@@ -1,6 +1,7 @@
 # Artifact serving — decision document
 
 **Status:** decided, pending implementation · **Feature branch:** `feat/esp-platform-lib-slices` (PR FastLED/fbuild#1890)
+**Amended:** 2026-11-21 — §8 adds exact-fingerprint framework core objects (FastLED/fbuild#1882), decided, not implemented.
 **Date:** 2026-11-04 · **Scope:** serving pre-compiled framework libraries + headers from object storage so a user's *first* compile does not build the ESP-IDF / Arduino core from source.
 
 What already exists (the baseline these decisions build on):
@@ -336,9 +337,103 @@ Items 4, 7, 11, 12, 14 and 15 are the ones that would have caught a real defect:
 
 ---
 
+## 8. Exact-fingerprint framework core objects (FastLED/fbuild#1882)
+
+**Status:** decided 2026-11-21, **not implemented**. The pilot (PR FastLED/fbuild#1883, tip `c4b803933056bcc10e23ea8f177e92c73fec8802`, author Zach Vorhies) was closed unmerged; nothing from it is on `main`. This section is what a re-implementation must satisfy. Tracking issue: FastLED/fbuild#1882.
+
+Decisions 1–7 serve the vendor's *precompiled SDK libraries* (per-chip slices). This is a different artifact: the **compiled objects of the Arduino core itself** (60 translation units for the pilot boards, a 3.5–4.1 MB `tar.zst`), valid only for one exact compiler invocation. It is served *after* the framework sources and the SDK slice are provisioned, so it removes compilation, never download bytes.
+
+### DECISION
+
+**8a. Framework identity is per component, taken in staging — never a hash of the installed tree.**
+
+The fingerprint's framework term is a list of component content IDs, one per installed unit:
+
+| Component | Subtree | Identity taken |
+|---|---|---|
+| core | the framework install root, **excluding** `tools/esp32-arduino-libs/` and `tools/.libs-archives/` | in the core's staging dir, before the atomic rename |
+| SDK, once per required variant (`required_sdk_variants`: the MCU plus the board's chip variant, FastLED/fbuild#1897) | `tools/esp32-arduino-libs/<variant>/` | in the SDK extract dir, after compat patches, before the merge into `tools/` |
+| MCU skeleton, where a platform ships one | the entries it contributes under `tools/esp32-arduino-libs/<mcu>/` | in its extract dir, before the merge |
+
+- Each component writes a stamp inside its own subtree recording `{schema, component, version, content_id, recipe}`. The stamp is written in staging, so a component is either absent or complete with its identity — there is no window in which the tree exists without one.
+- `recipe` is an integer bumped whenever `patch_mcu_compatibility` (or any other post-extract mutation) changes. Compat patches move **into staging**, ahead of the stamp. A component is never mutated after its stamp is written.
+- A component with no stamp (every install made before this lands, and any tree an older fbuild patched in place) **has no identity**. The planner then emits no fingerprint and the build compiles from source. There is no backfill that re-hashes an installed tree on the build path.
+- The content ID is over the component's files (path, bytes, exec bit, symlink target), not over the archive it came from, so a slice install and a whole-bundle install of the same variant produce the same ID.
+
+**8b. One user-facing opt-out for every prebuilt framework artifact; the pilot's flag names are rejected.**
+
+- `--no-prebuilt-libs` / `FBUILD_NO_PREBUILT_LIBS` (decision 1) is the **only** user-facing switch and disables core-object serving as well as SDK slices. "Compile framework libraries from source" is the promise the help text already makes; core objects are inside it.
+- While the feature is research-only it is gated by a second **hidden** opt-in, `--prebuilt-core` / `FBUILD_PREBUILT_CORE` (`hide = true`, `conflicts_with = "no_prebuilt_libs"`), deleted in the PR that flips the default — the same lifecycle decision 1 gives `--prebuilt-libs`. `--no-prebuilt-libs` wins over it.
+- `--prebuilt`, `--no-prebuilt` and `FBUILD_PREBUILT` must not ship. Decision 1 already rejects `--no-prebuilt` as too broad a promise; that ruling stands and extends to the positive spelling.
+- Core objects get their own short ladder, entered only after decision 5's ladder has produced a framework tree: local verified cache → `mirrors[]` in index order → compile from source. Any failure at any rung — missing identity, ineligible project, miss, transfer error, hash mismatch, or a link failure after a hit — ends in the source compile and exit 0. A hit that then fails to link tombstones that fingerprint for the daemon's lifetime and rebuilds once from source.
+
+**8c. Nothing is published until the fingerprint is install-history-independent, and publishing is a maintainer action.**
+
+Uploading to the bucket requires explicit maintainer approval each time. The three objects the pilot uploaded are orphans under 8a; their fate is FastLED/fbuild#2135.
+
+### RATIONALE
+
+Fingerprint — the options considered:
+
+| Option | Verdict |
+|---|---|
+| (a) Assemble and patch the whole core + SDK + MCU recipe in staging; the recipe is one immutable install | **Rejected.** One immutable install per (core, MCU, variant) duplicates the multi-GB core tree per chip and discards the shared-core / per-chip-slice layout that decisions 2 and 5 are built on. |
+| (b) Separate immutable components, each fingerprinted | **Chosen**, as 8a. The per-variant SDK subtree is already a self-contained directory, so the component boundary exists on disk today; only the identity and the "patch before publish" ordering are missing. No install-directory move is required. |
+| (c) Re-hash the installed tree after provisioning finishes (what the pilot's `65fb7379` did: `finalize_sdk_content_manifest` rewrites the sidecar from `hash_tree(install_path)`) | **Rejected.** `tools/esp32-arduino-libs/` is shared by every MCU built against that core version, so the whole-tree hash depends on *which other boards the user has ever built*. A publisher with only `esp32c3` installed and a user who also built `esp32dev` compute different fingerprints for a byte-identical compile. It also hashes ~2.6 GB on the provisioning path and certifies whatever is on disk, including a half-merged tree. |
+| (d) Identity = sha256 of each downloaded archive | **Rejected.** The same SDK variant arrives as a per-chip slice *or* as the whole vendor bundle (decision 5, rungs 2–5); the archive hashes differ while the installed bytes do not, so the hit rate would depend on which rung happened to answer. |
+
+Flags — the options considered:
+
+| Option | Verdict |
+|---|---|
+| Keep `--prebuilt` / `--no-prebuilt` / `FBUILD_PREBUILT` | **Rejected** — contradicts decision 1. |
+| Separate feature with its own user-facing pair (`--prebuilt-core` / `--no-prebuilt-core`) | **Rejected.** Two public opt-outs for "do not use fbuild's prebuilt framework binaries" means a user bisecting an ABI problem has to know there are two artifact classes. Decision 1 chose one flag for exactly that case. |
+| Fold under `--no-prebuilt-libs`, with a hidden research opt-in specific to this artifact | **Chosen**, as 8b. One public promise; the research gate cannot be confused with the slice gate and disappears when the default flips. |
+| Environment variable only, no flag | **Rejected.** fbuild resolves the environment in the CLI and forwards an explicit per-request choice to the daemon (decision 1, "never read from the environment deep in the fetch path"); a flag is how that choice is expressed and tested. |
+
+Why the pilot was closed rather than rebased: it was 508 commits behind `main` with content conflicts in at least 12 files (2026-11-19 triage), its identity scheme was option (c), its flags were the rejected spelling, its bucket keys (`prebuilt/<framework>/<version>/<arch>/fp-<16>/prebuilt.tar.zst`) predate decision 2, and its own bench puts the feature at break-even on the pilot fixture (below). None of its code is reachable without the planner, so landing any slice of it would have added uncalled code.
+
+Measured by the pilot (`bench/prebuilt/README.md` at the tip above; framework 3.3.12, one contended host, so wall clock is indicative only):
+
+| Board | Framework TUs, source → hit | Wall, source → hit (local mirror) | Cold hit from the real bucket |
+|---|---|---|---|
+| `esp32-c3-devkitm-1` | 60 → 0 | 14.9 s → 10.7 s | 24.8 s — slower than the source build |
+| `esp32dev` | 60 → 0 | 12.7 s → 11.0 s | not measured |
+| `esp32-s3-devkitc-1` | 60 → 0 | 18.9 s → 11.6 s | not measured |
+
+The core compile is ~5 s of a 10–12 s build, and a repeat source build on the same machine already drops to 9.5–9.6 s through the existing compile caches. So this feature is worth building only for configurations whose framework compile is several times larger than the pilot's; re-implementation should start by naming that configuration and measuring it, not by porting the transfer code.
+
+### CONCRETE VALUES
+
+| Item | Value |
+|---|---|
+| Public opt-out | `--no-prebuilt-libs` / `FBUILD_NO_PREBUILT_LIBS` (unchanged from decision 1) |
+| Research opt-in | `--prebuilt-core` / `FBUILD_PREBUILT_CORE`, hidden, deleted when the default flips |
+| Forbidden spellings | `--prebuilt`, `--no-prebuilt`, `FBUILD_PREBUILT` |
+| Default | off; every failure falls back to the source compile |
+| Fingerprint inputs | schema + ABI version, toolchain identity, core component ID, SDK component ID per required variant, skeleton component ID where present, `recipe`, MCU, variant dir, the ordered canonical compiler argv per TU, config/header digests |
+| Legacy installs | no stamp → no fingerprint → source compile; never re-hashed on the build path |
+| Bucket key | decision 2's scheme: `v1/<vendor>/<product>/<channel>/<ref>/<chip>/<product>-<ref>-<chip>.<sha16>.tar.zst`, with a distinct `<product>` for core objects; the pilot's `prebuilt/…/fp-<16>/` shape is retired |
+| Eligibility (v1) | conventional `src/` project, no extra build flags / unflags / extra scripts / board overrides; anything else compiles from source |
+| Reusable from the pilot (cherry-pick `-x` to keep authorship) | `fbuild-core::content_manifest` (`ContentId`, deterministic manifest, streaming tree hash); the streamed `extract_with_manifest`; the descriptor-verifying Catalog reader; daemon single-flight + `Range`/`If-Range` resume + staging GC; the canonical-argv / prefix-map planner |
+| Not reusable | `finalize_sdk_content_manifest` and the `tree:<hash>` identity (option (c)); the CLI flags; `ci/build_prebuilt.py`'s key layout; the committed `prebuilt-arduino-esp32` shard |
+
+**Required tests for a re-implementation** (RED first, same fixture rules as decision 7):
+
+18. **Install-history independence** — install `esp32c3` alone, record the fingerprint; install `esp32dev` into the same core tree; the `esp32c3` fingerprint is unchanged. This is the test option (c) fails.
+19. **Source-of-archive independence** — the same variant installed from a slice and from the whole bundle yields the same SDK component ID.
+20. **No identity, no serving** — a component directory without a stamp produces no plan and a source build, and no stamp is written by the build path.
+21. **Interrupted install** — a merge killed part-way leaves no stamp; the next run reinstalls and only then stamps.
+22. **Flag plumbing** — `--prebuilt-core` enables, `--no-prebuilt-libs` and `FBUILD_NO_PREBUILT_LIBS=1` each disable and win; a `--help` snapshot proves `--prebuilt-core` is hidden and `--prebuilt` / `--no-prebuilt` do not parse.
+23. **Byte equality** — for each pilot board, `firmware.bin` from a hit equals `firmware.bin` from the source build of the same tree.
+
+---
+
 ## Open follow-ups (file as issues, not resolved here)
 
 1. Move `install_lock.rs`'s directory-based single-flight into the daemon's in-memory manager, to comply with the no-file-locks rule now that correctness no longer depends on it (decision 4).
 2. Backfill the `.<sha16>` filename infix on the `core-3.3.11`, `core-3.3.12`, `5.3`, `3.0.4`, `core-4.0.0-RC1` slices and re-publish the shard (decision 2).
 3. Republish `core-4.0.0-RC1` without the bogus `esp32s31` chip key, then land the publisher-side checker (decisions 2, 7).
 4. Register `artifacts.fbuild.dev` and point it at the current Spaces bucket before `mirrors[]` ships, so the DNS escape hatch exists from day one (decision 5).
+5. Re-implement exact-fingerprint framework core-object serving against decision 8, starting with a measurement that shows a configuration where it pays (FastLED/fbuild#1882).
+6. Maintainer: delete or keep the three orphaned pilot objects under `prebuilt/arduino-esp32/3.3.12/` in the bucket (FastLED/fbuild#2135).
