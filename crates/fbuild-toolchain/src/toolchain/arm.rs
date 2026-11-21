@@ -273,7 +273,12 @@ fn platform_package(host: HostPlatform) -> Option<ArmSource> {
 /// fbuild. A host without a package gets the vendor directory as a URL that
 /// is never fetched: `ensure_installed` rejects it first unless an override
 /// pins a compiler.
-fn host_source() -> (String, Option<&'static str>, &'static str, Option<HostPlatform>) {
+fn host_source() -> (
+    String,
+    Option<&'static str>,
+    &'static str,
+    Option<HostPlatform>,
+) {
     let host = fbuild_core::platform::host::current();
     match platform_package(host) {
         Some(src) => (src.url, Some(src.checksum), src.version, None),
@@ -416,7 +421,10 @@ mod tests {
         let other = host(HostOs::Macos, HostArch::Other);
         tc.unsupported_host = Some(other);
         let err = tc.ensure_installed().await.unwrap_err().to_string();
-        assert!(err.contains(&format!("macos {}", other.arch_name())), "{err}");
+        assert!(
+            err.contains(&format!("macos {}", other.arch_name())),
+            "{err}"
+        );
         assert!(err.contains("macos-x86_64"), "{err}");
     }
 
