@@ -337,13 +337,16 @@ mod tests {
         assert!(entry_dir(root, "abc123").join(ELF_NAME).is_file());
     }
 
-    #[cfg(unix)]
     #[test]
     fn a_firmware_size_symlink_is_not_followed() {
         let cache = tempfile::TempDir::new().unwrap();
         let elsewhere = tempfile::TempDir::new().unwrap();
         std::fs::write(elsewhere.path().join("keep"), b"bytes").unwrap();
-        std::os::unix::fs::symlink(elsewhere.path(), cache.path().join("firmware-size")).unwrap();
+        fbuild_core::platform::fs::symlink_dir(
+            elsewhere.path(),
+            &cache.path().join("firmware-size"),
+        )
+        .unwrap();
 
         remove_obsolete_dirs(cache.path());
 
