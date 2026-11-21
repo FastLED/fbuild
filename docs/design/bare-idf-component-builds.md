@@ -2,7 +2,9 @@
 
 **Status:** research complete 2026-11-09, **delivered 2026-11-10** (PRs #1975-#1987;
 follow-ups #1970-#1974 all merged) · **Issue:** FastLED/fbuild#1761 (parent #1664;
-the *reject* half landed in #1730) · **Dates:** research 2026-11-09, delivery 2026-11-10
+the *reject* half landed in #1730) · **Dates:** research 2026-11-09, delivery 2026-11-10 ·
+**Widened 2026-11-21** to the RISC-V targets (see "RISC-V targets and the native-adapter
+decision")
 
 fbuild used to build ESP32 projects only through the Arduino core and its
 precompiled ESP-IDF libraries, so a bare `framework = espidf` project was
@@ -41,7 +43,8 @@ Two paths, one per-environment switch, and the native one is unchanged.
   `crates/fbuild-build-esp/src/esp32/espidf_delegate.rs`, entered from
   `orchestrator/build.rs` after `prepare_build_system`. `native` and `arduino`
   mean the native path; an unknown value is a configuration error that names the
-  valid ones instead of silently picking one.
+  valid ones instead of silently picking one. The chip comes from the board:
+  esp32s3 (Xtensa profile) and esp32c3/c5/c6/p4 (RISC-V profile, 2026-11-21).
 - **The artifacts are the proof.** `espidf_artifacts.rs` derives the layout from
   the `flasher_args.json` the IDF build itself writes — no second copy of IDF's
   layout knowledge — and publishes the app bin, ELF, map, bootloader, partition
@@ -288,8 +291,9 @@ file is fatal), and the profile's `PATH` entries are *prepended* to the host
 `PATH` rather than substituted, because `idf.py`/CMake shell out to `ln`/`git`.
 
 Per-chip slices (#1949/#1951) cut the *framework* half; an IDF release has no
-equivalent slicing story — the profile is chip-scoped (esp32s3), but a second
-family adds its own cross toolchain.
+equivalent slicing story — a profile is family-scoped (`Esp32S3Only`,
+`Riscv32`), and the second family adds its own cross toolchain: 2.1 GB
+installed for `riscv32-esp-elf`, against 1.1 GB for `xtensa-esp-elf`.
 
 ## Options
 
@@ -345,17 +349,84 @@ family adds its own cross toolchain.
 
 - **The switch is per environment.** No project gets a delegated build by
   accident; a project has to set `board_build.build_system = espidf`.
-- **The native IDF-only path (#1878) is a separate, still-draft track** for the
-  silicon families pioarduino cannot serve (C5, P4). #1880 (sdkconfig in the
-  sketch root + an in-sketch directive) is scoped to it and gated on it.
-- **No per-chip slicing of a release**, and no second chip family's profile
-  measured (see "Toolchain cost").
+- **There is one bare-IDF path.** The native adapter of #1878 was closed in
+  favour of widening this one (next section). #1880 (sdkconfig in the sketch
+  root + an in-sketch directive) was scoped to that adapter's generated
+  `sdkconfig` seed and stays open, re-scoped to the delegated path.
+- **ESP32-P4 rev-3 silicon is refused**, not built: it needs an ESP-IDF pin of
+  v5.5.2 or later (#2133).
+- **esp32, esp32s2, esp32c2 and esp32h2 are still refused.** The pinned
+  compilers cover them, but no project has been built for them through this
+  path, and a chip is listed only once one has.
+- **No per-chip slicing of a release** (see "Toolchain cost").
 - **No CI lane builds the delegated fixture**: the end-to-end test is `#[ignore]`
   and run deliberately (48.4 s here); wiring a hosted lane was an #1974
   non-goal.
 - **A compiler-launcher cache** stays a future option with a cost of entry: its
   key must cover the IDF release and the `sdkconfig` digest rather than the raw
   compile command (see "Caching decision").
+
+## RISC-V targets and the native-adapter decision (2026-11-21)
+
+#1878 predates the delegated path. It routed **every** bare
+`framework = espidf` build, with no opt-in, to a second adapter
+(`orchestrator/idf/`) that drove CMake/Ninja itself against PlatformIO's
+`framework-espidf` package (IDF 5.4, or 5.5.5 for C5/P4), built its own Python
+environment with `pip` against `dl.espressif.com`, generated a wrapper project
+when the user's had no `CMakeLists.txt`, and exported its own artifact set.
+After #1975-#1988 that is a second implementation of one concept — "build this
+project with IDF's own build system" — with different pins, a different
+provisioning stack, no artifact proof gate and no compile-database merge.
+
+Four ways to reconcile them were weighed:
+
+| # | Strategy | Verdict |
+|---|---|---|
+| 1 | Native adapter for the families the delegate cannot serve (C5, P4), delegate elsewhere | Rejected: two provisioning stacks, two IDF pins and two artifact exporters, selected by chip. The delegate "cannot serve" them only because its profile lacked a compiler |
+| 2 | Native adapter behind its own opt-in value | Rejected: the same duplication, plus a user-visible choice between two near-identical modes |
+| 3 | **Close #1878; widen the delegate to the RISC-V targets** | **Chosen** |
+| 4 | Close #1878 as superseded, land nothing | Rejected: leaves C5/P4 without a bare-IDF path, which is the gap #1878 existed to close |
+
+Why 3: the gap was one missing toolchain archive, not a missing build system.
+`IdfProfile::Riscv32` pins `riscv32-esp-elf` esp-14.2.0_20241119 from the
+v5.5.1 `tools.json` (sha256 per host) next to the ROM ELFs, OpenOCD, CMake and
+Ninja the S3 profile already pins, and `profile_for_chip` maps `esp32c3`,
+`esp32c5`, `esp32c6` and `esp32p4` to it. Everything else — the opt-in, the
+supervised child, the proof gate, the compile database, cold-only caching — is
+the existing path, unchanged. Routing stays explicit: without
+`board_build.build_system = espidf` a bare `espidf` request still fails fast.
+
+What that decision costs, stated rather than hidden:
+
+- **One IDF pin (v5.5.1), so no ESP32-P4 rev-3.** v5.5.1 caps
+  `ESP32P4_REV_MAX_FULL` at 199. #1878 used IDF 5.5.5 for exactly this reason.
+  The delegate refuses a board whose SDK variant is not `esp32p4_es` before it
+  downloads anything, with an error naming the release; lifting it is a
+  release-pin change (#2133), not a second adapter.
+- **A project must own a `CMakeLists.txt`.** #1878's generated wrapper for
+  PlatformIO-layout `src/` projects is not carried over; nothing on `main`
+  asked for it, and it is what #1880's sdkconfig layering was built on.
+- **2.8 GB on first use** for a RISC-V chip, against 1.8 GB for esp32s3.
+
+Measured 2026-11-21 on the steward host, `tests/platform/espidf_component_riscv`
+(the probe application from #1878, re-homed as a project with its own root
+`CMakeLists.txt`), through `fbuild build`:
+
+| Environment | Board | App image | ELF | Bootloader | Compile DB entries | Revision range in `sdkconfig` |
+|---|---|---|---|---|---|---|
+| `esp32c3` | `esp32-c3-devkitm-1` | 178,992 B | 3,905,208 B | 21,008 B | 886 | 3..199 |
+| `esp32c5` | `esp32-c5-devkitc-1` | 206,128 B | 4,366,760 B | 22,176 B | 962 | 100..199 |
+| `esp32c6` | `esp32-c6-devkitc-1` | 158,320 B | 3,888,304 B | 22,496 B | 952 | 0..99 |
+| `esp32p4` | `esp32-p4-evboard` | 211,024 B | 4,616,828 B | 22,544 B | 929 | 1..199 |
+| `esp32p4-r3` | `esp32-p4_r3` | refused before provisioning | | | | |
+
+All four passed as the ignored tests `espidf_riscv_component_project_builds_for_*`
+(`espidf_delegate_e2e_tests.rs`): 1379.9 s in total for one cold install of the
+RISC-V profile plus four cold builds, on a host at load average 80-130 — a
+correctness run, not a timing. The install held no Xtensa compiler:
+`toolchains/` contained `riscv32-esp-elf`, `esp-rom-elfs`, `openocd-esp32`,
+`cmake`, `ninja`, the source tree and the Python environment. None of the
+images was booted on hardware.
 
 ## Non-goals (held through delivery)
 

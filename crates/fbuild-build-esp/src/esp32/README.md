@@ -41,3 +41,6 @@ sets `board_build.build_system = espidf` instead has its own
 `idf_component_register()` CMake project built by the pinned ESP-IDF release;
 `orchestrator/build.rs` branches to `espidf_delegate` immediately after the
 common `BuildContext`, so none of the Arduino package/framework work runs.
+The pinned release is provisioned per toolchain family: esp32s3 gets the Xtensa
+profile, esp32c3/c5/c6/p4 the RISC-V one. Any other MCU, and ESP32-P4 rev-3
+silicon (which the pinned v5.5.1 cannot target), is refused by name.

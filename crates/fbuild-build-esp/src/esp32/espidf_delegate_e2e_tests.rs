@@ -21,15 +21,15 @@ use fbuild_core::path::NormalizedPath;
 
 use crate::BuildOrchestrator;
 
-/// Copy the committed fixture into a scratch project so the build never writes
-/// into the repository.
-fn copy_fixture(destination: &Path) {
+/// Copy a committed `tests/platform/<fixture>` into a scratch project so the
+/// build never writes into the repository.
+fn copy_fixture(fixture: &str, destination: &Path) {
     let source = Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("..")
         .join("..")
         .join("tests")
         .join("platform")
-        .join("espidf_component");
+        .join(fixture);
     std::fs::create_dir_all(destination).unwrap();
     let source = NormalizedPath::new(&source);
     let destination = NormalizedPath::new(destination);
@@ -68,11 +68,15 @@ fn build_root() -> (tempfile::TempDir, NormalizedPath) {
     }
 }
 
-fn params(project: &NormalizedPath, build_dir: &NormalizedPath) -> crate::BuildParams {
+fn params(
+    project: &NormalizedPath,
+    build_dir: &NormalizedPath,
+    env_name: &str,
+) -> crate::BuildParams {
     crate::BuildParams {
         project_dir: project.as_path().to_path_buf(),
         shrink: Default::default(),
-        env_name: "esp32s3".into(),
+        env_name: env_name.into(),
         clean_all: false,
         clean_only: false,
         clean: false,
@@ -102,11 +106,11 @@ fn params(project: &NormalizedPath, build_dir: &NormalizedPath) -> crate::BuildP
 async fn espidf_component_project_builds_and_publishes_artifacts() {
     let (_scratch, root) = build_root();
     let project = root.join("project");
-    copy_fixture(project.as_path());
+    copy_fixture("espidf_component", project.as_path());
     let build_dir = root.join("build");
 
     let result = crate::esp32::Esp32Orchestrator
-        .build(&params(&project, &build_dir))
+        .build(&params(&project, &build_dir, "esp32s3"))
         .await
         .expect("the delegated build must succeed");
 
@@ -185,5 +189,135 @@ async fn espidf_component_project_builds_and_publishes_artifacts() {
     assert_eq!(
         result.compile_database_path.as_deref(),
         Some(compiledb.as_path())
+    );
+}
+
+/// Build one environment of `tests/platform/espidf_component_riscv` through the
+/// real orchestrator and check the artifacts the delegated build publishes.
+///
+/// Each chip gets its own project copy and build directory under the shared
+/// root, so the tests can run one after another against one install.
+async fn build_riscv_component_project(env_name: &str, chip: &str) {
+    let (_scratch, root) = build_root();
+    let project = root.join(format!("project-{env_name}"));
+    copy_fixture("espidf_component_riscv", project.as_path());
+    let build_dir = root.join(format!("build-{env_name}"));
+
+    let result = crate::esp32::Esp32Orchestrator
+        .build(&params(&project, &build_dir, env_name))
+        .await
+        .expect("the delegated build must succeed");
+
+    assert!(result.success, "{}", result.message);
+    let idf_dir = build_dir.join("idf");
+    for name in [
+        "riscv_component_demo.bin",
+        "riscv_component_demo.elf",
+        "riscv_component_demo.map",
+        "bootloader.bin",
+        "partition-table.bin",
+        "sdkconfig",
+        "compile_commands.json",
+        "idf-artifacts.json",
+    ] {
+        let path = idf_dir.join(name);
+        assert!(path.as_path().is_file(), "missing artifact {path}");
+    }
+
+    // The target is the board's chip, not a value the project hard-codes: the
+    // fixture's `sdkconfig.defaults` names no `CONFIG_IDF_TARGET`.
+    let sdkconfig = std::fs::read_to_string(idf_dir.join("sdkconfig").as_path()).unwrap();
+    assert!(
+        sdkconfig.contains(&format!("CONFIG_IDF_TARGET=\"{chip}\"")),
+        "the generated sdkconfig does not target {chip}"
+    );
+    // `sdkconfig.defaults` reached the build (`main.c` also refuses to compile
+    // otherwise).
+    assert!(sdkconfig.contains("CONFIG_LOG_DEFAULT_LEVEL_WARN=y"));
+
+    let index: serde_json::Value = serde_json::from_slice(
+        &std::fs::read(idf_dir.join("idf-artifacts.json").as_path()).unwrap(),
+    )
+    .unwrap();
+    assert_eq!(index["project"], "riscv_component_demo");
+    assert_eq!(index["chip"], chip);
+
+    // The RISC-V compiler built it: every project entry of the published
+    // database is compiled by `riscv32-esp-elf-*`, never by the Xtensa GCC.
+    let compiledb = project.join("compile_commands.json");
+    let entries: serde_json::Value =
+        serde_json::from_slice(&std::fs::read(compiledb.as_path()).unwrap()).unwrap();
+    let entries = entries
+        .as_array()
+        .expect("compile_commands.json is an array");
+    assert!(
+        entries.len() > 100,
+        "only {} compile commands",
+        entries.len()
+    );
+    let probe = entries
+        .iter()
+        .find(|entry| {
+            entry["file"]
+                .as_str()
+                .is_some_and(|file| file.ends_with("probe.c"))
+        })
+        .expect("the project's own component was compiled");
+    let invocation = match probe["command"].as_str() {
+        Some(command) => command.to_string(),
+        None => probe["arguments"].to_string(),
+    };
+    assert!(
+        invocation.contains("riscv32-esp-elf-"),
+        "probe.c was not compiled by the RISC-V toolchain: {invocation}"
+    );
+}
+
+#[tokio::test]
+#[ignore = "installs the pinned ESP-IDF release with the RISC-V toolchain (~2.8 GB) and runs a real idf.py build"]
+async fn espidf_riscv_component_project_builds_for_esp32c5() {
+    build_riscv_component_project("esp32c5", "esp32c5").await;
+}
+
+#[tokio::test]
+#[ignore = "installs the pinned ESP-IDF release with the RISC-V toolchain (~2.8 GB) and runs a real idf.py build"]
+async fn espidf_riscv_component_project_builds_for_esp32p4() {
+    build_riscv_component_project("esp32p4", "esp32p4").await;
+}
+
+#[tokio::test]
+#[ignore = "installs the pinned ESP-IDF release with the RISC-V toolchain (~2.8 GB) and runs a real idf.py build"]
+async fn espidf_riscv_component_project_builds_for_esp32c3() {
+    build_riscv_component_project("esp32c3", "esp32c3").await;
+}
+
+#[tokio::test]
+#[ignore = "installs the pinned ESP-IDF release with the RISC-V toolchain (~2.8 GB) and runs a real idf.py build"]
+async fn espidf_riscv_component_project_builds_for_esp32c6() {
+    build_riscv_component_project("esp32c6", "esp32c6").await;
+}
+
+/// ESP32-P4 rev-3 silicon is refused by the real orchestrator entry point
+/// before anything is provisioned: no download, no build directory content.
+#[tokio::test]
+async fn espidf_riscv_component_project_is_refused_for_p4_rev3_silicon() {
+    let scratch = tempfile::TempDir::new().unwrap();
+    let root = NormalizedPath::new(scratch.path());
+    let project = root.join("project");
+    copy_fixture("espidf_component_riscv", project.as_path());
+    let build_dir = root.join("build");
+
+    let error = crate::esp32::Esp32Orchestrator
+        .build(&params(&project, &build_dir, "esp32p4-r3"))
+        .await
+        .err()
+        .expect("rev-3 silicon must not build against the pinned release");
+
+    let message = error.to_string();
+    assert!(message.contains("esp32p4"), "{message}");
+    assert!(message.contains("rev-3 silicon"), "{message}");
+    assert!(
+        !build_dir.join("idf").as_path().exists(),
+        "the delegated build root was created for a refused build"
     );
 }

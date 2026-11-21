@@ -17,4 +17,6 @@ architecture doc for the subsystem once the feature lands.
   (`board_build.build_system = espidf`) that delegates to a pinned ESP-IDF
   release. Contains a measured `idf.py` spike (v5.5.1, esp32s3), the three
   option costs, the measured cold-only caching decision, the
-  false-coverage proof gate, and the delivery map for follow-ups #1970-#1974.
+  false-coverage proof gate, the delivery map for follow-ups #1970-#1974, and
+  the 2026-11-21 decision to close the native adapter (#1878) and widen the
+  delegated path to the RISC-V targets instead.

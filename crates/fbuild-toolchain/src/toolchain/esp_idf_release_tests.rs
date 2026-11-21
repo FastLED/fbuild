@@ -61,23 +61,142 @@ fn s3_profile_installs_the_two_host_build_tools_after_the_toolchains() {
 }
 
 #[test]
-fn the_other_targets_toolchains_are_not_pinned_at_all() {
-    // Not "filtered out at install time": absent from the pin table, so no
-    // code path can install 2.1 GiB of RISC-V bits into an S3 profile.
-    for excluded in [
-        "riscv32-esp-elf",
-        "riscv32-esp-elf-gdb",
-        "xtensa-esp-elf-gdb",
-    ] {
+fn the_s3_profile_never_installs_another_targets_toolchain() {
+    // The RISC-V compiler is pinned for `IdfProfile::Riscv32` (#1878's C5/P4
+    // gap), but it is 2.1 GiB an S3 build never runs, so it must stay out of
+    // the S3 component list rather than be filtered at install time.
+    assert!(
+        !IdfProfile::Esp32S3Only
+            .components()
+            .contains(&IdfComponent::Riscv32EspElf)
+    );
+    assert!(
+        S3_EXCLUDED
+            .iter()
+            .any(|(name, _)| *name == "riscv32-esp-elf")
+    );
+    // The debuggers are not pinned at all: no profile can install them.
+    for excluded in ["riscv32-esp-elf-gdb", "xtensa-esp-elf-gdb"] {
         assert!(
             !PINS.iter().any(|p| p.component == excluded),
             "{excluded} must not be pinned"
         );
-        assert!(
-            S3_EXCLUDED.iter().any(|(name, _)| *name == excluded)
-                || excluded == "riscv32-esp-elf-gdb"
-        );
     }
+}
+
+#[test]
+fn riscv_profile_installs_the_riscv_toolchain_and_nothing_xtensa() {
+    let all: Vec<&str> = IdfProfile::Riscv32
+        .components()
+        .iter()
+        .map(|c| c.id())
+        .collect();
+    // `tools.json` scopes `xtensa-esp-elf` and `esp32ulp-elf` to
+    // esp32/esp32s2/esp32s3; a RISC-V target's LP core is built by the same
+    // riscv32 compiler, so neither belongs here.
+    assert_eq!(
+        all,
+        [
+            "riscv32-esp-elf",
+            "esp-rom-elfs",
+            "openocd-esp32",
+            "cmake",
+            "ninja"
+        ]
+    );
+    for tool in IdfComponent::BUILD_TOOLS {
+        assert!(IdfProfile::Riscv32.components().contains(&tool));
+    }
+}
+
+#[test]
+fn riscv_toolchain_is_pinned_for_every_supported_host() {
+    let hosts = [
+        (HostOs::Linux, HostArch::X86_64, "linux-amd64"),
+        (HostOs::Linux, HostArch::Aarch64, "linux-arm64"),
+        (HostOs::Macos, HostArch::X86_64, "macos"),
+        (HostOs::Macos, HostArch::Aarch64, "macos-arm64"),
+        (HostOs::Windows, HostArch::X86_64, "win32"),
+    ];
+    for (os, arch, key) in hosts {
+        let pin = pin(IdfComponent::Riscv32EspElf, HostPlatform::new(os, arch)).unwrap();
+        assert_eq!(pin.component, "riscv32-esp-elf");
+        assert_eq!(pin.platform, key);
+        // The same crosstool-NG release as the Xtensa compiler: one IDF
+        // release recommends one compiler set.
+        assert_eq!(pin.version, "esp-14.2.0_20241119");
+        assert_eq!(pin.sha256.len(), 64, "{key} needs a full sha256");
+        assert!(pin.sha256.chars().all(|c| c.is_ascii_hexdigit()));
+        assert!(
+            pin.url.starts_with(
+                "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/riscv32-esp-elf-"
+            ),
+            "{}",
+            pin.url
+        );
+        assert!(pin.bytes > 200_000_000, "{key} pin has no size");
+    }
+    // Unpinned hosts still error rather than borrow another host's binaries.
+    assert!(
+        pin(
+            IdfComponent::Riscv32EspElf,
+            HostPlatform::new(HostOs::Linux, HostArch::Arm)
+        )
+        .is_err()
+    );
+}
+
+#[test]
+fn profiles_share_one_release_and_the_components_they_have_in_common() {
+    // Both profiles install the same IDF release, so a component they share
+    // (ROM ELFs, OpenOCD, CMake, Ninja) is one cache entry, not one per profile.
+    assert_eq!(
+        IdfProfile::Riscv32.cache_prefix(),
+        IdfProfile::Esp32S3Only.cache_prefix()
+    );
+    let shared: Vec<IdfComponent> = IdfProfile::Riscv32
+        .components()
+        .iter()
+        .copied()
+        .filter(|c| IdfProfile::Esp32S3Only.components().contains(c))
+        .collect();
+    assert_eq!(
+        shared,
+        [
+            IdfComponent::EspRomElfs,
+            IdfComponent::OpenocdEsp32,
+            IdfComponent::Cmake,
+            IdfComponent::Ninja
+        ]
+    );
+}
+
+#[test]
+fn riscv_profile_measured_size_is_reported_not_hidden() {
+    // The RISC-V compiler alone is ~2.1 GB installed: almost twice the S3
+    // profile, which is why a chip gets it only by asking for it.
+    let toolchains = IdfProfile::Riscv32.measured_installed_bytes();
+    assert!(
+        (2_100_000_000..=2_300_000_000).contains(&toolchains),
+        "RISC-V profile measured {toolchains} B"
+    );
+    assert_eq!(
+        IdfProfile::Riscv32.measured_build_tools_bytes(),
+        IdfProfile::Esp32S3Only.measured_build_tools_bytes()
+    );
+}
+
+#[test]
+fn riscv_tool_root_finds_the_nested_export_dir() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let nested = tmp
+        .path()
+        .join("riscv32-esp-elf-14.2.0")
+        .join("riscv32-esp-elf")
+        .join("bin");
+    std::fs::create_dir_all(&nested).unwrap();
+    let root = tool_root(tmp.path(), IdfComponent::Riscv32EspElf).unwrap();
+    assert!(root.as_path().ends_with("riscv32-esp-elf"));
 }
 
 #[test]
