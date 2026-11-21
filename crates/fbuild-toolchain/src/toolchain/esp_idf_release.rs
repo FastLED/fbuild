@@ -34,12 +34,16 @@ pub const IDF_RELEASE_VERSION: &str = "v5.5.1";
 /// Commit `v5.5.1` resolves to (`git rev-parse HEAD` in a v5.5.1 checkout).
 pub const IDF_RELEASE_COMMIT: &str = "fcae32885b0296b32044cb99ecbdc50d98dddb83";
 
-/// One tool component the ESP32-S3 profile installs.
+/// One tool component an install profile can pull.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum IdfComponent {
     /// GCC/binutils for ESP32, ESP32-S2 and ESP32-S3 (the only cross compiler an
     /// ESP32-S3 project needs).
     XtensaEspElf,
+    /// GCC/binutils for the RISC-V targets (C2/C3/C5/C6/H2/P4), and for their
+    /// LP cores. Only [`IdfProfile::Riscv32`] installs it: at 2.1 GiB it is the
+    /// largest archive of the release.
+    Riscv32EspElf,
     /// Binutils for the ULP coprocessor.
     Esp32UlpElf,
     /// ROM ELF symbol files the default linker scripts reference.
@@ -98,6 +102,7 @@ impl IdfComponent {
     pub const fn id(self) -> &'static str {
         match self {
             Self::XtensaEspElf => "xtensa-esp-elf",
+            Self::Riscv32EspElf => "riscv32-esp-elf",
             Self::Esp32UlpElf => "esp32ulp-elf",
             Self::EspRomElfs => "esp-rom-elfs",
             Self::OpenocdEsp32 => "openocd-esp32",
@@ -118,7 +123,7 @@ impl IdfComponent {
     const fn root_rule(self) -> RootRule {
         match self {
             Self::EspRomElfs => RootRule::ArchiveRoot,
-            Self::XtensaEspElf | Self::Esp32UlpElf | Self::OpenocdEsp32 => {
+            Self::XtensaEspElf | Self::Riscv32EspElf | Self::Esp32UlpElf | Self::OpenocdEsp32 => {
                 RootRule::Named(self.id())
             }
             Self::Cmake => RootRule::Owning("bin/cmake"),
@@ -200,11 +205,31 @@ pub const S3_MEASURED_INSTALLED_BYTES: &[(&str, u64)] = &[
 pub const BUILD_TOOLS_MEASURED_INSTALLED_BYTES: &[(&str, u64)] =
     &[("cmake", 153_276_700), ("ninja", 273_768)];
 
+/// Installed bytes of the RISC-V profile's **target toolchains**. The compiler
+/// is the `S3_EXCLUDED` measurement (the same archive, 2026-11-09); the two
+/// shared components are the `S3_MEASURED_INSTALLED_BYTES` rows.
+pub const RISCV_MEASURED_INSTALLED_BYTES: &[(&str, u64)] = &[
+    ("riscv32-esp-elf", 2_142_092_152),
+    ("esp-rom-elfs", 6_918_628),
+    ("openocd-esp32", 7_153_401),
+];
+
 /// Every component [`IdfProfile::Esp32S3Only`] installs, in install order:
 /// target toolchains first, then the host build tools they are driven by.
 const S3_COMPONENTS: [IdfComponent; 6] = [
     IdfComponent::XtensaEspElf,
     IdfComponent::Esp32UlpElf,
+    IdfComponent::EspRomElfs,
+    IdfComponent::OpenocdEsp32,
+    IdfComponent::Cmake,
+    IdfComponent::Ninja,
+];
+
+/// Every component [`IdfProfile::Riscv32`] installs, in install order. No
+/// Xtensa compiler and no `esp32ulp-elf`: `tools.json` scopes both to
+/// esp32/esp32s2/esp32s3.
+const RISCV_COMPONENTS: [IdfComponent; 5] = [
+    IdfComponent::Riscv32EspElf,
     IdfComponent::EspRomElfs,
     IdfComponent::OpenocdEsp32,
     IdfComponent::Cmake,
@@ -217,6 +242,10 @@ pub enum IdfProfile {
     /// Xtensa + ULP + ROM ELFs + OpenOCD: everything an ESP32-S3 build needs and
     /// nothing for the other eight targets.
     Esp32S3Only,
+    /// RISC-V + ROM ELFs + OpenOCD: what a RISC-V target needs and no Xtensa
+    /// compiler. A separate profile rather than a wider one because the RISC-V
+    /// compiler alone is almost twice the whole S3 profile (FastLED/fbuild#1878).
+    Riscv32,
 }
 
 impl IdfProfile {
@@ -228,25 +257,27 @@ impl IdfProfile {
     pub fn components(self) -> &'static [IdfComponent] {
         match self {
             Self::Esp32S3Only => &S3_COMPONENTS,
+            Self::Riscv32 => &RISCV_COMPONENTS,
         }
     }
 
-    /// Measured installed bytes of the target toolchains
-    /// (`S3_MEASURED_INSTALLED_BYTES`), the set #1970 AC2 measured.
+    /// Measured installed bytes of the target toolchains: for the S3 profile
+    /// the set #1970 AC2 measured (`S3_MEASURED_INSTALLED_BYTES`).
     pub fn measured_installed_bytes(self) -> u64 {
-        match self {
-            Self::Esp32S3Only => S3_MEASURED_INSTALLED_BYTES.iter().map(|(_, b)| b).sum(),
-        }
+        let rows = match self {
+            Self::Esp32S3Only => S3_MEASURED_INSTALLED_BYTES,
+            Self::Riscv32 => RISCV_MEASURED_INSTALLED_BYTES,
+        };
+        rows.iter().map(|(_, b)| b).sum()
     }
 
-    /// Measured installed bytes of the host build tools.
+    /// Measured installed bytes of the host build tools, which every profile
+    /// installs.
     pub fn measured_build_tools_bytes(self) -> u64 {
-        match self {
-            Self::Esp32S3Only => BUILD_TOOLS_MEASURED_INSTALLED_BYTES
-                .iter()
-                .map(|(_, b)| b)
-                .sum(),
-        }
+        BUILD_TOOLS_MEASURED_INSTALLED_BYTES
+            .iter()
+            .map(|(_, b)| b)
+            .sum()
     }
 
     /// Cache key prefix: one IDF release, installed side by side with any other
@@ -342,6 +373,46 @@ const PINS: &[EspIdfPin] = &[
         sha256: "b30e450e0af279783c54a9ae77c3b367dd556b78eda930a92ec7b784a74c28c8",
         bytes: 382457717,
         url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/xtensa-esp-elf-14.2.0_20241119-i686-w64-mingw32.zip",
+    },
+    EspIdfPin {
+        component: "riscv32-esp-elf",
+        platform: "linux-amd64",
+        version: "esp-14.2.0_20241119",
+        sha256: "7faaa86d272f3e43c233f8a5ffeba327673224a752c2eb72394655d5e7950000",
+        bytes: 298069324,
+        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/riscv32-esp-elf-14.2.0_20241119-x86_64-linux-gnu.tar.xz",
+    },
+    EspIdfPin {
+        component: "riscv32-esp-elf",
+        platform: "linux-arm64",
+        version: "esp-14.2.0_20241119",
+        sha256: "762eac9ee3d909cf806dcbd26feeb4a83061640d1afea39bc36efdb566b77b03",
+        bytes: 294868260,
+        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/riscv32-esp-elf-14.2.0_20241119-aarch64-linux-gnu.tar.xz",
+    },
+    EspIdfPin {
+        component: "riscv32-esp-elf",
+        platform: "macos",
+        version: "esp-14.2.0_20241119",
+        sha256: "fd7543ca97f4d971798b8323e1e7315e648dded4cf2c16a82c3093447b0358fa",
+        bytes: 305253540,
+        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/riscv32-esp-elf-14.2.0_20241119-x86_64-apple-darwin.tar.xz",
+    },
+    EspIdfPin {
+        component: "riscv32-esp-elf",
+        platform: "macos-arm64",
+        version: "esp-14.2.0_20241119",
+        sha256: "b0e54a077c8abd261a588ee96b4079a95218ad9c3124b70ef7275c5de262277d",
+        bytes: 285259728,
+        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/riscv32-esp-elf-14.2.0_20241119-aarch64-apple-darwin.tar.xz",
+    },
+    EspIdfPin {
+        component: "riscv32-esp-elf",
+        platform: "win32",
+        version: "esp-14.2.0_20241119",
+        sha256: "54193a97bd75205678ead8d11f00b351cfa3c2a6e5ab5d966341358b9f9422d7",
+        bytes: 672055172,
+        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/riscv32-esp-elf-14.2.0_20241119-i686-w64-mingw32.zip",
     },
     EspIdfPin {
         component: "esp32ulp-elf",
