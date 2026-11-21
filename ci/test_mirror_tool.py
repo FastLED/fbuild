@@ -367,6 +367,60 @@ class UserAgentTest(unittest.TestCase):
         restore.assert_not_called()
 
 
+class FullPassUserAgentTest(unittest.TestCase):
+    """#2040 UA decision: the bulk pass never sends the production UA by default.
+
+    The CDN started refusing `fbuild-mirror` after a ~102 GB pass. If the full
+    pass ran under fbuild's production UA and that string were refused the same
+    way, every real fbuild client's registry fallback would break. The small
+    incremental pass (update.py) keeps the production default."""
+
+    def setUp(self) -> None:
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.cargo = write_cargo(Path(self.tmp.name), "9.8.7")
+
+    def test_full_pass_requires_an_explicit_user_agent(self) -> None:
+        for env in ({}, {"FBUILD_MIRROR_UA": "  "}):
+            with (
+                self.subTest(env=env),
+                self.assertRaisesRegex(ValueError, "FBUILD_MIRROR_UA"),
+            ):
+                rotate.full_pass_user_agent(env, self.cargo)
+
+    def test_explicit_user_agent_is_validated_and_used(self) -> None:
+        env = {"FBUILD_MIRROR_UA": "PlatformIO/6.2.0 (fbuild/9.8.7; bulk)"}
+        self.assertEqual(
+            rotate.full_pass_user_agent(env, self.cargo),
+            "PlatformIO/6.2.0 (fbuild/9.8.7; bulk)",
+        )
+        with self.assertRaisesRegex(ValueError, "PlatformIO/"):
+            rotate.full_pass_user_agent({"FBUILD_MIRROR_UA": "curl/8"}, self.cargo)
+
+    def test_supervisor_stops_before_any_droplet_without_one(self) -> None:
+        with (
+            mock.patch.object(sys, "argv", ["rotate.py"]),
+            mock.patch.dict(rotate.os.environ, {}, clear=True),
+            mock.patch.object(rotate, "SSH_KEY_ID", "123"),
+            mock.patch.object(rotate, "droplets", return_value=[]) as listed,
+            mock.patch.object(
+                rotate, "_start_droplet", side_effect=AssertionError("droplet")
+            ),
+            self.assertRaisesRegex(SystemExit, "FBUILD_MIRROR_UA"),
+        ):
+            rotate.main()
+        listed.assert_not_called()
+
+    def test_print_user_agent_still_shows_the_default(self) -> None:
+        with (
+            mock.patch.object(sys, "argv", ["rotate.py", "--print-user-agent"]),
+            mock.patch.dict(rotate.os.environ, {}, clear=True),
+            mock.patch("builtins.print") as printed,
+        ):
+            self.assertEqual(rotate.main(), 0)
+        self.assertTrue(printed.call_args[0][0].startswith("PlatformIO/"))
+
+
 def make_db(path: Path, rows: list[tuple[str, str, int]]) -> Path:
     """A state DB in mirror.py's schema: (key, state, updated_at) per file."""
     conn = sqlite3.connect(path)
@@ -875,3 +929,112 @@ class UpdateScriptTest(unittest.TestCase):
             copy = sqlite3.connect(out)
             self.assertEqual(mirror.stored_watermark(copy), 7)
             copy.close()
+
+
+def backup_listing_s3(objects: list[tuple[str, int]]):
+    """A fake `rotate.s3` listing `(key, unix mtime)` under `_state/`, two per page."""
+    from datetime import datetime, timezone
+
+    class ListingS3:
+        deleted: list[dict] = []
+
+        def list_objects_v2(self, **kwargs: object) -> dict:
+            assert kwargs["Bucket"] == rotate.BUCKET
+            assert kwargs["Prefix"] == rotate.STATE_KEY + ".bak-"
+            start = int(str(kwargs.get("ContinuationToken", "0")))
+            page = objects[start : start + 2]
+            out: dict = {
+                "Contents": [
+                    {
+                        "Key": key,
+                        "Size": 10,
+                        "LastModified": datetime.fromtimestamp(ts, timezone.utc),
+                    }
+                    for key, ts in page
+                ]
+            }
+            if start + 2 < len(objects):
+                out["IsTruncated"] = True
+                out["NextContinuationToken"] = str(start + 2)
+            return out
+
+        def delete_object(self, **kwargs: object) -> None:
+            ListingS3.deleted.append(kwargs)
+
+    return ListingS3
+
+
+BAK = rotate.STATE_KEY + ".bak-"
+
+
+class BackupRetentionTest(unittest.TestCase):
+    """#2040: `_state/manifest.db.bak-*` piles up, one per publishing run."""
+
+    def backups(self) -> list[rotate.Backup]:
+        return [
+            rotate.Backup(BAK + "2026-11-17", 10, 100),
+            rotate.Backup(BAK + "20261117T214822Z", 10, 300),
+            rotate.Backup(BAK + "20261118T000000Z", 10, 200),
+        ]
+
+    def test_keeps_the_newest_by_modification_time(self) -> None:
+        doomed = rotate.plan_backup_prune(self.backups(), keep=2)
+        self.assertEqual([b.key for b in doomed], [BAK + "2026-11-17"])
+        self.assertEqual(rotate.plan_backup_prune(self.backups(), keep=3), [])
+        self.assertEqual(rotate.plan_backup_prune(self.backups(), keep=9), [])
+
+    def test_always_keeps_at_least_one(self) -> None:
+        for keep in (0, -1):
+            with self.subTest(keep=keep), self.assertRaises(ValueError):
+                rotate.plan_backup_prune(self.backups(), keep=keep)
+
+    def test_never_touches_anything_but_a_backup(self) -> None:
+        odd = self.backups() + [rotate.Backup(rotate.STATE_KEY, 10, 1)]
+        with self.assertRaisesRegex(ValueError, "not a state DB backup"):
+            rotate.plan_backup_prune(odd, keep=1)
+
+    def test_lists_every_page(self) -> None:
+        fake = backup_listing_s3([(BAK + "a", 1), (BAK + "b", 2), (BAK + "c", 3)])
+        with mock.patch.object(rotate, "s3", fake):
+            got = rotate.list_backups()
+        self.assertEqual(
+            [(b.key, b.mtime) for b in got],
+            [(BAK + "a", 1), (BAK + "b", 2), (BAK + "c", 3)],
+        )
+
+    def run_prune(self, argv: list[str]):
+        fake = backup_listing_s3([(BAK + "old", 1), (BAK + "mid", 2), (BAK + "new", 3)])
+        fake.deleted = []
+        with (
+            mock.patch.object(rotate, "s3", fake),
+            mock.patch.object(update, "fresh_work_db") as work,
+            mock.patch("builtins.print"),
+        ):
+            status = update.main(argv)
+        work.assert_not_called()  # pruning never runs a pass
+        return status, fake.deleted
+
+    def test_prune_is_a_dry_run_by_default(self) -> None:
+        status, deleted = self.run_prune(["--prune-backups", "1"])
+        self.assertEqual(status, 0)
+        self.assertEqual(deleted, [])
+
+    def test_prune_deletes_only_with_the_explicit_flag(self) -> None:
+        status, deleted = self.run_prune(["--prune-backups", "1", "--delete"])
+        self.assertEqual(status, 0)
+        self.assertEqual(
+            deleted,
+            [
+                {"Bucket": rotate.BUCKET, "Key": BAK + "mid"},
+                {"Bucket": rotate.BUCKET, "Key": BAK + "old"},
+            ],
+        )
+
+    def test_delete_without_prune_is_refused(self) -> None:
+        with self.assertRaises(SystemExit):
+            update.parse_args(["--delete"])
+
+    def test_prune_does_not_mix_with_a_pass(self) -> None:
+        for extra in (["--since", "2026-10-01"], ["--package", "a/b/c"]):
+            with self.subTest(extra=extra), self.assertRaises(SystemExit):
+                update.parse_args(["--prune-backups", "2", *extra])

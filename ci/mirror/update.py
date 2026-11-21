@@ -31,6 +31,11 @@ refused the client (`mirror.RegistryRefused`).
     uv run --no-project --script ci/mirror/update.py --dry-run
     uv run --no-project --script ci/mirror/update.py --since 2026-10-01 --dry-run
     uv run --no-project --script ci/mirror/update.py --package fastled/library/FastLED
+    uv run --no-project --script ci/mirror/update.py --prune-backups 5 [--delete]
+
+Each publishing run leaves a `_state/manifest.db.bak-<UTC>` copy (~20 MB).
+`--prune-backups KEEP` lists the ones beyond the newest KEEP and deletes them
+only with `--delete`; it never runs a pass.
 """
 
 from __future__ import annotations
@@ -166,11 +171,51 @@ def parse_args(argv: list[str] | None) -> argparse.Namespace:
     )
     ap.add_argument("--dry-run", action="store_true", help="list; write nothing")
     ap.add_argument("--max-bytes", type=int, default=DEFAULT_MAX_BYTES)
-    return ap.parse_args(argv)
+    ap.add_argument(
+        "--prune-backups",
+        type=int,
+        metavar="KEEP",
+        help="instead of a pass, list the state DB backups beyond the newest KEEP"
+        " (deletes nothing without --delete)",
+    )
+    ap.add_argument(
+        "--delete",
+        action="store_true",
+        help="with --prune-backups: actually delete the listed backups",
+    )
+    args = ap.parse_args(argv)
+    if args.delete and args.prune_backups is None:
+        ap.error("--delete only applies to --prune-backups")
+    if args.prune_backups is not None and (args.since or args.package):
+        ap.error("--prune-backups does not run a pass; drop --since/--package")
+    return args
+
+
+def prune_backups(keep: int, delete: bool) -> int:
+    """List (and with `delete`, remove) state DB backups beyond the newest `keep`."""
+    backups = rotate.list_backups()
+    try:
+        doomed = rotate.plan_backup_prune(backups, keep)
+    except ValueError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+    for backup in backups:
+        stamp = datetime.fromtimestamp(backup.mtime, timezone.utc).isoformat()
+        verdict = "delete" if backup in doomed else "keep"
+        print(f"  {verdict:<6} {backup.size:>10}  {stamp}  {backup.key}")
+    freed = sum(b.size for b in doomed)
+    if not delete:
+        print(f"dry run: would delete {len(doomed)} backups, {freed} bytes")
+        return 0
+    rotate.delete_backups(doomed)
+    print(f"deleted {len(doomed)} backups, {freed} bytes")
+    return 0
 
 
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
+    if args.prune_backups is not None:
+        return prune_backups(args.prune_backups, args.delete)
     try:
         user_agent = mirror.resolve_user_agent(os.environ)
     except ValueError as exc:

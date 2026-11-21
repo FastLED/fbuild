@@ -64,8 +64,10 @@ uv run --no-project --with boto3 python ci/gen_mirror_manifest.py --credentials 
 uv run --no-project --with boto3 python ci/gen_mirror_manifest.py --credentials ~/.config/do-spaces/credentials.json --check
 ```
 
-Each publishing run leaves a dated `_state/manifest.db.bak-<UTC>` beside the
-DB; prune old ones by hand.
+Each publishing run leaves a dated `_state/manifest.db.bak-<UTC>` (~20 MB)
+beside the DB. Keep the newest 5: `update.py --prune-backups 5` lists every
+backup and marks the ones beyond the newest 5; it deletes them only with
+`--delete`, never runs a pass, and always keeps at least one.
 
 ## A refused client stops the run
 
@@ -88,6 +90,13 @@ The default is now fbuild's production format, `PlatformIO/6.2.0 (fbuild/<versio
 read from the checkout's `Cargo.toml`. `FBUILD_MIRROR_UA` overrides it.
 `rotate.py` resolves the UA locally and writes it into the droplet's unit file.
 
+The production default applies to `update.py` only. A full pass (`rotate.py`)
+needs `FBUILD_MIRROR_UA` set explicitly and stops before creating a droplet
+without it: the CDN refused `fbuild-mirror` right after a ~102 GB pass, and the
+same refusal of the production string would break every real fbuild client's
+registry fallback. Choosing the UA for a bulk pass is the operator's decision
+(FastLED/fbuild#2040).
+
 ## Configuration
 
 Credentials are never in the repo. The scripts read a JSON file with
@@ -95,7 +104,7 @@ Credentials are never in the repo. The scripts read a JSON file with
 
 | Variable | Used by | Default |
 |---|---|---|
-| `FBUILD_MIRROR_UA` | all | production UA for the checkout's version |
+| `FBUILD_MIRROR_UA` | all | production UA for the checkout's version (`update.py`); required for `rotate.py` |
 | `FBUILD_MIRROR_CREDS` | all | `~/.config/do-spaces/credentials.json` (rotate), `/etc/fbuild-mirror/spaces.json` (droplet) |
 | `FBUILD_MIRROR_WORKDIR` | rotate, update | `~/.local/state/fbuild-mirror` (status file, `rotation-work/`, `update-work/`) |
 | `FBUILD_MIRROR_SSH_KEY_ID` | rotate | required: the DigitalOcean SSH key id (`doctl compute ssh-key list`) |
@@ -105,6 +114,7 @@ Credentials are never in the repo. The scripts read a JSON file with
 ```bash
 uv run --no-project --script ci/mirror/rotate.py --print-user-agent
 uv run --no-project --script ci/mirror/rotate.py --status
-uv run --no-project --script ci/mirror/rotate.py        # creates droplets and writes the bucket
+FBUILD_MIRROR_UA='PlatformIO/...' uv run --no-project --script ci/mirror/rotate.py  # creates droplets, writes the bucket
 uv run --no-project --script ci/mirror/update.py --dry-run  # incremental: lists, writes nothing
+uv run --no-project --script ci/mirror/update.py --prune-backups 5  # lists old DB backups, deletes nothing
 ```
