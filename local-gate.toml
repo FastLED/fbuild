@@ -51,43 +51,15 @@ all-jobs = true
 event = "workflow_dispatch"
 inputs = { glibc_floor = "false" }
 
+# Lint never runs under bosn; `soldr lint` is the only local linter. This host
+# lane runs dylint.yml's policy validators through uv, each lint library's
+# formatting and UI tests through `soldr cargo`, then `soldr lint rust --check
+# --cross-dylint` over the workspace for every declared target. It produces no
+# act2 replay report, so the hosted Dylint jobs are not replay-mapped here;
+# ci-attestations.yml binds their gates to this lane.
 [gate.lanes.dylint]
 run = ["uv", "run", "--no-project", "--python", "3.12", "python", "-m", "ci.local_gate", "--lane", "dylint"]
-tools = ["bosn", "uv"]
-
-[[gate.replay.jobs]]
-source-job = "dylint.yml:dylint"
-key = "Dylint/Dylint Full (Linux builder, all OS targets)"
-steps = ["Checkout source", "Set up uv", "Provision cold-build disk capacity", "Validate Dylint allowlist paths", "Enforce shrink-only .fbuild allowlist", "Validate platform-boundary ledgers", "Setup soldr", "Repair registry sources missing packaged files", "Prepare prebuilt Dylint tools and driver", "Install rustfmt for the Dylint toolchain", "Check Dylint library formatting", "Test Dylint libraries", "Run dylint over workspace"]
-lanes = ["dylint"]
-
-[[gate.replay.jobs]]
-source-job = "dylint.yml:gate"
-key = "Dylint/Dylint"
-steps = ["Require successful Dylint jobs"]
-lanes = ["dylint"]
-
-[[gate.replay.jobs]]
-source-job = "dylint.yml:policy"
-key = "Dylint/Dylint policy"
-steps = ["Checkout source", "Set up uv", "Validate Dylint policy files"]
-lanes = ["dylint"]
-
-# `all-jobs` above selects every job of the standalone Dylint run, including the
-# end-of-queue janitor, which its own guard confines to `merge_group`. Declared
-# without `steps` so the skipped job derives no required checks.
-[[gate.replay.jobs]]
-source-job = "dylint.yml:queue-cache-janitor"
-lanes = ["dylint"]
-
-# Replay Dylint directly with its dispatch input for all shipping targets
-# and UI fixtures. The hosted caller's prooft dependency is separate.
-[[gate.replay.selections]]
-lane = "dylint"
-workflow = "dylint.yml"
-all-jobs = true
-event = "workflow_dispatch"
-inputs = { all_targets = "true" }
+tools = ["soldr", "uv"]
 
 # RUST-033 (FastLED/fbuild#1793): the whole lint phase as one lane. soldr runs
 # rustfmt, Clippy for the host and every declared [workspace.metadata.soldr]

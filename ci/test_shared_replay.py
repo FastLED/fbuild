@@ -47,18 +47,11 @@ class SharedReplayTests(unittest.TestCase):
         self.assertEqual(len(cross_link), 1)
         self.assertEqual(cross_link[0].proof.steps, ())
 
-    def test_dylint_lane_declares_the_whole_pr_workflow(self):
+    def test_dylint_lane_is_not_a_replay(self):
+        """Lint never runs under bosn; the dylint lane runs soldr lint on the host."""
         raw = tomllib.loads((ROOT / "local-gate.toml").read_text())
         selections = raw["gate"]["replay"]["selections"]
-        selected = [item for item in selections if item["lane"] == "dylint"]
-        self.assertEqual(len(selected), 1)
-        self.assertEqual(selected[0]["workflow"], "dylint.yml")
-        self.assertTrue(selected[0]["all-jobs"])
-        self.assertNotIn("job", selected[0])
-        # `dylint.yml` carries no pull_request trigger since #79a5200a; a
-        # selection for an event the file does not declare replays nothing
-        # (FastLED/fbuild#2086).
-        self.assertEqual(selected[0]["event"], "workflow_dispatch")
+        self.assertEqual([item for item in selections if item["lane"] == "dylint"], [])
 
     def test_every_selection_event_is_a_trigger_of_its_workflow(self) -> None:
         """A replay selection must name an event the workflow actually declares.

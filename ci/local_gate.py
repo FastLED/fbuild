@@ -1,5 +1,7 @@
-"""Replay the selected Ubuntu or Dylint workflow through act2.
+"""Run the local gate: the Ubuntu workflow replay plus host lint lanes.
 
+The `linux-minimal` lane replays `check-ubuntu.yml` through act2. Lint never
+runs under bosn: the `dylint` and `lint` lanes run `soldr lint` on the host.
 This proof covers native Linux x64 only. Board builds, extended/full mode and
 the other native hosts retain their remote validation.
 """
@@ -342,20 +344,19 @@ def main() -> None:
         raise ValueError("commit the worktree before running the local gate")
     if lane is None:
         validate_ci_scripts()
-    daemon = output(["docker", "info", "--format", "{{.OSType}}/{{.Architecture}}"])
-    if (
-        platform.system() != "Linux"
-        or platform.machine().lower() not in {"x86_64", "amd64"}
-        or daemon.strip().lower() not in {"linux/x86_64", "linux/amd64"}
-    ):
-        raise ValueError("Linux x64 tests require a native Linux x64 host and daemon")
+    if platform.system() != "Linux" or platform.machine().lower() not in {"x86_64", "amd64"}:
+        raise ValueError("the local gate requires a native Linux x64 host")
     sha = output(["git", "rev-parse", "HEAD"]).strip()
     if lane in (None, "linux-minimal"):
+        daemon = output(["docker", "info", "--format", "{{.OSType}}/{{.Architecture}}"])
+        if daemon.strip().lower() not in {"linux/x86_64", "linux/amd64"}:
+            raise ValueError("the Ubuntu replay requires a native Linux x64 daemon")
         run_ubuntu(sha)
     from ci.local_dylint_gate import run_dylint
 
+    # Host lane: lint never runs under bosn (soldr lint only).
     if lane in (None, "dylint"):
-        run_dylint(ROOT, sha)
+        run_dylint(ROOT)
     from ci.local_lint_gate import run_lint
 
     # Opt-in for now: the cold run is expensive, and GATE-007's cache key only
