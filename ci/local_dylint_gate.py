@@ -34,6 +34,8 @@ VALIDATORS: tuple[tuple[str, ...], ...] = (
     ("ci/check_fbuild_path_baseline.py", "--base", "origin/main"),
     ("ci/enforce_platform_boundary.py", "--print-totals"),
 )
+PREPARE = ["soldr", "dylint", "prepare"]
+TOOL_BIN_PREFIX = "soldr: dylint prepare: tool bin dir "
 
 
 def lint_libraries(root: Path = ROOT) -> list[Path]:
@@ -51,7 +53,7 @@ def host_commands(root: Path = ROOT) -> list[tuple[list[str], Path]]:
     commands: list[tuple[list[str], Path]] = [
         ([*UV_PYTHON, *validator], root) for validator in VALIDATORS
     ]
-    commands.append((["soldr", "dylint", "prepare"], root))
+    commands.append((PREPARE, root))
     libraries = lint_libraries(root)
     commands.extend(
         (["soldr", "cargo", "fmt", "--all", "--", "--check"], library)
@@ -69,20 +71,47 @@ def lane_env(root: Path = ROOT) -> dict[str, str]:
     env.setdefault("CARGO_HOME", str(Path.home() / ".cargo"))
     # Library UI tests share one target tree, apart from the workspace build.
     env["CARGO_TARGET_DIR"] = str(root / "target" / "dylint-tests")
+    # A lane-owned driver root: `soldr dylint prepare` stages the prebuilt
+    # driver there under both the host-qualified and the bare nightly name.
+    # dylint_testing's UI runner looks the driver up by the bare name, and
+    # without it falls back to building dylint_driver from a git checkout.
+    env["DYLINT_DRIVER_PATH"] = str(root / "target" / "dylint-tests" / "drivers")
     return env
+
+
+def tool_bin_dirs(prepare_output: str) -> list[str]:
+    """cargo-dylint and dylint-link bin dirs that `soldr dylint prepare` reports.
+
+    UI tests run nested cargo outside soldr's Dylint front door, so these
+    must be on PATH (hosted CI appends them to GITHUB_PATH the same way).
+    """
+    return [
+        line.removeprefix(TOOL_BIN_PREFIX).strip()
+        for line in prepare_output.splitlines()
+        if line.startswith(TOOL_BIN_PREFIX)
+    ]
 
 
 def run_dylint(root: Path = ROOT) -> None:
     if platform.system() != "Linux":
         raise SystemExit("dylint lane: cross-target Dylint runs from a Linux host only")
     env = lane_env(root)
+    Path(env["DYLINT_DRIVER_PATH"]).mkdir(parents=True, exist_ok=True)
     for argv, cwd in host_commands(root):
         print(f"dylint lane: ({cwd.relative_to(root)}) {' '.join(argv)}", flush=True)
         # The workspace lint keeps soldr's own target directory.
         command_env = env if argv != lint_command() else {
             key: value for key, value in env.items() if key != "CARGO_TARGET_DIR"
         }
-        result = subprocess.run(argv, cwd=cwd, env=command_env, check=False)
+        if argv == PREPARE:
+            result = subprocess.run(
+                argv, cwd=cwd, env=command_env, check=False,
+                stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+            )
+            print(result.stdout, end="", flush=True)
+            env["PATH"] = os.pathsep.join([*tool_bin_dirs(result.stdout), env.get("PATH", "")])
+        else:
+            result = subprocess.run(argv, cwd=cwd, env=command_env, check=False)
         if result.returncode != 0:
             print(f"dylint lane: failed with exit code {result.returncode}", file=sys.stderr)
             raise SystemExit(result.returncode)

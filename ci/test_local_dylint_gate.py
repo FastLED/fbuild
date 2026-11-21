@@ -62,6 +62,22 @@ class DylintLaneShapeTests(unittest.TestCase):
             env = local_dylint_gate.lane_env()
         self.assertNotIn("RUSTUP_TOOLCHAIN", env)
 
+    def test_ui_tests_get_a_lane_owned_prebuilt_driver_root(self) -> None:
+        """Without DYLINT_DRIVER_PATH, dylint_testing builds the driver from git."""
+        env = local_dylint_gate.lane_env()
+        self.assertEqual(env["DYLINT_DRIVER_PATH"], str(ROOT / "target" / "dylint-tests" / "drivers"))
+
+    def test_prepare_tool_bin_dirs_are_parsed(self) -> None:
+        output = (
+            "soldr: dylint prepare: resolving cargo-dylint + dylint-link prebuilts\n"
+            "soldr: dylint prepare: tool bin dir /h/.soldr/bin/cargo-dylint-6.2.0\n"
+            "soldr: dylint prepare: tool bin dir /h/.soldr/bin/dylint-link-6.2.0\n"
+        )
+        self.assertEqual(
+            local_dylint_gate.tool_bin_dirs(output),
+            ["/h/.soldr/bin/cargo-dylint-6.2.0", "/h/.soldr/bin/dylint-link-6.2.0"],
+        )
+
     def test_non_linux_host_is_a_hard_error(self) -> None:
         with mock.patch.object(local_dylint_gate.platform, "system", return_value="Darwin"):
             with mock.patch.object(local_dylint_gate.subprocess, "run") as run:
