@@ -262,10 +262,7 @@ async fn serial_ws_preemption_reconnects_after_deploy_impl(renumber: bool, fail_
     }
 
     if renumber {
-        // Move the pair into a binding that ends here so its master handle
-        // closes before the transport reattaches. `drop()` would be a no-op
-        // (and a clippy error) on hosts where `PtyPair` has no drop glue.
-        let _released = initial_pty;
+        initial_pty.close();
     }
 
     ctx.serial_manager
@@ -322,8 +319,9 @@ async fn serial_ws_preemption_reconnects_after_deploy_impl(renumber: bool, fail_
     ws.send(ClientMessage::Text(r#"{"type":"detach"}"#.into()))
         .await
         .unwrap();
-    // Same reason as above: end the binding's lifetime without `drop()`.
-    let _released = recovered_pty;
+    if let Some(pty) = recovered_pty {
+        pty.close();
+    }
     server.abort();
 }
 
