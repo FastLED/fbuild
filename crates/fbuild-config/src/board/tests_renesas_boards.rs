@@ -194,3 +194,82 @@ fn every_renesas_board_declares_build_core_and_variant() {
         violations.join("\n")
     );
 }
+
+/// Pinned upstream `upload` block for the RA boards that flash through the
+/// DFU bootloader (`(board_id, maximum_ram_size, maximum_size)`).
+///
+/// Values are PlatformIO `platform-renesas-ra` `develop` board JSON fields
+/// (`platformio/platform-renesas-ra`, `boards/{portenta_c33,uno_r4_minima,nano_r4}.json`),
+/// which is the same source `enrich_boards` and `ci/validate_boards.py`
+/// compare against. Only fields `enrich_boards` emits are pinned here:
+/// `native_usb`, `protocols` and `offset_address` are not in its
+/// `UPLOAD_FIELDS`, so adding them would read as drift.
+const RA_DFU_UPLOAD_BLOCK: &[(&str, u64, u64)] = &[
+    ("portenta_c33", 523_624, 2_097_152),
+    ("uno_r4_minima", 32_768, 262_144),
+    ("nano_r4", 32_768, 262_144),
+];
+
+/// The Renesas RA platform has no deployer yet (FastLED/fbuild#2131 stage 3),
+/// but the board data it will read must be right first: without an `upload`
+/// block `upload.protocol` is `None`, so the platform arm has nothing to
+/// dispatch on and the size checks cannot tell a DFU image from anything else.
+#[test]
+fn ra_dfu_boards_declare_the_upstream_upload_block() {
+    let db = get_board_db();
+    for (board_id, expected_ram, expected_size) in RA_DFU_UPLOAD_BLOCK {
+        let board = db
+            .get(*board_id)
+            .unwrap_or_else(|| panic!("{board_id}: not in the bundled board db"));
+        let upload = board.get("upload").unwrap_or_else(|| {
+            panic!("{board_id}: missing the upload block (FastLED/fbuild#2131)")
+        });
+        assert_eq!(
+            upload.get("protocol").and_then(Value::as_str),
+            Some("dfu"),
+            "{board_id}: upload.protocol must match platform-renesas-ra"
+        );
+        assert_eq!(
+            upload.get("maximum_ram_size").and_then(Value::as_u64),
+            Some(*expected_ram),
+            "{board_id}: upload.maximum_ram_size must match platform-renesas-ra"
+        );
+        assert_eq!(
+            upload.get("maximum_size").and_then(Value::as_u64),
+            Some(*expected_size),
+            "{board_id}: upload.maximum_size must match platform-renesas-ra"
+        );
+        // The two spellings of the same number must not drift apart: the
+        // bundle's top-level ram/rom are what the size check compares against.
+        assert_eq!(
+            board.get("ram").and_then(Value::as_u64),
+            upload.get("maximum_ram_size").and_then(Value::as_u64),
+            "{board_id}: top-level ram and upload.maximum_ram_size disagree"
+        );
+        assert_eq!(
+            board.get("rom").and_then(Value::as_u64),
+            upload.get("maximum_size").and_then(Value::as_u64),
+            "{board_id}: top-level rom and upload.maximum_size disagree"
+        );
+        // Bundled snapshots stay hwids-free (ci/check_usb_vidpid_literals.py).
+        assert!(
+            !upload.to_string().contains("hwids"),
+            "{board_id}: the upload block must not carry hwids"
+        );
+    }
+}
+
+/// The production loader must surface the block: `BoardConfig::from_board_id`
+/// is the entry point every deploy/build path uses, so asserting on the raw
+/// JSON alone would prove the file, not the wiring.
+#[test]
+fn ra_dfu_boards_surface_upload_protocol_through_the_loader() {
+    for (board_id, _, _) in RA_DFU_UPLOAD_BLOCK {
+        let config = BoardConfig::from_board_id(board_id, &HashMap::new()).unwrap();
+        assert_eq!(
+            config.upload_protocol.as_deref(),
+            Some("dfu"),
+            "{board_id}: BoardConfig must surface upload.protocol"
+        );
+    }
+}

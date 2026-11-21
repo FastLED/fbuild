@@ -21,6 +21,11 @@
   "platform": "renesas-ra",
   "ram": 523624,
   "rom": 2097152,
+  "upload": {
+    "protocol": "dfu",
+    "maximum_ram_size": 523624,
+    "maximum_size": 2097152
+  },
   "url": "https://www.arduino.cc/pro/hardware-product-portenta-c33",
   "vendor": "Arduino"
 }
