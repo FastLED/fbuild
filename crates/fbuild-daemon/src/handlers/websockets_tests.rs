@@ -262,7 +262,7 @@ async fn serial_ws_preemption_reconnects_after_deploy_impl(renumber: bool, fail_
     }
 
     if renumber {
-        drop(initial_pty);
+        initial_pty.close();
     }
 
     ctx.serial_manager
@@ -319,7 +319,9 @@ async fn serial_ws_preemption_reconnects_after_deploy_impl(renumber: bool, fail_
     ws.send(ClientMessage::Text(r#"{"type":"detach"}"#.into()))
         .await
         .unwrap();
-    drop(recovered_pty);
+    if let Some(pty) = recovered_pty {
+        pty.close();
+    }
     server.abort();
 }
 

@@ -29,6 +29,13 @@ impl PtyPair {
         super::selected::pty::PtyPair::open().map(|inner| Self { inner })
     }
 
+    /// Close both directions now, so the slave's device path disappears.
+    ///
+    /// Same as dropping the pair, but says so at the call site. On a host with
+    /// no pseudo-terminals the pair has no drop glue, so a plain `drop(pair)`
+    /// trips `clippy::drop_non_drop` there.
+    pub fn close(self) {}
+
     /// Device name of the slave side (`/dev/pts/7`) — the name a test gives
     /// fbuild as an attached serial port.
     pub fn slave_name(&self) -> &str {

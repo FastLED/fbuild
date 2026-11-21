@@ -63,7 +63,7 @@ pub fn stage_runtime_libraries(binary: &Path) -> io::Result<()> {
 /// appended so a caller can still resolve it.
 pub fn runtime_library_dirs(binary: &Path) -> io::Result<Vec<NormalizedPath>> {
     let exe_dir = parent_dir(binary)?;
-    let mut dirs = vec![NormalizedPath::from(exe_dir)];
+    let mut dirs = vec![exe_dir];
     if dirs[0].join(ICONV_DLL).is_file() {
         return Ok(dirs);
     }
