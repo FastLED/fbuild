@@ -5,7 +5,7 @@
 //! Before #2036 an fbuild upgrade that changed them (#2028 dropped nRF52
 //! `-flto`) left "No-op fingerprint matched" reusing stale artifacts.
 
-use super::{fbuild_build_identity, hash_build_inputs};
+use super::{compose_identity, fbuild_build_identity, hash_build_inputs};
 
 fn flags(values: &[&str]) -> Vec<String> {
     values.iter().map(|v| (*v).to_string()).collect()
@@ -64,5 +64,26 @@ fn identity_carries_the_embedded_assets_digest() {
     assert!(
         fbuild_build_identity().ends_with(digest),
         "the no-op fingerprint identity must include the assets digest"
+    );
+}
+
+/// In dev mode the identity carries the running image's digest, so an
+/// uncommitted `.rs` edit, which relinks fbuild, stops the no-op
+/// (FastLED/fbuild#2125). Official runs keep the reproducible identity.
+#[test]
+fn dev_image_digest_extends_the_identity() {
+    let official = compose_identity("2.5.46+git.aaaaaaaaaaaa", "d1g3st", None);
+    assert_eq!(official, "2.5.46+git.aaaaaaaaaaaa+assets.d1g3st");
+    let before = compose_identity("2.5.46+git.aaaaaaaaaaaa", "d1g3st", Some("image-one"));
+    let after = compose_identity("2.5.46+git.aaaaaaaaaaaa", "d1g3st", Some("image-two"));
+    assert_eq!(
+        before,
+        "2.5.46+git.aaaaaaaaaaaa+assets.d1g3st+image.image-one"
+    );
+    let config = flags(&["-DUSER=1"]);
+    assert_ne!(
+        hash_build_inputs(&"platform-metadata", &config, &before).unwrap(),
+        hash_build_inputs(&"platform-metadata", &config, &after).unwrap(),
+        "a relinked dev binary must not reuse the previous build"
     );
 }

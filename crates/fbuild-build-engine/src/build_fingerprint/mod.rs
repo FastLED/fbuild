@@ -134,20 +134,30 @@ pub fn stable_hash_with_build_config<T: Serialize>(
 
 /// This fbuild binary's identity: the workspace version, the checkout
 /// commit and a digest of its embedded assets
-/// (`2.5.46+git.5fca4d49c9ab[-dirty]+assets.<sha256>`).
+/// (`2.5.46+git.5fca4d49c9ab[-dirty]+assets.<sha256>`), plus, in dev mode
+/// only, a digest of the running image (`+image.<blake3>`).
 ///
 /// fbuild adds compiler and linker flags of its own (MCU config JSONs, the
 /// release profile, built-in defaults) that are resolved only after the
 /// no-op check, so the fingerprint keys on the binary that owns them: a
 /// different fbuild can never reuse another's artifacts (FastLED/fbuild#2036).
 /// The commit stamp cannot see an uncommitted config JSON edit, so the
-/// embedded assets' bytes are part of it too (FastLED/fbuild#2042).
+/// embedded assets' bytes are part of it too (FastLED/fbuild#2042). Nor can
+/// it see an uncommitted `.rs` edit, but that relinks the binary, so a dev
+/// run keys on the image itself (FastLED/fbuild#2125).
 fn fbuild_build_identity() -> String {
-    format!(
-        "{}+assets.{}",
-        fbuild_core::build_id::long_version(),
-        fbuild_core::build_id::EMBEDDED_ASSETS_DIGEST
+    compose_identity(
+        &fbuild_core::build_id::long_version(),
+        fbuild_core::build_id::EMBEDDED_ASSETS_DIGEST,
+        fbuild_paths::dev_daemon_namespace::dev_image_digest(),
     )
+}
+
+fn compose_identity(long_version: &str, assets_digest: &str, image: Option<&str>) -> String {
+    match image {
+        Some(image) => format!("{long_version}+assets.{assets_digest}+image.{image}"),
+        None => format!("{long_version}+assets.{assets_digest}"),
+    }
 }
 
 fn hash_build_inputs<T: Serialize, C: Serialize>(

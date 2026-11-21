@@ -21,6 +21,8 @@
 
 use serde::{Deserialize, Serialize};
 
+use crate::github_url;
+
 /// Kind of source declared in a `lib_deps` entry.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
@@ -32,6 +34,8 @@ pub enum SourceType {
     Registry,
     /// GitHub URL — `https://github.com/<owner>/<repo>[.git][#<ref>]`.
     /// `<ref>` may be a branch, tag, or commit SHA per PlatformIO docs.
+    /// `…/tree/<ref>` and `…/archive/<ref>.zip|.tar.gz` name a ref too
+    /// ([`crate::github_url`]).
     /// Reproducible via the resolved SHA.
     Github,
     /// Generic Git URL (non-GitHub) with an explicit `git+` prefix.
@@ -95,7 +99,8 @@ pub struct ClassifiedDep {
     pub source_type: SourceType,
     /// Registry / VCS version constraint (`^3.5.0`, `~1.0`, `v2.0.0`) or
     /// VCS ref (`main`, `v1.2.3`) — whatever appears after `@` or `#` on
-    /// the raw spec. `None` if none was provided.
+    /// the raw spec, or the ref a GitHub `/tree/<ref>` or `/archive/<ref>.zip`
+    /// URL names. `None` if none was provided.
     pub version_spec: Option<String>,
     /// Owner segment for `owner/name@ver` registry specs, or for
     /// `github.com/<owner>/<repo>` URLs.
@@ -188,7 +193,7 @@ pub fn classify(raw: &str) -> ClassifiedDep {
                 raw: raw.to_string(),
                 name: repo.clone(),
                 source_type: SourceType::Github,
-                version_spec: hash_suffix,
+                version_spec: github_ref(trimmed, hash_suffix),
                 owner: if owner.is_empty() { None } else { Some(owner) },
                 url: Some(url_no_ref),
                 local_path: None,
@@ -274,6 +279,17 @@ fn is_github_url(url: &str) -> bool {
         || lower.starts_with("http://github.com/")
         || lower.starts_with("https://www.github.com/")
         || lower.starts_with("http://www.github.com/")
+}
+
+/// The ref of a GitHub URL: the one a `/tree/<ref>` or `/archive/<ref>.zip`
+/// URL names, parsed as the build parses it (`GitHubSource`), else the
+/// `#<ref>` suffix. A malformed web URL, which the build rejects, has none
+/// (FastLED/fbuild#2125).
+fn github_ref(url: &str, hash_suffix: Option<String>) -> Option<String> {
+    match github_url::parse_web_url(&github_url::canonical_github_host(url)) {
+        Some(web) => web.map(|web| web.reference),
+        None => hash_suffix,
+    }
 }
 
 /// Extract `(owner, repo)` from `https://github.com/<owner>/<repo>[.git]`.
@@ -422,6 +438,55 @@ mod tests {
         assert_eq!(d.name, "FastLED");
         assert_eq!(d.version_spec.as_deref(), Some("v3.5.0"));
         assert_eq!(d.url.as_deref(), Some("https://github.com/FastLED/FastLED"));
+    }
+
+    /// `/tree/<ref>` and `/archive/<ref>.zip` name the ref the build installs
+    /// (`GitHubSource`), so the lock records it as `#<ref>` would be
+    /// (FastLED/fbuild#2125).
+    #[test]
+    fn github_web_and_archive_urls_record_their_ref() {
+        for (raw, reference) in [
+            ("https://github.com/FastLED/FastLED/tree/3.10.3", "3.10.3"),
+            (
+                "https://github.com/FastLED/FastLED/tree/feature/x/",
+                "feature/x",
+            ),
+            (
+                "https://github.com/FastLED/FastLED/tree/feature%2Fx",
+                "feature/x",
+            ),
+            ("http://www.github.com/FastLED/FastLED/tree/v1", "v1"),
+            (
+                "https://github.com/FastLED/FastLED/archive/3.10.3.zip",
+                "3.10.3",
+            ),
+            (
+                "https://github.com/FastLED/FastLED/archive/refs/tags/v1.tar.gz",
+                "refs/tags/v1",
+            ),
+        ] {
+            let d = cls(raw);
+            assert_eq!(d.source_type, SourceType::Github, "{raw}");
+            assert_eq!(d.name, "FastLED", "{raw}");
+            assert_eq!(d.owner.as_deref(), Some("FastLED"), "{raw}");
+            assert_eq!(d.version_spec.as_deref(), Some(reference), "{raw}");
+            assert_eq!(d.url.as_deref(), Some(raw), "{raw}");
+        }
+    }
+
+    /// A web URL the build rejects records no ref, rather than a guess.
+    #[test]
+    fn malformed_github_web_url_records_no_ref() {
+        for raw in [
+            "https://github.com/O/R/tree/",
+            "https://github.com/O/R/tree/a/../b",
+            "https://github.com/O/R/tree/v1#v2",
+            "https://github.com/O/R/archive/v1.zip#v2",
+        ] {
+            let d = cls(raw);
+            assert_eq!(d.source_type, SourceType::Github, "{raw}");
+            assert_eq!(d.version_spec, None, "{raw}");
+        }
     }
 
     #[test]

@@ -50,6 +50,7 @@ Each `lib_deps` entry is classified into one of these source types:
 | `FastLED@^3.5.0` | `registry` | `unresolved` |
 | `fastled/FastLED@^3.5.0` | `registry` | `unresolved` |
 | `https://github.com/FastLED/FastLED[.git][#ref]` | `github` | `unresolved` |
+| `https://github.com/FastLED/FastLED/tree/<ref>` / `.../archive/<ref>.zip` | `github` | `unresolved` |
 | `git+https://gitlab.com/foo/bar.git[#ref]` | `git` | `unresolved` |
 | `https://example.com/lib.zip` | `http-archive` | `unresolved` |
 | `symlink:///path/to/lib` | `symlink` | `unlocked` |
@@ -60,6 +61,15 @@ Each `lib_deps` entry is classified into one of these source types:
 `status: "unresolved"` and captures the raw spec, extracted owner/name/ref,
 and URL. Phase 2 will add the resolved commit SHA, archive URL, and
 `sha256`, flipping the status to `locked`.
+
+A GitHub entry's ref goes in `version_spec`: the `#<ref>` suffix, or the
+ref a `/tree/<ref>` or `/archive/<ref>.zip` (`.tar.gz`) URL names, parsed
+exactly as the build parses it (`fbuild_config::github_url`) — percent
+escapes decoded once, `refs/tags/<t>` kept as written. `url` stays the URL
+as written (minus any `#<ref>`). A malformed web URL, which the build
+skips, records no ref (FastLED/fbuild#2125). The daemon's
+`/api/ide/libraries` endpoint shares this classifier and reports the same
+`version_spec`.
 
 ### What builds install today
 

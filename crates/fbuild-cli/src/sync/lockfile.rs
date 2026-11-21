@@ -313,6 +313,19 @@ mod tests {
         assert_eq!(lock.envs["uno"].packages[0].status, LockStatus::Unresolved);
     }
 
+    /// A GitHub `/tree/<ref>` URL records the ref the build installs
+    /// (FastLED/fbuild#2125).
+    #[test]
+    fn github_tree_url_records_its_ref() {
+        let raw = "https://github.com/FastLED/FastLED/tree/3.10.3";
+        let lock = Lockfile::from_classified("t".into(), deps("uno", &[raw]));
+        let package = &lock.envs["uno"].packages[0];
+        assert_eq!(package.source_type, SourceType::Github);
+        assert_eq!(package.version_spec.as_deref(), Some("3.10.3"));
+        assert_eq!(package.url.as_deref(), Some(raw));
+        assert_eq!(package.status, LockStatus::Unresolved);
+    }
+
     #[test]
     fn json_is_deterministic_for_same_input() {
         let a = Lockfile::from_classified(

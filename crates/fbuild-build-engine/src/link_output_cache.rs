@@ -14,7 +14,8 @@
 //! The cache is strictly best effort: any I/O error, missing input or
 //! unreadable entry is a miss and the caller relinks. Entries are pruned to
 //! [`MAX_CACHE_BYTES`] by directory mtime so the cache cannot grow without
-//! bound.
+//! bound, and the prune pass removes directories an older fbuild left under
+//! the root that nothing reads any more.
 
 use std::io::Read;
 use std::path::Path;
@@ -163,8 +164,29 @@ fn entry_size(dir: &Path) -> (u64, Option<SystemTime>) {
     (size, mtime)
 }
 
+/// Directories under the cache root that nothing uses any more.
+///
+/// `firmware-size` held the ESP32 cross-project size reports (#1894) until
+/// #2065 deleted that cache; nothing else ever removed it (FastLED/fbuild#2125).
+const OBSOLETE_DIRS: &[&str] = &["firmware-size"];
+
+/// Remove [`OBSOLETE_DIRS`] from `root`: only real directories at exactly
+/// that path, never a symlink's target. Best effort, like the cache itself.
+fn remove_obsolete_dirs(root: &Path) {
+    for name in OBSOLETE_DIRS {
+        let dir = root.join(name);
+        let is_real_dir = std::fs::symlink_metadata(&dir).is_ok_and(|meta| meta.is_dir());
+        if is_real_dir {
+            if let Err(error) = std::fs::remove_dir_all(&dir) {
+                tracing::debug!("could not remove obsolete {}: {error}", dir.display());
+            }
+        }
+    }
+}
+
 /// Drop the oldest entries until the cache fits [`MAX_CACHE_BYTES`].
 fn prune(root: &Path) {
+    remove_obsolete_dirs(root);
     let Ok(prefixes) = std::fs::read_dir(root) else {
         return;
     };
@@ -288,5 +310,46 @@ mod tests {
         assert!(restore(cache.path(), "abc123", &restored));
         assert_eq!(std::fs::read(&restored).unwrap(), b"\x7fELF output");
         assert!(!restore(cache.path(), "missing", &restored));
+    }
+
+    /// #2065 deleted the ESP32 cross-project size cache that lived in
+    /// `<root>/firmware-size`; the prune pass removes that obsolete directory
+    /// and nothing else (FastLED/fbuild#2125).
+    #[test]
+    fn store_removes_the_obsolete_firmware_size_dir_only() {
+        let cache = tempfile::TempDir::new().unwrap();
+        let root = cache.path();
+        let obsolete = root.join("firmware-size").join("ab").join("abcdef");
+        let bin_cache = root.join("firmware-bin").join("cd").join("cdef01");
+        let nested = root.join("ef").join("firmware-size");
+        for dir in [&obsolete, &bin_cache, &nested] {
+            std::fs::create_dir_all(dir).unwrap();
+            std::fs::write(dir.join("entry"), b"bytes").unwrap();
+        }
+        let work = tempfile::TempDir::new().unwrap();
+        let built = write_object(work.path(), "built.elf", b"\x7fELF output");
+
+        store(root, "abc123", &built);
+
+        assert!(!root.join("firmware-size").exists());
+        assert!(bin_cache.join("entry").is_file(), "firmware-bin is live");
+        assert!(nested.join("entry").is_file(), "only the top-level dir");
+        assert!(entry_dir(root, "abc123").join(ELF_NAME).is_file());
+    }
+
+    #[test]
+    fn a_firmware_size_symlink_is_not_followed() {
+        let cache = tempfile::TempDir::new().unwrap();
+        let elsewhere = tempfile::TempDir::new().unwrap();
+        std::fs::write(elsewhere.path().join("keep"), b"bytes").unwrap();
+        fbuild_core::platform::fs::symlink_dir(
+            elsewhere.path(),
+            &cache.path().join("firmware-size"),
+        )
+        .unwrap();
+
+        remove_obsolete_dirs(cache.path());
+
+        assert!(elsewhere.path().join("keep").is_file());
     }
 }

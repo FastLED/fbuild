@@ -275,6 +275,9 @@ impl DaemonContext {
             .as_secs_f64();
         let source_mtime = compute_binary_mtime();
         let source_exe = compute_binary_path();
+        // Hash the dev image now, before a rebuild can replace it on hosts
+        // without a replace-proof image handle (FastLED/fbuild#2125).
+        let _ = fbuild_paths::dev_daemon_namespace::dev_image_digest();
         let launched_by_broker = crate::broker::backend::launched_by_broker();
         Self {
             started_at: Instant::now(),

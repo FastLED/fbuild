@@ -500,6 +500,27 @@ lib_deps =
         assert_eq!(local.source_type, fbuild_config::SourceType::LocalPath);
     }
 
+    /// The endpoint shares `fbuild sync`'s classifier, so a GitHub
+    /// `/tree/<ref>` URL reports the same ref (FastLED/fbuild#2125).
+    #[tokio::test]
+    async fn build_library_entries_reports_a_github_tree_urls_ref() {
+        let tmp = tempfile::tempdir().unwrap();
+        write_project(
+            tmp.path(),
+            "[env:uno]\nplatform = atmelavr\nboard = uno\nframework = arduino\n\
+             lib_deps = https://github.com/FastLED/FastLED/tree/3.10.3\n",
+        )
+        .await;
+        let config = PlatformIOConfig::from_path(&tmp.path().join("platformio.ini")).unwrap();
+        let entries = build_library_entries(&config, "uno", &tmp.path().join("libs"))
+            .await
+            .unwrap();
+        assert_eq!(entries.len(), 1);
+        assert_eq!(entries[0].source_type, fbuild_config::SourceType::Github);
+        assert_eq!(entries[0].name, "FastLED");
+        assert_eq!(entries[0].version_spec.as_deref(), Some("3.10.3"));
+    }
+
     #[tokio::test]
     async fn build_library_entries_no_libs_dir_marks_all_uninstalled() {
         let tmp = tempfile::tempdir().unwrap();

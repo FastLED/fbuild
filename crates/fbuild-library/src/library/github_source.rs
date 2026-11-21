@@ -22,10 +22,13 @@
 //! ([`fbuild_core::platformio_package::parse_package_spec`]), and the
 //! owner/repo split is the one platform repositories already use
 //! ([`fbuild_packages_fetch::platformio_repository::github_owner_repo`]).
+//! The `/tree/` and `/archive/` shapes are parsed by
+//! [`fbuild_config::github_url`], which `fbuild sync` shares.
 
 use std::io::Read;
 use std::path::Path;
 
+use fbuild_config::github_url;
 use fbuild_core::platformio_package::{PackageSource, parse_package_spec};
 use fbuild_core::{FbuildError, Result};
 use fbuild_packages_fetch::platformio_repository::github_owner_repo;
@@ -44,7 +47,7 @@ impl GitHubSource {
     /// Parse a GitHub repository URL. `None` for anything else, including
     /// non-GitHub hosts, direct archive URLs and malformed refs.
     pub fn parse(spec: &str) -> Option<Self> {
-        let spec = canonical_github_host(spec);
+        let spec = github_url::canonical_github_host(spec);
         if let Some(web) = Self::parse_web_url(&spec) {
             return web;
         }
@@ -56,7 +59,10 @@ impl GitHubSource {
             return None;
         };
         let (owner, repo) = github_owner_repo(&url).ok()?;
-        if reference.as_deref().is_some_and(|r| !valid_reference(r)) {
+        if reference
+            .as_deref()
+            .is_some_and(|r| !github_url::valid_reference(r))
+        {
             return None;
         }
         Some(Self {
@@ -72,34 +78,18 @@ impl GitHubSource {
     /// they install like `#<ref>` (FastLED/fbuild#2042). `None` when the URL
     /// has neither shape; `Some(None)` when it has one but is malformed.
     fn parse_web_url(spec: &str) -> Option<Option<Self>> {
-        let path = spec.strip_prefix("https://github.com/")?;
-        let mut segments = path.splitn(4, '/');
-        let (owner, repo, kind) = (segments.next()?, segments.next()?, segments.next()?);
-        let rest = segments.next().unwrap_or("");
-        let reference = match kind {
-            "tree" => Some(rest.strip_suffix('/').unwrap_or(rest)),
-            "archive" => [".zip", ".tar.gz"]
-                .iter()
-                .find_map(|ext| rest.strip_suffix(ext)),
-            _ => return None,
-        };
-        // The ref is a URL path here, so it may be percent-encoded
-        // (`feature%2Fx`); `archive_url` encodes it again (FastLED/fbuild#2042).
-        let reference = reference.and_then(percent_decode);
-        Some(reference.and_then(|reference| Self::pinned(owner, repo, &reference)))
+        let web = github_url::parse_web_url(spec)?;
+        Some(web.and_then(|web| Self::pinned(web.owner, web.repo, web.reference)))
     }
 
-    /// `owner/repo` at `reference`, all validated.
-    fn pinned(owner: &str, repo: &str, reference: &str) -> Option<Self> {
-        if !valid_reference(reference) || reference.contains('#') {
-            return None;
-        }
+    /// `owner/repo` at an already validated `reference`.
+    fn pinned(owner: &str, repo: &str, reference: String) -> Option<Self> {
         let (owner, repo) =
             github_owner_repo(&format!("https://github.com/{owner}/{repo}")).ok()?;
         Some(Self {
             owner,
             repo,
-            reference: Some(reference.to_string()),
+            reference: Some(reference),
         })
     }
 
@@ -153,58 +143,6 @@ impl GitHubSource {
         let short: String = digest[..4].iter().map(|b| format!("{b:02x}")).collect();
         Some(format!("{safe}-{short}"))
     }
-}
-
-/// `http://` and `www.` spellings of github.com name the same repository
-/// (and `fbuild sync` classifies them as GitHub too); spell them as the
-/// canonical `https://github.com/` the shared parser expects.
-fn canonical_github_host(spec: &str) -> String {
-    let (prefix, rest) = spec
-        .strip_prefix("git+")
-        .map_or(("", spec), |rest| ("git+", rest));
-    for host in [
-        "http://github.com/",
-        "http://www.github.com/",
-        "https://www.github.com/",
-    ] {
-        if let Some(tail) = rest.strip_prefix(host) {
-            return format!("{prefix}https://github.com/{tail}");
-        }
-    }
-    spec.to_string()
-}
-
-/// Decode `%XX` escapes in a URL path. `None` for a malformed escape or a
-/// result that is not UTF-8.
-fn percent_decode(text: &str) -> Option<String> {
-    let mut bytes = Vec::with_capacity(text.len());
-    let mut rest = text.as_bytes();
-    while let Some((&byte, tail)) = rest.split_first() {
-        if byte == b'%' {
-            let hex = tail
-                .get(..2)
-                .filter(|h| h.iter().all(u8::is_ascii_hexdigit))?;
-            let hex = std::str::from_utf8(hex).ok()?;
-            bytes.push(u8::from_str_radix(hex, 16).ok()?);
-            rest = &tail[2..];
-        } else {
-            bytes.push(byte);
-            rest = tail;
-        }
-    }
-    String::from_utf8(bytes).ok()
-}
-
-/// A ref must be a usable URL path: no whitespace or control characters, no
-/// `?`, and no empty, `.` or `..` path segments.
-fn valid_reference(reference: &str) -> bool {
-    !reference.is_empty()
-        && !reference
-            .chars()
-            .any(|c| c.is_whitespace() || c.is_control() || c == '?')
-        && reference
-            .split('/')
-            .all(|segment| !matches!(segment, "" | "." | ".."))
 }
 
 /// Fail with a clear message when `path`, downloaded from `url`, is not a
