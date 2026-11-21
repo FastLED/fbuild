@@ -37,6 +37,11 @@
 //! A valid inherited stamp wins even outside dev mode, so a release CLI
 //! under a dev parent stays in its family's namespace.
 //!
+//! The same dev-only image digest also keys the no-op build identity
+//! ([`dev_image_digest`], FastLED/fbuild#2125): there it is always this
+//! process's own image, never an inherited value, because the daemon that
+//! builds can be relinked without the CLI that spawned it.
+//!
 //! Hash failure is reported, never silently swallowed — a silent downgrade
 //! would quietly reintroduce the shared-daemon war this module exists to
 //! prevent. Entry points log the warning and continue (today's behavior),
@@ -104,6 +109,64 @@ fn hash_current_exe() -> std::io::Result<[u8; 32]> {
 pub fn namespace_to_export() -> std::io::Result<Option<String>> {
     let inherited = std::env::var(ZCCACHE_DAEMON_NAMESPACE_ENV).ok();
     namespace_for_process(inherited.as_deref(), is_dev_mode(), hash_current_exe)
+}
+
+/// Digest of the running fbuild image, for the no-op build identity, or
+/// `None` outside dev mode (FastLED/fbuild#2125).
+///
+/// A dev checkout's commit stamp cannot see an uncommitted `.rs` edit, but
+/// any such edit relinks the binary, so the image's bytes change. Official
+/// runs return `None`: an installed release binary changes only with its
+/// version, which the identity already carries, and hashing its path or
+/// mtime would make CI-restored build dirs miss (docs/CI_CACHE.md).
+///
+/// Computed once per process. The daemon calls it at startup, so on hosts
+/// without a replace-proof image handle the digest describes the binary that
+/// is running, not one rebuilt over it later.
+pub fn dev_image_digest() -> Option<&'static str> {
+    static DIGEST: std::sync::OnceLock<Option<String>> = std::sync::OnceLock::new();
+    DIGEST
+        .get_or_init(|| image_digest_for(is_dev_mode(), hash_running_image))
+        .as_deref()
+}
+
+/// [`dev_image_digest`]'s seam. A hash failure yields a unique identity,
+/// never a stable fallback: that would no-op on stale artifacts.
+pub(crate) fn image_digest_for<F>(dev_mode: bool, hash: F) -> Option<String>
+where
+    F: FnOnce() -> std::io::Result<[u8; 32]>,
+{
+    if !dev_mode {
+        return None;
+    }
+    Some(match hash() {
+        Ok(digest) => blake3::Hash::from_bytes(digest).to_hex().to_string(),
+        Err(error) => {
+            static UNHASHED: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+            tracing::warn!(
+                "cannot hash the running fbuild image; builds will not reuse artifacts from another fbuild process: {error}"
+            );
+            let nanos = std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .map_or(0, |elapsed| elapsed.as_nanos());
+            let call = UNHASHED.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+            format!("unhashed-{}-{nanos}-{call}", std::process::id())
+        }
+    })
+}
+
+/// Hash the running image: Linux's replace-proof `/proc/self/exe` when the
+/// host has one, so a binary rebuilt over the launch path is not mistaken
+/// for the running one; otherwise the launch path.
+fn hash_running_image() -> std::io::Result<[u8; 32]> {
+    let image = match fbuild_core::platform::executable::replace_proof_live_image() {
+        Some(image) => image,
+        None => fbuild_core::platform::executable::current_image()?,
+    };
+    let mut file = std::fs::File::open(&image)?;
+    let mut hasher = blake3::Hasher::new();
+    std::io::copy(&mut file, &mut hasher)?;
+    Ok(*hasher.finalize().as_bytes())
 }
 
 #[cfg(test)]
@@ -187,6 +250,36 @@ mod tests {
         .unwrap_err();
 
         assert_eq!(error.kind(), std::io::ErrorKind::PermissionDenied);
+    }
+
+    /// Any `.rs` edit relinks the binary, so in dev mode the no-op build
+    /// identity carries the running image's digest (FastLED/fbuild#2125).
+    #[test]
+    fn dev_image_digest_is_the_full_image_hash() {
+        let digest = image_digest_for(true, || Ok(hash(0xab))).unwrap();
+        assert_eq!(digest, "ab".repeat(32));
+        assert_ne!(
+            image_digest_for(true, || Ok(hash(0xcd))),
+            Some(digest),
+            "a rebuilt image must change the identity"
+        );
+    }
+
+    #[test]
+    fn official_runs_carry_no_image_digest_and_never_hash() {
+        let digest = image_digest_for(false, || Err(std::io::Error::other("must not be called")));
+        assert_eq!(digest, None, "release identities stay reproducible");
+    }
+
+    /// An unreadable image must never fall back to a stable value, which
+    /// would no-op on stale artifacts: it gets a per-call identity instead.
+    #[test]
+    fn unhashable_image_never_matches_a_previous_identity() {
+        let fail = || Err(std::io::Error::other("unreadable"));
+        let first = image_digest_for(true, fail).unwrap();
+        let second = image_digest_for(true, fail).unwrap();
+        assert!(first.starts_with("unhashed-"), "{first}");
+        assert_ne!(first, second);
     }
 
     /// Keep inheritance coverage on the pure seam: mutating the process

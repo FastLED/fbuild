@@ -19,7 +19,12 @@ nothing relevant has changed.
   fbuild binary, whose built-in MCU/profile flags may differ, never reuses
   another's artifacts (FastLED/fbuild#2036). The assets digest covers an
   uncommitted config JSON edit in a dev checkout, which the commit stamp
-  cannot see (FastLED/fbuild#2042).
+  cannot see (FastLED/fbuild#2042). In dev mode (`FBUILD_DEV_MODE=1`) it also
+  carries a digest of the running fbuild image
+  (`fbuild_paths::dev_daemon_namespace::dev_image_digest`): an uncommitted
+  `.rs` edit relinks the binary, so the next build is not a no-op. Official
+  runs leave it out, so release identities stay reproducible
+  (FastLED/fbuild#2125).
 - **`identity_tests.rs`** -- Tests that the fbuild identity invalidates the
   no-op metadata hash while unchanged inputs keep it.
 - **`fast_path.rs`** -- Shared warm-build cache contract. Orchestrators
