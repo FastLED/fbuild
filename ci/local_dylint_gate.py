@@ -1,155 +1,92 @@
-"""Replay the hosted Dylint workflow, extending it to every shipping target."""
+"""Run the Dylint local-gate lane on the host: policy validators, lint libraries, ``soldr lint``.
+
+Lint never runs under bosn; ``soldr lint`` is the only local linter. The lane
+used to replay ``dylint.yml`` through a bosn/act container, whose caching
+semantics break the shared build host. It now runs the same checks the hosted
+``dylint.yml`` jobs run, directly on the host:
+
+1. The lightweight Python policy validators (allowlist paths, the shrink-only
+   ``.fbuild`` baseline, the platform-boundary ledgers) through ``uv``.
+2. Each lint library's formatting and UI tests through ``soldr cargo``. Every
+   ``dylints/*`` crate pins its own nightly in ``rust-toolchain.toml``, so the
+   commands run from the crate directory with ``RUSTUP_TOOLCHAIN`` removed.
+3. ``soldr lint rust --check --cross-dylint``: formatting, Clippy and every
+   ``[workspace.metadata.dylint]`` library over the whole workspace, for the
+   host and every ``[workspace.metadata.soldr].targets`` triple.
+
+The hosted job's extra comparison of raw Dylint observations against the
+platform-boundary ledger stays remote: it needs a fresh, uncached driver pass,
+which a warm local cache deliberately does not do.
+"""
 
 from __future__ import annotations
 
-import json
 import os
+import platform
 import subprocess
-from dataclasses import dataclass
+import sys
 from pathlib import Path
 
-from ci.local_gate import (
-    JsonValue,
-    RunProof,
-    RunSelection,
-    bosn_command,
-    document,
-    output,
-    replay_concurrency,
-    submitted_run_id,
-    verify_run,
-    wire_string,
-)
-
-SELECTION = RunSelection(
-    ".github/workflows/dylint.yml",
-    None,
-    "workflow_dispatch",
-    frozenset({"policy", "dylint", "gate"}),
-    # The end-of-queue cache janitor is confined to `merge_group` by its own
-    # guard, so a dispatch replay reports it explicitly skipped.
-    frozenset({"queue-cache-janitor"}),
+ROOT = Path(__file__).resolve().parent.parent
+UV_PYTHON = ("uv", "run", "--no-project", "python")
+VALIDATORS: tuple[tuple[str, ...], ...] = (
+    ("ci/check_dylint_allowlists.py",),
+    ("ci/check_fbuild_path_baseline.py", "--base", "origin/main"),
+    ("ci/enforce_platform_boundary.py", "--print-totals"),
 )
 
 
-@dataclass(frozen=True)
-class RequiredSteps:
-    job: str
-    names: tuple[str, ...]
+def lint_libraries(root: Path = ROOT) -> list[Path]:
+    """Every lint library crate under ``dylints/``, in a stable order."""
+    return sorted(path.parent for path in root.glob("dylints/*/Cargo.toml"))
 
 
-REQUIRED_STEPS = (
-    RequiredSteps("policy", ("Validate Dylint policy files",)),
-    RequiredSteps(
-        "dylint",
-        (
-            "Validate Dylint allowlist paths",
-            "Enforce shrink-only .fbuild allowlist",
-            "Validate platform-boundary ledgers",
-            "Prepare prebuilt Dylint tools and driver",
-            "Install rustfmt for the Dylint toolchain",
-            "Check Dylint library formatting",
-            "Test Dylint libraries",
-            "Run dylint over workspace",
-        ),
-    ),
-)
+def lint_command() -> list[str]:
+    """The workspace lint: fmt, Clippy and Dylint for the host and every target."""
+    return ["soldr", "lint", "rust", "--check", "--cross-dylint"]
 
 
-@dataclass(frozen=True)
-class StepProof:
-    job: str
-    name: str
-    stage: str
-    status: str
-    conclusion: str | None
-
-
-def read_steps(raw: dict[str, JsonValue]) -> tuple[StepProof, ...]:
-    tree = raw.get("tree")
-    if not isinstance(tree, dict) or not isinstance(groups := tree.get("groups"), list):
-        raise ValueError("Dylint proof lacks job groups")
-    steps: list[StepProof] = []
-    for group in groups:
-        if not isinstance(group, dict) or not isinstance(jobs := group.get("jobs"), list):
-            raise ValueError("invalid Dylint job group")
-        for job in jobs:
-            if not isinstance(job, dict) or not isinstance(
-                sections := job.get("sections"), list
-            ):
-                raise ValueError("Dylint proof lacks step evidence")
-            job_id = wire_string(job, "job_id")
-            for section in sections:
-                if not isinstance(section, dict):
-                    raise ValueError("invalid Dylint step evidence")
-                conclusion = section.get("conclusion")
-                if conclusion is not None and not isinstance(conclusion, str):
-                    raise ValueError("invalid Dylint step conclusion")
-                steps.append(
-                    StepProof(
-                        job_id,
-                        wire_string(section, "name"),
-                        wire_string(section, "stage"),
-                        wire_string(section, "status"),
-                        conclusion,
-                    )
-                )
-    return tuple(steps)
-
-
-def verify_dylint(raw: dict[str, JsonValue], workspace: Path, sha: str) -> None:
-    verify_run(RunProof.from_json(raw), workspace, sha, SELECTION)
-    steps = read_steps(raw)
-    for required in REQUIRED_STEPS:
-        for name in required.names:
-            matching = [
-                step
-                for step in steps
-                if step.job == required.job
-                and step.name == name
-                and step.stage == "Main"
-            ]
-            if (
-                len(matching) != 1
-                or matching[0].status != "completed"
-                or matching[0].conclusion != "success"
-            ):
-                raise ValueError(
-                    f"required Dylint step did not pass: {required.job}/{name}"
-                )
-
-
-def run_dylint(workspace: Path, sha: str) -> None:
-    submitted = document(
-        bosn_command(
-            "ci",
-            "run",
-            "--workspace",
-            str(workspace),
-            "--workflow",
-            SELECTION.workflow,
-            "--event",
-            "workflow_dispatch",
-            "--input",
-            "all_targets=true",
-            *replay_concurrency(),
-            "--mode",
-            "minimal",
-            "--sha",
-            sha,
-            "--timeout-secs",
-            "7200",
-            "--json",
-        )
+def host_commands(root: Path = ROOT) -> list[tuple[list[str], Path]]:
+    """Every command the lane runs, with its working directory, in order."""
+    commands: list[tuple[list[str], Path]] = [
+        ([*UV_PYTHON, *validator], root) for validator in VALIDATORS
+    ]
+    commands.append((["soldr", "dylint", "prepare"], root))
+    libraries = lint_libraries(root)
+    commands.extend(
+        (["soldr", "cargo", "fmt", "--all", "--", "--check"], library)
+        for library in libraries
     )
-    run_id = submitted_run_id(submitted)
-    print(f"bosn dispatch Dylint run: {run_id}", flush=True)
-    subprocess.run(bosn_command("ci", "wait", run_id), cwd=workspace, check=True)
-    report = output(bosn_command("ci", "show", run_id, "--json"))
-    raw: JsonValue = json.loads(report)
-    if not isinstance(raw, dict):
-        raise ValueError("bosn returned a non-object Dylint report")
-    verify_dylint(raw, workspace, sha)
-    report_path = os.environ.get("CI_LINT_GATE_REPLAY_REPORT")
-    if report_path:
-        Path(report_path).write_text(report, encoding="utf-8")
+    commands.extend((["soldr", "cargo", "test"], library) for library in libraries)
+    commands.append((lint_command(), root))
+    return commands
+
+
+def lane_env(root: Path = ROOT) -> dict[str, str]:
+    env = os.environ.copy()
+    # The stable workspace pin must not override each library's nightly pin.
+    env.pop("RUSTUP_TOOLCHAIN", None)
+    env.setdefault("CARGO_HOME", str(Path.home() / ".cargo"))
+    # Library UI tests share one target tree, apart from the workspace build.
+    env["CARGO_TARGET_DIR"] = str(root / "target" / "dylint-tests")
+    return env
+
+
+def run_dylint(root: Path = ROOT) -> None:
+    if platform.system() != "Linux":
+        raise SystemExit("dylint lane: cross-target Dylint runs from a Linux host only")
+    env = lane_env(root)
+    for argv, cwd in host_commands(root):
+        print(f"dylint lane: ({cwd.relative_to(root)}) {' '.join(argv)}", flush=True)
+        # The workspace lint keeps soldr's own target directory.
+        command_env = env if argv != lint_command() else {
+            key: value for key, value in env.items() if key != "CARGO_TARGET_DIR"
+        }
+        result = subprocess.run(argv, cwd=cwd, env=command_env, check=False)
+        if result.returncode != 0:
+            print(f"dylint lane: failed with exit code {result.returncode}", file=sys.stderr)
+            raise SystemExit(result.returncode)
+
+
+if __name__ == "__main__":
+    run_dylint()

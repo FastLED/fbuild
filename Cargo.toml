@@ -92,6 +92,12 @@ targets = [
     "aarch64-pc-windows-msvc",
 ]
 
+# `soldr lint` is the only local linter (lint never runs under bosn). The
+# dylint step runs every [workspace.metadata.dylint] library; the local-gate
+# `dylint` lane adds `--cross-dylint` so it covers every target above.
+[workspace.metadata.soldr.lint]
+steps = ["fmt", "clippy", "dylint"]
+
 [workspace.package]
 version = "2.5.52"
 edition = "2021"
