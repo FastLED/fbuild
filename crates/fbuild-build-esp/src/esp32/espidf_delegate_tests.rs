@@ -355,14 +355,65 @@ fn build_system_switch_defaults_to_native_and_rejects_typos() {
     assert!(error.to_string().contains("`native`"), "{error}");
 }
 
-/// The pinned release provisions one target; another chip is an explicit
+/// A chip the pinned release has no verified profile for is an explicit
 /// configuration error rather than a missing-compiler crash later.
 #[test]
 fn an_unsupported_chip_is_refused_by_name() {
-    super::profile_for_chip("esp32s3").unwrap();
-    let error = super::profile_for_chip("esp32c6").unwrap_err();
-    assert!(error.to_string().contains("esp32c6"), "{error}");
-    assert!(error.to_string().contains("#1971"), "{error}");
+    assert_eq!(
+        super::profile_for_chip("esp32s3").unwrap(),
+        IdfProfile::Esp32S3Only
+    );
+    for chip in ["esp32", "esp32h2", "esp8266"] {
+        let error = super::profile_for_chip(chip).unwrap_err();
+        assert!(error.to_string().contains(chip), "{error}");
+        assert!(error.to_string().contains("#1971"), "{error}");
+        // The message lists what *is* served, so the fix is readable.
+        assert!(error.to_string().contains("esp32c5"), "{error}");
+    }
+}
+
+/// The RISC-V chips get the RISC-V profile: the Xtensa compiler cannot build
+/// them, and installing both for every build would cost 3.3 GB instead of the
+/// one compiler the chip needs (FastLED/fbuild#1878).
+#[test]
+fn riscv_chips_resolve_the_riscv_profile() {
+    for chip in ["esp32c3", "esp32c5", "esp32c6", "esp32p4"] {
+        assert_eq!(
+            super::profile_for_chip(chip).unwrap(),
+            IdfProfile::Riscv32,
+            "{chip}"
+        );
+    }
+}
+
+/// ESP32-P4 rev-3 silicon is refused before anything is downloaded: the pinned
+/// v5.5.1 caps `ESP32P4_REV_MAX_FULL` at 199, so the image it builds cannot
+/// boot there. Building it anyway would be a silent wrong-silicon success.
+#[test]
+fn p4_rev3_silicon_is_refused_and_pre_rev3_is_accepted() {
+    super::reject_unsupported_silicon("esp32p4", "esp32p4_es").unwrap();
+    let error = super::reject_unsupported_silicon("esp32p4", "esp32p4").unwrap_err();
+    let message = error.to_string();
+    assert!(message.contains("esp32p4"), "{message}");
+    assert!(message.contains("rev"), "{message}");
+    assert!(message.contains(IDF_RELEASE_VERSION), "{message}");
+    assert!(message.contains("esp32p4_es"), "{message}");
+    // Every other chip has one silicon family as far as the release goes.
+    for chip in ["esp32s3", "esp32c3", "esp32c5", "esp32c6"] {
+        super::reject_unsupported_silicon(chip, chip).unwrap();
+    }
+}
+
+/// The provisioning line states the profile's real footprint instead of the S3
+/// figure for every chip: the RISC-V compiler is almost twice the Xtensa one.
+#[test]
+fn the_provisioning_line_names_the_profile_footprint() {
+    let s3 = super::provisioning_line("esp32s3", IdfProfile::Esp32S3Only);
+    assert!(s3.contains("esp32s3"), "{s3}");
+    assert!(s3.contains("~1.3 GB of toolchains"), "{s3}");
+    let riscv = super::provisioning_line("esp32c5", IdfProfile::Riscv32);
+    assert!(riscv.contains("esp32c5"), "{riscv}");
+    assert!(riscv.contains("~2.3 GB of toolchains"), "{riscv}");
 }
 
 /// The delegated build reports its caching mode, and the mode it reports is

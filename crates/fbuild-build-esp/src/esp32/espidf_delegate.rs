@@ -126,18 +126,56 @@ impl IdfCacheMode {
 
 /// The IDF profile that provisions `chip`, or an error naming what exists.
 ///
-/// The pinned release currently provisions one target (ESP32-S3) — widening it
-/// is a release-matrix change (#1970's follow-up), not something this path can
-/// paper over: the chip's cross compiler would simply be absent.
+/// A chip is listed once a real project has been built for it with the pinned
+/// release (`espidf_delegate_e2e_tests.rs`); the rest of the release's target
+/// matrix stays refused rather than assumed, because a chip without its cross
+/// compiler in the profile would fail much later and far less legibly.
 fn profile_for_chip(chip: &str) -> Result<IdfProfile> {
     match chip {
         "esp32s3" => Ok(IdfProfile::Esp32S3Only),
+        "esp32c3" | "esp32c5" | "esp32c6" | "esp32p4" => Ok(IdfProfile::Riscv32),
         other => Err(FbuildError::ConfigError(format!(
             "{BUILD_SYSTEM_KEY} = espidf is not available for MCU '{other}': the pinned ESP-IDF \
-             release provisions esp32s3 only. Use `frameworks = arduino` for this board, or \
-             build it with PlatformIO (FastLED/fbuild#1971, #1970)"
+             {IDF_RELEASE_VERSION} is provisioned for esp32s3, esp32c3, esp32c5, esp32c6 and \
+             esp32p4 only. Use `framework = arduino` for this board, or build it with \
+             PlatformIO (FastLED/fbuild#1971, #1970)"
         ))),
     }
+}
+
+/// Refuse silicon the pinned release cannot produce an image for.
+///
+/// ESP-IDF v5.5.1 caps `ESP32P4_REV_MAX_FULL` at 199, so it builds for
+/// pre-rev-3 ESP32-P4 only — the boards whose SDK variant is `esp32p4_es`.
+/// Rev-3 silicon (`esp32p4`, a different ROM) needs v5.5.2 or later, which is a
+/// release-pin change (FastLED/fbuild#2133) and not something a build may paper
+/// over: the image would link, flash and then fail in the bootloader.
+fn reject_unsupported_silicon(chip: &str, sdk_variant: &str) -> Result<()> {
+    if chip == "esp32p4" && sdk_variant != "esp32p4_es" {
+        return Err(FbuildError::ConfigError(format!(
+            "{BUILD_SYSTEM_KEY} = espidf cannot build ESP32-P4 silicon variant '{sdk_variant}': \
+             the pinned ESP-IDF {IDF_RELEASE_VERSION} supports chip revisions up to v1.99 \
+             (boards with `chip_variant = esp32p4_es`), and rev-3 silicon needs ESP-IDF v5.5.2 or \
+             later. Use `framework = arduino` for this board (FastLED/fbuild#2133)"
+        )));
+    }
+    Ok(())
+}
+
+/// The build-log line announcing the install, with the profile's own measured
+/// footprint: the RISC-V compiler is almost twice the Xtensa one, so one
+/// figure for every chip would understate it.
+fn provisioning_line(chip: &str, profile: IdfProfile) -> String {
+    let tools = profile.measured_installed_bytes() + profile.measured_build_tools_bytes();
+    // Decimal gigabytes with one digit, the unit the design note quotes.
+    let tenths = tools / 100_000_000;
+    format!(
+        "ESP-IDF delegated build: provisioning the pinned release for {chip} (first run installs \
+         ~{}.{} GB of toolchains and build tools, plus the ~0.5 GB source tree and Python \
+         environment)",
+        tenths / 10,
+        tenths % 10
+    )
 }
 
 /// Per-step deadlines.
@@ -156,7 +194,7 @@ pub(super) struct IdfBuildRequest {
     pub project_dir: NormalizedPath,
     /// The delegated build root (`<build>/idf`).
     pub build_dir: NormalizedPath,
-    /// IDF target name (`esp32s3`).
+    /// IDF target name (`esp32s3`, `esp32c5`, ...).
     pub chip: String,
 }
 
@@ -423,6 +461,7 @@ pub(super) async fn delegate_build(
     let started = std::time::Instant::now();
     let chip = ctx.board.mcu.clone();
     let profile = profile_for_chip(&chip)?;
+    reject_unsupported_silicon(&chip, ctx.board.sdk_variant())?;
     let build_dir = NormalizedPath::new(&ctx.build_dir).join("idf");
     std::fs::create_dir_all(build_dir.as_path()).map_err(|error| {
         FbuildError::Other(format!(
@@ -430,9 +469,7 @@ pub(super) async fn delegate_build(
         ))
     })?;
 
-    ctx.build_log.push(format!(
-        "ESP-IDF delegated build: provisioning the pinned release for {chip} (first run downloads ~1.8 GB)"
-    ));
+    ctx.build_log.push(provisioning_line(&chip, profile));
     let install = EspIdfInstall::new(&params.project_dir, profile)?;
     let installed = install.install().await?;
 
