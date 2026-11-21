@@ -42,7 +42,9 @@ class RunSelection:
     skipped_jobs: frozenset[str] = frozenset()
 
 
-UBUNTU_SELECTION = RunSelection(WORKFLOW, None, "workflow_dispatch", REQUIRED_JOBS, frozenset({"glibc-floor"}))
+# `pool` (the forge-pool runner selector) runs only when the repository
+# variable FORGE_POOL_LABELS is set, which a local replay never has.
+UBUNTU_SELECTION = RunSelection(WORKFLOW, None, "workflow_dispatch", REQUIRED_JOBS, frozenset({"glibc-floor", "pool"}))
 
 
 def wire_string(raw: dict[str, JsonValue], key: str) -> str:

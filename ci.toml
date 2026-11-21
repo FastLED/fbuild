@@ -131,7 +131,7 @@ cache  = "machine"
 
 # -- Allowlists ----------------------------------------------------------------
 [allow]
-actions           = ["actions/checkout", "actions/upload-artifact", "actions/download-artifact", "actions/cache", "actions/setup-python", "actions/attest-build-provenance", "actions/upload-pages-artifact", "actions/deploy-pages", "actions/configure-pages", "actions/create-github-app-token", "actions/add-to-project", "astral-sh/setup-uv", "zackees/setup-soldr", "arduino/setup-arduino-cli", "pypa/gh-action-pypi-publish", "FastLED/fbuild", "azure/login"]
+actions           = ["actions/checkout", "actions/upload-artifact", "actions/download-artifact", "actions/cache", "actions/setup-python", "actions/attest-build-provenance", "actions/upload-pages-artifact", "actions/deploy-pages", "actions/configure-pages", "actions/create-github-app-token", "actions/add-to-project", "astral-sh/setup-uv", "zackees/setup-soldr", "arduino/setup-arduino-cli", "pypa/gh-action-pypi-publish", "FastLED/fbuild", "azure/login", "forge-ci/ci.yml"]
 tools             = ["soldr", "uv", "python", "python3", "git", "gh", "bosn"]
 # Azure Artifact Signing (Authenticode) for the Windows release lanes: azure/login is OIDC
 # (no client secret); these are org-level coordinates, not credentials

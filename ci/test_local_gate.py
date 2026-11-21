@@ -31,13 +31,14 @@ class RunProofTests(unittest.TestCase):
             "done",
             "success",
             0,
-            3,
-            3,
+            4,
+            4,
             0,
             (
                 JobProof("check", "completed", "success"),
                 JobProof("python-facade-tests", "completed", "success"),
                 JobProof("glibc-floor", "completed", "skipped"),
+                JobProof("pool", "completed", "skipped"),
             ),
         )
 
@@ -58,7 +59,7 @@ class RunProofTests(unittest.TestCase):
             "state": "done",
             "conclusion": "success",
             "exit_code": 0,
-            "jobs": {"total": 3, "completed": 3, "failed": 0},
+            "jobs": {"total": 4, "completed": 4, "failed": 0},
             "tree": {
                 "malformed_lines": 0,
                 "groups": [
@@ -133,7 +134,7 @@ class RunProofTests(unittest.TestCase):
             None,
             "workflow_dispatch",
             frozenset({"check", "python-facade-tests"}),
-            frozenset({"queue-cache-janitor", "glibc-floor"}),
+            frozenset({"queue-cache-janitor", "glibc-floor", "pool"}),
         )
         skipped = RunProof(
             self.proof.workspace,
@@ -148,8 +149,8 @@ class RunProofTests(unittest.TestCase):
             "done",
             "success",
             0,
-            4,
-            4,
+            5,
+            5,
             0,
             (
                 *self.proof.jobs,
