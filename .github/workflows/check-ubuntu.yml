@@ -80,7 +80,15 @@ jobs:
     # it succeeded: act hands a skipped job's outputs on unevaluated.
     if: ${{ !cancelled() }}
     runs-on: ${{ needs.pool.result == 'success' && fromJSON(needs.pool.outputs.runs-on || '"ubuntu-latest"') || 'ubuntu-latest' }}
-    timeout-minutes: 30
+    # 45 min, not 30: the suite now runs 27-31 min wall on the Dell pool
+    # (2026-11-22 merge-group runs 45023302280 wall=1823s and 45028183293
+    # wall=1862s were killed at the old 30-min cap mid-test, which reads as
+    # `cancelled` -> `CI summary` red -> the merge queue ejects the PR; the
+    # one green run of the day was wall=1650s, only 2.5 min of headroom).
+    # A queue ref never restores a warm build cache (`save-cache` skips a
+    # non-default ref), so every merge group compiles from cold; 45 still
+    # bounds a wedged job.
+    timeout-minutes: 45
     env:
       SOLDR_S3_CACHE_ACCESS_KEY: ${{ secrets.SOLDR_S3_CACHE_ACCESS_KEY }}
       SOLDR_S3_CACHE_SECRET_KEY: ${{ secrets.SOLDR_S3_CACHE_SECRET_KEY }}
