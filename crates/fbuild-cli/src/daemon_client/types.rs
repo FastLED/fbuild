@@ -577,3 +577,25 @@ pub struct DevicePreemptResponse {
     pub lease_id: Option<String>,
     pub message: String,
 }
+
+/// `POST /api/reset` request.
+///
+/// Sent by `fbuild reset` so the daemon, not the CLI, opens the port and the
+/// exclusive device-lease admission runs first (FastLED/fbuild#2151).
+#[derive(Debug, Clone, Serialize)]
+pub struct ResetRequest {
+    /// Resolved serial node (`/dev/ttyACM1`, `COM9`).
+    pub port: String,
+    /// Board id from `platformio.ini`; selects the platform-specific reset
+    /// sequence inside the daemon. `None` falls back to a generic DTR toggle.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub board: Option<String>,
+    /// Exclusive lease id this workflow holds. Omitting it while another
+    /// client holds the lease is refused by the daemon (status 409).
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub lease_id: Option<String>,
+    #[serde(default)]
+    pub verbose: bool,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub request_id: Option<String>,
+}

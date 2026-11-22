@@ -433,6 +433,11 @@ pub enum Commands {
         /// Verbose output
         #[arg(short, long)]
         verbose: bool,
+        /// Exclusive device-lease id this workflow holds (`fbuild device
+        /// lease --exclusive`); a reset on a board leased to another workflow
+        /// is refused unless this names the holder (FastLED/fbuild#2151).
+        #[arg(long = "lease-id")]
+        lease_id: Option<String>,
     },
     /// Purge cached packages
     Purge {

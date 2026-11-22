@@ -455,7 +455,8 @@ pub async fn async_main() {
             environment,
             port,
             verbose,
-        }) => run_reset(project_dir, environment, port, verbose),
+            lease_id,
+        }) => run_reset(project_dir, environment, port, lease_id, verbose).await,
         Some(Commands::Purge {
             target,
             dry_run,
