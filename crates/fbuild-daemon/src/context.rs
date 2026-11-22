@@ -105,7 +105,7 @@ pub fn watch_set_cache_window_from_env() -> Duration {
     Duration::from_secs(secs)
 }
 
-/// Fallback idle timeout: daemon shuts down after 12 hours regardless.
+/// Fallback idle timeout: daemon shuts down after 12 hours without activity.
 pub const IDLE_TIMEOUT: Duration = Duration::from_secs(43200);
 
 /// Interval for checking stale project locks.
@@ -449,9 +449,10 @@ impl DaemonContext {
     /// it and users can see why the daemon isn't shutting down. See issue
     /// FastLED/fbuild#51.
     pub fn busy_reason(&self) -> Option<String> {
-        let op_running = self
-            .operation_in_progress
-            .load(std::sync::atomic::Ordering::Relaxed);
+        let op_running = self.operation_drain_count() > 0
+            || self
+                .operation_in_progress
+                .load(std::sync::atomic::Ordering::Relaxed);
         let serial_session_count = self.serial_manager.get_port_sessions().len();
         let pending_attaches = self
             .pending_serial_attaches
