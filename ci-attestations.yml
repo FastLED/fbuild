@@ -1,12 +1,24 @@
 # The Rust lanes include build scripts, fixtures, toolchain and CI settings.
 # Linux checks also read Python sources and repository-wide guard inputs.
+# `run` is what the bare `prooft` runner (and `./push`) executes. Local lanes
+# are host-only: lint runs first, on the host through `soldr lint` (never under
+# bosn), and `--test` adds the native Linux x64 test lane after it. Gates a
+# host run cannot prove (cross-target Clippy/Dylint, the `dylint` lane) stay
+# unattested, so CI runs them.
 version: 1
 lanes:
   lint:
+    # fmt, host Clippy and host Dylint; stamps rust/all/fmt and the host triple's gates.
+    run: [soldr, lint, rust, --check, --host-only]
     inputs: [".cargo/**", ".github/**", ".clippy.toml", ".rustfmt.toml", ".gitattributes", "Cargo.*", "rust-toolchain.toml", "crates/**", "bench/**", "tests/**", "site/**", "ci/**", "python/**", "dylints/**", "pyproject.toml", "uv.lock", "ci.toml", "local-gate.toml", "ci-attestations.yml", "push", ".env", ".intentionally-empty-file.o"]
   dylint:
+    # No `run`: the lane's cross-target Dylint is CI's (dylint.yml).
     inputs: [".cargo/**", ".github/**", ".clippy.toml", ".rustfmt.toml", ".gitattributes", "Cargo.*", "rust-toolchain.toml", "crates/**", "bench/**", "tests/**", "site/**", "ci/**", "python/**", "dylints/**", "pyproject.toml", "uv.lock", "ci.toml", "local-gate.toml", "ci-attestations.yml", "push", ".env", ".intentionally-empty-file.o", ".gitignore", "lint", "test"]
   linux-minimal:
+    # check-ubuntu.yml's checks and unit tests on the native Linux x64 host,
+    # replayed through bosn; the release cross-link (glibc_floor) is off.
+    stage: test
+    run: [uv, run, --no-project, --python, "3.12", python, -m, ci.local_gate, --lane, linux-minimal]
     inputs: ["**"]
 gates:
   rust/all/fmt: {lane: lint, fidelity: native}
