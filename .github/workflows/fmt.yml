@@ -64,7 +64,7 @@ jobs:
           ref: ${{ inputs.ref || github.event.pull_request.head.sha }}
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@v0
+        uses: zackees/setup-soldr@01e9101565638f03588327a3cb7b6ccecfe5a099
         with:
           cache-key-suffix: fmt-fmt
           cache: true

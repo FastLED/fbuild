@@ -67,7 +67,7 @@ jobs:
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
-      - uses: zackees/setup-soldr@v0
+      - uses: zackees/setup-soldr@01e9101565638f03588327a3cb7b6ccecfe5a099
         with:
           s3-bucket: forge-ci-cache
           s3-endpoint: sfo3.digitaloceanspaces.com
