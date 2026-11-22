@@ -25,6 +25,8 @@
 //! added). This directory is not a binary target — cargo only auto-discovers
 //! `src/bin/*/main.rs`.
 
+mod self_eviction;
+
 use crate::context::{
     BroadcastHub, DEAD_CLIENT_SERIAL_RECLAIM_INTERVAL, DaemonContext, IDLE_TIMEOUT,
     STALE_LOCK_CHECK_INTERVAL, self_eviction_timeout,
@@ -38,6 +40,7 @@ use axum::Router;
 use axum::routing::{get, post};
 use clap::Parser;
 use fbuild_build::compile_backend::CompileBackend;
+use self_eviction::try_self_evict;
 use std::sync::Arc;
 use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
@@ -939,118 +942,9 @@ fn format_bytes_compact(bytes: u64) -> String {
     }
 }
 
-/// Track continuous idle time and close operation admission before self-eviction.
-fn try_self_evict(
-    ctx: &DaemonContext,
-    empty_since: &mut Option<std::time::Instant>,
-    now: std::time::Instant,
-    timeout: std::time::Duration,
-) -> bool {
-    if !ctx.is_empty() {
-        if empty_since.take().is_some() {
-            tracing::debug!("Daemon is no longer empty, resetting eviction timer");
-        }
-        return false;
-    }
-    let Some(since) = *empty_since else {
-        *empty_since = Some(now);
-        tracing::info!(
-            "Daemon is idle; self-eviction in {:.0}s unless new work arrives",
-            timeout.as_secs_f64()
-        );
-        return false;
-    };
-    if now.duration_since(since) < timeout {
-        return false;
-    }
-    if ctx.try_begin_shutdown(false).is_none() {
-        // An operation was admitted after the idle snapshot above.
-        *empty_since = None;
-        return false;
-    }
-    tracing::info!(
-        "Self-eviction triggered: daemon empty for {:.1}s, shutting down",
-        now.duration_since(since).as_secs_f64()
-    );
-    true
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn self_eviction_waits_for_in_flight_operations_and_a_fresh_idle_window() {
-        use crate::handlers::operations::OperationGuard;
-        use std::time::{Duration, Instant};
-
-        let (tx, _rx) = tokio::sync::watch::channel(false);
-        let ctx = Arc::new(DaemonContext::new(0, tx, ".".to_string()));
-        let now = Instant::now();
-        let timeout = Duration::from_secs(30);
-        let mut empty_since = Some(now - timeout);
-        let first = OperationGuard::new(&ctx, fbuild_core::DaemonState::Building, None);
-        let second = OperationGuard::new(&ctx, fbuild_core::DaemonState::Building, None);
-        // A finishing concurrent operation clears the legacy boolean while
-        // the remaining guard still represents an in-flight build.
-        drop(first);
-        assert_eq!(ctx.operation_drain_count(), 1);
-        assert!(!ctx.is_empty());
-        assert!(!try_self_evict(&ctx, &mut empty_since, now, timeout));
-        assert_eq!(empty_since, None);
-        assert!(!try_self_evict(
-            &ctx,
-            &mut empty_since,
-            now + timeout,
-            timeout
-        ));
-        assert_eq!(empty_since, None);
-        assert!(
-            !ctx.is_shutting_down
-                .load(std::sync::atomic::Ordering::Acquire)
-        );
-
-        drop(second);
-        let now = now + timeout * 2;
-        assert!(!try_self_evict(&ctx, &mut empty_since, now, timeout));
-        assert_eq!(empty_since, Some(now));
-        assert!(!try_self_evict(
-            &ctx,
-            &mut empty_since,
-            now + timeout / 2,
-            timeout
-        ));
-        assert!(try_self_evict(
-            &ctx,
-            &mut empty_since,
-            now + timeout,
-            timeout
-        ));
-        assert!(ctx.begin_operation_admission().is_none());
-    }
-
-    #[test]
-    fn self_eviction_waits_for_admitted_operation_requests() {
-        use std::time::{Duration, Instant};
-
-        let (tx, _rx) = tokio::sync::watch::channel(false);
-        let ctx = DaemonContext::new(0, tx, ".".to_string());
-        let now = Instant::now();
-        let timeout = Duration::from_secs(30);
-        let mut empty_since = Some(now - timeout);
-        let admission = ctx.begin_operation_admission().unwrap();
-        assert!(!ctx.is_empty());
-        assert!(!try_self_evict(&ctx, &mut empty_since, now, timeout));
-        assert_eq!(empty_since, None);
-        drop(admission);
-        assert!(!try_self_evict(&ctx, &mut empty_since, now, timeout));
-        assert!(try_self_evict(
-            &ctx,
-            &mut empty_since,
-            now + timeout,
-            timeout
-        ));
-    }
 
     #[tokio::test]
     async fn another_daemon_is_listening_detects_a_live_listener() {

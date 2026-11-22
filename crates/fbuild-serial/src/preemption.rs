@@ -14,6 +14,11 @@
 
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
+use std::time::Duration;
+
+/// Upper bound between re-checks while waiting for a busy port. A release
+/// wakes waiters immediately; this only bounds a missed wake-up.
+const PORT_WAIT_RECHECK: Duration = Duration::from_secs(5);
 
 /// Tracks which ports are currently preempted by deploy operations.
 ///
@@ -25,6 +30,8 @@ use std::sync::{Arc, Mutex};
 /// the call-site signature for callers that already `.await` them.
 pub struct PreemptionTracker {
     preempted_ports: Arc<Mutex<HashMap<String, PreemptionInfo>>>,
+    /// Wakes [`Self::preempt_waiting`] callers when any port is released.
+    released: tokio::sync::Notify,
 }
 
 #[derive(Debug, Clone)]
@@ -55,10 +62,32 @@ impl std::fmt::Display for PreemptionConflict {
 
 impl std::error::Error for PreemptionConflict {}
 
+/// A deploy waited its whole budget for a port another request still holds.
+#[derive(Debug, Clone)]
+pub struct PortWaitTimeout {
+    pub conflict: PreemptionConflict,
+    pub waited: Duration,
+}
+
+impl std::fmt::Display for PortWaitTimeout {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "port {} is still in use after waiting {}s: {}",
+            self.conflict.port,
+            self.waited.as_secs(),
+            self.conflict
+        )
+    }
+}
+
+impl std::error::Error for PortWaitTimeout {}
+
 impl PreemptionTracker {
     pub fn new() -> Self {
         Self {
             preempted_ports: Arc::new(Mutex::new(HashMap::new())),
+            released: tokio::sync::Notify::new(),
         }
     }
 
@@ -93,11 +122,56 @@ impl PreemptionTracker {
     }
 
     pub async fn clear(&self, port: &str) {
-        let mut ports = self
-            .preempted_ports
-            .lock()
-            .unwrap_or_else(|err| err.into_inner());
-        ports.remove(port);
+        let removed = {
+            let mut ports = self
+                .preempted_ports
+                .lock()
+                .unwrap_or_else(|err| err.into_inner());
+            ports.remove(port).is_some()
+        };
+        if removed {
+            self.released.notify_waiters();
+        }
+    }
+
+    /// Like [`Self::preempt`], but a port held by another request is waited
+    /// for, up to `budget`, instead of failing at once.
+    ///
+    /// Another client's deploy legitimately holds a port for the length of
+    /// its flash; failing immediately threw away a finished multi-minute
+    /// build. `on_wait` is called on every re-check with the current holder
+    /// and the time waited so far, so the caller can say who it is queued
+    /// behind.
+    pub async fn preempt_waiting(
+        &self,
+        port: &str,
+        reason: String,
+        preempted_by: String,
+        budget: Duration,
+        mut on_wait: impl FnMut(&PreemptionConflict, Duration),
+    ) -> Result<(), PortWaitTimeout> {
+        let started = std::time::Instant::now();
+        loop {
+            // Register for the wake-up before checking, so a release between
+            // the check and the wait is not missed.
+            let released = self.released.notified();
+            tokio::pin!(released);
+            released.as_mut().enable();
+            let conflict = match self
+                .preempt(port, reason.clone(), preempted_by.clone())
+                .await
+            {
+                Ok(()) => return Ok(()),
+                Err(conflict) => conflict,
+            };
+            let waited = started.elapsed();
+            if waited >= budget {
+                return Err(PortWaitTimeout { conflict, waited });
+            }
+            on_wait(&conflict, waited);
+            let recheck = (budget - waited).min(PORT_WAIT_RECHECK);
+            let _ = tokio::time::timeout(recheck, released).await;
+        }
     }
 
     pub async fn is_preempted(&self, port: &str) -> bool {
@@ -217,5 +291,66 @@ mod tests {
         release.wait();
         publisher.await.unwrap();
         deploy.await.unwrap().unwrap();
+    }
+    /// A second deploy whose build finished while another client's deploy
+    /// held the port must queue for it, not throw the build away.
+    #[tokio::test]
+    async fn busy_port_is_waited_on_then_acquired() {
+        let tracker = Arc::new(PreemptionTracker::new());
+        tracker
+            .preempt("COM1", "deploy (project a)".into(), "request-1".into())
+            .await
+            .unwrap();
+        let releaser = Arc::clone(&tracker);
+        tokio::spawn(async move {
+            tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+            releaser.clear("COM1").await;
+        });
+
+        let mut seen_holders = Vec::new();
+        tracker
+            .preempt_waiting(
+                "COM1",
+                "deploy (project b)".into(),
+                "request-2".into(),
+                std::time::Duration::from_secs(30),
+                |conflict, _waited| seen_holders.push(conflict.holder.preempted_by.clone()),
+            )
+            .await
+            .expect("the port is released well inside the wait budget");
+
+        assert_eq!(seen_holders.first().map(String::as_str), Some("request-1"));
+        let holder = tracker.holder("COM1").await.unwrap();
+        assert_eq!(holder.preempted_by, "request-2");
+    }
+
+    /// The wait is bounded: a holder that never lets go fails the second
+    /// deploy with an error that still names the holder.
+    #[tokio::test]
+    async fn busy_port_wait_is_bounded_and_names_the_holder() {
+        let tracker = PreemptionTracker::new();
+        tracker
+            .preempt("COM1", "deploy (project a)".into(), "request-1".into())
+            .await
+            .unwrap();
+
+        let error = tracker
+            .preempt_waiting(
+                "COM1",
+                "deploy (project b)".into(),
+                "request-2".into(),
+                std::time::Duration::from_millis(150),
+                |_, _| {},
+            )
+            .await
+            .expect_err("a holder that never releases must time the waiter out");
+
+        let message = error.to_string();
+        assert!(message.contains("still in use after waiting"), "{message}");
+        assert!(message.contains("request-1"), "{message}");
+        assert_eq!(
+            tracker.holder("COM1").await.unwrap().preempted_by,
+            "request-1"
+        );
     }
 }

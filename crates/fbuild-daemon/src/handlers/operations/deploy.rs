@@ -7,6 +7,7 @@ use super::common::{
     trust_device_hash_enabled,
 };
 use super::deploy_port::{append_warning_to_stderr, choose_deploy_port};
+use super::deploy_port_wait::{PortWaitReporter, deploy_port_wait_budget};
 use super::deploy_teensy::find_teensy_loader_cli;
 use super::monitor::{MonitorOutcome, run_monitor_loop};
 use crate::context::DaemonContext;
@@ -464,17 +465,23 @@ pub async fn deploy(
         }
     }
 
-    // Preempt serial if port specified or auto-selected.
+    // Preempt serial if port specified or auto-selected. Another client's
+    // deploy/reset may hold the port for the length of its flash; queue
+    // behind it (bounded) rather than discard the build that just finished.
     if let Some(ref p) = deploy_port_str {
-        if let Err(error) = ctx
+        let mut reporter = PortWaitReporter::new(&ctx);
+        let acquired = ctx
             .serial_manager
-            .preempt_for_deploy(
+            .preempt_for_deploy_waiting(
                 p,
                 format!("deploy (project {})", project_dir.display()),
                 request_id.clone(),
+                deploy_port_wait_budget(),
+                |conflict, waited| reporter.report(conflict, waited),
             )
-            .await
-        {
+            .await;
+        drop(reporter);
+        if let Err(error) = acquired {
             return (
                 StatusCode::CONFLICT,
                 Json(OperationResponse::fail(request_id, error.to_string())),

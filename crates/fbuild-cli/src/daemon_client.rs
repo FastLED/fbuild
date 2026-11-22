@@ -9,16 +9,23 @@ use running_process::broker::client::RefusalKind;
 use serde::Serialize;
 
 mod identity;
+mod liveness;
 mod restart_diag;
 mod startup_log;
 mod types;
 pub use identity::warn_if_daemon_identity_mismatch;
 pub use types::*;
 
-/// Daemon long-operation cap — re-exported as a local alias so existing
-/// call sites read naturally. Backed by `fbuild_core::time::DAEMON_LONG_OP_TIMEOUT`
-/// (30 min) per FastLED/fbuild#844.
+/// Fixed wall-clock cap on long daemon operations, now used only against a
+/// daemon too old to report progress (FastLED/fbuild#844). Current daemons
+/// are judged by [`liveness`]: a request keeps waiting while the daemon makes
+/// progress and fails only after a load-scaled stall window with none.
 const LONG_OPERATION_TIMEOUT: std::time::Duration = fbuild_core::time::DAEMON_LONG_OP_TIMEOUT;
+
+/// Transport-level ceiling for a long operation's HTTP request. Far beyond
+/// any real build; hang detection is the liveness watchdog's job, this only
+/// stops a lost socket from pinning the CLI forever.
+const OPERATION_REQUEST_CEILING: std::time::Duration = std::time::Duration::from_secs(24 * 3600);
 
 /// Percent-encode a port name for use in a URL path segment.
 fn encode_port(port: &str) -> String {
@@ -374,11 +381,9 @@ impl DaemonClient {
     pub async fn build(&self, req: &BuildRequest) -> fbuild_core::Result<OperationResponse> {
         // Non-streaming build is used by API/MCP callers. It can legitimately
         // wait behind another client's global package/toolchain/sidecar
-        // install, but we still cap the wait at LONG_OPERATION_TIMEOUT (30 min)
-        // so a hung daemon doesn't translate to an unbounded hang for the
-        // caller. FastLED/fbuild#810 — matches the streaming variant's ceiling.
-        self.post_operation("/api/build", req, Some(LONG_OPERATION_TIMEOUT))
-            .await
+        // install; the liveness watchdog in `post_operation` still fails a
+        // daemon that stops making progress (FastLED/fbuild#810).
+        self.post_operation("/api/build", req).await
     }
 
     /// Send a streaming build request. Prints log lines in real-time,
@@ -387,11 +392,26 @@ impl DaemonClient {
         &self,
         req: &BuildRequest,
     ) -> fbuild_core::Result<OperationResponse> {
+        // The stream prints its own status lines, so stage changes are not
+        // echoed again here; the watchdog only judges liveness.
+        liveness::await_with_liveness(
+            self.build_streaming_inner(req),
+            || self.progress_sample(),
+            &liveness::LivenessPolicy::from_env(LONG_OPERATION_TIMEOUT),
+            |_| {},
+        )
+        .await
+    }
+
+    async fn build_streaming_inner(
+        &self,
+        req: &BuildRequest,
+    ) -> fbuild_core::Result<OperationResponse> {
         let resp = self
             .client
             .post(format!("{}/api/build", self.base_url))
             .json(req)
-            .timeout(LONG_OPERATION_TIMEOUT)
+            .timeout(OPERATION_REQUEST_CEILING)
             .send()
             .await
             .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("request failed: {}", e)))?;
@@ -482,14 +502,12 @@ impl DaemonClient {
 
     /// Send a deploy request.
     pub async fn deploy(&self, req: &DeployRequest) -> fbuild_core::Result<OperationResponse> {
-        self.post_operation("/api/deploy", req, Some(LONG_OPERATION_TIMEOUT))
-            .await
+        self.post_operation("/api/deploy", req).await
     }
 
     /// Send a test-emu request (build + emulator run).
     pub async fn test_emu(&self, req: &TestEmuRequest) -> fbuild_core::Result<OperationResponse> {
-        self.post_operation("/api/test-emu", req, Some(LONG_OPERATION_TIMEOUT))
-            .await
+        self.post_operation("/api/test-emu", req).await
     }
 
     /// Install declared platform/framework/library dependencies without
@@ -500,8 +518,7 @@ impl DaemonClient {
         &self,
         req: &InstallDepsRequest,
     ) -> fbuild_core::Result<OperationResponse> {
-        self.post_operation("/api/install-deps", req, Some(LONG_OPERATION_TIMEOUT))
-            .await
+        self.post_operation("/api/install-deps", req).await
     }
 
     /// Get daemon info (PID, port, uptime, etc.).
@@ -737,20 +754,52 @@ impl DaemonClient {
             .map_err(|e| fbuild_core::FbuildError::DaemonError(format!("invalid response: {}", e)))
     }
 
+    /// Sample the daemon's progress counter and current stage for the
+    /// liveness watchdog. `None` when the daemon did not answer in time; the
+    /// medium timeout leaves room for a daemon slowed by host load.
+    async fn progress_sample(&self) -> Option<liveness::ProgressSample> {
+        let info = self
+            .client
+            .get(format!("{}/api/daemon/info", self.base_url))
+            .timeout(fbuild_core::time::MEDIUM_HTTP_TIMEOUT)
+            .send()
+            .await
+            .ok()?
+            .json::<DaemonInfoResponse>()
+            .await
+            .ok()?;
+        Some(liveness::ProgressSample {
+            seq: info.progress_seq,
+            stage: info.current_operation,
+        })
+    }
+
+    /// POST a long operation and wait for its result for as long as the
+    /// daemon keeps making progress, printing each new stage it reports.
     async fn post_operation<T: Serialize>(
         &self,
         path: &str,
         body: &T,
-        timeout: Option<std::time::Duration>,
+    ) -> fbuild_core::Result<OperationResponse> {
+        liveness::await_with_liveness(
+            self.post_operation_request(path, body),
+            || self.progress_sample(),
+            &liveness::LivenessPolicy::from_env(LONG_OPERATION_TIMEOUT),
+            |stage| eprintln!("fbuild daemon: {stage}"),
+        )
+        .await
+    }
+
+    async fn post_operation_request<T: Serialize>(
+        &self,
+        path: &str,
+        body: &T,
     ) -> fbuild_core::Result<OperationResponse> {
         let request = self
             .client
             .post(format!("{}{}", self.base_url, path))
-            .json(body);
-        let request = match timeout {
-            Some(timeout) => request.timeout(timeout),
-            None => request,
-        };
+            .json(body)
+            .timeout(OPERATION_REQUEST_CEILING);
         let resp = request.send().await.map_err(|e| {
             fbuild_core::FbuildError::DaemonError(format!(
                 "request failed: {}{}",
