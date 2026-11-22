@@ -11,7 +11,10 @@
 //! `IDF_TOOLS_PATH` side tree.
 //!
 //! Pins are copied from the release's own `tools/tools.json` (`status:
-//! recommended`), sha256 included: no archive is trusted by URL alone. The
+//! recommended`), sha256 included: no archive is trusted by URL alone. That
+//! copy is not trusted by eye either — its `tools.json` is committed beside
+//! the Python pins in `data/`, and `esp_idf_release_tests` compares every row
+//! against it, so a moved pin is a data diff with a named failing row. The
 //! `tools.json` platform set is a superset of what fbuild supports, so
 //! `linux-armel`, `linux-armhf` and `linux-i686` are deliberately unpinned and
 //! asking for one is an error, never a silent fallback to another host's bits.
