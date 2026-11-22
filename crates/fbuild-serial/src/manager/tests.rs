@@ -867,6 +867,43 @@ async fn concurrent_deploy_preemption_rejects_second_request_and_preserves_first
     assert!(!manager.is_preempted("COM1").await);
 }
 
+/// A deploy that finds the port held by another client's deploy queues for
+/// it and takes it over once the first deploy completes.
+#[tokio::test]
+async fn deploy_waits_for_busy_port_then_acquires_it() {
+    let manager = Arc::new(SharedSerialManager::new());
+    manager
+        .preempt_for_deploy("COM1", "deploy (project a)".into(), "request-1".into())
+        .await
+        .unwrap();
+    let first = Arc::clone(&manager);
+    tokio::spawn(async move {
+        tokio::time::sleep(Duration::from_millis(200)).await;
+        first.complete_deploy_preemption("COM1", "COM1").await;
+    });
+
+    let mut holders = Vec::new();
+    manager
+        .preempt_for_deploy_waiting(
+            "COM1",
+            "deploy (project b)".into(),
+            "request-2".into(),
+            Duration::from_secs(30),
+            |conflict, _| holders.push(conflict.to_string()),
+        )
+        .await
+        .expect("second deploy acquires the port once the first releases it");
+
+    assert!(holders[0].contains("request-1"), "{holders:?}");
+    assert!(
+        manager
+            .preemption_holder("COM1")
+            .await
+            .unwrap()
+            .contains("request-2")
+    );
+}
+
 /// FastLED/fbuild#1429: a session whose reader thread has exited must not be
 /// reused (it still holds the OS fd); `open_port` closes it first.
 #[tokio::test]

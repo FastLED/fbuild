@@ -1078,6 +1078,45 @@ impl SharedSerialManager {
             .preempt(&session_key, reason.clone(), preempted_by.clone())
             .await
             .map_err(|error| fbuild_core::FbuildError::SerialError(error.to_string()))?;
+        self.close_for_deploy(port, session_key, reason, preempted_by)
+            .await
+    }
+
+    /// [`Self::preempt_for_deploy`], queueing up to `budget` behind another
+    /// request's deploy/reset instead of failing at once. `on_wait` reports
+    /// the current holder on each re-check.
+    pub async fn preempt_for_deploy_waiting(
+        &self,
+        port: &str,
+        reason: String,
+        preempted_by: String,
+        budget: Duration,
+        on_wait: impl FnMut(&crate::preemption::PreemptionConflict, Duration),
+    ) -> fbuild_core::Result<()> {
+        let session_key = self.resolve_port_key(port);
+        self.preemption
+            .preempt_waiting(
+                &session_key,
+                reason.clone(),
+                preempted_by.clone(),
+                budget,
+                on_wait,
+            )
+            .await
+            .map_err(|error| fbuild_core::FbuildError::SerialError(error.to_string()))?;
+        self.close_for_deploy(port, session_key, reason, preempted_by)
+            .await
+    }
+
+    /// Second half of deploy preemption, once the tracker slot is held:
+    /// notify monitors and close the port.
+    async fn close_for_deploy(
+        &self,
+        port: &str,
+        session_key: String,
+        reason: String,
+        preempted_by: String,
+    ) -> fbuild_core::Result<()> {
         self.deploy_preempted_keys
             .insert(port.to_string(), session_key.clone());
         self.deploy_pending_ports.insert(port.to_string(), ());

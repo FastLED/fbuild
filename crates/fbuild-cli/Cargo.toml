@@ -42,5 +42,9 @@ walkdir = { workspace = true }
 owo-colors = { workspace = true }
 semver = { workspace = true }
 
+[dev-dependencies]
+# Paused-clock tests for the daemon liveness watchdog.
+tokio = { workspace = true, features = ["test-util"] }
+
 [lints]
 workspace = true

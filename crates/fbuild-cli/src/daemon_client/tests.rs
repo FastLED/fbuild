@@ -82,6 +82,7 @@ fn daemon_info_for_cache_identity(
         cache_schema_version,
         spawner_cwd: None,
         source_mtime: None,
+        progress_seq: None,
     }
 }
 

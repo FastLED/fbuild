@@ -189,6 +189,7 @@ fn daemon_info_response(ctx: &DaemonContext) -> DaemonInfoResponse {
         mcp_url: format!("http://127.0.0.1:{}/mcp", ctx.port),
         watch_set_cache: Some(ctx.watch_set_cache.stats()),
         long_path_support: ctx.long_path_support.clone(),
+        progress_seq: Some(crate::log_layer::progress_seq()),
     }
 }
 

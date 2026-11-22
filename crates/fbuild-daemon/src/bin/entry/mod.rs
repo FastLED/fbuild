@@ -561,6 +561,13 @@ async fn run_async(heap_profile_rate: Option<usize>) -> i32 {
                             );
                         } else if let Some(since) = daemon_empty_since {
                             if since.elapsed() >= self_eviction_timeout() {
+                                // Close admission atomically with the final
+                                // busy check, so a request admitted since the
+                                // check above keeps the daemon alive.
+                                if ctx.try_begin_shutdown(false).is_none() {
+                                    daemon_empty_since = None;
+                                    continue;
+                                }
                                 tracing::info!(
                                     "Self-eviction triggered: daemon empty for {:.1}s, shutting down",
                                     since.elapsed().as_secs_f64()

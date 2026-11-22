@@ -155,6 +155,7 @@ mod tests {
             cache_schema_version: Some(fbuild_paths::running_process::CACHE_SCHEMA_VERSION),
             spawner_cwd: spawner_cwd.map(str::to_string),
             source_mtime: None,
+            progress_seq: None,
         }
     }
 
