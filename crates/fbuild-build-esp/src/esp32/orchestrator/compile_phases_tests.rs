@@ -88,13 +88,20 @@ fn fixture(
 /// A hydrated core cache compiles zero core TUs. The core leg must then
 /// record ~0 ms instead of inheriting the sketch's compile time from the
 /// region both share.
+///
+/// The bound is RELATIVE: the bug this guards has the signature
+/// `compile-core ~= compile-core-variant ~= compile-sketch`, while a correct
+/// build leaves the empty leg at its own scheduling cost. An absolute bound
+/// (formerly `< 30 ms`) reds a correct build on an oversubscribed runner,
+/// where the empty leg alone measured 32 ms (#2152). The fake's delay is
+/// raised so the ratio has a wide margin.
 #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
 async fn empty_core_leg_does_not_inherit_the_sketch_time() {
     let (dir, core_sources, sketch_sources) = fixture(0, 1);
     let root = dir.path();
     let compiler = SlowCompiler {
         gcc: NormalizedPath::new(root.join("gcc")),
-        delay: Duration::from_millis(60),
+        delay: Duration::from_millis(200),
     };
     let overlay = LanguageExtraFlags::default();
     let build_log = Mutex::new(BuildLog::new());
@@ -133,13 +140,14 @@ async fn empty_core_leg_does_not_inherit_the_sketch_time() {
 
     assert!(core.objects.is_empty(), "no core TU was compiled");
     assert_eq!(sketch.objects.len(), 1);
+    // The bug gives a 1:1 ratio; correct code gives ~0.35 even at 32 ms vs 93 ms.
     assert!(
-        core_phase < Duration::from_millis(30),
-        "an empty core leg must not inherit the sketch's time; got {core_phase:?}"
+        core_phase * 3 < sketch_phase,
+        "an empty core leg must not inherit the sketch's time; got core {core_phase:?} vs sketch {sketch_phase:?}"
     );
     assert!(
         sketch_phase >= Duration::from_millis(40),
-        "the sketch TU compiles against the fake's 60 ms delay; got {sketch_phase:?}"
+        "the sketch TU compiles against the fake's 200 ms delay; got {sketch_phase:?}"
     );
     assert!(
         region >= sketch_phase.saturating_sub(Duration::from_millis(10)),
