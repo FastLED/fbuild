@@ -13,7 +13,7 @@ from typing import cast
 from ci.cancel_superseded import queue_pr
 
 ROOT = Path(__file__).resolve().parents[1]
-PROOFT_SOURCE = "git+https://github.com/forge-ci/prooft@d08d58bebcd8592e4526b9bde9ca4717966a8786"
+PROOFT_SOURCE = "git+https://github.com/forge-ci/prooft@3445861a03acde3a338c840d582b14c8b0fd22d9"
 JOBS = ("policy", "dylint", "gate", "linux", "fmt")
 FORCE_TAGS = ("[ci-full]", "[ci-remote]", "[no-attest]")
 

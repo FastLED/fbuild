@@ -18,17 +18,22 @@ workspace free bytes before and after; Rust/fbuild caches and disk guards stay
 unchanged. Run its focused checks with
 `uv run --no-project python -m unittest ci.test_reclaim_android_ndks`.
 
-`./push` validates a committed feature branch before pushing it. It runs
-formatting and cross-target Clippy, replays the checks and unit tests from
-`check-ubuntu.yml` (builds and tests only), and runs the `dylint` lane on the
-host, which supplies host Clippy through `soldr lint`. Bosn receives build and test concurrency limits based on
-the host's current load. Lint never runs under bosn: the `dylint` lane
-(`local_dylint_gate.py`) runs `dylint.yml`'s Python policy validators through
-uv, every lint library's formatting and UI tests through `soldr cargo`, and
-`soldr lint rust --check --cross-dylint` over the workspace for every shipping
-target.
-Prooft reuses fresh attestations with matching lane inputs and verifies all
-gates before push. Use `./push --prove-only` to validate and stamp locally.
+`./push` is a thin delegate (forge-ci/ci.yml GATE-014): it execs
+`prooft --push` with its arguments, resolved from the one pin in
+`prooft_verify.py`. The prooft runner refuses a dirty tree or the base branch,
+runs the lanes that declare `run:` in `ci-attestations.yml` and stamps their
+gates on HEAD, then pushes with a lease and opens or reuses the PR (`--no-pr`
+skips it). A lane already attested on HEAD is not rerun.
+
+Local lanes are host-only, for speed. The `lint` lane always runs first, on
+the host (lint never runs under bosn): `soldr lint rust --check --host-only`,
+which stamps formatting plus host Clippy and Dylint. `./push --test` adds the
+`linux-minimal` test lane, which replays the checks and unit tests from
+`check-ubuntu.yml` on the native Linux x64 host through bosn, with build and
+test concurrency sized to the host's current load. Cross-target Clippy and
+Dylint and the `dylint` lane declare no `run:`, so they stay unattested and
+CI runs them. Bare `prooft` (lint only) and `prooft --test` run the same lanes
+without pushing.
 
 `prooft_verify.py` reads the policy and tool pin from the trusted base commit.
 Default PR runs with valid proof can skip formatting, both jobs in the

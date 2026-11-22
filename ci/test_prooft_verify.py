@@ -1,4 +1,4 @@
-"""Contract tests for ci-minimal's `prooft` job and the `./push` lanes.
+"""Contract tests for ci-minimal's `prooft` job, `./push` and the runner lanes.
 
     uv run --with pyyaml --no-project python -m unittest ci.test_prooft_verify
 
@@ -14,6 +14,7 @@ import importlib.machinery
 import importlib.util
 import os
 import subprocess
+import sys
 import tempfile
 import tomllib
 import unittest
@@ -22,9 +23,10 @@ from unittest.mock import patch
 
 import yaml
 
-from ci import prooft_verify
+from ci import local_gate, prooft_verify
 
 ROOT = Path(__file__).resolve().parents[1]
+LINT_CHECKS = {"fmt", "lint", "clippy", "dylint", "types", "check", "static"}
 PR_ENV = {"EVENT_NAME": "pull_request", "BASE_SHA": "b" * 40, "HEAD_SHA": "a" * 40, "PR_TITLE": "t", "FORK": "false"}
 
 
@@ -196,89 +198,60 @@ class PolicyTests(unittest.TestCase):
 
 
 class PushTests(unittest.TestCase):
-    @staticmethod
-    def git_outputs(branch: str = "feature", status: str = "") -> dict[tuple[str, ...], str]:
-        return {
-            ("rev-parse", "--abbrev-ref", "HEAD"): branch,
-            ("for-each-ref", "--format=%(symref:short)", "refs/remotes/origin/HEAD"): "origin/trunk",
-            ("status", "--porcelain", "--untracked-files=no"): status,
-            ("ls-files", "--others", "--exclude-standard"): "",
-        }
+    """GATE-014/016/017: `./push` delegates to the prooft runner; the policy names the lanes."""
 
-    def test_push_lanes_prove_every_required_gate(self) -> None:
-        push = load_push()
-        policy = yaml.safe_load((ROOT / "ci-attestations.yml").read_text())
-        needed = {gate for gates in policy["jobs"].values() for gate in gates}
-        proven = {gate for gate, spec in policy["gates"].items() if spec["lane"] in push.LANES}
-        self.assertLessEqual(needed, proven)
-        self.assertEqual(set(push.LANES), set(policy["lanes"]))
+    def setUp(self) -> None:
+        self.policy = yaml.safe_load((ROOT / "ci-attestations.yml").read_text())
+        self.lanes = self.policy["lanes"]
 
-    def test_refuses_protected_branches_and_dirty_trees(self) -> None:
-        push = load_push()
-        cases = (("main", ""), ("trunk", ""), ("HEAD", ""), ("feature", " M crates/x.rs"))
-        for branch, status in cases:
-            outputs = self.git_outputs(branch, status)
-            with patch.object(push, "git", lambda *args: outputs[args]), patch.object(push, "attest") as attest:
-                self.assertEqual(3, push.main([]))
-            attest.assert_not_called()
+    def stage(self, lane: str) -> str:
+        """prooft's rule: the declared stage, else lint when every gate is a lint check."""
+        if "stage" in self.lanes[lane]:
+            return self.lanes[lane]["stage"]
+        checks = {gate.rsplit("/", 1)[1] for gate, spec in self.policy["gates"].items() if spec["lane"] == lane}
+        return "lint" if checks and checks <= LINT_CHECKS else "test"
 
-    def test_no_proof_bypass_is_a_usage_error(self) -> None:
-        push = load_push()
-        with patch.object(push, "step") as step, self.assertRaises(SystemExit) as raised:
-            push.main(["--no-proof"])
-        self.assertEqual(2, raised.exception.code)
-        step.assert_not_called()
+    def test_push_execs_the_pinned_prooft_runner_with_the_callers_args(self) -> None:
+        with patch.object(sys, "argv", ["push", "--test", "--no-pr"]), patch.object(os, "execvp") as execvp:
+            load_push()
+        argv = prooft_verify.prooft_argv("--push", "--test", "--no-pr")
+        execvp.assert_called_once_with(argv[0], argv)
+        self.assertEqual(["uvx", "--from", prooft_verify.PROOFT_SOURCE, "prooft"], argv[:4])
 
-    def test_failed_proof_pushes_nothing(self) -> None:
-        push = load_push()
-        outputs = self.git_outputs()
-        with (
-            patch.object(push, "git", lambda *args: outputs[args]),
-            patch.object(push, "attest", return_value=False),
-            patch.object(push, "step") as step,
-        ):
-            self.assertEqual(1, push.main([]))
-        step.assert_not_called()
+    def test_push_never_publishes_attests_or_skips_lint_itself(self) -> None:
+        code = "\n".join(
+            line for line in (ROOT / "push").read_text().splitlines() if not line.lstrip().startswith("#")
+        )
+        for banned in ("git push", "gh pr", "subprocess", "local_gate", "--no-lint", '"run"', '"soldr"', '"apply"'):
+            self.assertNotIn(banned, code)
 
-    def test_lanes_verify_before_push_and_pr(self) -> None:
-        push = load_push()
-        calls = []
-        outputs = self.git_outputs()
+    def runnable(self) -> dict[str, list[str]]:
+        """Lanes the bare runner executes, in declaration order, with their argv."""
+        runs = {lane: spec["run"] for lane, spec in self.lanes.items() if "run" in spec}
+        for lane, run in runs.items():
+            with self.subTest(lane=lane):
+                self.assertTrue(isinstance(run, list) and run and all(isinstance(arg, str) for arg in run))
+        return runs
 
-        def git(*args, **_kwargs):
-            return "" if args[0] == "update-ref" else outputs[args]
+    def test_lint_runs_first_on_the_host_only_through_soldr_lint(self) -> None:
+        runs = self.runnable()
+        stages = [self.stage(lane) for lane in runs]
+        self.assertIn("lint", stages, "GATE-017: at least one runnable lint lane")
+        self.assertEqual(sorted(stages, key=lambda stage: stage != "lint"), stages, "lint lanes come first")
+        for lane, argv in runs.items():
+            if self.stage(lane) == "lint":
+                with self.subTest(lane=lane):
+                    self.assertEqual(["soldr", "lint"], argv[:2], "GATE-016: lint is host soldr lint, never bosn")
+                    self.assertIn("--host-only", argv, "local lint skips cross targets; CI covers them")
+                    self.assertNotIn("--cross-dylint", argv)
+        self.assertEqual(["soldr", "lint", "rust", "--check", "--host-only"], runs["lint"])
 
-        def run(argv):
-            calls.append(argv)
-            return 0
-
-        gates = {lane: {lane} for lane in push.LANES}
-        with (
-            patch.object(push, "git", git),
-            patch.object(push, "lane_gates", return_value=gates),
-            patch.object(push, "reuse_proof"),
-            patch.object(push, "proof_status", side_effect=[set(), {"lint"}, set(gates)]),
-            patch.object(push, "step", run),
-            patch.object(push, "has_open_pr", return_value=False),
-        ):
-            self.assertEqual(0, push.main([]))
-        self.assertEqual([
-            ["run", "linux-minimal"], ["run", "dylint"], ["verify", "HEAD"],
-        ], [argv[6:8] for argv in calls[:3]])
-        self.assertEqual(["git", "push"], calls[3][:2])
-        self.assertEqual(["gh", "pr", "create"], calls[4][:3])
-
-    def test_missing_gate_after_verify_refuses_push(self) -> None:
-        push = load_push()
-        gates = {lane: {lane} for lane in push.LANES}
-        with (
-            patch.object(push, "git"),
-            patch.object(push, "lane_gates", return_value=gates),
-            patch.object(push, "reuse_proof"),
-            patch.object(push, "proof_status", return_value={"lint"}),
-            patch.object(push, "step", return_value=0),
-        ):
-            self.assertFalse(push.attest("feature"))
+    def test_test_lane_is_the_native_host_replay_and_cross_lanes_stay_remote(self) -> None:
+        runs = self.runnable()
+        self.assertEqual("test", self.stage("linux-minimal"))
+        self.assertEqual(["ci.local_gate", "--lane", "linux-minimal"], runs["linux-minimal"][-3:])
+        self.assertIn("glibc-floor", local_gate.UBUNTU_SELECTION.skipped_jobs, "the release cross-link stays remote")
+        self.assertNotIn("dylint", runs, "cross-target Dylint is CI's; a host run cannot prove the lane")
 
 
 if __name__ == "__main__":

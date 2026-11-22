@@ -3,162 +3,18 @@
 # requires-python = ">=3.11"
 # dependencies = []
 # ///
-"""Prove a committed feature branch, push it, and open a PR.
+"""Publish this branch through the prooft runner (forge-ci/ci.yml GATE-014).
 
-Use --prove-only to stamp HEAD locally or --no-pr to only prove and push.
-Exit codes: 0 success, 1 failed step, 2 usage, 3 refused.
+Lint lanes first, `--test` adds the test lanes, then a lease push and the PR
+is opened or reused. Lanes and their commands live in ci-attestations.yml.
 """
 
-from __future__ import annotations
-
-import argparse
-import json
-import subprocess
+import os
 import sys
-import tempfile
-import time
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
-sys.path.insert(0, str(ROOT))
-from ci.prooft_verify import prooft_argv  # noqa: E402
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from ci.prooft_verify import prooft_argv  # noqa: E402  (the repository's one prooft pin)
 
-LOCAL_GATE = ["uv", "run", "--no-project", "--python", "3.12", "python", "-m", "ci.local_gate", "--lane"]
-LANES = {
-    "linux-minimal": [*LOCAL_GATE, "linux-minimal"],
-    "lint": ["uv", "run", "--no-project", "python", "-m", "ci.local_lint_gate", "--cross-clippy"],
-    "dylint": [*LOCAL_GATE, "dylint"],
-}
-
-
-def git(*args: str, root: Path = ROOT) -> str:
-    return subprocess.run(
-        ["git", *args], cwd=root, check=True, stdout=subprocess.PIPE, text=True,
-    ).stdout.strip()
-
-
-def step(argv: list[str], *, stdin: str | None = None) -> int:
-    print(f"./push: $ {' '.join(argv)}", flush=True)
-    return subprocess.run(argv, cwd=ROOT, check=False, input=stdin, text=True).returncode
-
-
-def read(argv: list[str]) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(argv, cwd=ROOT, check=False, stdout=subprocess.PIPE, text=True)
-
-
-def proof_status(root: Path) -> set[str]:
-    result = read(prooft_argv("verify", "HEAD", "--json", root=root))
-    rows = json.loads(result.stdout)
-    return {row["gate"] for row in rows if row["state"] == "valid"}
-
-
-def lane_gates(root: Path) -> dict[str, set[str]]:
-    result = read(prooft_argv("lanes", root=root))
-    result.check_returncode()
-    gates = dict(line.split(": ", 1) for line in result.stdout.splitlines())
-    if set(gates) != set(LANES) or not all(gates.values()):
-        raise ValueError("push lanes do not match ci-attestations.yml")
-    return {lane: set(paths.split(", ")) for lane, paths in gates.items()}
-
-
-def reuse_proof(ref: str, root: Path, valid: set[str]) -> None:
-    exists = subprocess.run(
-        ["git", "show-ref", "--verify", "--quiet", ref], cwd=root, check=False,
-    )
-    if exists.returncode != 0:
-        return
-    result = read(prooft_argv("emit", ref, root=root))
-    result.check_returncode()
-    # prooft validates the bundle against HEAD's input keys and retains the
-    # execution timestamps. Exit 1 also covers a bundle with no matching inputs.
-    bundle = json.loads(result.stdout)
-    bundle["attestations"] = [item for item in bundle["attestations"] if item["gate"] not in valid]
-    if bundle["attestations"]:
-        step(prooft_argv("apply", "-", root=root), stdin=json.dumps(bundle))
-
-
-def attest(branch: str, root: Path = ROOT) -> bool:
-    gates = lane_gates(root)
-    valid = proof_status(root)
-    proof_ref = f"refs/fbuild/push/{branch}"
-    if any(not paths <= valid for paths in gates.values()):
-        reuse_proof(proof_ref, root, valid)
-        valid = proof_status(root)
-    for lane, command in LANES.items():
-        if gates[lane] <= valid:
-            print(f"./push: {lane}: existing proof (inputs unchanged)", flush=True)
-            continue
-        started = time.monotonic()
-        code = step(prooft_argv("run", lane, "--", *command, root=root))
-        print(f"./push: {lane}: {time.monotonic() - started:.1f}s (exit {code})", flush=True)
-        if code != 0:
-            return False
-        git("update-ref", proof_ref, "HEAD", root=root)
-    code = step(prooft_argv("verify", "HEAD", root=root))
-    if code != 0:
-        return False
-    valid = proof_status(root)
-    if any(not paths <= valid for paths in gates.values()):
-        return False
-    git("update-ref", proof_ref, "HEAD", root=root)
-    return True
-
-
-def attest_checkout(branch: str) -> bool:
-    if not git("ls-files", "--others", "--exclude-standard"):
-        return attest(branch)
-    # Bosn snapshots untracked files. Replay a separate checkout of the
-    # committed inputs when the contributor has local scratch files.
-    original = git("rev-parse", "HEAD")
-    with tempfile.TemporaryDirectory(prefix="fbuild-push-") as temp:
-        checkout = Path(temp) / "source"
-        git("worktree", "add", "--detach", str(checkout), original)
-        try:
-            if not attest(branch, checkout):
-                return False
-            stamped = git("rev-parse", "HEAD", root=checkout)
-        finally:
-            git("worktree", "remove", str(checkout))
-    git("update-ref", f"refs/heads/{branch}", stamped, original)
-    return True
-
-
-def has_open_pr(branch: str) -> bool:
-    result = read(["gh", "pr", "list", "--head", branch, "--state", "open", "--json", "number", "--jq", "length"])
-    result.check_returncode()
-    return int(result.stdout) > 0
-
-
-def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__, allow_abbrev=False)
-    parser.add_argument("--no-pr", action="store_true", help="do not open a pull request")
-    parser.add_argument("--prove-only", action="store_true", help="stamp HEAD but push nothing")
-    parser.add_argument("--remote", default="origin")
-    args = parser.parse_args(argv)
-
-    try:
-        branch = git("rev-parse", "--abbrev-ref", "HEAD")
-        default = git("for-each-ref", "--format=%(symref:short)", f"refs/remotes/{args.remote}/HEAD")
-        if branch in {"HEAD", "main", "master", default.removeprefix(f"{args.remote}/")}:
-            print(f"./push: refusing to push {branch!r}; work on a feature branch", file=sys.stderr)
-            return 3
-        if git("status", "--porcelain", "--untracked-files=no"):
-            print("./push: refusing: tracked files have uncommitted changes", file=sys.stderr)
-            return 3
-        if not attest_checkout(branch):
-            print("./push: proof failed; nothing pushed", file=sys.stderr)
-            return 1
-        if args.prove_only:
-            return 0
-        if step(["git", "push", "--force-with-lease", "-u", "--", args.remote, f"HEAD:refs/heads/{branch}"]) != 0:
-            return 1
-        if args.no_pr or has_open_pr(branch):
-            return 0
-        return 0 if step(["gh", "pr", "create", "--fill", "--head", branch]) == 0 else 1
-    except (OSError, subprocess.CalledProcessError, ValueError, KeyError) as error:
-        print(f"./push: {error}", file=sys.stderr)
-        return 1
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+argv = prooft_argv("--push", *sys.argv[1:])
+os.execvp(argv[0], argv)
