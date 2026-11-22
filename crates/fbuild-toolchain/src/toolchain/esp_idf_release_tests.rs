@@ -445,3 +445,267 @@ async fn esp_rom_elfs_installs_from_the_pinned_archive() {
     let again = tool.ensure_normalized().await.unwrap();
     assert_eq!(root, again);
 }
+
+/// The pinned release's own `tools.json`, committed verbatim beside the pins.
+///
+/// `PINS` is a hand-copied projection of this file. The tests below compare the
+/// two row by row, so moving the pin (#2133) is a data diff a reviewer can read
+/// instead of a transcription exercise nothing can check.
+const RELEASE_TOOLS_JSON: &str = include_str!("../../data/esp-idf-v5.5.1-tools.json");
+
+/// The release the snapshot above was taken from, spelled as its file name is.
+/// Kept as its own const so a version bump that forgets the snapshot fails
+/// `the_tools_json_snapshot_belongs_to_the_pinned_release` instead of silently
+/// checking v5.5.1 data against a newer table.
+const SNAPSHOT_RELEASE: &str = "v5.5.1";
+
+/// Upstream `tools.json` platform spellings that differ from fbuild's key for
+/// the same host. `ninja` is the one tool Espressif publishes under `win64`.
+const PLATFORM_ALIASES: &[(&str, &str)] = &[("win32", "win64")];
+
+/// The five hosts `platform_key` supports, as real `HostPlatform`s.
+fn supported_hosts() -> [HostPlatform; 5] {
+    [
+        HostPlatform::new(HostOs::Linux, HostArch::X86_64),
+        HostPlatform::new(HostOs::Linux, HostArch::Aarch64),
+        HostPlatform::new(HostOs::Macos, HostArch::X86_64),
+        HostPlatform::new(HostOs::Macos, HostArch::Aarch64),
+        HostPlatform::new(HostOs::Windows, HostArch::X86_64),
+    ]
+}
+
+/// Every component a delegated ESP-IDF build can ask for, across both profiles.
+fn delegated_components() -> Vec<IdfComponent> {
+    let mut all: Vec<IdfComponent> = Vec::new();
+    for profile in [IdfProfile::Esp32S3Only, IdfProfile::Riscv32] {
+        for component in profile.components() {
+            if !all.contains(component) {
+                all.push(*component);
+            }
+        }
+    }
+    all
+}
+
+/// The recommended version of `component` that the pins use for `host`.
+fn recommended_version_for<'a>(
+    json: &'a serde_json::Value,
+    component: &str,
+    host: HostPlatform,
+) -> Option<&'a serde_json::Value> {
+    let key = platform_key(host)?;
+    let pinned = PINS
+        .iter()
+        .find(|p| p.component == component && (p.platform == key || p.platform == "any"))?;
+    recommended_version(json, component, pinned.version)
+}
+
+fn release_tools_json() -> serde_json::Value {
+    serde_json::from_str(RELEASE_TOOLS_JSON)
+        .expect("the pinned tools.json snapshot must be valid JSON")
+}
+
+/// The `status: recommended` entry for `component` at `version`, or `None`.
+fn recommended_version<'a>(
+    json: &'a serde_json::Value,
+    component: &str,
+    version: &str,
+) -> Option<&'a serde_json::Value> {
+    let tool = json["tools"]
+        .as_array()?
+        .iter()
+        .find(|t| t["name"].as_str() == Some(component))?;
+    tool["versions"].as_array()?.iter().find(|v| {
+        v["name"].as_str() == Some(version) && v["status"].as_str() == Some("recommended")
+    })
+}
+
+/// One host's archive inside a recommended version, following the alias table.
+fn archive_for<'a>(
+    version: &'a serde_json::Value,
+    platform: &str,
+) -> Option<&'a serde_json::Value> {
+    let alias = PLATFORM_ALIASES
+        .iter()
+        .find(|(ours, _)| *ours == platform)
+        .map(|(_, upstream)| *upstream);
+    version
+        .get(platform)
+        .or_else(|| alias.and_then(|key| version.get(key)))
+}
+
+#[test]
+fn the_tools_json_snapshot_belongs_to_the_pinned_release() {
+    assert_eq!(
+        SNAPSHOT_RELEASE, IDF_RELEASE_VERSION,
+        "data/esp-idf-{SNAPSHOT_RELEASE}-tools.json is checked against the pins, but the \
+         delegated pin is {IDF_RELEASE_VERSION}: replace the snapshot when the pin moves"
+    );
+}
+
+#[test]
+fn pins_are_verbatim_rows_of_the_release_tools_json() {
+    let json = release_tools_json();
+    let mut mismatches = Vec::new();
+    for pin in PINS {
+        let Some(version) = recommended_version(&json, pin.component, pin.version) else {
+            mismatches.push(format!(
+                "{}: no `recommended` {} entry in the pinned release's tools.json",
+                pin.component, pin.version
+            ));
+            continue;
+        };
+        let Some(archive) = archive_for(version, pin.platform) else {
+            mismatches.push(format!(
+                "{} {}: tools.json has no `{}` archive",
+                pin.component, pin.version, pin.platform
+            ));
+            continue;
+        };
+        if archive["sha256"].as_str() != Some(pin.sha256) {
+            mismatches.push(format!(
+                "{} {}: sha256 is {} upstream, {} here",
+                pin.component,
+                pin.platform,
+                archive["sha256"].as_str().unwrap_or("<none>"),
+                pin.sha256
+            ));
+        }
+        if archive["size"].as_u64() != Some(pin.bytes) {
+            mismatches.push(format!(
+                "{} {}: size is {} upstream, {} here",
+                pin.component, pin.platform, archive["size"], pin.bytes
+            ));
+        }
+        if archive["url"].as_str() != Some(pin.url) {
+            mismatches.push(format!(
+                "{} {}: url is {} upstream, {} here",
+                pin.component,
+                pin.platform,
+                archive["url"].as_str().unwrap_or("<none>"),
+                pin.url
+            ));
+        }
+    }
+    assert!(
+        mismatches.is_empty(),
+        "{} pin row(s) disagree with data/esp-idf-{SNAPSHOT_RELEASE}-tools.json:\n{}",
+        mismatches.len(),
+        mismatches.join("\n")
+    );
+}
+
+#[test]
+fn pins_cover_exactly_the_archives_upstream_publishes() {
+    // Coverage, both ways: every archive the pinned release recommends for a
+    // host fbuild supports must have a `PINS` row, and `PINS` may not invent a
+    // row for a host upstream publishes nothing for (which would silently
+    // install another host's binaries).
+    let json = release_tools_json();
+    let mut missing = Vec::new();
+    let mut invented = Vec::new();
+    let mut reached: Vec<(&str, &str)> = Vec::new();
+    for component in delegated_components() {
+        for host in supported_hosts() {
+            let key = platform_key(host).expect("supported host");
+            let version = recommended_version_for(&json, component.id(), linux())
+                .unwrap_or_else(|| panic!("{} is not a recommended release", component.id()));
+            // `esp-rom-elfs` publishes one host-independent archive under `any`.
+            let upstream = archive_for(version, key)
+                .or_else(|| version.get("any"))
+                .is_some();
+            match (upstream, pin(component, host)) {
+                (true, Ok(pinned)) => {
+                    assert!(
+                        pinned.platform == key || pinned.platform == "any",
+                        "{} {key} borrowed {}",
+                        component.id(),
+                        pinned.platform
+                    );
+                    reached.push((pinned.component, pinned.platform));
+                }
+                (true, Err(e)) => missing.push(format!("{} {key}: {e}", component.id())),
+                (false, Ok(_)) => invented.push(format!("{} {key}", component.id())),
+                // Upstream publishes nothing for this host either: no pin is
+                // the honest answer, and `pin` above must refuse it.
+                (false, Err(_)) => {}
+            }
+        }
+    }
+    assert!(
+        missing.is_empty() && invented.is_empty(),
+        "pins disagree with the release's host coverage:\n  missing:\n{}\n  invented:\n{}",
+        missing.join("\n  "),
+        invented.join("\n  ")
+    );
+    // Rows, not (row, host) pairs: `esp-rom-elfs`'s single `any` row answers for
+    // all five hosts. This is the dead-row check — a pin nothing can reach is a
+    // typo in `platform`, not coverage.
+    reached.sort_unstable();
+    reached.dedup();
+    let mut pinned_rows: Vec<(&str, &str)> =
+        PINS.iter().map(|p| (p.component, p.platform)).collect();
+    pinned_rows.sort_unstable();
+    assert_eq!(
+        reached, pinned_rows,
+        "every pin must be reachable from a supported host"
+    );
+}
+
+#[test]
+fn upstream_publishes_no_linux_arm64_ninja_so_a_delegated_build_there_has_none() {
+    // Recorded, not papered over: `tools.json` for the pinned release has no
+    // `linux-arm64` ninja archive (the five keys are linux-amd64, macos,
+    // macos-arm64 and win64), so a delegated `idf.py` build on an arm64 Linux
+    // host cannot get a pinned ninja even though every other component is
+    // pinned there. If upstream ever publishes one this test fails and the
+    // pin should be added; until then `pin()` must refuse rather than borrow
+    // another host's binary.
+    let json = release_tools_json();
+    let version = recommended_version(&json, "ninja", "1.12.1").expect("ninja 1.12.1");
+    assert!(
+        archive_for(version, "linux-arm64").is_none(),
+        "upstream now publishes a linux-arm64 ninja: add the pin"
+    );
+    assert!(
+        pin(
+            IdfComponent::Ninja,
+            HostPlatform::new(HostOs::Linux, HostArch::Aarch64)
+        )
+        .is_err(),
+        "no pinned ninja exists for linux-arm64, so the lookup must refuse"
+    );
+}
+
+#[test]
+fn the_release_publishes_one_recommended_version_per_pinned_component() {
+    let json = release_tools_json();
+    for component in IdfProfile::Esp32S3Only.components() {
+        let versions: Vec<String> = json["tools"]
+            .as_array()
+            .expect("tools[]")
+            .iter()
+            .filter(|t| t["name"].as_str() == Some(component.id()))
+            .flat_map(|t| t["versions"].as_array().cloned().unwrap_or_default())
+            .filter(|v| v["status"].as_str() == Some("recommended"))
+            .map(|v| v["name"].as_str().unwrap_or_default().to_string())
+            .collect();
+        assert_eq!(
+            versions.len(),
+            1,
+            "{} has {} `recommended` versions in tools.json, so a pin cannot name one \
+             release and install another",
+            component.id(),
+            versions.len()
+        );
+        let pinned = pin(*component, linux()).unwrap();
+        assert_eq!(
+            versions[0],
+            pinned.version,
+            "{} pins {} but tools.json recommends {}",
+            component.id(),
+            pinned.version,
+            versions[0]
+        );
+    }
+}
