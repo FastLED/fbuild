@@ -277,6 +277,10 @@ pub struct DaemonInfoResponse {
     pub spawner_cwd: Option<String>,
     #[serde(default)]
     pub source_mtime: Option<f64>,
+    /// Monotonic work-progress counter for the liveness watchdog; absent on
+    /// daemons that predate it.
+    #[serde(default)]
+    pub progress_seq: Option<u64>,
 }
 
 #[derive(Debug, Deserialize)]

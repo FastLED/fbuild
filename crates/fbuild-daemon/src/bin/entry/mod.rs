@@ -560,7 +560,9 @@ async fn run_async(heap_profile_rate: Option<usize>) -> i32 {
                                 self_eviction_timeout().as_secs_f64()
                             );
                         } else if let Some(since) = daemon_empty_since {
-                            if since.elapsed() >= self_eviction_timeout() {
+                            if since.elapsed() >= self_eviction_timeout()
+                                && ctx.try_begin_shutdown(false).is_some()
+                            {
                                 tracing::info!(
                                     "Self-eviction triggered: daemon empty for {:.1}s, shutting down",
                                     since.elapsed().as_secs_f64()

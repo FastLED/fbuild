@@ -331,6 +331,11 @@ pub struct DaemonInfoResponse {
     /// with clients and daemons that predate the long-path preflight.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub long_path_support: Option<fbuild_paths::long_paths::Observation>,
+    /// Monotonic work-progress counter the CLI's liveness watchdog samples:
+    /// it keeps waiting on a long operation while this advances, and calls
+    /// the daemon hung only after a load-scaled window with no change.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub progress_seq: Option<u64>,
     pub source_mtime: f64,
     pub spawner_cwd: String,
     /// MCP (Model Context Protocol) server URL.
@@ -1029,6 +1034,7 @@ mod tests {
             mcp_url: "http://127.0.0.1:8765/mcp".into(),
             watch_set_cache: None,
             long_path_support: None,
+            progress_seq: None,
         };
         let json = serde_json::to_string(&resp).unwrap();
         assert!(json.contains("\"started_at\""));
@@ -1080,6 +1086,7 @@ mod tests {
             mcp_url: "http://127.0.0.1:8765/mcp".into(),
             watch_set_cache: None,
             long_path_support: None,
+            progress_seq: None,
         };
         let json = serde_json::to_string(&resp).unwrap();
         assert!(!json.contains("current_operation"));
@@ -1120,6 +1127,7 @@ mod tests {
             mcp_url: "http://127.0.0.1:8765/mcp".into(),
             watch_set_cache: None,
             long_path_support: None,
+            progress_seq: None,
         };
         let json = serde_json::to_string(&resp).unwrap();
         assert!(json.contains("\"current_operation\""));

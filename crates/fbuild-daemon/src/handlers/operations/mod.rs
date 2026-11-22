@@ -9,6 +9,7 @@ mod build;
 mod common;
 mod deploy;
 mod deploy_port;
+mod deploy_port_wait;
 mod deploy_teensy;
 mod install_deps;
 mod monitor;

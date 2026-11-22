@@ -176,8 +176,13 @@ pub(crate) fn qemu_extra_build_flags(platform: fbuild_core::Platform, mcu: &str)
     }
 }
 
-/// RAII guard that sets `operation_in_progress` to true on creation
-/// and false on drop. Also tracks daemon state and current operation description.
+/// RAII guard that sets `operation_in_progress` to true on creation and
+/// clears it when the *last* concurrent operation drops. Also tracks daemon
+/// state and current operation description.
+///
+/// Concurrent operations share the flag, so a guard that finishes first must
+/// not clear it: the idle loop reads it and would self-evict the daemon in the
+/// middle of the other client's build.
 pub(crate) struct OperationGuard {
     ctx: Arc<DaemonContext>,
     flag: Arc<std::sync::atomic::AtomicBool>,
@@ -192,8 +197,9 @@ impl OperationGuard {
         description: Option<String>,
     ) -> Self {
         ctx.touch_activity();
+        crate::log_layer::note_progress();
         ctx.active_operations.fetch_add(1, Ordering::AcqRel);
-        ctx.operation_in_progress.store(true, Ordering::Relaxed);
+        ctx.operation_in_progress.store(true, Ordering::Release);
         if let Ok(mut s) = ctx.daemon_state.write() {
             *s = daemon_state;
         }
@@ -211,8 +217,12 @@ impl OperationGuard {
 
 impl Drop for OperationGuard {
     fn drop(&mut self) {
-        self.ctx.active_operations.fetch_sub(1, Ordering::AcqRel);
-        self.flag.store(false, Ordering::Relaxed);
+        crate::log_layer::note_progress();
+        let remaining = self.ctx.active_operations.fetch_sub(1, Ordering::AcqRel) - 1;
+        if remaining > 0 {
+            return;
+        }
+        self.flag.store(false, Ordering::Release);
         if let Ok(mut s) = self.state.write() {
             *s = fbuild_core::DaemonState::Idle;
         }
@@ -240,6 +250,35 @@ mod tests {
 
         drop(second);
         assert_eq!(ctx.active_operations.load(Ordering::Acquire), 0);
+    }
+
+    /// Two clients build concurrently and the first one finishes. The second
+    /// is still compiling, so the daemon must stay busy: the idle loop used to
+    /// read a single boolean that the first guard's drop cleared, self-evicted
+    /// mid-build, and the surviving client lost its connection after ~500 s of
+    /// work ("error sending request for url .../api/deploy").
+    #[test]
+    fn finishing_one_operation_keeps_daemon_busy_while_another_runs() {
+        let (shutdown_tx, _shutdown_rx) = tokio::sync::watch::channel(false);
+        let ctx = Arc::new(DaemonContext::new(0, shutdown_tx, ".".to_string()));
+        let first = OperationGuard::new(&ctx, fbuild_core::DaemonState::Building, None);
+        let second = OperationGuard::new(
+            &ctx,
+            fbuild_core::DaemonState::Deploying,
+            Some("deploying esp32c6".to_string()),
+        );
+
+        drop(first);
+        assert!(
+            ctx.busy_reason().is_some(),
+            "a running operation must block self-eviction"
+        );
+        assert!(ctx.operation_in_progress.load(Ordering::Acquire));
+        assert!(ctx.try_begin_shutdown(false).is_none());
+
+        drop(second);
+        assert_eq!(ctx.busy_reason(), None);
+        assert!(!ctx.operation_in_progress.load(Ordering::Acquire));
     }
 
     #[tokio::test]

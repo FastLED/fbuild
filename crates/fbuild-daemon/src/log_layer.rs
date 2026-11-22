@@ -31,6 +31,7 @@
 //! event.
 
 use std::fmt::Write as _;
+use std::sync::atomic::{AtomicU64, Ordering};
 
 use tokio::sync::broadcast;
 use tracing::field::{Field, Visit};
@@ -51,6 +52,43 @@ impl BroadcastLogLayer {
     }
 }
 
+/// Work-progress counter sampled by the CLI's liveness watchdog through
+/// `/api/daemon/info` `progress_seq`.
+///
+/// Every tracing event from real work (compile steps, library builds,
+/// package installs, deploy/flash progress, zccache compile handling) bumps
+/// it, as do operation starts and finishes. Events from the daemon's own
+/// periodic housekeeping are excluded: the idle loop's "staying alive" line
+/// fires every minute whether or not anything is moving, and counting it
+/// would make a hung operation look alive forever.
+static PROGRESS_SEQ: AtomicU64 = AtomicU64::new(0);
+
+/// Module paths whose events are periodic housekeeping, not work progress.
+const HOUSEKEEPING_MODULES: &[&str] = &[
+    "fbuild_daemon::entry",
+    "fbuild_daemon::shutdown",
+    "fbuild_daemon::handlers::health",
+    "fbuild_daemon::handlers::websockets",
+    "maintenance_schedule",
+];
+
+/// Current value of the work-progress counter.
+pub fn progress_seq() -> u64 {
+    PROGRESS_SEQ.load(Ordering::Relaxed)
+}
+
+/// Record that an operation advanced without a tracing event saying so.
+pub fn note_progress() {
+    PROGRESS_SEQ.fetch_add(1, Ordering::Relaxed);
+}
+
+/// Whether an event from `module` is evidence that work is advancing.
+fn counts_as_progress(module: &str) -> bool {
+    !HOUSEKEEPING_MODULES
+        .iter()
+        .any(|housekeeping| module.contains(housekeeping))
+}
+
 fn now_unix() -> f64 {
     std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
@@ -63,15 +101,18 @@ where
     S: Subscriber,
 {
     fn on_event(&self, event: &Event<'_>, _ctx: Context<'_, S>) {
+        let meta = event.metadata();
+        let module = meta.module_path().unwrap_or_else(|| meta.target());
+        if counts_as_progress(module) {
+            note_progress();
+        }
+
         // Cheap early-out when nothing is subscribed. `/ws/logs` is an
         // opt-in stream; the common case is zero clients and we should
         // not pay serialization cost for events that nobody reads.
         if self.tx.receiver_count() == 0 {
             return;
         }
-
-        let meta = event.metadata();
-        let module = meta.module_path().unwrap_or_else(|| meta.target());
 
         // Drop events from the `/ws/logs` handler itself so client
         // connect/disconnect notices don't feed themselves back onto
@@ -163,6 +204,32 @@ impl Visit for MessageVisitor {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// Compile/deploy events are progress; the idle loop's once-a-minute
+    /// "staying alive" line is not, or a hung build would never look hung.
+    #[test]
+    fn housekeeping_events_do_not_count_as_progress() {
+        assert!(counts_as_progress("fbuild_build_engine::parallel"));
+        assert!(counts_as_progress(
+            "fbuild_library::library::library_compiler"
+        ));
+        assert!(counts_as_progress("fbuild_deploy::esp32::deployer"));
+        assert!(counts_as_progress(
+            "zccache::daemon_core::daemon::server::handle_compile::pipeline::compile_exec"
+        ));
+        assert!(!counts_as_progress("fbuild_daemon::entry"));
+        assert!(!counts_as_progress("fbuild_daemon::handlers::health"));
+        assert!(!counts_as_progress(
+            "zccache::daemon_core::daemon::server::maintenance_schedule"
+        ));
+    }
+
+    #[test]
+    fn note_progress_advances_the_counter() {
+        let before = progress_seq();
+        note_progress();
+        assert!(progress_seq() > before);
+    }
 
     #[test]
     fn message_visitor_joins_message_and_fields() {

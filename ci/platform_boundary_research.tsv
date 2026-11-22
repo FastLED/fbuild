@@ -23,6 +23,7 @@ crates/fbuild-core/src/platform/linux/fs.rs	174	native_path	libc::	process	host_
 crates/fbuild-core/src/platform/linux/fs.rs	184	native_path	libc::	process	host_mechanic
 crates/fbuild-core/src/platform/linux/fs.rs	204	native_path	std::os::unix::fs::symlink	fs	host_mechanic
 crates/fbuild-core/src/platform/linux/fs.rs	205	native_path	std::os::unix::fs::symlink	fs	host_mechanic
+crates/fbuild-core/src/platform/linux/host.rs	14	native_path	libc::	process	host_mechanic
 crates/fbuild-core/src/platform/linux/ipc.rs	1	native_path	interprocess::local_socket	ipc	host_mechanic
 crates/fbuild-core/src/platform/linux/ipc.rs	2	native_path	interprocess::local_socket	ipc	host_mechanic
 crates/fbuild-core/src/platform/linux/ipc.rs	3	native_path	interprocess::os::unix	ipc	host_mechanic
@@ -50,6 +51,7 @@ crates/fbuild-core/src/platform/macos/fs.rs	167	native_path	std::os::unix::ffi::
 crates/fbuild-core/src/platform/macos/fs.rs	172	native_path	libc::	process	host_mechanic
 crates/fbuild-core/src/platform/macos/fs.rs	174	native_path	libc::	process	host_mechanic
 crates/fbuild-core/src/platform/macos/fs.rs	184	native_path	libc::	process	host_mechanic
+crates/fbuild-core/src/platform/macos/host.rs	14	native_path	libc::	process	host_mechanic
 crates/fbuild-core/src/platform/macos/ipc.rs	1	native_path	interprocess::local_socket	ipc	host_mechanic
 crates/fbuild-core/src/platform/macos/ipc.rs	2	native_path	interprocess::local_socket	ipc	host_mechanic
 crates/fbuild-core/src/platform/macos/ipc.rs	3	native_path	socket2::	ipc	host_mechanic

@@ -138,6 +138,13 @@ pub fn home_dir() -> Option<crate::path::NormalizedPath> {
     super::selected::host::home_dir()
 }
 
+/// One-minute system load average, or `None` where the host has no such
+/// figure (Windows). Long-running waits use it to stretch hang detection on
+/// an overloaded machine instead of mistaking slow for stuck.
+pub fn load_average_1m() -> Option<f64> {
+    super::selected::host::load_average_1m()
+}
+
 #[cfg(test)]
 mod tests {
     use super::{HostArch, HostOs, HostPlatform};

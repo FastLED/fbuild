@@ -15,6 +15,9 @@ handlers. Originally `handlers/operations.rs`; split here to keep every
 - **`build.rs`** -- `POST /api/build` handler (streaming + buffered paths).
 - **`deploy.rs`** -- `POST /api/deploy` handler with the ESP32 trust-hash /
   verify-flash fast paths and AVR fallback.
+- **`deploy_port_wait.rs`** -- bounded queueing (default 900 s,
+  `FBUILD_DEPLOY_PORT_WAIT_SECS`) for a deploy whose port another request's
+  deploy/reset holds; publishes the holder as `current_operation` meanwhile.
 - **`monitor.rs`** -- `POST /api/monitor` handler, `MonitorState`,
   `MonitorOutcome`, and the shared `run_monitor_loop`.
 - **`reset.rs`** -- `POST /api/reset` handler (DTR/RTS toggling).
