@@ -12,12 +12,18 @@ use super::reset_via;
 use crate::daemon_client::DaemonClient;
 use std::io::{BufRead, BufReader, Read, Write};
 use std::net::TcpListener;
-use std::sync::mpsc;
+use std::thread::JoinHandle;
 
 /// One canned HTTP response plus the request the stub actually received.
+///
+/// The captured request comes back through the server thread's join handle
+/// rather than a channel: this module lives under `crates/*/src/`, where
+/// `ban_std_mpsc_in_async_reachable` denies `std::sync::mpsc` outright, and a
+/// join is enough here because the thread has already answered by the time the
+/// caller asks for what it received.
 struct StubDaemon {
     port: u16,
-    received: mpsc::Receiver<String>,
+    served: JoinHandle<String>,
 }
 
 impl StubDaemon {
@@ -27,10 +33,9 @@ impl StubDaemon {
     fn start(status_line: &str, body: &str) -> Self {
         let listener = TcpListener::bind("127.0.0.1:0").expect("bind ephemeral port");
         let port = listener.local_addr().expect("local addr").port();
-        let (tx, received) = mpsc::channel();
         let status_line = status_line.to_string();
         let body = body.to_string();
-        std::thread::spawn(move || {
+        let served = std::thread::spawn(move || {
             let (stream, _) = listener.accept().expect("accept one connection");
             let mut reader = BufReader::new(stream.try_clone().expect("clone stream"));
             let mut head = String::new();
@@ -68,15 +73,15 @@ impl StubDaemon {
                 .write_all(response.as_bytes())
                 .expect("write response");
             stream.flush().ok();
-            let _ = tx.send(request);
+            request
         });
-        Self { port, received }
+        Self { port, served }
     }
 
     fn request(self) -> String {
-        self.received
-            .recv_timeout(std::time::Duration::from_secs(10))
-            .expect("stub daemon received the request")
+        self.served
+            .join()
+            .expect("stub daemon served exactly one request")
     }
 }
 
