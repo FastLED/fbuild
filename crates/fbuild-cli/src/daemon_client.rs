@@ -755,9 +755,19 @@ impl DaemonClient {
     }
 
     /// Sample the daemon's progress counter and current stage for the
-    /// liveness watchdog. `None` when the daemon did not answer in time.
+    /// liveness watchdog. `None` when the daemon did not answer in time; the
+    /// medium timeout leaves room for a daemon slowed by host load.
     async fn progress_sample(&self) -> Option<liveness::ProgressSample> {
-        let info = self.daemon_info().await.ok()?;
+        let info = self
+            .client
+            .get(format!("{}/api/daemon/info", self.base_url))
+            .timeout(fbuild_core::time::MEDIUM_HTTP_TIMEOUT)
+            .send()
+            .await
+            .ok()?
+            .json::<DaemonInfoResponse>()
+            .await
+            .ok()?;
         Some(liveness::ProgressSample {
             seq: info.progress_seq,
             stage: info.current_operation,

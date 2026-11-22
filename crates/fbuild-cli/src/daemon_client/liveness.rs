@@ -75,22 +75,7 @@ fn stall_window_from_env(raw: Option<String>) -> Duration {
 /// One-minute load average divided by the CPU count.
 fn host_load_ratio() -> Option<f64> {
     let cpus = std::thread::available_parallelism().ok()?.get() as f64;
-    load_average_1m().map(|load| load / cpus)
-}
-
-#[cfg(target_os = "linux")]
-fn load_average_1m() -> Option<f64> {
-    parse_loadavg(&std::fs::read_to_string("/proc/loadavg").ok()?)
-}
-
-#[cfg(not(target_os = "linux"))]
-fn load_average_1m() -> Option<f64> {
-    None
-}
-
-#[cfg_attr(not(target_os = "linux"), allow(dead_code))]
-fn parse_loadavg(contents: &str) -> Option<f64> {
-    contents.split_whitespace().next()?.parse().ok()
+    fbuild_core::platform::host::load_average_1m().map(|load| load / cpus)
 }
 
 /// Await `work` while it keeps making progress.
@@ -367,7 +352,7 @@ mod tests {
     }
 
     #[test]
-    fn stall_window_env_and_loadavg_parse() {
+    fn stall_window_env_and_host_load() {
         assert_eq!(stall_window_from_env(None), DEFAULT_STALL_WINDOW);
         assert_eq!(
             stall_window_from_env(Some(" 90 ".into())),
@@ -381,10 +366,7 @@ mod tests {
             stall_window_from_env(Some("x".into())),
             DEFAULT_STALL_WINDOW
         );
-        assert_eq!(
-            parse_loadavg("1148.13 758.79 429.97 285/12844 1"),
-            Some(1148.13)
-        );
-        assert_eq!(parse_loadavg(""), None);
+        let load = fbuild_core::platform::host::load_average_1m();
+        assert!(load.is_none_or(|l| l.is_finite() && l >= 0.0), "{load:?}");
     }
 }

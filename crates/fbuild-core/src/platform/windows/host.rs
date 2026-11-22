@@ -9,3 +9,8 @@ pub(crate) fn home_dir() -> Option<NormalizedPath> {
         .or_else(|| std::env::var_os("HOME"))
         .map(NormalizedPath::new)
 }
+
+/// Windows has no load average; callers treat `None` as "unknown".
+pub(crate) fn load_average_1m() -> Option<f64> {
+    None
+}
