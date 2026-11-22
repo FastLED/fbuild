@@ -103,7 +103,7 @@ jobs:
         id: setup-soldr
         if: inputs.fbuild-artifact == ''
         # Canary exact setup-soldr main SHA before v0 promotion.
-        uses: zackees/setup-soldr@a6d9bf060c700f5755238b03f5dbc9fb63f41750
+        uses: zackees/setup-soldr@f703600f360018ae2c793df6d445e6a0cc34053a
         with:
           s3-bucket: forge-ci-cache
           s3-endpoint: sfo3.digitaloceanspaces.com

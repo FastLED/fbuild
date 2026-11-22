@@ -353,7 +353,7 @@ class FractionalWorkflowTests(unittest.TestCase):
         # setup-soldr@v0 defaults to 0.9.52 since its promotion to a2c1d423
         # (which also keys this output cache by soldr version, setup-soldr#678),
         # so the floating tag is used as-is: no RUST-013 version pin.
-        self.assertEqual("zackees/setup-soldr@a6d9bf060c700f5755238b03f5dbc9fb63f41750", setup["uses"])
+        self.assertEqual("zackees/setup-soldr@f703600f360018ae2c793df6d445e6a0cc34053a", setup["uses"])
         self.assertNotIn("version", setup["with"])
         names ={step.get("name") for step in lint_job["steps"]}
         for retired in ("Restore compiled Dylint libraries", "Reuse cached Dylint library tree", "Save compiled Dylint libraries"):
