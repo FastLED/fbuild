@@ -20,8 +20,8 @@ unchanged. Run its focused checks with
 
 `./push` validates a committed feature branch before pushing it. It runs
 formatting and cross-target Clippy, replays the checks and unit tests from
-`check-ubuntu.yml`, and runs the `dylint` lane on the host. The Ubuntu replay
-supplies host Clippy. Bosn receives build and test concurrency limits based on
+`check-ubuntu.yml` (builds and tests only), and runs the `dylint` lane on the
+host, which supplies host Clippy through `soldr lint`. Bosn receives build and test concurrency limits based on
 the host's current load. Lint never runs under bosn: the `dylint` lane
 (`local_dylint_gate.py`) runs `dylint.yml`'s Python policy validators through
 uv, every lint library's formatting and UI tests through `soldr cargo`, and

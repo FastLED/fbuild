@@ -158,6 +158,11 @@ jobs:
               rm -rf "$src"
             fi
           done
+      # Host Clippy on the stable workspace toolchain lives here rather than
+      # in check-ubuntu.yml's `check` job, which the local gate replays
+      # through bosn; lint never runs under bosn (GATE-016).
+      - name: Clippy
+        run: soldr cargo clippy --workspace --all-targets -- -D warnings
       - name: Prepare prebuilt Dylint tools and driver
         timeout-minutes: 10
         run: |

@@ -182,8 +182,17 @@ class FractionalWorkflowTests(unittest.TestCase):
         for job_id in ("linux", "board_plan", "test", "full", "reuse_decision"):
             self.assertNotIn("verify", minimal[job_id].get("needs", []))
         jobs = self.load("check-ubuntu.yml")["jobs"]
+        # Host Clippy is required in dylint.yml's `dylint` job: `check` is
+        # replayed through bosn, and lint never runs under bosn (GATE-016).
+        dylint = self.load("dylint.yml")["jobs"]["dylint"]
+        clippy = [
+            step for step in dylint["steps"]
+            if step.get("run", "").strip() == "soldr cargo clippy --workspace --all-targets -- -D warnings"
+        ]
+        self.assertEqual(1, len(clippy))
+        self.assertNotIn("if", clippy[0])
+        self.assertFalse(any("clippy" in step.get("run", "") for step in jobs["check"]["steps"]))
         for job_id, command in (
-            ("check", "soldr cargo clippy --workspace --all-targets -- -D warnings"),
             ("check", "soldr cargo test --workspace"),
             ("python-facade-tests", "soldr cargo test -p fbuild-python --test python_facades -- --ignored"),
         ):

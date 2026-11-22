@@ -4,7 +4,7 @@
 host and every target in ``[workspace.metadata.soldr].targets`` (soldr#3378),
 and Dylint for every selected target using the lint libraries' pinned nightly.
 The repository's remote lint scope is ``soldr cargo clippy --workspace
---all-targets -- -D warnings`` (check-ubuntu.yml "Clippy"); soldr applies the
+--all-targets -- -D warnings`` (dylint.yml "Clippy"); soldr applies the
 workspace scope and denies warnings itself, so no extra cargo flags are needed.
 Passing ``--all-targets`` through makes cargo reject the invocation as a
 duplicate.
@@ -52,7 +52,7 @@ def run_lint() -> None:
 
 
 def run_cross_clippy() -> None:
-    """The Ubuntu replay checks host Clippy; this lane checks format and cross Clippy."""
+    """The dylint lane checks host Clippy (soldr lint); this lane checks format and cross Clippy."""
     if platform.system() != "Linux" or platform.machine().lower() not in {"x86_64", "amd64"}:
         raise SystemExit("cross Clippy lane requires a Linux x86-64 host")
     from ci.local_gate import load_aware_test_threads
