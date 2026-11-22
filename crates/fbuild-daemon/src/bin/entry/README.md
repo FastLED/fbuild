@@ -22,3 +22,22 @@ is touched: those files say new entries must not be added, and this is the
 path-based exemption instead.
 
 See also `../README.md` for the test-helper binaries in this directory.
+
+## `self_eviction.rs`
+
+The self-eviction window predicate lives in its own module so it can be unit
+tested with an explicit "now" instead of sleeping (FastLED/fbuild#2144).
+
+`try_self_evict(ctx, &mut empty_since, now, timeout)` answers "has the daemon
+been empty for the whole window?" using `DaemonContext::is_empty()` — the
+admitted-request and active-operation counters plus serial sessions and pending
+attaches, never the legacy `operation_in_progress` boolean, which one finishing
+operation could clear while a sibling build was still running (FastLED/fbuild#51).
+When the window expires it commits with `try_begin_shutdown(false)`, which closes
+operation admission *before* the loop signals shutdown, and it re-arms the window
+from the first quiet tick so a daemon that just finished a build gets a fresh
+timeout.
+
+`mod.rs` keeps the once-a-second loop (log bookkeeping, the 12-hour fallback,
+stale-lock cleanup) and stays under the 1000-LOC gate by delegating this
+predicate here.

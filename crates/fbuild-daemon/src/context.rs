@@ -105,7 +105,7 @@ pub fn watch_set_cache_window_from_env() -> Duration {
     Duration::from_secs(secs)
 }
 
-/// Fallback idle timeout: daemon shuts down after 12 hours regardless.
+/// Fallback idle timeout: daemon shuts down after 12 hours without activity.
 pub const IDLE_TIMEOUT: Duration = Duration::from_secs(43200);
 
 /// Interval for checking stale project locks.

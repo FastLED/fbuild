@@ -25,6 +25,8 @@
 //! added). This directory is not a binary target — cargo only auto-discovers
 //! `src/bin/*/main.rs`.
 
+mod self_eviction;
+
 use crate::context::{
     BroadcastHub, DEAD_CLIENT_SERIAL_RECLAIM_INTERVAL, DaemonContext, IDLE_TIMEOUT,
     STALE_LOCK_CHECK_INTERVAL, self_eviction_timeout,
@@ -38,6 +40,7 @@ use axum::Router;
 use axum::routing::{get, post};
 use clap::Parser;
 use fbuild_build::compile_backend::CompileBackend;
+use self_eviction::try_self_evict;
 use std::sync::Arc;
 use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
@@ -547,36 +550,25 @@ async fn run_async(heap_profile_rate: Option<usize>) -> i32 {
                 tokio::time::sleep(std::time::Duration::from_secs(1)).await;
 
                 // --- Self-eviction: 0 ops + 0 serial sessions for self_eviction_timeout ---
+                if try_self_evict(
+                    &ctx,
+                    &mut daemon_empty_since,
+                    std::time::Instant::now(),
+                    self_eviction_timeout(),
+                ) {
+                    let _ = ctx.shutdown_tx.send(true);
+                    return;
+                }
                 match ctx.busy_reason() {
                     None => {
                         if last_busy_reason.is_some() {
                             last_busy_reason = None;
                             last_busy_report = None;
                         }
-                        if daemon_empty_since.is_none() {
-                            daemon_empty_since = Some(std::time::Instant::now());
-                            tracing::info!(
-                                "Daemon is idle; self-eviction in {:.0}s unless new work arrives",
-                                self_eviction_timeout().as_secs_f64()
-                            );
-                        } else if let Some(since) = daemon_empty_since {
-                            if since.elapsed() >= self_eviction_timeout()
-                                && ctx.try_begin_shutdown(false).is_some()
-                            {
-                                tracing::info!(
-                                    "Self-eviction triggered: daemon empty for {:.1}s, shutting down",
-                                    since.elapsed().as_secs_f64()
-                                );
-                                let _ = ctx.shutdown_tx.send(true);
-                                return;
-                            }
-                        }
                     }
                     Some(reason) => {
-                        if daemon_empty_since.is_some() {
-                            tracing::debug!("Daemon is no longer empty, resetting eviction timer");
-                            daemon_empty_since = None;
-                        }
+                        // Active work must also reset the fallback idle timeout.
+                        ctx.touch_activity();
                         // Announce the blocker on transition and then
                         // periodically repeat the reminder so a stuck
                         // session is visible in logs without spamming every
@@ -594,7 +586,10 @@ async fn run_async(heap_profile_rate: Option<usize>) -> i32 {
                 }
 
                 // --- Idle timeout (12h fallback) ---
-                if ctx.idle_duration() >= IDLE_TIMEOUT {
+                if ctx.idle_duration() >= IDLE_TIMEOUT
+                    && ctx.is_empty()
+                    && ctx.try_begin_shutdown(false).is_some()
+                {
                     tracing::info!(
                         "Idle timeout reached ({:.0}s), shutting down",
                         ctx.idle_duration().as_secs_f64()
