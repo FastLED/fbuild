@@ -27,6 +27,11 @@ const LONG_OPERATION_TIMEOUT: std::time::Duration = fbuild_core::time::DAEMON_LO
 /// stops a lost socket from pinning the CLI forever.
 const OPERATION_REQUEST_CEILING: std::time::Duration = std::time::Duration::from_secs(24 * 3600);
 
+/// Ceiling for a reset request. The daemon bounds its own reset at a 10 s
+/// hard deadline (wedged USB CDC driver) and answers 504, so this only stops a
+/// lost socket from pinning the CLI.
+const RESET_REQUEST_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(60);
+
 /// Percent-encode a port name for use in a URL path segment.
 fn encode_port(port: &str) -> String {
     port.replace('%', "%25").replace('/', "%2F")
@@ -508,6 +513,45 @@ impl DaemonClient {
     /// Send a test-emu request (build + emulator run).
     pub async fn test_emu(&self, req: &TestEmuRequest) -> fbuild_core::Result<OperationResponse> {
         self.post_operation("/api/test-emu", req).await
+    }
+
+    /// Send a reset request (FastLED/fbuild#2151).
+    ///
+    /// Routed through the daemon rather than toggling DTR/RTS in this
+    /// process so `DeviceManager::admit_operation` runs before the port is
+    /// opened: a board held by a foreign exclusive lease is refused here, and
+    /// a 409 becomes an error that carries the daemon's own explanation
+    /// (holder id plus both ways out) instead of a hardware-flavoured failure.
+    pub async fn device_reset(&self, req: &ResetRequest) -> fbuild_core::Result<OperationResponse> {
+        let resp = self
+            .client
+            .post(format!("{}/api/reset", self.base_url))
+            .json(req)
+            .timeout(RESET_REQUEST_TIMEOUT)
+            .send()
+            .await
+            .map_err(|e| {
+                fbuild_core::FbuildError::DaemonError(format!(
+                    "reset request failed: {}{}",
+                    e,
+                    daemon_loss_note()
+                ))
+            })?;
+
+        let status = resp.status();
+        let body = resp.json::<OperationResponse>().await.map_err(|e| {
+            fbuild_core::FbuildError::DaemonError(format!(
+                "invalid reset response (HTTP {}): {}{}",
+                status.as_u16(),
+                e,
+                daemon_loss_note()
+            ))
+        })?;
+
+        if status == reqwest::StatusCode::CONFLICT {
+            return Err(fbuild_core::FbuildError::DaemonError(body.message));
+        }
+        Ok(body)
     }
 
     /// Install declared platform/framework/library dependencies without
