@@ -10,6 +10,7 @@ mod chip_slice;
 mod variants;
 pub use variants::FetchRequest;
 pub mod cache_archive;
+pub mod component_id;
 pub mod disk_cache;
 pub mod downloader;
 pub mod extractor;
@@ -958,6 +959,8 @@ mod toolchain_gcc_ar_tests {
 
 #[cfg(test)]
 mod chip_slice_tests;
+#[cfg(test)]
+mod component_id_tests;
 #[cfg(test)]
 mod install_repair_tests;
 #[cfg(test)]

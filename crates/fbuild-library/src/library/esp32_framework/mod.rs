@@ -176,6 +176,31 @@ impl Esp32Framework {
     }
 }
 
+/// Subtrees that belong to another component: the SDK/MCU merge writes into them
+/// after the core install commits, so they are excluded from the core's identity
+/// (decision 8a).
+const CORE_EXCLUDED_SUBTREES: &[&str] = &["tools/esp32-arduino-libs", "tools/.libs-archives"];
+
+/// No post-extract mutation of the core's own subtree runs after the staging
+/// tree is final, so the recipe starts at 0. Bump it when one is added: a tree
+/// mutated after it was stamped must not keep the same identity.
+const CORE_RECIPE: u32 = 0;
+
+/// Write the core component's identity into the framework root in `staging`.
+///
+/// A component with no stamp has no identity, and the prebuilt planner then
+/// compiles from source; there is no backfill that re-hashes an installed tree.
+fn stamp_core_component(staging: &Path, version: &str) -> fbuild_core::Result<()> {
+    use fbuild_packages_fetch::component_id::{ComponentIdentity, content_id, write_stamp};
+
+    let root = find_framework_root(staging);
+    let content_id = content_id(&root, CORE_EXCLUDED_SUBTREES)?;
+    write_stamp(
+        &root,
+        &ComponentIdentity::new("core", version, content_id, CORE_RECIPE),
+    )
+}
+
 #[async_trait::async_trait]
 impl crate::Package for Esp32Framework {
     async fn ensure_installed(&self) -> fbuild_core::Result<PathBuf> {
@@ -183,7 +208,16 @@ impl crate::Package for Esp32Framework {
             return Ok(self.resolved_dir());
         }
 
-        let install_path = self.base.staged_install(Self::validate).await?;
+        // Identity is taken in staging, after every staging mutation and before
+        // the atomic rename (docs/design/artifact-serving-decisions.md §8a).
+        let version = self.base.version.clone();
+        let install_path = self
+            .base
+            .staged_install(move |staging| {
+                Self::validate(staging)?;
+                stamp_core_component(staging, &version)
+            })
+            .await?;
         Ok(find_framework_root(&install_path))
     }
 
