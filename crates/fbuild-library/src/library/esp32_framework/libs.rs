@@ -101,15 +101,7 @@ fn installed_variant_dir(tools_dir: &Path, variant: &str) -> Option<PathBuf> {
 fn patch_installed_variants(tools_dir: &Path, variants: &[&str]) -> fbuild_core::Result<()> {
     for variant in variants {
         if let Some(mcu_dir) = installed_variant_dir(tools_dir, variant) {
-            // A stamped tree is final: its compat patches ran in staging, ahead
-            // of the stamp (decision 8a), so patching it here would make the
-            // stamp describe bytes nobody hashed. Only a legacy tree - the ones
-            // installed before stamping existed - is patched in place, and it
-            // stays without an identity.
-            if read_stamp(&mcu_dir).is_some() {
-                continue;
-            }
-            patch_mcu_compatibility(&mcu_dir, variant)?;
+            patch_unless_stamped(&mcu_dir, variant)?;
         }
     }
     Ok(())
@@ -146,17 +138,26 @@ fn staged_variant_dir(temp_dir: &Path, variant: &str) -> Option<PathBuf> {
     visit(temp_dir, variant, 0)
 }
 
+/// Write one component's identity at the root of its staging tree.
+fn stamp_component(
+    root: &Path,
+    component: &str,
+    version: &str,
+    recipe: u32,
+) -> fbuild_core::Result<ComponentIdentity> {
+    let content_id = content_id(root, &[])?;
+    let identity = ComponentIdentity::new(component, version, content_id, recipe);
+    write_stamp(root, &identity)?;
+    Ok(identity)
+}
+
 /// Write one SDK variant's identity at the root of its staging tree.
 fn stamp_sdk_component(
     root: &Path,
     variant: &str,
     version: &str,
 ) -> fbuild_core::Result<ComponentIdentity> {
-    let content_id = content_id(root, &[])?;
-    let identity =
-        ComponentIdentity::new(&format!("sdk-{variant}"), version, content_id, SDK_RECIPE);
-    write_stamp(root, &identity)?;
-    Ok(identity)
+    stamp_component(root, &format!("sdk-{variant}"), version, SDK_RECIPE)
 }
 
 /// Keep the staged identity only if the merge reproduced the staged bytes.
@@ -174,15 +175,26 @@ fn reconcile_sdk_stamp(
     let Some(installed) = installed_variant_dir(tools_dir, variant) else {
         return Ok(());
     };
-    let merged_id = content_id(&installed, &[])?;
+    reconcile_stamp(&installed, staged, &format!("{variant} SDK"))
+}
+
+/// Drop `staged`'s stamp from `installed` unless the merge reproduced the
+/// staged bytes. Shared by every component: the merged tree is what ships, so a
+/// mismatch means the tree carries no identity rather than a false one.
+fn reconcile_stamp(
+    installed: &Path,
+    staged: &ComponentIdentity,
+    label: &str,
+) -> fbuild_core::Result<()> {
+    let merged_id = content_id(installed, &[])?;
     if merged_id == staged.content_id {
         return Ok(());
     }
     tracing::warn!(
-        "{variant} SDK: the merged tree does not match the staged identity ({merged_id} vs {}); dropping its component stamp",
+        "{label}: the merged tree does not match the staged identity ({merged_id} vs {}); dropping its component stamp",
         staged.content_id
     );
-    remove_stamp(&installed)
+    remove_stamp(installed)
 }
 
 /// Extract a fetched libs archive, stamp the requested variant in the extract
@@ -304,6 +316,16 @@ fn merge_skeleton_mcu_entries(
     visit(temp_dir, &tools_dir.join(NEW_SDK_LAYOUT).join(mcu), mcu)
 }
 
+/// Patch a component tree in place only when it carries no identity: a stamped
+/// tree is final, and patching it would make the stamp describe bytes nobody
+/// hashed (decision 8a). Legacy trees stay patched and stay identity-less.
+pub(super) fn patch_unless_stamped(mcu_dir: &Path, mcu: &str) -> fbuild_core::Result<()> {
+    if read_stamp(mcu_dir).is_some() {
+        return Ok(());
+    }
+    patch_mcu_compatibility(mcu_dir, mcu)
+}
+
 fn patch_mcu_compatibility(mcu_dir: &Path, mcu: &str) -> fbuild_core::Result<()> {
     if matches!(mcu, "esp32c2" | "esp32h2") {
         // The packaged esp_bt.h uses ../../../../controller/<mcu>/esp_bt_cfg.h,
@@ -351,6 +373,53 @@ fn patch_mcu_compatibility(mcu_dir: &Path, mcu: &str) -> fbuild_core::Result<()>
         "// ESP32-C2 has no touch sensor peripheral; Arduino-ESP32 3.3.x includes this unconditionally.\n",
     )?;
     Ok(())
+}
+
+/// Recipe of the MCU skeleton component, e.g. `mcu-esp32c2`. The compat patches
+/// run in the skeleton's extract dir ahead of the stamp (decision 8a), so
+/// anything that changes what they write changes every skeleton content id.
+pub(super) const MCU_SKELETON_RECIPE: u32 = 1;
+
+/// Copy the requested MCU tree out of a skeleton extract dir into `tools/`,
+/// taking its identity in staging first (decision 8a).
+///
+/// The compat patches and the stamp both run on the staged tree, and the merge
+/// re-checks the id: a copy into an unrelated pre-existing partial directory
+/// leaves the installed tree without an identity instead of certifying bytes
+/// that were never hashed.
+pub(super) fn install_skeleton_from_archive(
+    temp_dir: &Path,
+    tools_dir: &Path,
+    mcu: &str,
+    version: &str,
+) -> fbuild_core::Result<bool> {
+    let staged = match staged_variant_dir(temp_dir, mcu) {
+        Some(root) => {
+            patch_mcu_compatibility(&root, mcu)?;
+            Some(stamp_component(
+                &root,
+                &format!("mcu-{mcu}"),
+                version,
+                MCU_SKELETON_RECIPE,
+            )?)
+        }
+        None => {
+            tracing::warn!(
+                "skeleton archive for {mcu} carries no {mcu} tree; merging it without a component identity"
+            );
+            None
+        }
+    };
+    let merged = merge_skeleton_mcu_entries(temp_dir, tools_dir, mcu)?;
+    if let Some(identity) = staged.as_ref() {
+        if let Some(installed) = mcu_sdk_dir_candidates(tools_dir, mcu)
+            .into_iter()
+            .find(|mcu_dir| mcu_dir.is_dir())
+        {
+            reconcile_stamp(&installed, identity, &format!("mcu-{mcu}"))?;
+        }
+    }
+    Ok(merged)
 }
 
 impl Esp32Framework {
@@ -449,7 +518,7 @@ impl Esp32Framework {
         // FreeRTOS headers, so existence alone is not a valid completion test.
         for mcu_dir in mcu_sdk_dir_candidates(&tools_dir, mcu) {
             if mcu_sdk_complete(&mcu_dir) {
-                patch_mcu_compatibility(&mcu_dir, mcu)?;
+                patch_unless_stamped(&mcu_dir, mcu)?;
                 return Ok(());
             }
         }
@@ -476,12 +545,17 @@ impl Esp32Framework {
 
         // Skeleton archives such as c2_arduino_compile_skeleton.zip extract as
         // a direct esp32c2/ directory. Merge direct MCU roots into the new SDK
-        // layout so sdk_mcu_dir() finds the completed tree.
-        let merged_skeleton = merge_skeleton_mcu_entries(temp_dir.path(), &tools_dir, mcu)?;
+        // layout so sdk_mcu_dir() finds the completed tree; the staged tree is
+        // patched and stamped before the merge (decision 8a).
+        let skeleton_version = archive_filename
+            .rsplit_once('.')
+            .map_or(archive_filename, |(stem, _)| stem);
+        let merged_skeleton =
+            install_skeleton_from_archive(temp_dir.path(), &tools_dir, mcu, skeleton_version)?;
 
         for mcu_dir in mcu_sdk_dir_candidates(&tools_dir, mcu) {
             if mcu_sdk_complete(&mcu_dir) || merged_skeleton {
-                patch_mcu_compatibility(&mcu_dir, mcu)?;
+                patch_unless_stamped(&mcu_dir, mcu)?;
                 tracing::info!("{} skeleton libs installed", mcu);
                 return Ok(());
             }
