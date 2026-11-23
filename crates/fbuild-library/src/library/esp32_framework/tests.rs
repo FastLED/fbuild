@@ -804,13 +804,12 @@ fn test_core_component_identity_is_stamped_at_the_framework_root() {
 
 // --- MCU skeleton component identity (decision 8a, FastLED/fbuild#1882) ---
 
-fn skeleton_extract(root: &Path, wrapper: &str, mcu: &str) -> std::path::PathBuf {
+fn skeleton_extract(root: &Path, wrapper: &str, mcu: &str) {
     let dir = root.join(wrapper).join(mcu);
     std::fs::create_dir_all(dir.join("flags")).unwrap();
     std::fs::write(dir.join("flags/includes"), "-Iinclude\n").unwrap();
     std::fs::create_dir_all(dir.join("include/hal/include/hal")).unwrap();
     std::fs::write(dir.join("include/hal/include/hal/hal.h"), "//hal\n").unwrap();
-    dir
 }
 
 #[test]
