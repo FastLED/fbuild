@@ -32,10 +32,10 @@ use fbuild_core::{FbuildError, Result};
 use crate::{CacheSubdir, PackageBase, PackageInfo};
 
 /// The single ESP-IDF release this module pins.
-pub const IDF_RELEASE_VERSION: &str = "v5.5.1";
+pub const IDF_RELEASE_VERSION: &str = "v5.5.6";
 
-/// Commit `v5.5.1` resolves to (`git rev-parse HEAD` in a v5.5.1 checkout).
-pub const IDF_RELEASE_COMMIT: &str = "fcae32885b0296b32044cb99ecbdc50d98dddb83";
+/// Commit `v5.5.6` resolves to (`git rev-parse HEAD` in a v5.5.6 checkout).
+pub const IDF_RELEASE_COMMIT: &str = "880a203ae603d08a94d06aa01e0d6761958e5e9e";
 
 /// One tool component an install profile can pull.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -184,37 +184,38 @@ fn relative_native_name(rel: &str) -> String {
 }
 
 /// Components `install.sh` installs by default that the ESP32-S3 profile skips,
-/// with the installed size measured on linux-amd64 (2026-11-09, `du -sb`).
+/// with the installed size measured on linux-amd64 (2026-11-22, `du -sb`).
 pub const S3_EXCLUDED: &[(&str, u64)] = &[
-    // RISC-V cross compiler: 2.1 GiB, used by C2/C3/C5/C6/H2/P4 only.
-    ("riscv32-esp-elf", 2_142_092_152),
-    // GDB for Xtensa: 104 MiB, debugging only.
+    // RISC-V cross compiler: 2.0 GiB, used by C2/C3/C5/C6/H2/P4 only.
+    ("riscv32-esp-elf", 2_139_416_957),
+    // GDB for Xtensa: 104 MiB, debugging only (2026-11-09, v5.5.1's gdb;
+    // fbuild pins no GDB, so this row is unchanged by the release move).
     ("xtensa-esp-elf-gdb", 108_817_092),
 ];
 
 /// Installed bytes of the ESP32-S3 profile's **target toolchains**, measured with
-/// `du -sb` on linux-amd64 (2026-11-09, ESP-IDF v5.5.1 as installed by
-/// `install.sh` into a scratch tree). This is the set #1970 AC2 capped at
+/// `du -sb` on linux-amd64 (2026-11-22, ESP-IDF v5.5.6). This is the set
+/// #1970 AC2 capped at
 /// 1.3 GB.
 pub const S3_MEASURED_INSTALLED_BYTES: &[(&str, u64)] = &[
-    ("xtensa-esp-elf", 1_103_937_348),
+    ("xtensa-esp-elf", 1_155_003_203),
     ("esp32ulp-elf", 31_188_493),
-    ("esp-rom-elfs", 6_918_628),
-    ("openocd-esp32", 7_153_401),
+    ("esp-rom-elfs", 9_444_944),
+    ("openocd-esp32", 7_791_081),
 ];
 
 /// Installed bytes of the two host build tools, measured with `du -sb` on
-/// linux-amd64 (2026-11-10, extracted from the pinned archives).
+/// linux-amd64 (2026-11-22, extracted from the pinned archives).
 pub const BUILD_TOOLS_MEASURED_INSTALLED_BYTES: &[(&str, u64)] =
     &[("cmake", 153_276_700), ("ninja", 273_768)];
 
 /// Installed bytes of the RISC-V profile's **target toolchains**. The compiler
-/// is the `S3_EXCLUDED` measurement (the same archive, 2026-11-09); the two
+/// is the `S3_EXCLUDED` measurement (the same archive, 2026-11-22); the two
 /// shared components are the `S3_MEASURED_INSTALLED_BYTES` rows.
 pub const RISCV_MEASURED_INSTALLED_BYTES: &[(&str, u64)] = &[
-    ("riscv32-esp-elf", 2_142_092_152),
-    ("esp-rom-elfs", 6_918_628),
-    ("openocd-esp32", 7_153_401),
+    ("riscv32-esp-elf", 2_139_416_957),
+    ("esp-rom-elfs", 9_444_944),
+    ("openocd-esp32", 7_791_081),
 ];
 
 /// Every component [`IdfProfile::Esp32S3Only`] installs, in install order:
@@ -335,87 +336,87 @@ fn unsupported_host(component: IdfComponent, host: HostPlatform) -> FbuildError 
     ))
 }
 
-/// `tools.json` of ESP-IDF v5.5.1, `status: recommended`, verbatim.
+/// `tools.json` of ESP-IDF v5.5.6, `status: recommended`, verbatim.
 const PINS: &[EspIdfPin] = &[
     EspIdfPin {
         component: "xtensa-esp-elf",
         platform: "linux-amd64",
-        version: "esp-14.2.0_20241119",
-        sha256: "e3e6dcf3d275c3c9ab0e4c8a9d93fd10e7efc035d435460576c9d95b4140c676",
-        bytes: 174652716,
-        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/xtensa-esp-elf-14.2.0_20241119-x86_64-linux-gnu.tar.xz",
+        version: "esp-14.2.0_20260121",
+        sha256: "da31f36d79d4e99f24e55a90a71e65d5694714f16199960bf7885724b706a48c",
+        bytes: 176559292,
+        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20260121/xtensa-esp-elf-14.2.0_20260121-x86_64-linux-gnu.tar.xz",
     },
     EspIdfPin {
         component: "xtensa-esp-elf",
         platform: "linux-arm64",
-        version: "esp-14.2.0_20241119",
-        sha256: "ac2b311dc0003386425086bfc813bf2aeb3cdf3b117845802df6ebef5f69955f",
-        bytes: 176920772,
-        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/xtensa-esp-elf-14.2.0_20241119-aarch64-linux-gnu.tar.xz",
+        version: "esp-14.2.0_20260121",
+        sha256: "80ae10ce3d6c02e8c06213f03cac343c4ef6f0fbd89f28530b918f7a1006f1eb",
+        bytes: 171504672,
+        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20260121/xtensa-esp-elf-14.2.0_20260121-aarch64-linux-gnu.tar.xz",
     },
     EspIdfPin {
         component: "xtensa-esp-elf",
         platform: "macos",
-        version: "esp-14.2.0_20241119",
-        sha256: "1ca7a93825d5b84f6547fa73e6174acadb9af5c877f365e50e176936784383ea",
-        bytes: 182782108,
-        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/xtensa-esp-elf-14.2.0_20241119-x86_64-apple-darwin.tar.xz",
+        version: "esp-14.2.0_20260121",
+        sha256: "02e5e3421222c9a708b21eca7826acb137668b188cb46fbde46339b26d4b2eeb",
+        bytes: 177355744,
+        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20260121/xtensa-esp-elf-14.2.0_20260121-x86_64-apple-darwin.tar.xz",
     },
     EspIdfPin {
         component: "xtensa-esp-elf",
         platform: "macos-arm64",
-        version: "esp-14.2.0_20241119",
-        sha256: "b9732bb3cdcd6a50420c25eb9a8d90eb1216a0a0a274c8ffd4c2037167b5081f",
-        bytes: 167948176,
-        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/xtensa-esp-elf-14.2.0_20241119-aarch64-apple-darwin.tar.xz",
+        version: "esp-14.2.0_20260121",
+        sha256: "a450db49cea5f191a96345c5b7f0e1a9671a9cf132fecfd9fb1faf6c2a30637e",
+        bytes: 170666656,
+        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20260121/xtensa-esp-elf-14.2.0_20260121-aarch64-apple-darwin.tar.xz",
     },
     EspIdfPin {
         component: "xtensa-esp-elf",
         platform: "win32",
-        version: "esp-14.2.0_20241119",
-        sha256: "b30e450e0af279783c54a9ae77c3b367dd556b78eda930a92ec7b784a74c28c8",
-        bytes: 382457717,
-        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/xtensa-esp-elf-14.2.0_20241119-i686-w64-mingw32.zip",
+        version: "esp-14.2.0_20260121",
+        sha256: "d57eeb3783bce663cca312323ac9b305a22dfab479c642320c62aeefcc536ac0",
+        bytes: 411000830,
+        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20260121/xtensa-esp-elf-14.2.0_20260121-i686-w64-mingw32.zip",
     },
     EspIdfPin {
         component: "riscv32-esp-elf",
         platform: "linux-amd64",
-        version: "esp-14.2.0_20241119",
-        sha256: "7faaa86d272f3e43c233f8a5ffeba327673224a752c2eb72394655d5e7950000",
-        bytes: 298069324,
-        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/riscv32-esp-elf-14.2.0_20241119-x86_64-linux-gnu.tar.xz",
+        version: "esp-14.2.0_20260121",
+        sha256: "b3fce4b04dd15a9f0ed1c209b5a2f389c04eff92ed85e4cc0ebc275b7d95e95a",
+        bytes: 292412032,
+        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20260121/riscv32-esp-elf-14.2.0_20260121-x86_64-linux-gnu.tar.xz",
     },
     EspIdfPin {
         component: "riscv32-esp-elf",
         platform: "linux-arm64",
-        version: "esp-14.2.0_20241119",
-        sha256: "762eac9ee3d909cf806dcbd26feeb4a83061640d1afea39bc36efdb566b77b03",
-        bytes: 294868260,
-        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/riscv32-esp-elf-14.2.0_20241119-aarch64-linux-gnu.tar.xz",
+        version: "esp-14.2.0_20260121",
+        sha256: "61bea5c55a6a5a592b97a822e7ee5f75618a00d24441ce15e3a06f57da7188c9",
+        bytes: 284818756,
+        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20260121/riscv32-esp-elf-14.2.0_20260121-aarch64-linux-gnu.tar.xz",
     },
     EspIdfPin {
         component: "riscv32-esp-elf",
         platform: "macos",
-        version: "esp-14.2.0_20241119",
-        sha256: "fd7543ca97f4d971798b8323e1e7315e648dded4cf2c16a82c3093447b0358fa",
-        bytes: 305253540,
-        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/riscv32-esp-elf-14.2.0_20241119-x86_64-apple-darwin.tar.xz",
+        version: "esp-14.2.0_20260121",
+        sha256: "a690ca49198a2181ea7212563ba356b1460f2f9f1b190bef401907bf90646b78",
+        bytes: 296934608,
+        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20260121/riscv32-esp-elf-14.2.0_20260121-x86_64-apple-darwin.tar.xz",
     },
     EspIdfPin {
         component: "riscv32-esp-elf",
         platform: "macos-arm64",
-        version: "esp-14.2.0_20241119",
-        sha256: "b0e54a077c8abd261a588ee96b4079a95218ad9c3124b70ef7275c5de262277d",
-        bytes: 285259728,
-        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/riscv32-esp-elf-14.2.0_20241119-aarch64-apple-darwin.tar.xz",
+        version: "esp-14.2.0_20260121",
+        sha256: "caa7103e014c61939eea4656cd4effdc34930da0b76cd59ad1adb7bfaeef923c",
+        bytes: 289213048,
+        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20260121/riscv32-esp-elf-14.2.0_20260121-aarch64-apple-darwin.tar.xz",
     },
     EspIdfPin {
         component: "riscv32-esp-elf",
         platform: "win32",
-        version: "esp-14.2.0_20241119",
-        sha256: "54193a97bd75205678ead8d11f00b351cfa3c2a6e5ab5d966341358b9f9422d7",
-        bytes: 672055172,
-        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/riscv32-esp-elf-14.2.0_20241119-i686-w64-mingw32.zip",
+        version: "esp-14.2.0_20260121",
+        sha256: "6f2c8f95866bdd72a96d0823f902b3e7466220f57470b5070ed5d6e99cddfa99",
+        bytes: 698364886,
+        url: "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20260121/riscv32-esp-elf-14.2.0_20260121-i686-w64-mingw32.zip",
     },
     EspIdfPin {
         component: "esp32ulp-elf",
@@ -460,50 +461,50 @@ const PINS: &[EspIdfPin] = &[
     EspIdfPin {
         component: "esp-rom-elfs",
         platform: "any",
-        version: "20241011",
-        sha256: "921f000164a421c7628fbfee55b173384aafaa51883adc65cd27bf9b0af9e9a9",
-        bytes: 3540038,
-        url: "https://github.com/espressif/esp-rom-elfs/releases/download/20241011/esp-rom-elfs-20241011.tar.gz",
+        version: "20260528",
+        sha256: "caa463d3cbef2430a5a35847c1d9f2f152403b17a802050927ff60c8da54fe46",
+        bytes: 4902355,
+        url: "https://github.com/espressif/esp-rom-elfs/releases/download/20260528/esp-rom-elfs-20260528.tar.gz",
     },
     EspIdfPin {
         component: "openocd-esp32",
         platform: "linux-amd64",
-        version: "v0.12.0-esp32-20250707",
-        sha256: "766293bd7a08900d3536f87a0a7ade960f07266f16e4147f95ca5ce4e15d4c5d",
-        bytes: 2489724,
-        url: "https://github.com/espressif/openocd-esp32/releases/download/v0.12.0-esp32-20250707/openocd-esp32-linux-amd64-0.12.0-esp32-20250707.tar.gz",
+        version: "v0.12.0-esp32-20260831",
+        sha256: "89dcf8efc32296fa5c1f1cfb0268b82a2f14ce9b9cdcf76e817c51365aee6e5a",
+        bytes: 2677335,
+        url: "https://github.com/espressif/openocd-esp32/releases/download/v0.12.0-esp32-20260831/openocd-esp32-linux-amd64-0.12.0-esp32-20260831.tar.gz",
     },
     EspIdfPin {
         component: "openocd-esp32",
         platform: "linux-arm64",
-        version: "v0.12.0-esp32-20250707",
-        sha256: "34b6883c372444b49950893b2fc0101aefd10d404a88ef72c97e80199f8544d3",
-        bytes: 2371243,
-        url: "https://github.com/espressif/openocd-esp32/releases/download/v0.12.0-esp32-20250707/openocd-esp32-linux-arm64-0.12.0-esp32-20250707.tar.gz",
+        version: "v0.12.0-esp32-20260831",
+        sha256: "59236b2160dfcef1db3dbb0b7718e0ed9e127630dd65c5ccb6f13ef56c1e84ba",
+        bytes: 2608313,
+        url: "https://github.com/espressif/openocd-esp32/releases/download/v0.12.0-esp32-20260831/openocd-esp32-linux-arm64-0.12.0-esp32-20260831.tar.gz",
     },
     EspIdfPin {
         component: "openocd-esp32",
         platform: "macos",
-        version: "v0.12.0-esp32-20250707",
-        sha256: "6267be53892a76d535938a1b044b685adc7d292f090447e8a3e3d0f0996474d1",
-        bytes: 2585348,
-        url: "https://github.com/espressif/openocd-esp32/releases/download/v0.12.0-esp32-20250707/openocd-esp32-macos-0.12.0-esp32-20250707.tar.gz",
+        version: "v0.12.0-esp32-20260831",
+        sha256: "0db9db27da168e1c280f223767251d54cd5ccbf794460a2bf4284d15517a61dc",
+        bytes: 2836639,
+        url: "https://github.com/espressif/openocd-esp32/releases/download/v0.12.0-esp32-20260831/openocd-esp32-macos-0.12.0-esp32-20260831.tar.gz",
     },
     EspIdfPin {
         component: "openocd-esp32",
         platform: "macos-arm64",
-        version: "v0.12.0-esp32-20250707",
-        sha256: "150e938ac48a6ee031ddbc8b31043bc7f2073ab2ee4896b658918d35899673c3",
-        bytes: 2628741,
-        url: "https://github.com/espressif/openocd-esp32/releases/download/v0.12.0-esp32-20250707/openocd-esp32-macos-arm64-0.12.0-esp32-20250707.tar.gz",
+        version: "v0.12.0-esp32-20260831",
+        sha256: "75dc62bf15d5a20a92b1c809048896c9af0ca5024fd89d4219b3b5b92f3a9f88",
+        bytes: 2638802,
+        url: "https://github.com/espressif/openocd-esp32/releases/download/v0.12.0-esp32-20260831/openocd-esp32-macos-arm64-0.12.0-esp32-20260831.tar.gz",
     },
     EspIdfPin {
         component: "openocd-esp32",
         platform: "win32",
-        version: "v0.12.0-esp32-20250707",
-        sha256: "666274b04af7f36b430b6d063006051c37b8635b5175735ad5af07a1fbc6f486",
-        bytes: 3034680,
-        url: "https://github.com/espressif/openocd-esp32/releases/download/v0.12.0-esp32-20250707/openocd-esp32-win32-0.12.0-esp32-20250707.zip",
+        version: "v0.12.0-esp32-20260831",
+        sha256: "b3a7cce1f16d63c5023f97c3408bda1c10371bcb76e88e3ddb1111918cdc77a2",
+        bytes: 3291881,
+        url: "https://github.com/espressif/openocd-esp32/releases/download/v0.12.0-esp32-20260831/openocd-esp32-win32-0.12.0-esp32-20260831.zip",
     },
     // CMake 3.30.2, `tools.json` `status: recommended`. Kitware's own release
     // assets; the 3.16.3 entry `tools.json` also carries is `supported`, not
@@ -558,6 +559,16 @@ const PINS: &[EspIdfPin] = &[
         sha256: "6f98805688d19672bd699fbbfa2c2cf0fc054ac3df1f0e6a47664d963d530255",
         bytes: 123084,
         url: "https://github.com/ninja-build/ninja/releases/download/v1.12.1/ninja-linux.zip",
+    },
+    EspIdfPin {
+        // v5.5.6 publishes this one; v5.5.1 did not, so an arm64 Linux host
+        // could pin every component but ninja (#2133).
+        component: "ninja",
+        platform: "linux-arm64",
+        version: "1.12.1",
+        sha256: "5c25c6570b0155e95fce5918cb95f1ad9870df5768653afe128db822301a05a1",
+        bytes: 121787,
+        url: "https://github.com/ninja-build/ninja/releases/download/v1.12.1/ninja-linux-aarch64.zip",
     },
     EspIdfPin {
         component: "ninja",

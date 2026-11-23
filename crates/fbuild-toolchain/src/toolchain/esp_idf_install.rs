@@ -43,7 +43,7 @@ use super::esp_idf_source::EspIdfSource;
 /// future `--report` would name.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum IdfInstallUnit {
-    /// The pinned source checkout (`esp-idf-v5.5.1/source`).
+    /// The pinned source checkout (`esp-idf-v5.5.6/source`).
     Source,
     /// Every tool archive the profile installs.
     Tools,
@@ -255,7 +255,7 @@ impl EspIdfInstall {
     ///
     /// Each package is its own cache entry, so each is measured with its own
     /// identity set; the units share no files by construction (separate keys
-    /// under `esp-idf-v5.5.1/`).
+    /// under `esp-idf-v5.5.6/`).
     pub fn installed_bytes(&self) -> u64 {
         let mut source_seen: HashSet<fbuild_core::platform::fs::FileIdentity> = HashSet::new();
         let source = dir_bytes(self.source.install_path().as_path(), &mut source_seen);

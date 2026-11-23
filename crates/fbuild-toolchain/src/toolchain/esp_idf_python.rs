@@ -27,7 +27,7 @@
 //!    pip and setuptools, so `python -m venv` and the install below work offline
 //!    apart from the wheel downloads, and no `ensurepip` is ever needed from the
 //!    host.
-//! 2. **The packages** — `data/esp-idf-v5.5.1-python.lock`: the pinned commit's
+//! 2. **The packages** — `data/esp-idf-v5.5.6-python.lock`: the pinned commit's
 //!    `tools/requirements/requirements.core.txt` resolved against the release's
 //!    published `espidf.constraints.v5.5.txt` (both committed beside the lock)
 //!    with `uv pip compile --universal --generate-hashes`. Installed with
@@ -78,12 +78,12 @@ pub const IDF_PYTHON_ENV_NAME: &str = "idf5.5_py3.12_env";
 
 /// The hash-locked requirements of the pinned commit. `include_str!` so the
 /// pins travel inside the binary and cannot drift from the code that uses them.
-pub const REQUIREMENTS_LOCK: &str = include_str!("../../data/esp-idf-v5.5.1-python.lock");
+pub const REQUIREMENTS_LOCK: &str = include_str!("../../data/esp-idf-v5.5.6-python.lock");
 
 /// The release's published constraints file, committed for reproducible
 /// regeneration of the lock and for the checker below (`-c`).
 pub const REQUIREMENTS_CONSTRAINTS: &str =
-    include_str!("../../data/esp-idf-v5.5.1-constraints.txt");
+    include_str!("../../data/esp-idf-v5.5.6-constraints.txt");
 
 /// Name the constraints file keeps once written into the cache: this is the
 /// name `idf_tools.py` looks for under `IDF_TOOLS_PATH`.
@@ -620,7 +620,10 @@ mod tests {
     #[test]
     fn the_lock_pins_the_whole_core_requirement_set() {
         let packages = locked_packages();
-        assert_eq!(packages.len(), 60, "lock package count moved: {packages:?}");
+        // 71 for the v5.5.6 environment: its constraints carry the
+        // `python_full_version < '3.16'` / `>= '3.16'` split, so a few
+        // packages appear twice with disjoint markers (#2133).
+        assert_eq!(packages.len(), 71, "lock package count moved: {packages:?}");
         // The 21 direct entries of requirements.core.txt, by normalized name.
         // A regenerated lock that loses one is not a smaller install, it is a
         // broken environment that fails inside `idf.py` instead of here.
@@ -689,10 +692,14 @@ mod tests {
             "cryptography ceiling moved"
         );
         let packages = locked_packages();
-        assert!(
-            packages.contains(&"esptool==4.13.0"),
-            "esptool: {packages:?}"
-        );
+        // The lock follows the constraint rather than a literal: `esptool~=4.12`
+        // allows any 4.12+ 4.x, and v5.5.6's environment resolved 4.14.0.
+        let esptool = packages
+            .iter()
+            .find(|package| package.starts_with("esptool=="))
+            .expect("esptool is pinned");
+        let version = esptool.split("==").nth(1).unwrap_or_default();
+        assert!(version.starts_with("4.1"), "esptool: {esptool}");
         assert!(
             packages.contains(&"cryptography==44.0.3"),
             "cryptography: {packages:?}"
