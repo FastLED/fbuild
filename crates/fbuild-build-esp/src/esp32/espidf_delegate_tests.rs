@@ -91,6 +91,21 @@ impl FakeIdf {
             project_dir: self.project(),
             build_dir: self.build(),
             chip: "esp32s3".to_string(),
+            sdkconfig_defaults: None,
+        }
+    }
+
+    /// The same request with a chip that has a silicon family.
+    fn p4_request(
+        &self,
+        chip: &str,
+        sdkconfig_defaults: Option<NormalizedPath>,
+    ) -> IdfBuildRequest {
+        IdfBuildRequest {
+            project_dir: self.project(),
+            build_dir: self.build(),
+            chip: chip.to_string(),
+            sdkconfig_defaults,
         }
     }
 
@@ -125,7 +140,7 @@ impl FakeIdf {
         // `$*` is the argv it received (the interpreter path is argv[0] of the
         // child, so it does not appear in `$*`).
         let script = format!(
-            "#!/bin/sh\nprintf '%s|%s\\n' \"$0\" \"$*\" >> \"{log}\"\nprintf '%s|%s|%s\\n' \"$IDF_PATH\" \"$IDF_TOOLS_PATH\" \"$PATH\" >> \"{env}\"\n{body}\n",
+            "#!/bin/sh\nprintf '%s|%s\\n' \"$0\" \"$*\" >> \"{log}\"\nprintf '%s|%s|%s|%s\\n' \"$IDF_PATH\" \"$IDF_TOOLS_PATH\" \"$PATH\" \"$SDKCONFIG_DEFAULTS\" >> \"{env}\"\n{body}\n",
             log = self.log().display_slash(),
             env = self.env_log().display_slash(),
             body = body,
@@ -204,7 +219,11 @@ async fn set_target_then_build_runs_with_the_installed_environment() {
     // the host's entries (idf.py shells out to git/ln).
     let environment = fake.child_environment();
     let fields: Vec<&str> = environment.split('|').collect();
-    assert_eq!(fields.len(), 3, "{environment}");
+    assert_eq!(fields.len(), 4, "{environment}");
+    assert_eq!(
+        fields[3], "",
+        "a chip with one silicon family must not set SDKCONFIG_DEFAULTS: {environment}"
+    );
     assert_eq!(fields[0], fake.source().to_string(), "{environment}");
     assert_eq!(fields[1], fake.path().to_string(), "{environment}");
     let path_entries: Vec<NormalizedPath> = std::env::split_paths(fields[2])
@@ -386,22 +405,150 @@ fn riscv_chips_resolve_the_riscv_profile() {
     }
 }
 
-/// ESP32-P4 rev-3 silicon is refused before anything is downloaded: the pinned
-/// v5.5.1 caps `ESP32P4_REV_MAX_FULL` at 199, so the image it builds cannot
-/// boot there. Building it anyway would be a silent wrong-silicon success.
+/// The ESP32-P4 silicon family comes from the board's own variant: `esp32p4`
+/// is rev-3 silicon (min 3.0), `esp32p4_es` is pre-rev-3 (revs up to 1.99).
+/// Either way one release serves both, so nothing is refused for the pin's sake
+/// (FastLED/fbuild#2133).
 #[test]
-fn p4_rev3_silicon_is_refused_and_pre_rev3_is_accepted() {
-    super::reject_unsupported_silicon("esp32p4", "esp32p4_es").unwrap();
-    let error = super::reject_unsupported_silicon("esp32p4", "esp32p4").unwrap_err();
-    let message = error.to_string();
-    assert!(message.contains("esp32p4"), "{message}");
-    assert!(message.contains("rev"), "{message}");
-    assert!(message.contains(IDF_RELEASE_VERSION), "{message}");
-    assert!(message.contains("esp32p4_es"), "{message}");
-    // Every other chip has one silicon family as far as the release goes.
+fn the_p4_silicon_family_comes_from_the_board_variant() {
+    let rev3 = super::silicon_family("esp32p4", "esp32p4")
+        .unwrap()
+        .unwrap();
+    assert_eq!(rev3.selector, "CONFIG_ESP32P4_REV_MIN_300");
+    assert_eq!(rev3.lines, ["CONFIG_ESP32P4_REV_MIN_300=y"]);
+    let pre = super::silicon_family("esp32p4", "esp32p4_es")
+        .unwrap()
+        .unwrap();
+    assert_eq!(pre.selector, "CONFIG_ESP32P4_SELECTS_REV_LESS_V3");
+    assert_eq!(
+        pre.lines,
+        [
+            "CONFIG_ESP32P4_SELECTS_REV_LESS_V3=y",
+            "CONFIG_ESP32P4_REV_MIN_0=y"
+        ]
+    );
+    // Every chip with a single family in the pinned release stays untouched.
     for chip in ["esp32s3", "esp32c3", "esp32c5", "esp32c6"] {
-        super::reject_unsupported_silicon(chip, chip).unwrap();
+        assert!(
+            super::silicon_family(chip, chip).unwrap().is_none(),
+            "{chip}"
+        );
     }
+}
+
+/// A P4 board that names neither family is refused by name: guessing would
+/// build for silicon the board may not have.
+#[test]
+fn an_unknown_p4_variant_is_refused() {
+    let message = super::silicon_family("esp32p4", "esp32p4_es2")
+        .unwrap_err()
+        .to_string();
+    assert!(message.contains("esp32p4_es2"), "{message}");
+    assert!(message.contains("esp32p4_es"), "{message}");
+    assert!(message.contains("FastLED/fbuild#2133"), "{message}");
+}
+
+/// The family defaults are written where `idf.py` is pointed, with the family
+/// symbol and nothing else.
+#[test]
+fn the_silicon_defaults_file_carries_the_family_symbol() {
+    let dir = tempfile::TempDir::new().unwrap();
+    let build = NormalizedPath::new(dir.path());
+    let path = super::write_silicon_defaults(&build, &super::P4_REV3).unwrap();
+    assert_eq!(path, build.join("silicon-rev3.defaults"));
+    let text = std::fs::read_to_string(path.as_path()).unwrap();
+    let symbols: Vec<&str> = text
+        .lines()
+        .filter(|line| !line.trim_start().starts_with('#') && !line.trim().is_empty())
+        .collect();
+    assert_eq!(symbols, ["CONFIG_ESP32P4_REV_MIN_300=y"], "{text}");
+}
+
+/// `SDKCONFIG_DEFAULTS` replaces IDF's own list, so the project's files are
+/// appended after the family entry — and only the ones that exist, because IDF
+/// aborts a configure that names a missing file.
+#[test]
+fn the_sdkconfig_defaults_list_puts_the_family_first() {
+    let fake = FakeIdf::new();
+    let family = fake.build().join("silicon-rev3.defaults");
+    let list =
+        super::sdkconfig_defaults_list(&fake.p4_request("esp32p4", Some(family.clone())), &family);
+    assert_eq!(list, family.to_string(), "only the family entry exists");
+
+    std::fs::write(
+        fake.project().join("sdkconfig.defaults").as_path(),
+        "CONFIG_LOG_DEFAULT_LEVEL_WARN=y\n",
+    )
+    .unwrap();
+    std::fs::write(
+        fake.project().join("sdkconfig.defaults.esp32p4").as_path(),
+        "CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y\n",
+    )
+    .unwrap();
+    let list =
+        super::sdkconfig_defaults_list(&fake.p4_request("esp32p4", Some(family.clone())), &family);
+    let entries: Vec<&str> = list.split(';').collect();
+    assert_eq!(entries.len(), 3, "{list}");
+    assert_eq!(entries[0], family.to_string(), "{list}");
+    assert!(entries[1].ends_with("sdkconfig.defaults"), "{list}");
+    assert!(entries[2].ends_with("sdkconfig.defaults.esp32p4"), "{list}");
+}
+
+/// The wiring, not just the helper: a real spawn for an ESP32-P4 board sees
+/// `SDKCONFIG_DEFAULTS` in its environment, family entry first.
+#[tokio::test]
+async fn the_child_gets_the_silicon_family_defaults() {
+    if fbuild_core::platform::host::is_windows() {
+        return;
+    }
+    let fake = FakeIdf::new();
+    fake.install_driver(&format!(
+        "echo 'fake idf.py: compiling'\n{}exit 0",
+        write_artifacts_script(&fake.build())
+    ));
+    let family = super::write_silicon_defaults(&fake.build(), &super::P4_REV3).unwrap();
+    std::fs::write(
+        fake.project().join("sdkconfig.defaults").as_path(),
+        "CONFIG_LOG_DEFAULT_LEVEL_WARN=y\n",
+    )
+    .unwrap();
+
+    IdfDelegate::new(fake.installed())
+        .run(&fake.p4_request("esp32p4", Some(family.clone())))
+        .await
+        .unwrap();
+
+    let environment = fake.child_environment();
+    let fields: Vec<&str> = environment.split('|').collect();
+    assert_eq!(fields.len(), 4, "{environment}");
+    let entries: Vec<&str> = fields[3].split(';').collect();
+    assert_eq!(entries.len(), 2, "SDKCONFIG_DEFAULTS: {}", fields[3]);
+    assert_eq!(entries[0], family.to_string(), "{}", fields[3]);
+    assert!(entries[1].ends_with("sdkconfig.defaults"), "{}", fields[3]);
+}
+
+/// A project `sdkconfig` that selected the other family is refused by name: a
+/// `sdkconfig` outranks every default, so building with it would silently
+/// produce an image for the other silicon.
+#[test]
+fn a_sdkconfig_pinning_the_other_family_is_refused() {
+    let fake = FakeIdf::new();
+    // A pre-rev-3 sdkconfig on a rev-3 board.
+    std::fs::write(
+        fake.project().join("sdkconfig").as_path(),
+        "CONFIG_IDF_TARGET=\"esp32p4\"\nCONFIG_ESP32P4_SELECTS_REV_LESS_V3=y\n",
+    )
+    .unwrap();
+    let message = super::reject_conflicting_sdkconfig(&fake.project(), &super::P4_REV3)
+        .unwrap_err()
+        .to_string();
+    assert!(message.contains("sdkconfig"), "{message}");
+    assert!(
+        message.contains("CONFIG_ESP32P4_SELECTS_REV_LESS_V3"),
+        "{message}"
+    );
+    // The same file is fine on a pre-rev-3 board.
+    super::reject_conflicting_sdkconfig(&fake.project(), &super::P4_PRE_REV3).unwrap();
 }
 
 /// The provisioning line states the profile's real footprint instead of the S3

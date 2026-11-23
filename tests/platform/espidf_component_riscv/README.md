@@ -10,8 +10,10 @@ its own root `CMakeLists.txt`, which is what the delegated build requires.
   fails to compile unless `sdkconfig.defaults` reached the IDF build;
 - `components/idf_probe` is a second, project-owned component;
 - `platformio.ini` has one environment per chip: `esp32c3`, `esp32c5`,
-  `esp32c6`, `esp32p4` (pre-rev-3 silicon) and `esp32p4-r3`, which must be
-  refused — the pinned ESP-IDF v5.5.1 cannot target rev-3 silicon.
+  `esp32c6`, `esp32p4` (pre-rev-3 silicon) and `esp32p4-r3` (rev-3 silicon).
+  Both P4 environments build from the same release; the generated `sdkconfig`
+  must show the family each board declares (`CONFIG_ESP32P4_REV_MIN_FULL=0` vs
+  `=300`, FastLED/fbuild#2133).
 
 `sdkconfig.defaults` deliberately names no `CONFIG_IDF_TARGET`: the target comes
 from each environment's board.

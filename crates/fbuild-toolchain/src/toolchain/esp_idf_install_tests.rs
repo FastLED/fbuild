@@ -297,9 +297,15 @@ async fn assert_source_tools_and_python_are_the_pinned_release(
         fbuild_core::subprocess::run_command(&[&gcc.to_string(), "--version"], None, None, None)
             .await
             .unwrap();
+    let pinned = crate::toolchain::esp_idf_release::pin(
+        IdfComponent::XtensaEspElf,
+        fbuild_core::platform::host::current(),
+    )
+    .unwrap()
+    .version;
     assert!(
-        version_out.stdout.contains("esp-14.2.0_20241119"),
-        "xtensa GCC is not the pinned release: {}",
+        version_out.stdout.contains(pinned),
+        "xtensa GCC is not the pinned release {pinned}: {}",
         version_out.stdout
     );
 }

@@ -398,11 +398,13 @@ the existing path, unchanged. Routing stays explicit: without
 
 What that decision costs, stated rather than hidden:
 
-- **One IDF pin (v5.5.1), so no ESP32-P4 rev-3.** v5.5.1 caps
-  `ESP32P4_REV_MAX_FULL` at 199. #1878 used IDF 5.5.5 for exactly this reason.
-  The delegate refuses a board whose SDK variant is not `esp32p4_es` before it
-  downloads anything, with an error naming the release; lifting it is a
-  release-pin change (#2133), not a second adapter.
+- **One IDF pin, still one release.** v5.5.1 capped `ESP32P4_REV_MAX_FULL` at
+  199, and #1878 answered that with a second pin (IDF 5.5.5). #2133 instead
+  moved the single pin to v5.5.6 — which carries both P4 silicon families — and
+  selects the family from the board's `build.chip_variant` through an
+  fbuild-owned `SDKCONFIG_DEFAULTS` entry that precedes the project's own. One
+  release, both families; a project `sdkconfig` naming the other family is a
+  configuration error rather than a silent wrong-silicon image.
 - **A project must own a `CMakeLists.txt`.** #1878's generated wrapper for
   PlatformIO-layout `src/` projects is not carried over; nothing on `main`
   asked for it, and it is what #1880's sdkconfig layering was built on.

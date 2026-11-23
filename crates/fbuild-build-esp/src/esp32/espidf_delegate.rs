@@ -143,23 +143,116 @@ fn profile_for_chip(chip: &str) -> Result<IdfProfile> {
     }
 }
 
-/// Refuse silicon the pinned release cannot produce an image for.
+/// The ESP32-P4 silicon family a board asks for, and the Kconfig lines that
+/// select it.
 ///
-/// ESP-IDF v5.5.1 caps `ESP32P4_REV_MAX_FULL` at 199, so it builds for
-/// pre-rev-3 ESP32-P4 only — the boards whose SDK variant is `esp32p4_es`.
-/// Rev-3 silicon (`esp32p4`, a different ROM) needs v5.5.2 or later, which is a
-/// release-pin change (FastLED/fbuild#2133) and not something a build may paper
-/// over: the image would link, flash and then fail in the bootloader.
-fn reject_unsupported_silicon(chip: &str, sdk_variant: &str) -> Result<()> {
-    if chip == "esp32p4" && sdk_variant != "esp32p4_es" {
+/// ESP-IDF v5.5.2+ carries both P4 families in one release and picks between
+/// them at configure time: `ESP32P4_SELECTS_REV_LESS_V3` moves
+/// `ESP32P4_REV_MAX_FULL` between 199 (pre-rev-3) and 399 (rev-3), and the
+/// `ESP32P4_REV_MIN` choice is only legal on the matching side of that switch,
+/// so an image built for the wrong family links, flashes and then fails in the
+/// bootloader. The board's own `build.chip_variant` decides which family it is
+/// (FastLED/fbuild#2133).
+#[derive(Debug)]
+pub(super) struct SiliconFamily {
+    /// Name of the fbuild-owned defaults file in the delegated build root.
+    pub(super) file_name: &'static str,
+    /// Kconfig lines written into it, in file order.
+    pub(super) lines: &'static [&'static str],
+    /// The symbol that selects this family.
+    pub(super) selector: &'static str,
+    /// The symbol that selects the other family.
+    pub(super) opposite: &'static str,
+}
+
+/// Rev-3 ESP32-P4 silicon (`chip_variant = esp32p4`): revisions 3.0 and up.
+pub(super) const P4_REV3: SiliconFamily = SiliconFamily {
+    file_name: "silicon-rev3.defaults",
+    lines: &["CONFIG_ESP32P4_REV_MIN_300=y"],
+    selector: "CONFIG_ESP32P4_REV_MIN_300",
+    opposite: "CONFIG_ESP32P4_SELECTS_REV_LESS_V3",
+};
+
+/// Pre-rev-3 ESP32-P4 silicon (the `esp32p4_es` boards): revisions up to 1.99.
+pub(super) const P4_PRE_REV3: SiliconFamily = SiliconFamily {
+    file_name: "silicon-pre-rev3.defaults",
+    lines: &[
+        "CONFIG_ESP32P4_SELECTS_REV_LESS_V3=y",
+        "CONFIG_ESP32P4_REV_MIN_0=y",
+    ],
+    selector: "CONFIG_ESP32P4_SELECTS_REV_LESS_V3",
+    opposite: "CONFIG_ESP32P4_REV_MIN_300",
+};
+
+/// The silicon family `chip`/`sdk_variant` names, or `None` when the chip has a
+/// single family in the pinned release.
+///
+/// An ESP32-P4 board that names neither family is an error rather than a guess:
+/// the two families need different Kconfig, and defaulting silently would ship
+/// an image for silicon the board may not have.
+fn silicon_family(chip: &str, sdk_variant: &str) -> Result<Option<&'static SiliconFamily>> {
+    if chip != "esp32p4" {
+        return Ok(None);
+    }
+    match sdk_variant {
+        "esp32p4" => Ok(Some(&P4_REV3)),
+        "esp32p4_es" => Ok(Some(&P4_PRE_REV3)),
+        other => Err(FbuildError::ConfigError(format!(
+            "{BUILD_SYSTEM_KEY} = espidf cannot tell which ESP32-P4 silicon '{other}' is: the \
+             board's `build.chip_variant` must be `esp32p4` (rev-3 silicon) or `esp32p4_es` \
+             (pre-rev-3 silicon), because the two need different ESP-IDF Kconfig families and an \
+             image built for the wrong one fails in the bootloader (FastLED/fbuild#2133)"
+        ))),
+    }
+}
+
+/// Refuse a project `sdkconfig` that already selected the other family.
+///
+/// A `sdkconfig` outranks the whole defaults list, so carrying one over from a
+/// build for the other family would produce exactly the wrong-silicon image the
+/// family defaults exist to prevent. The file is named in the error rather than
+/// overridden.
+fn reject_conflicting_sdkconfig(
+    project_dir: &NormalizedPath,
+    family: &SiliconFamily,
+) -> Result<()> {
+    let path = project_dir.join("sdkconfig");
+    let Ok(text) = std::fs::read_to_string(path.as_path()) else {
+        return Ok(());
+    };
+    let conflicting = format!("{}=y", family.opposite);
+    if text.lines().any(|line| line.trim() == conflicting.as_str()) {
         return Err(FbuildError::ConfigError(format!(
-            "{BUILD_SYSTEM_KEY} = espidf cannot build ESP32-P4 silicon variant '{sdk_variant}': \
-             the pinned ESP-IDF {IDF_RELEASE_VERSION} supports chip revisions up to v1.99 \
-             (boards with `chip_variant = esp32p4_es`), and rev-3 silicon needs ESP-IDF v5.5.2 or \
-             later. Use `framework = arduino` for this board (FastLED/fbuild#2133)"
+            "{path} selects {}, but this board is {} silicon: {BUILD_SYSTEM_KEY} = espidf builds \
+             one ESP32-P4 family per image, so a sdkconfig that pins the other family cannot be \
+             used. Delete the file (or keep it as `sdkconfig.defaults` without that symbol) and \
+             rebuild (FastLED/fbuild#2133)",
+            family.opposite, family.selector
         )));
     }
     Ok(())
+}
+
+/// Write the family's defaults file into the delegated build root.
+///
+/// It goes into fbuild's build directory, not the project: it is derived data
+/// for this build, and the project stays the user's.
+fn write_silicon_defaults(
+    build_dir: &NormalizedPath,
+    family: &SiliconFamily,
+) -> Result<NormalizedPath> {
+    let path = build_dir.join(family.file_name);
+    let mut text = String::from(
+        "# Written by fbuild: the ESP32-P4 silicon family the board declares.\n\
+         # Changing these symbols by hand builds an image for other silicon.\n",
+    );
+    for line in family.lines {
+        text.push_str(line);
+        text.push('\n');
+    }
+    std::fs::write(path.as_path(), text)
+        .map_err(|error| FbuildError::Other(format!("writing {path}: {error}")))?;
+    Ok(path)
 }
 
 /// The build-log line announcing the install, with the profile's own measured
@@ -196,6 +289,9 @@ pub(super) struct IdfBuildRequest {
     pub build_dir: NormalizedPath,
     /// IDF target name (`esp32s3`, `esp32c5`, ...).
     pub chip: String,
+    /// fbuild's own `SDKCONFIG_DEFAULTS` entry, when the chip has more than one
+    /// silicon family (ESP32-P4 rev-3 vs pre-rev-3).
+    pub sdkconfig_defaults: Option<NormalizedPath>,
 }
 
 /// The delegated build's result, with the streams of both steps.
@@ -269,7 +365,7 @@ impl IdfDelegate {
         stage: &'static str,
     ) -> Result<CommandReport> {
         let argv = self.argv(request, extra);
-        let env = self.env()?;
+        let env = self.env(request)?;
         let env_refs: Vec<(&str, &str)> = env
             .iter()
             .map(|(key, value)| (key.as_str(), value.as_str()))
@@ -308,8 +404,9 @@ impl IdfDelegate {
     }
 
     /// The child environment: IDF variables from the install, plus `PATH` with
-    /// the profile's directories *prepended* to the host's.
-    fn env(&self) -> Result<Vec<(String, String)>> {
+    /// the profile's directories *prepended* to the host's, plus the
+    /// `SDKCONFIG_DEFAULTS` list when the board needs a silicon family.
+    fn env(&self, request: &IdfBuildRequest) -> Result<Vec<(String, String)>> {
         let mut env: Vec<(String, String)> = self
             .installed
             .env_vars()
@@ -317,8 +414,37 @@ impl IdfDelegate {
             .map(|(key, value)| (key.to_string(), value.to_string()))
             .collect();
         env.push(("PATH".to_string(), prefixed_path(&self.installed)?));
+        if let Some(family_defaults) = &request.sdkconfig_defaults {
+            env.push((
+                "SDKCONFIG_DEFAULTS".to_string(),
+                sdkconfig_defaults_list(request, family_defaults),
+            ));
+        }
         Ok(env)
     }
+}
+
+/// The `SDKCONFIG_DEFAULTS` value: fbuild's family entry first, then the
+/// project's own files, in IDF's own precedence order.
+///
+/// Setting the variable replaces IDF's default list (`sdkconfig.defaults` plus
+/// `sdkconfig.defaults.<target>`), so those are appended explicitly. IDF aborts
+/// a configure that names a file which does not exist, hence the existence
+/// checks, and every entry is absolute because IDF resolves a relative one
+/// against its own working directory.
+fn sdkconfig_defaults_list(request: &IdfBuildRequest, family_defaults: &NormalizedPath) -> String {
+    let mut files = vec![family_defaults.to_string()];
+    let project_defaults = request.project_dir.join("sdkconfig.defaults");
+    if project_defaults.as_path().is_file() {
+        files.push(project_defaults.to_string());
+    }
+    let target_defaults = request
+        .project_dir
+        .join(format!("sdkconfig.defaults.{}", request.chip));
+    if target_defaults.as_path().is_file() {
+        files.push(target_defaults.to_string());
+    }
+    files.join(";")
 }
 
 /// The profile's `PATH` entries followed by the host `PATH`.
@@ -461,7 +587,10 @@ pub(super) async fn delegate_build(
     let started = std::time::Instant::now();
     let chip = ctx.board.mcu.clone();
     let profile = profile_for_chip(&chip)?;
-    reject_unsupported_silicon(&chip, ctx.board.sdk_variant())?;
+    let family = silicon_family(&chip, ctx.board.sdk_variant())?;
+    if let Some(family) = family {
+        reject_conflicting_sdkconfig(&NormalizedPath::new(&params.project_dir), family)?;
+    }
     let build_dir = NormalizedPath::new(&ctx.build_dir).join("idf");
     std::fs::create_dir_all(build_dir.as_path()).map_err(|error| {
         FbuildError::Other(format!(
@@ -473,10 +602,25 @@ pub(super) async fn delegate_build(
     let install = EspIdfInstall::new(&params.project_dir, profile)?;
     let installed = install.install().await?;
 
+    // #2133: one release carries both ESP32-P4 silicon families, so the board's
+    // own variant decides which one this image is for.
+    let sdkconfig_defaults = match family {
+        Some(family) => {
+            ctx.build_log.push(format!(
+                "ESP32-P4 silicon family: {} (board variant {}, from {})",
+                family.selector,
+                ctx.board.sdk_variant(),
+                family.file_name
+            ));
+            Some(write_silicon_defaults(&build_dir, family)?)
+        }
+        None => None,
+    };
     let request = IdfBuildRequest {
         project_dir: NormalizedPath::new(&params.project_dir),
         build_dir: build_dir.clone(),
         chip: chip.clone(),
+        sdkconfig_defaults,
     };
     let delegate = IdfDelegate::new(installed);
     let cache = IdfCacheMode::ColdOnly;

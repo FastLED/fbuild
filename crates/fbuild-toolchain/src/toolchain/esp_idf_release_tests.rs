@@ -123,14 +123,18 @@ fn riscv_toolchain_is_pinned_for_every_supported_host() {
         assert_eq!(pin.component, "riscv32-esp-elf");
         assert_eq!(pin.platform, key);
         // The same crosstool-NG release as the Xtensa compiler: one IDF
-        // release recommends one compiler set.
-        assert_eq!(pin.version, "esp-14.2.0_20241119");
+        // release recommends one compiler set. Compared against the Xtensa pin
+        // rather than a literal, so a moved release cannot leave one of the two
+        // compilers behind.
+        let xtensa = super::pin(IdfComponent::XtensaEspElf, HostPlatform::new(os, arch)).unwrap();
+        assert_eq!(pin.version, xtensa.version);
         assert_eq!(pin.sha256.len(), 64, "{key} needs a full sha256");
         assert!(pin.sha256.chars().all(|c| c.is_ascii_hexdigit()));
         assert!(
-            pin.url.starts_with(
-                "https://github.com/espressif/crosstool-NG/releases/download/esp-14.2.0_20241119/riscv32-esp-elf-"
-            ),
+            pin.url.starts_with(&format!(
+                "https://github.com/espressif/crosstool-NG/releases/download/{}/riscv32-esp-elf-",
+                pin.version
+            )),
             "{}",
             pin.url
         );
@@ -308,7 +312,7 @@ fn two_idf_releases_install_side_by_side() {
             .as_path()
             .file_name()
             .and_then(|n| n.to_str()),
-        Some("v5.5.1+esp-14.2.0_20241119"),
+        Some("v5.5.6+esp-14.2.0_20260121"),
         "install leaf must name the IDF release: {}",
         v551.install_path()
     );
@@ -342,7 +346,10 @@ fn s3_profile_measured_size_fits_the_budget() {
     );
     // CMake and Ninja are what push the whole tool set past AC2's 1.3 GB,
     // which is why they are budgeted separately instead of hidden inside it.
-    assert!(toolchains + build_tools <= 1_350_000_000);
+    // Measured 2026-11-22: 1.357 GB together, 54 MB more than on v5.5.1 --
+    // v5.5.6's Xtensa GCC and ROM ELFs grew. The ceiling follows the release
+    // and is asserted here, so a further jump fails a test instead of a doc.
+    assert!(toolchains + build_tools <= 1_360_000_000);
 }
 
 #[test]
@@ -451,13 +458,13 @@ async fn esp_rom_elfs_installs_from_the_pinned_archive() {
 /// `PINS` is a hand-copied projection of this file. The tests below compare the
 /// two row by row, so moving the pin (#2133) is a data diff a reviewer can read
 /// instead of a transcription exercise nothing can check.
-const RELEASE_TOOLS_JSON: &str = include_str!("../../data/esp-idf-v5.5.1-tools.json");
+const RELEASE_TOOLS_JSON: &str = include_str!("../../data/esp-idf-v5.5.6-tools.json");
 
 /// The release the snapshot above was taken from, spelled as its file name is.
 /// Kept as its own const so a version bump that forgets the snapshot fails
 /// `the_tools_json_snapshot_belongs_to_the_pinned_release` instead of silently
-/// checking v5.5.1 data against a newer table.
-const SNAPSHOT_RELEASE: &str = "v5.5.1";
+/// checking v5.5.6 data against a newer table.
+const SNAPSHOT_RELEASE: &str = "v5.5.6";
 
 /// Upstream `tools.json` platform spellings that differ from fbuild's key for
 /// the same host. `ninja` is the one tool Espressif publishes under `win64`.
@@ -653,28 +660,25 @@ fn pins_cover_exactly_the_archives_upstream_publishes() {
 }
 
 #[test]
-fn upstream_publishes_no_linux_arm64_ninja_so_a_delegated_build_there_has_none() {
-    // Recorded, not papered over: `tools.json` for the pinned release has no
-    // `linux-arm64` ninja archive (the five keys are linux-amd64, macos,
-    // macos-arm64 and win64), so a delegated `idf.py` build on an arm64 Linux
-    // host cannot get a pinned ninja even though every other component is
-    // pinned there. If upstream ever publishes one this test fails and the
-    // pin should be added; until then `pin()` must refuse rather than borrow
-    // another host's binary.
+fn a_linux_arm64_ninja_pin_exists_because_upstream_publishes_one() {
+    // v5.5.1's `tools.json` carried no `linux-arm64` ninja archive, so a
+    // delegated `idf.py` build on an arm64 Linux host could pin every other
+    // component but that one; the test here used to record the gap. v5.5.6
+    // publishes `ninja-linux-aarch64.zip`, so the pin exists from the same
+    // bump (#2133) — and `pins_cover_exactly_the_archives_upstream_publishes`
+    // is what keeps the two in step from now on.
     let json = release_tools_json();
     let version = recommended_version(&json, "ninja", "1.12.1").expect("ninja 1.12.1");
     assert!(
-        archive_for(version, "linux-arm64").is_none(),
-        "upstream now publishes a linux-arm64 ninja: add the pin"
+        archive_for(version, "linux-arm64").is_some(),
+        "upstream dropped the linux-arm64 ninja archive again"
     );
-    assert!(
-        pin(
-            IdfComponent::Ninja,
-            HostPlatform::new(HostOs::Linux, HostArch::Aarch64)
-        )
-        .is_err(),
-        "no pinned ninja exists for linux-arm64, so the lookup must refuse"
-    );
+    let arm = pin(
+        IdfComponent::Ninja,
+        HostPlatform::new(HostOs::Linux, HostArch::Aarch64),
+    )
+    .expect("ninja is pinned for linux-arm64");
+    assert!(arm.url.ends_with("ninja-linux-aarch64.zip"), "{}", arm.url);
 }
 
 #[test]

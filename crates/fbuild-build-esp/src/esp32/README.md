@@ -42,5 +42,8 @@ sets `board_build.build_system = espidf` instead has its own
 `orchestrator/build.rs` branches to `espidf_delegate` immediately after the
 common `BuildContext`, so none of the Arduino package/framework work runs.
 The pinned release is provisioned per toolchain family: esp32s3 gets the Xtensa
-profile, esp32c3/c5/c6/p4 the RISC-V one. Any other MCU, and ESP32-P4 rev-3
-silicon (which the pinned v5.5.1 cannot target), is refused by name.
+profile, esp32c3/c5/c6/p4 the RISC-V one. Any other MCU is refused by name.
+An ESP32-P4 board is built for the silicon family its `build.chip_variant`
+names — `esp32p4` (rev-3) or `esp32p4_es` (pre-rev-3) — through an fbuild-owned
+`SDKCONFIG_DEFAULTS` entry, because one release carries both families
+(FastLED/fbuild#2133).

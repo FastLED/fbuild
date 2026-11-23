@@ -1,4 +1,4 @@
-//! Pinned ESP-IDF v5.5.1 **source tree** as one fbuild package (FastLED/fbuild#1970).
+//! Pinned ESP-IDF v5.5.6 **source tree** as one fbuild package (FastLED/fbuild#1970).
 //!
 //! The tool components ([`super::esp_idf_release`]) are only half of what a
 //! delegated `idf.py` build (#1971) needs: the subprocess also has to *be* an
@@ -44,23 +44,23 @@ use fbuild_core::{FbuildError, Result};
 use super::esp_idf_release::{IDF_RELEASE_COMMIT, IDF_RELEASE_VERSION};
 use crate::{CacheSubdir, PackageBase, PackageInfo};
 
-/// ESP-IDF v5.5.1 source tree at the pinned commit (GitHub commit archive).
+/// ESP-IDF v5.5.6 source tree at the pinned commit (GitHub commit archive).
 pub const IDF_SOURCE_URL: &str =
-    "https://github.com/espressif/esp-idf/archive/fcae32885b0296b32044cb99ecbdc50d98dddb83.tar.gz";
+    "https://github.com/espressif/esp-idf/archive/880a203ae603d08a94d06aa01e0d6761958e5e9e.tar.gz";
 
-/// sha256 of [`IDF_SOURCE_URL`], measured 2026-11-09 (re-download reproduced it).
+/// sha256 of [`IDF_SOURCE_URL`], measured 2026-11-22 (re-download reproduced it).
 pub const IDF_SOURCE_SHA256: &str =
-    "ad95862f0796251f51edab9afa9163ac7d14803cf208d5137a2e1fc5aa431e50";
+    "009b1c0623f7ee608ad20d26701cfb2be0f1cd5e2861fb8c1421de69c4a120d8";
 
 /// Compressed bytes of [`IDF_SOURCE_URL`].
-pub const IDF_SOURCE_BYTES: u64 = 61_134_823;
+pub const IDF_SOURCE_BYTES: u64 = 65_204_565;
 
 /// Installed bytes of the whole tree (source + every submodule), measured with
-/// `du -sb` on 2026-11-09: 449,952,002 B. The submodules cost far more on disk
+/// `du -sb` on 2026-11-22: 428,094,401 B. The submodules cost far more on disk
 /// than their 47 MB of archives (sibling-chip BT libraries and Wi-Fi blobs), and
 /// `du` counts a hardlinked file once -- relevant here because Espressif ships
 /// several tools that way.
-pub const IDF_SOURCE_EXTRACTED_BYTES: u64 = 449_952_002;
+pub const IDF_SOURCE_EXTRACTED_BYTES: u64 = 428_094_401;
 
 /// One pinned submodule: the gitlink the release records, and its archive.
 #[derive(Debug, Clone, Copy)]
@@ -69,7 +69,7 @@ pub struct IdfSubmodulePin {
     pub path: &'static str,
     /// Commit archive of the submodule at exactly that gitlink.
     pub url: &'static str,
-    /// sha256 of `url`, measured 2026-11-09.
+    /// sha256 of `url`, measured 2026-11-22.
     pub sha256: &'static str,
     /// Compressed bytes of `url`.
     pub bytes: u64,
@@ -85,51 +85,51 @@ pub const IDF_SUBMODULES: &[IdfSubmodulePin] = &[
     },
     IdfSubmodulePin {
         path: "components/bt/controller/lib_esp32",
-        url: "https://github.com/espressif/esp32-bt-lib/archive/185c7205db1f5082d070d00ea5dfdbb24c291d05.tar.gz",
-        sha256: "3c60186c30f471cb341a037463472bda4f660d413884b8b6522c8657a95d159f",
-        bytes: 278_915,
+        url: "https://github.com/espressif/esp32-bt-lib/archive/e4281c149690558467f75137d64bd5334076e7e1.tar.gz",
+        sha256: "5a45266392e418009e5feed9853241e308a6f7292d6168f6e1c5e08a712852ab",
+        bytes: 297_338,
     },
     IdfSubmodulePin {
         path: "components/bt/controller/lib_esp32c2/esp32c2-bt-lib",
-        url: "https://github.com/espressif/esp32c2-bt-lib/archive/ff958fab2f693e4b5974375cce525945fd238c4f.tar.gz",
-        sha256: "682d22e17b329e39e1465efa5d0110b50ec9041587e54e14e23959cf5ab1107b",
-        bytes: 1_147_707,
+        url: "https://github.com/espressif/esp32c2-bt-lib/archive/6a5c0b8bfca1a2e984e89431b8ebf9b521dad5ea.tar.gz",
+        sha256: "6e5d7b8e10d6dae8705859087980376d29330326193e976b1a43c0302d062c4e",
+        bytes: 703_211,
     },
     IdfSubmodulePin {
         path: "components/bt/controller/lib_esp32c3_family",
-        url: "https://github.com/espressif/esp32c3-bt-lib/archive/0c68809d62e432427de97b5294f6619307f62f40.tar.gz",
-        sha256: "e204c9e3ef9007af2dee15bbf2b23a136320315fb86b9eadce2853a175a9eeca",
-        bytes: 1_916_548,
+        url: "https://github.com/espressif/esp32c3-bt-lib/archive/0a08c4b32f3666003080b662a1a61794da24ff0f.tar.gz",
+        sha256: "4d54b26bd38c9a9e145d7c937d87ff53adbdbd11b6570f4b643bcc0fa377fb7f",
+        bytes: 1_973_605,
     },
     IdfSubmodulePin {
         path: "components/bt/controller/lib_esp32c5/esp32c5-bt-lib",
-        url: "https://github.com/espressif/esp32c5-bt-lib/archive/74cfecd57f600e5e00d175311893d241a6163cdd.tar.gz",
-        sha256: "6fd8f3f3a72394a252e904604e9c0a0ef09932692ddcfb18cf32e906303d5e9b",
-        bytes: 892_921,
+        url: "https://github.com/espressif/esp32c5-bt-lib/archive/0b5cb2d7cfb4078e951da36a695bc4fb37e52391.tar.gz",
+        sha256: "a2f9dcd44545183ccc9c8ba64fbda7f2aa1290a4ada1cb6f4699955743657deb",
+        bytes: 628_861,
     },
     IdfSubmodulePin {
         path: "components/bt/controller/lib_esp32c6/esp32c6-bt-lib",
-        url: "https://github.com/espressif/esp32c6-bt-lib/archive/3655fcdaadb66bb4cd4d497c2dbd4e6e2a4cc696.tar.gz",
-        sha256: "b07543116adf24dedbef64b2abe1a2251fe25ba8a23c12fc6de2f3dd5e3b203d",
-        bytes: 1_859_983,
+        url: "https://github.com/espressif/esp32c6-bt-lib/archive/a00f2d0a19c54b9ca31358754fbb8b9a08cbb92c.tar.gz",
+        sha256: "5c9054656a58253878f7b4812ed0c0d0ce6b7b9efeacd3dd0b9ce9b9ae64b808",
+        bytes: 1_238_118,
     },
     IdfSubmodulePin {
         path: "components/bt/controller/lib_esp32h2/esp32h2-bt-lib",
-        url: "https://github.com/espressif/esp32h2-bt-lib/archive/a2ba40fae2462488f65efca042e5cecd9e018c7e.tar.gz",
-        sha256: "eb88a1696322cac51a3a7235c4e9c935e1ac739fe51049b91d18f616f67afc7e",
-        bytes: 1_927_781,
+        url: "https://github.com/espressif/esp32h2-bt-lib/archive/71685bf7530058c468ec9e28b2eebbe71df88741.tar.gz",
+        sha256: "f88cccab7c79d2c9a82faaa8467b91b3c467c663429c16aa47da34ef47c7531d",
+        bytes: 2_280_122,
     },
     IdfSubmodulePin {
         path: "components/bt/esp_ble_mesh/lib/lib",
-        url: "https://github.com/espressif/esp-ble-mesh-lib/archive/d9fe7de9a9eb2a4e4c51172b9c303f9d800706fa.tar.gz",
-        sha256: "5dbd3c9fd9086d2d56c8b2a4166533304ad379932db560df1ddc0ba9db45d5f0",
-        bytes: 4_056_772,
+        url: "https://github.com/espressif/esp-ble-mesh-lib/archive/428709f9e9b70f1cbc52931e433cf68c7673b0df.tar.gz",
+        sha256: "538fbbea76f483f0ff57ad4ea7c85f0c98d0c12ccefa962f639154e01e7641bd",
+        bytes: 4_214_470,
     },
     IdfSubmodulePin {
         path: "components/bt/host/nimble/nimble",
-        url: "https://github.com/espressif/esp-nimble/archive/b45dcedcafb7888174c3567002c36b342ec0b723.tar.gz",
-        sha256: "4fc7767c4d93023488fa8e06dd52d6139df5f855d240417ae07a60023a4dd7e2",
-        bytes: 1_845_863,
+        url: "https://github.com/espressif/esp-nimble/archive/71a1fd7bfd0654c6d174cc3f9cb007864f767cbc.tar.gz",
+        sha256: "403708fbbc787da2346810b5039faf53e4ba8fad7d93ebad1032f0f8870b9b35",
+        bytes: 1_966_078,
     },
     IdfSubmodulePin {
         path: "components/cmock/CMock",
@@ -139,21 +139,21 @@ pub const IDF_SUBMODULES: &[IdfSubmodulePin] = &[
     },
     IdfSubmodulePin {
         path: "components/esp_coex/lib",
-        url: "https://github.com/espressif/esp-coex-lib/archive/2d68674e3d522fb025e4666217f9cc1ca2af9399.tar.gz",
-        sha256: "1a9f5e3a619527468603a1d5d98cddaffbeaeadf04ae42787485b7ed12d86098",
-        bytes: 215_720,
+        url: "https://github.com/espressif/esp-coex-lib/archive/02c57071231dbe9f7555afcbb8ef86e35f517292.tar.gz",
+        sha256: "f26eab6fdb3f1e96b3f2ac2640e16a21e8288074b66c4d38828fb9b0ba99a744",
+        bytes: 294_117,
     },
     IdfSubmodulePin {
         path: "components/esp_phy/lib",
-        url: "https://github.com/espressif/esp-phy-lib/archive/45ce2703403784b4c3983a52e453988d61eb0e9d.tar.gz",
-        sha256: "fb1d68d49e5431e9e0c81abf7ed15a31f4401f964eaa9574d9c96da469d5eddf",
-        bytes: 2_948_146,
+        url: "https://github.com/espressif/esp-phy-lib/archive/5695f4f38108658bc4a33e4712c1ebcb34911434.tar.gz",
+        sha256: "e1619c7b80209c045ba9b265e1a9df5c256b0c57447bc4a5cfe1742503200e60",
+        bytes: 3_456_006,
     },
     IdfSubmodulePin {
         path: "components/esp_wifi/lib",
-        url: "https://github.com/espressif/esp32-wifi-lib/archive/c1f74dcf9151ae21b7a3850b90952796a2806358.tar.gz",
-        sha256: "0867b4d3cbb8d9bc800cd36aacaa2663ed01bae9e13c4316aed5e402981c695c",
-        bytes: 9_820_830,
+        url: "https://github.com/espressif/esp32-wifi-lib/archive/61bbece9cc8b3a6c8b2b5035f586db5d7abb95d2.tar.gz",
+        sha256: "993132bf008ef662ded3b708d32a3a85e750b1ff4f288f5527887bcd6288a8ba",
+        bytes: 9_979_774,
     },
     IdfSubmodulePin {
         path: "components/heap/tlsf",
@@ -163,39 +163,39 @@ pub const IDF_SUBMODULES: &[IdfSubmodulePin] = &[
     },
     IdfSubmodulePin {
         path: "components/json/cJSON",
-        url: "https://github.com/DaveGamble/cJSON/archive/8f2beb57ddad1f94bed899790b00f46df893ccac.tar.gz",
-        sha256: "bc69a9e0796bb6e3434aeadbb49d3e37c4b7aec34fdb306e3f55b275ca7c6acb",
-        bytes: 356_275,
+        url: "https://github.com/DaveGamble/cJSON/archive/b2890c8d76bbb64e710585ebc0a917196b9c67e7.tar.gz",
+        sha256: "c3866048d822428ab289d20842c75a39c92c26e967fed2f0706f6f15e6894082",
+        bytes: 356_494,
     },
     IdfSubmodulePin {
         path: "components/lwip/lwip",
-        url: "https://github.com/espressif/esp-lwip/archive/ebabd6d79c120c5d4415755aab1d908d8b5fa372.tar.gz",
-        sha256: "609a4db4e65c7e67acad8325bc48ecd6913cf10c606ff8c3e8fc25589d9d2a1c",
-        bytes: 1_634_786,
+        url: "https://github.com/espressif/esp-lwip/archive/c6f2f878e7b0f86033214b85547d579be43351e3.tar.gz",
+        sha256: "a7db02542a98b796d251645beb3c739289b543edf32468db3d0618b10f0a84f3",
+        bytes: 1_641_920,
     },
     IdfSubmodulePin {
         path: "components/mbedtls/mbedtls",
-        url: "https://github.com/espressif/mbedtls/archive/b5d87eaa6748b7a6fa70593178c08b4480e9b71e.tar.gz",
-        sha256: "e6beb4ed862c83daba07f0d8091c0c361c843623b06674b2d8effe00e8e7aa9d",
-        bytes: 6_400_544,
+        url: "https://github.com/espressif/mbedtls/archive/2b96dd8eebe880f304c69976b3c2fa0c5100cbb6.tar.gz",
+        sha256: "1b3c8ee0d78a6b0b492d1e0732ae11a7451180e010ed4109b5f4f299c6c210a3",
+        bytes: 6_729_050,
     },
     IdfSubmodulePin {
         path: "components/mqtt/esp-mqtt",
-        url: "https://github.com/espressif/esp-mqtt/archive/6af4446a48ea7fa54948edc4e62277ed70abb6e1.tar.gz",
-        sha256: "29166d1e9c00267e73f3bb525ce921ad4ab80eb349ba1203e3a4d1a402b5e7eb",
-        bytes: 68_387,
+        url: "https://github.com/espressif/esp-mqtt/archive/0e9ec171b448db2101ea537300976b7ffe595941.tar.gz",
+        sha256: "642e16ba821ef45be09c6f14b0d1aec9d606a9faf638a6d80f9a94780c7c6162",
+        bytes: 68_648,
     },
     IdfSubmodulePin {
         path: "components/openthread/lib",
-        url: "https://github.com/espressif/esp-thread-lib/archive/ec0296c44f628b8e1d1cb78898fe62baa2f90d13.tar.gz",
-        sha256: "006963483fc9a7fbb09d4a53ba16619adf7eeccb795802c962fd1af246b101da",
-        bytes: 860_877,
+        url: "https://github.com/espressif/esp-thread-lib/archive/33209823e559560f54dcd41cbf3dbdd27f46d569.tar.gz",
+        sha256: "2ba90d8670965bda665248a36ac5a9b7a9022152bff1989ef47020bf12300761",
+        bytes: 929_435,
     },
     IdfSubmodulePin {
         path: "components/openthread/openthread",
-        url: "https://github.com/espressif/openthread/archive/b945928d722177cd9caeab2e1025499628c101ef.tar.gz",
-        sha256: "a5b979a4ebb2756926bb0c0a1d0085751dedaa476d97169f49471b488a6c4dbf",
-        bytes: 9_656_601,
+        url: "https://github.com/espressif/openthread/archive/43cc05a9bcf780bd758bad53d897e2d88cf8cb75.tar.gz",
+        sha256: "4dfccd23e26f5e85d029312ddaae7e6b4d161610bd0ae7ceeaa0c176d393bbf8",
+        bytes: 4_487_181,
     },
     IdfSubmodulePin {
         path: "components/protobuf-c/protobuf-c",
@@ -205,9 +205,9 @@ pub const IDF_SUBMODULES: &[IdfSubmodulePin] = &[
     },
     IdfSubmodulePin {
         path: "components/spiffs/spiffs",
-        url: "https://github.com/pellepl/spiffs/archive/0dbb3f71c5f6fae3747a9d935372773762baf852.tar.gz",
-        sha256: "ad2f6bd71024d8aa917b860fc0e1e242c10984219ed3460be09a375803a72517",
-        bytes: 100_473,
+        url: "https://github.com/pellepl/spiffs/archive/ad902cadceb39d0825a97e25ecb5867641f606ba.tar.gz",
+        sha256: "8df4810b8b2bd48ed86e764a7231aadc42ffcbc54a3c68649a14a6ebbd428c78",
+        bytes: 100_617,
     },
     IdfSubmodulePin {
         path: "components/unity/unity",
@@ -406,7 +406,7 @@ mod tests {
         paths.sort_unstable();
         paths.dedup();
         assert_eq!(total, paths.len(), "duplicate submodule path");
-        assert_eq!(total, 23, "v5.5.1 has 23 gitlinks");
+        assert_eq!(total, 23, "the pinned release has 23 gitlinks");
         // The three an ESP32-S3 Wi-Fi build cannot link without.
         for required in [
             "components/mbedtls/mbedtls",

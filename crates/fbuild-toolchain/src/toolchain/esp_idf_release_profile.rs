@@ -233,6 +233,7 @@ pub(super) fn dir_bytes(root: &Path, seen: &mut HashSet<FileIdentity>) -> u64 {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::toolchain::esp_idf_release::pin;
 
     fn fabricated_root(base: &Path, component: IdfComponent, with_bin: bool) -> NormalizedPath {
         let root = NormalizedPath::new(base).join(component.id());
@@ -426,9 +427,15 @@ mod tests {
         .await
         .unwrap();
         let text = out.stdout;
+        let pinned = pin(
+            IdfComponent::XtensaEspElf,
+            fbuild_core::platform::host::current(),
+        )
+        .unwrap()
+        .version;
         assert!(
-            text.contains("esp-14.2.0_20241119"),
-            "xtensa GCC is not the pinned release: {text}"
+            text.contains(pinned),
+            "xtensa GCC is not the pinned release {pinned}: {text}"
         );
 
         let rom_elf = env

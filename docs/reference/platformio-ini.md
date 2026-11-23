@@ -193,10 +193,14 @@ board_build.build_system = espidf
   The two profiles share the source tree, the Python environment, CMake and
   Ninja, so a machine that builds both families pays for those once. Any other
   MCU is a configuration error naming the chip.
-- `esp32p4` is built for pre-rev-3 silicon only (boards whose `chip_variant` is
-  `esp32p4_es`, e.g. `esp32-p4-evboard`): the pinned ESP-IDF v5.5.1 supports chip
-  revisions up to v1.99. A rev-3 board (`esp32-p4_r3`) is refused before anything
-  is downloaded.
+- `esp32p4` is built for the silicon family the board's `chip_variant` names:
+  `esp32p4_es` (pre-rev-3 boards such as `esp32-p4-evboard`) gets
+  `CONFIG_ESP32P4_SELECTS_REV_LESS_V3=y` + `CONFIG_ESP32P4_REV_MIN_0=y`, and
+  `esp32p4` (rev-3 boards such as `esp32-p4_r3`) gets
+  `CONFIG_ESP32P4_REV_MIN_300=y` (`CONFIG_ESP32P4_REV_MIN_FULL=300`). The pinned
+  ESP-IDF release carries both families, so no board is refused for the pin's
+  sake; a project `sdkconfig` that selected the other family is a configuration
+  error (FastLED/fbuild#2133).
 
 A failing or timed-out delegated build reports its stage, argv, exit code and
 the tail of both streams.

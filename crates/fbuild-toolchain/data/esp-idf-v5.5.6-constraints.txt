@@ -1,0 +1,444 @@
+# --------- CORE ----------
+
+# setuptools: version 64 is required to support PEP 621 - pyproject.toml (with editable installs)
+setuptools>=64
+
+# click: Min. version was set to support the API used in idf.py and auto-completion
+click>=7.0,<8.2
+
+# pyserial: Min. version was set to support the used API
+pyserial>=3.3
+
+# cryptography: Min. version was set to support all functionality of ESP-IDF
+# Only binary for cryptography is here to make it work on ARMv7 architecture
+# We do have cryptography binary on https://dl.espressif.com/pypi for ARM
+# On https://pypi.org/ are no ARM binaries as standard now
+cryptography>=2.1.4,<45
+--only-binary cryptography
+
+# pyparsing: Min version was set based on https://github.com/pyparsing/pyparsing/issues/482
+pyparsing>=3.1.0,<3.3
+
+# pyelftools
+
+# We will bump component manager dependencies after testing the newly released versions with the ESP-IDF pipeline
+idf-component-manager>=2.2,<=2.5.2
+urllib3<2
+
+esptool~=4.12
+
+# bitstring (esptool dependency): 5.0 introduces breaking changes
+bitstring<5
+
+# IDFCI-13852
+esp-coredump~=1.10,!=1.17.0
+
+# esp-idf-kconfig: Config name was extended from 40 to 50 chars since 2.0.2 version
+esp-idf-kconfig>=2.0.2,<3.0.0
+
+freertos_gdb~=1.0
+
+esp-idf-monitor>=1.6.2,<2
+
+# 1.4.0 contains support for empty output sections in linker's map file
+esp-idf-size>=1.4.0,<2.0.0
+
+esp-idf-nvs-partition-gen~=0.1.9
+
+# The --only-binary flag is used to prevent local building of tree-sitter-c,
+# which avoids build failures on armv7l architecture.
+# Only versions 0.21.4 (for Python 3.9 and below) and 0.24.1 (for Python 3.10 and above) are available.
+tree-sitter-c>=0.21.4
+--only-binary tree-sitter-c
+
+# --------- CORE ends ----------
+
+# --------- GDBGUI -------------
+
+gdbgui==0.13.2.0; python_version < "3.11" and sys_platform == 'win32'
+# Windows is not supported since 0.14.0.0. See https://github.com/cs01/gdbgui/issues/348
+# pygdmi dependency is shared between gdbgui, coredump and py_debug_backend
+# pygdbmi 0.10 have breaking changes
+# The pygdbmi required max version 0.9.0.2 since 0.9.0.3 is not compatible with latest gdbgui (>=0.13.2.0)
+pygdbmi<=0.9.0.2; python_version < "3.11" and sys_platform == 'win32'
+# A compatible Socket.IO should be used. See https://github.com/miguelgrinberg/python-socketio/issues/578
+python-socketio<5; python_version < "3.11" and sys_platform == 'win32'
+jinja2<3.1; python_version < "3.11" and sys_platform == 'win32'
+itsdangerous<2.1; python_version < "3.11" and sys_platform == 'win32'
+
+# gdbgui 0.15.0.x allows Flask-SocketIO 5.1, which fails to import with Flask 3
+gdbgui>=0.15.2.0; sys_platform != "win32"
+
+# --------- GDBGUI ends ---------
+
+# --------- CI ---------
+
+# temp disabled since
+# v5.5.5 and earlier tags have written idf-ci>0.3,<1 in the requirements.ci.txt, which is incompatible with the current idf-ci>=1.0.0,<2.0 constraint.
+# idf-ci>=1.0.0,<2.0
+
+# idf-build-apps 3.1, 2.17 adds new field, which may change the behavior of clang build
+idf-build-apps < 3.1; python_version >= '3.10'
+idf-build-apps < 2.17; python_version < '3.10'
+
+# https://github.com/kislyuk/argcomplete/issues/559
+argcomplete<3.7.1; python_version < "3.10"
+
+# TODO: remove once all pytest.ini files fix their 'junit_logging' values
+# (invalid ones like 'stdout'). pytest 9.2 validates ini options strictly and
+# exits with code 4 on unknown values.
+pytest<9.2
+
+# --------- CI ends ---------
+
+# --------- TEST SPECIFIC ---------
+
+# 1.3.2 is not supported in 3.11. See https://gitlab.freedesktop.org/dbus/dbus-python/-/issues/45
+dbus-python<1.3; python_version > "3.10"
+
+# paho mqtt 2.0
+# https://github.com/eclipse/paho.mqtt.python/blob/master/ChangeLog.txt#L1
+# got a few breaking changes
+paho-mqtt<2
+
+# IDFCI-2426
+# https://github.com/secdev/scapy/issues/4512
+scapy<2.6
+
+# --------- PYTEST ends ---------
+
+# --------- DOCS -------------
+
+esp-docs~=2.5.0
+linuxdoc==20210324
+
+# --------- DOCS ends ---------
+
+# --------- esp_prov -------------
+
+# https://github.com/protocolbuffers/protobuf/issues/10075
+protobuf<=3.20.1
+
+# --------- esp_prov ends ---------
+
+# --------- UPPER BOUNDS ----------
+# Generated; do not edit this block by hand. The packages that ESP-IDF installs, except esptool and the ESP-IDF
+# CI packages, are limited to versions that were tested before they were merged: for each package, the higher
+# of the versions resolved for the features that every ESP-IDF CI job installs and for every feature, or, for a
+# package that only the features that are not optional install, the version resolved for those.
+# esp-idf: release/v5.5@b91517d860e597dd639142af46ca98fd7bed30da
+# oldest-python: 3.9
+# newest-python: 3.15
+# update: all
+# uv-version: 0.13.7
+# exclude-newer: 2026-11-09T15:39:24Z
+# exclude-newer-espressif: 2026-11-14T15:39:24Z
+# unresolvable: 3.15-x86_64-pc-windows-msvc
+# cap-held: argcomplete@darwin,linux,win32@3.9 bitstring click cryptography dbus-python@linux@3.11-3.15 esp-docs esp-idf-kconfig esp-idf-nvs-partition-gen esp-idf-size gdbgui@win32@3.9-3.10 idf-build-apps idf-component-manager itsdangerous@win32@3.9-3.10 jinja2@win32@3.9-3.10 linuxdoc paho-mqtt protobuf pygdbmi@win32@3.9-3.10 pyparsing pytest python-socketio@win32@3.9-3.10 scapy urllib3
+actdiag <=3.0.0; python_version < "3.16"
+alabaster <=0.7.16; python_version < "3.16"
+annotated-types <=0.7.0; python_version < "3.10"
+annotated-types <=0.8.0; python_version >= "3.10" and python_version < "3.16"
+argcomplete <=3.7.0; python_version < "3.10"
+argcomplete <=3.7.2; python_version >= "3.10" and python_version < "3.16"
+argon2-cffi <=25.1.0; python_version < "3.16"
+argon2-cffi-bindings <=25.1.0; python_version < "3.10"
+argon2-cffi-bindings <=26.1.0; python_version >= "3.10" and python_version < "3.16"
+async-timeout <=5.0.1; python_version < "3.11"
+attrs <=26.1.0; python_version < "3.16"
+babel <=2.18.0; python_version < "3.16"
+backports-zstd <=1.3.0; sys_platform == "win32" and python_version < "3.10"
+backports-zstd <=1.8.0; sys_platform == "win32" and python_version >= "3.10" and python_version < "3.11"
+bcrypt <=5.0.0; python_version < "3.16"
+bidict <=0.22.1; sys_platform != "win32" and python_version < "3.13"
+bitarray <=3.12.3; python_version < "3.16"
+bitstring <=4.4.0; python_version < "3.16"
+bleak <=1.1.1; python_version < "3.10"
+bleak <=3.1.0; python_version >= "3.10" and python_version < "3.16"
+blinker <=1.6.3; sys_platform != "win32" and python_version < "3.13"
+blockdiag <=3.0.0; python_version < "3.16"
+boto3 <=1.42.97; python_version < "3.10"
+boto3 <=1.43.126; python_version >= "3.10" and python_version < "3.16"
+botocore <=1.42.97; python_version < "3.10"
+botocore <=1.43.126; python_version >= "3.10" and python_version < "3.16"
+breathe <=4.35.0; python_version < "3.16"
+brotli <=1.1.0; sys_platform != "win32" and python_version < "3.13"
+brotli <=1.2.1; sys_platform == "win32" and python_version < "3.11"
+brotli <=1.1.0; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.13"
+cairocffi <=1.7.1; python_version < "3.16"
+cairosvg <=2.5.1; python_version < "3.16"
+certifi <=2026.10.23; python_version < "3.16"
+cffi <=2.0.0; python_version < "3.10"
+cffi <=2.1.1; python_version >= "3.10" and python_version < "3.16"
+charset-normalizer <=3.5.2; python_version < "3.16"
+click <=8.1.8; python_version < "3.16"
+colorama <=0.4.6; python_version < "3.16"
+commonmark <=0.9.2; python_version < "3.16"
+construct <=2.10.70; python_version < "3.16"
+coverage <=7.10.7; python_version < "3.10"
+coverage <=7.16.2; python_version >= "3.10" and python_version < "3.11"
+coverage <=7.17.2; python_version >= "3.11" and python_version < "3.16"
+cryptography <=44.0.3; python_version < "3.16"
+cssselect2 <=0.8.0; python_version < "3.10"
+cssselect2 <=0.10.1; python_version >= "3.10" and python_version < "3.16"
+dbus-fast <=2.45.1; sys_platform == "linux" and python_version < "3.10"
+dbus-fast <=5.0.26; sys_platform == "linux" and python_version >= "3.10" and python_version < "3.11"
+dbus-fast <=5.2.0; sys_platform == "linux" and python_version >= "3.11" and python_version < "3.16"
+dbus-python <=1.5.1; sys_platform == "linux" and python_version < "3.11"
+dbus-python <=1.2.18; sys_platform == "linux" and python_version >= "3.11" and python_version < "3.16"
+defusedxml <=0.7.1; python_version < "3.16"
+dnspython <=2.4.2; sys_platform != "win32" and python_version < "3.13"
+docutils <=0.20.1; python_version < "3.16"
+ecdsa <=0.19.2; python_version < "3.16"
+esp-bool-parser <=0.2.3; python_version < "3.16"
+esp-coredump <=1.18.1; python_version < "3.16"
+esp-docs <=2.5.1; python_version < "3.16"
+esp-idf-diag <=0.2.0; python_version < "3.16"
+esp-idf-kconfig <=2.5.4; python_version < "3.16"
+esp-idf-monitor <=1.11.0; python_version < "3.16"
+esp-idf-nvs-partition-gen <=0.1.9; python_version < "3.16"
+esp-idf-panic-decoder <=1.5.0; python_version < "3.16"
+esp-idf-size <=1.8.0; python_version < "3.16"
+esp-pylib <=1.2.1; python_version < "3.16"
+eventlet <=0.33.3; sys_platform != "win32" and python_version < "3.13"
+exceptiongroup <=1.3.1; python_version < "3.11"
+filelock <=3.19.1; python_version < "3.10"
+filelock <=4.1.0; python_version >= "3.10" and python_version < "3.11"
+filelock <=4.2.9; python_version >= "3.11" and python_version < "3.16"
+flask <=0.12.5; sys_platform == "win32" and python_version < "3.11"
+flask <=3.0.0; sys_platform != "win32" and python_version < "3.13"
+flask <=3.0.0; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.13"
+flask-compress <=1.10.1; sys_platform != "win32" and python_version < "3.13"
+flask-compress <=1.26; sys_platform == "win32" and python_version < "3.11"
+flask-compress <=1.10.1; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.13"
+flask-socketio <=2.9.6; sys_platform == "win32" and python_version < "3.11"
+flask-socketio <=5.3.6; sys_platform != "win32" and python_version < "3.13"
+flask-socketio <=5.3.6; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.13"
+freertos-gdb <=1.0.4; python_version < "3.16"
+fspath <=20230629; python_version < "3.16"
+funcparserlib <=1.0.1; python_version < "3.16"
+gdbgui <=0.13.2.0; sys_platform == "win32" and python_version < "3.11"
+gdbgui <=0.15.2.0; sys_platform != "win32" and python_version < "3.13"
+gdbgui <=0.15.2.0; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.13"
+gevent <=1.5.0; sys_platform == "win32" and python_version < "3.11"
+greenlet <=3.0.0; sys_platform != "win32" and python_version < "3.13"
+greenlet <=3.2.5; sys_platform == "win32" and python_version < "3.10"
+greenlet <=3.5.6; sys_platform == "win32" and python_version >= "3.10" and python_version < "3.11"
+greenlet <=3.0.0; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.13"
+h11 <=0.14.0; sys_platform != "win32" and python_version < "3.13"
+idf-build-apps <=2.16.1; python_version < "3.10"
+idf-build-apps <=3.0.2; python_version >= "3.10" and python_version < "3.16"
+idf-ci <=1.3.0; python_version < "3.10"
+idf-ci <=1.2.3; python_version >= "3.10" and python_version < "3.16"
+idf-component-manager <=2.5.2; python_version < "3.16"
+idna <=3.20; python_version < "3.16"
+imagesize <=1.5.0; python_version < "3.10"
+imagesize <=2.0.1; python_version >= "3.10" and python_version < "3.16"
+importlib-metadata <=8.7.1; python_version < "3.10"
+iniconfig <=2.1.0; python_version < "3.10"
+iniconfig <=2.3.1; python_version >= "3.10" and python_version < "3.16"
+intelhex <=2.3.0; python_version < "3.16"
+invoke <=3.0.3; python_version < "3.16"
+itsdangerous <=2.0.1; sys_platform == "win32" and python_version < "3.11"
+itsdangerous <=2.1.2; sys_platform != "win32" and python_version < "3.13"
+itsdangerous <=2.1.2; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.13"
+jinja2 <=3.0.3; sys_platform == "win32" and python_version < "3.11"
+jinja2 <=3.1.6; sys_platform != "win32" and python_version < "3.16"
+jinja2 <=3.1.6; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.16"
+jmespath <=1.1.0; python_version < "3.16"
+jsonref <=1.1.0; python_version < "3.16"
+jsonschema <=4.25.1; python_version < "3.10"
+jsonschema <=4.26.0; python_version >= "3.10" and python_version < "3.16"
+jsonschema-specifications <=2025.9.1; python_version < "3.16"
+junit-xml <=1.9; python_version < "3.16"
+linuxdoc <=20210324; python_version < "3.16"
+markdown-it-py <=3.0.0; python_version < "3.10"
+markdown-it-py <=4.2.0; python_version >= "3.10" and python_version < "3.16"
+markupsafe <=3.0.4; python_version < "3.16"
+mdurl <=0.1.2; python_version < "3.16"
+minio <=7.2.20; python_version < "3.16"
+netifaces <=0.11.0; python_version < "3.16"
+netmiko <=4.6.0; python_version < "3.10"
+netmiko <=4.8.0; python_version >= "3.10" and python_version < "3.16"
+ntc-templates <=8.1.0; python_version < "3.10"
+ntc-templates <=9.3.0; python_version >= "3.10" and python_version < "3.16"
+nwdiag <=2.0.0; python_version < "3.16"
+packaging <=26.3; python_version < "3.16"
+paho-mqtt <=1.6.1; python_version < "3.16"
+paramiko <=5.1.0; python_version < "3.16"
+pathvalidate <=3.3.1; python_version < "3.16"
+pexpect <=4.9.0; python_version < "3.16"
+pillow <=11.3.0; python_version < "3.10"
+pillow <=12.3.0; python_version >= "3.10" and python_version < "3.11"
+pillow <=13.0.0; python_version >= "3.11" and python_version < "3.16"
+pip <=26.0.1; python_version < "3.10"
+pip <=26.3; python_version >= "3.10" and python_version < "3.16"
+pluggy <=1.6.0; python_version < "3.10"
+pluggy <=1.7.0; python_version >= "3.10" and python_version < "3.16"
+prettytable <=3.16.0; python_version < "3.10"
+prettytable <=3.18.0; python_version >= "3.10" and python_version < "3.16"
+protobuf <=3.20.1; python_version < "3.16"
+psutil <=7.2.2; python_version < "3.16"
+ptyprocess <=0.7.0; python_version < "3.16"
+pyclang <=0.7.0; python_version < "3.16"
+pycparser <=2.23; python_version < "3.10"
+pycparser <=3.11; python_version >= "3.10" and python_version < "3.11"
+pycparser <=3.12; python_version >= "3.11" and python_version < "3.16"
+pycryptodome <=4.4.0; python_version < "3.16"
+pydantic <=2.13.5; python_version < "3.10"
+pydantic <=2.14.3; python_version >= "3.10" and python_version < "3.16"
+pydantic-core <=2.46.5; python_version < "3.10"
+pydantic-core <=2.50.4; python_version >= "3.10" and python_version < "3.16"
+pydantic-settings <=2.11.0; python_version < "3.10"
+pydantic-settings <=2.15.0; python_version >= "3.10" and python_version < "3.11"
+pydantic-settings <=2.16.2; python_version >= "3.11" and python_version < "3.16"
+pyecharts <=2.1.0; python_version < "3.16"
+pyelftools <=0.32; python_version < "3.10"
+pyelftools <=0.33; python_version >= "3.10" and python_version < "3.16"
+pygdbmi <=0.9.0.2; sys_platform == "win32" and python_version < "3.11"
+pygdbmi <=0.11.0.0; sys_platform != "win32" and python_version < "3.16"
+pygdbmi <=0.11.0.0; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.16"
+pygments <=2.21.0; python_version < "3.16"
+pynacl <=1.6.2; python_version < "3.16"
+pyobjc-core <=11.1; sys_platform == "darwin" and python_version < "3.10"
+pyobjc-core <=12.2.2; sys_platform == "darwin" and python_version >= "3.10" and python_version < "3.11"
+pyobjc-core <=13.0; sys_platform == "darwin" and python_version >= "3.11" and python_version < "3.16"
+pyobjc-framework-cocoa <=11.1; sys_platform == "darwin" and python_version < "3.10"
+pyobjc-framework-cocoa <=12.2.2; sys_platform == "darwin" and python_version >= "3.10" and python_version < "3.11"
+pyobjc-framework-cocoa <=13.0; sys_platform == "darwin" and python_version >= "3.11" and python_version < "3.16"
+pyobjc-framework-corebluetooth <=11.1; sys_platform == "darwin" and python_version < "3.10"
+pyobjc-framework-corebluetooth <=12.2.2; sys_platform == "darwin" and python_version >= "3.10" and python_version < "3.11"
+pyobjc-framework-corebluetooth <=13.0; sys_platform == "darwin" and python_version >= "3.11" and python_version < "3.16"
+pyobjc-framework-libdispatch <=11.1; sys_platform == "darwin" and python_version < "3.10"
+pyobjc-framework-libdispatch <=12.2.2; sys_platform == "darwin" and python_version >= "3.10" and python_version < "3.11"
+pyobjc-framework-libdispatch <=13.0; sys_platform == "darwin" and python_version >= "3.11" and python_version < "3.16"
+pyparsing <=3.2.5; python_version < "3.16"
+pyserial <=3.5; python_version < "3.16"
+pytest <=8.4.2; python_version < "3.10"
+pytest <=9.1.1; python_version >= "3.10" and python_version < "3.16"
+pytest-embedded <=1.18.2; python_version < "3.16"
+pytest-embedded-idf <=1.18.2; python_version < "3.16"
+pytest-embedded-jtag <=1.18.2; python_version < "3.16"
+pytest-embedded-qemu <=1.18.2; python_version < "3.16"
+pytest-embedded-serial <=1.18.2; python_version < "3.16"
+pytest-embedded-serial-esp <=1.18.2; python_version < "3.16"
+pytest-ignore-test-results <=0.3.0; python_version < "3.16"
+pytest-rerunfailures <=16.0.1; python_version < "3.10"
+pytest-rerunfailures <=16.7; python_version >= "3.10" and python_version < "3.16"
+pytest-timeout <=2.4.0; python_version < "3.16"
+python-can <=4.6.1; python_version < "3.16"
+python-dateutil <=2.9.0.post0; python_version < "3.16"
+python-dotenv <=1.2.1; python_version < "3.10"
+python-dotenv <=1.2.4; python_version >= "3.10" and python_version < "3.16"
+python-engineio <=3.14.2; sys_platform == "win32" and python_version < "3.11"
+python-engineio <=4.8.0; sys_platform != "win32" and python_version < "3.13"
+python-engineio <=4.8.0; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.13"
+python-gitlab <=6.5.0; python_version < "3.10"
+python-gitlab <=8.6.0; python_version >= "3.10" and python_version < "3.16"
+python-socketio <=4.6.1; sys_platform == "win32" and python_version < "3.11"
+python-socketio <=5.10.0; sys_platform != "win32" and python_version < "3.13"
+python-socketio <=5.10.0; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.13"
+pyyaml <=6.0.3; python_version < "3.16"
+qemu-qmp <=0.0.3; python_version < "3.16"
+rangehttpserver <=1.4.0; python_version < "3.16"
+recommonmark <=0.7.1; python_version < "3.16"
+reedsolo <=1.7.0; python_version < "3.16"
+referencing <=0.36.2; python_version < "3.10"
+referencing <=0.37.0; python_version >= "3.10" and python_version < "3.16"
+requests <=2.32.5; python_version < "3.10"
+requests <=2.34.2; python_version >= "3.10" and python_version < "3.16"
+requests-file <=3.0.1; python_version < "3.16"
+requests-toolbelt <=1.0.0; python_version < "3.16"
+rich <=15.0.0; python_version < "3.16"
+rich-click <=1.9.9; python_version < "3.16"
+rpds-py <=0.27.1; python_version < "3.10"
+rpds-py <=0.30.0; python_version >= "3.10" and python_version < "3.11"
+rpds-py <=2026.9.1; python_version >= "3.11" and python_version < "3.16"
+ruamel-yaml <=0.19.1; python_version < "3.16"
+s3transfer <=0.16.1; python_version < "3.10"
+s3transfer <=0.19.3; python_version >= "3.10" and python_version < "3.16"
+scapy <=2.5.0; python_version < "3.16"
+scp <=0.16.2; python_version < "3.16"
+seqdiag <=3.0.0; python_version < "3.16"
+setuptools <=82.0.1; python_version < "3.10"
+setuptools <=84.2.1; python_version >= "3.10" and python_version < "3.16"
+simple-websocket <=1.0.0; sys_platform != "win32" and python_version < "3.13"
+simplejson <=4.2.0; python_version < "3.16"
+simplewebsocketserver <=0.1.2; python_version < "3.16"
+six <=1.17.0; python_version < "3.16"
+snowballstemmer <=3.1.1; python_version < "3.16"
+sphinx <=7.1.2; python_version < "3.16"
+sphinx-copybutton <=0.5.0; python_version < "3.16"
+sphinx-idf-theme <=2.0.1; python_version < "3.16"
+sphinx-notfound-page <=1.1.0; python_version < "3.16"
+sphinx-selective-exclude <=1.0.3; python_version < "3.16"
+sphinxcontrib-actdiag <=3.0.0; python_version < "3.16"
+sphinxcontrib-applehelp <=2.0.0; python_version < "3.16"
+sphinxcontrib-blockdiag <=3.0.0; python_version < "3.16"
+sphinxcontrib-devhelp <=2.0.0; python_version < "3.16"
+sphinxcontrib-htmlhelp <=2.1.0; python_version < "3.16"
+sphinxcontrib-jquery <=4.1; python_version < "3.16"
+sphinxcontrib-jsmath <=2.0.0; python_version < "3.16"
+sphinxcontrib-nwdiag <=2.0.0; python_version < "3.16"
+sphinxcontrib-qthelp <=2.0.0; python_version < "3.16"
+sphinxcontrib-seqdiag <=3.0.0; python_version < "3.16"
+sphinxcontrib-serializinghtml <=2.0.0; python_version < "3.16"
+sphinxcontrib-svg2pdfconverter <=1.2.0; python_version < "3.16"
+sphinxcontrib-wavedrom <=3.0.4; python_version < "3.16"
+svgwrite <=1.4.3; python_version < "3.16"
+textfsm <=2.1.0; python_version < "3.16"
+tibs <=0.5.7; python_version < "3.16"
+tinycss2 <=1.4.0; python_version < "3.10"
+tinycss2 <=1.5.1; python_version >= "3.10" and python_version < "3.16"
+toml <=0.10.2; python_version < "3.11"
+tomli <=2.5.0; python_version < "3.11"
+tomlkit <=0.15.2; python_version < "3.16"
+tqdm <=4.70.1; python_version < "3.16"
+tree-sitter <=0.23.2; python_version < "3.10"
+tree-sitter <=0.26.1; python_version >= "3.10" and python_version < "3.16"
+tree-sitter-c <=0.23.6; python_version < "3.10"
+tree-sitter-c <=0.24.2; python_version >= "3.10" and python_version < "3.16"
+truststore <=0.10.5; python_version >= "3.10" and python_version < "3.16"
+typing-extensions <=4.16.0; python_version < "3.16"
+typing-inspection <=0.4.2; python_version < "3.10"
+typing-inspection <=0.4.5; python_version >= "3.10" and python_version < "3.16"
+urllib3 <=1.26.20; python_version < "3.16"
+wavedrom <=2.0.3.post3; python_version < "3.16"
+wcwidth <=0.9.4; python_version < "3.16"
+webcolors <=24.11.1; python_version < "3.10"
+webcolors <=25.10.0; python_version >= "3.10" and python_version < "3.16"
+webencodings <=0.5.1; python_version < "3.10"
+webencodings <=0.6.1; python_version >= "3.10" and python_version < "3.16"
+websocket-client <=1.9.0; python_version < "3.10"
+websocket-client <=1.9.2; python_version >= "3.10" and python_version < "3.16"
+websockets <=15.0.1; python_version < "3.10"
+websockets <=16.1.1; python_version >= "3.10" and python_version < "3.11"
+websockets <=17.4; python_version >= "3.11" and python_version < "3.16"
+werkzeug <=0.16.1; sys_platform == "win32" and python_version < "3.11"
+werkzeug <=3.0.0; sys_platform != "win32" and python_version < "3.13"
+werkzeug <=3.0.0; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.13"
+windows-curses <=2.4.2; sys_platform == "win32" and python_version < "3.15"
+winrt-runtime <=3.2.1; sys_platform == "win32" and python_version < "3.11"
+winrt-runtime <=4.1.0; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.15"
+winrt-windows-devices-bluetooth <=3.2.1; sys_platform == "win32" and python_version < "3.11"
+winrt-windows-devices-bluetooth <=4!10.0.28000.2957; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.15"
+winrt-windows-devices-bluetooth-advertisement <=3.2.1; sys_platform == "win32" and python_version < "3.11"
+winrt-windows-devices-bluetooth-advertisement <=4!10.0.28000.2957; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.15"
+winrt-windows-devices-bluetooth-genericattributeprofile <=3.2.1; sys_platform == "win32" and python_version < "3.11"
+winrt-windows-devices-bluetooth-genericattributeprofile <=4!10.0.28000.2957; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.15"
+winrt-windows-devices-enumeration <=3.2.1; sys_platform == "win32" and python_version < "3.11"
+winrt-windows-devices-enumeration <=4!10.0.28000.2957; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.15"
+winrt-windows-devices-radios <=3.2.1; sys_platform == "win32" and python_version >= "3.10" and python_version < "3.11"
+winrt-windows-devices-radios <=4!10.0.28000.2957; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.15"
+winrt-windows-foundation <=3.2.1; sys_platform == "win32" and python_version < "3.11"
+winrt-windows-foundation <=4!10.0.28000.2957; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.15"
+winrt-windows-foundation-collections <=3.2.1; sys_platform == "win32" and python_version < "3.11"
+winrt-windows-foundation-collections <=4!10.0.28000.2957; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.15"
+winrt-windows-storage-streams <=3.2.1; sys_platform == "win32" and python_version < "3.11"
+winrt-windows-storage-streams <=4!10.0.28000.2957; sys_platform == "win32" and python_version >= "3.11" and python_version < "3.15"
+wrapt <=1.17.3; python_version < "3.16"
+wsproto <=1.2.0; sys_platform != "win32" and python_version < "3.13"
+xcffib <=1.5.0; python_version < "3.10"
+xcffib <=1.13.0; python_version >= "3.10" and python_version < "3.16"
+zipp <=3.23.1; python_version < "3.10"
+# --------- UPPER BOUNDS ends ----------

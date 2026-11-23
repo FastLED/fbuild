@@ -297,27 +297,50 @@ async fn espidf_riscv_component_project_builds_for_esp32c6() {
     build_riscv_component_project("esp32c6", "esp32c6").await;
 }
 
-/// ESP32-P4 rev-3 silicon is refused by the real orchestrator entry point
-/// before anything is provisioned: no download, no build directory content.
+/// ESP32-P4 rev-3 silicon builds on the moved pin, and the image is built for
+/// the rev-3 family (`CONFIG_ESP32P4_REV_MIN_FULL=300`); the pre-rev-3 board
+/// keeps its own family on the same release (FastLED/fbuild#2133).
 #[tokio::test]
-async fn espidf_riscv_component_project_is_refused_for_p4_rev3_silicon() {
-    let scratch = tempfile::TempDir::new().unwrap();
-    let root = NormalizedPath::new(scratch.path());
-    let project = root.join("project");
-    copy_fixture("espidf_component_riscv", project.as_path());
-    let build_dir = root.join("build");
+#[ignore = "installs the pinned ESP-IDF release with the RISC-V toolchain (~2.8 GB) and runs two real idf.py builds"]
+async fn espidf_riscv_component_project_builds_for_both_p4_silicon_families() {
+    let (_scratch, root) = build_root();
 
-    let error = crate::esp32::Esp32Orchestrator
+    let project = root.join("project-esp32p4-r3");
+    copy_fixture("espidf_component_riscv", project.as_path());
+    let build_dir = root.join("build-esp32p4-r3");
+    let result = crate::esp32::Esp32Orchestrator
         .build(&params(&project, &build_dir, "esp32p4-r3"))
         .await
-        .err()
-        .expect("rev-3 silicon must not build against the pinned release");
-
-    let message = error.to_string();
-    assert!(message.contains("esp32p4"), "{message}");
-    assert!(message.contains("rev-3 silicon"), "{message}");
+        .expect("rev-3 silicon must build on the pinned release");
+    assert!(result.success, "{}", result.message);
+    let sdkconfig =
+        std::fs::read_to_string(build_dir.join("idf").join("sdkconfig").as_path()).unwrap();
     assert!(
-        !build_dir.join("idf").as_path().exists(),
-        "the delegated build root was created for a refused build"
+        sdkconfig.contains("CONFIG_ESP32P4_REV_MIN_FULL=300"),
+        "the rev-3 family was not selected:\n{sdkconfig}"
+    );
+    assert!(
+        !sdkconfig.contains("CONFIG_ESP32P4_SELECTS_REV_LESS_V3=y"),
+        "the pre-rev-3 family was selected for a rev-3 board:\n{sdkconfig}"
+    );
+
+    // The pre-rev-3 board keeps its own family: one release, both families.
+    let pre = root.join("project-esp32p4");
+    copy_fixture("espidf_component_riscv", pre.as_path());
+    let pre_build = root.join("build-esp32p4");
+    let result = crate::esp32::Esp32Orchestrator
+        .build(&params(&pre, &pre_build, "esp32p4"))
+        .await
+        .expect("pre-rev-3 silicon must keep building");
+    assert!(result.success, "{}", result.message);
+    let sdkconfig =
+        std::fs::read_to_string(pre_build.join("idf").join("sdkconfig").as_path()).unwrap();
+    assert!(
+        sdkconfig.contains("CONFIG_ESP32P4_SELECTS_REV_LESS_V3=y"),
+        "the pre-rev-3 family was not selected:\n{sdkconfig}"
+    );
+    assert!(
+        sdkconfig.contains("CONFIG_ESP32P4_REV_MIN_FULL=0"),
+        "the pre-rev-3 revision floor is wrong:\n{sdkconfig}"
     );
 }
