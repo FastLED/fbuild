@@ -4,6 +4,9 @@ use std::path::{Path, PathBuf};
 
 use super::Esp32Framework;
 use super::fs_utils::copy_dir_recursive;
+use fbuild_packages_fetch::component_id::{
+    ComponentIdentity, content_id, read_stamp, remove_stamp, write_stamp,
+};
 
 /// Archive whose presence proves a per-MCU SDK tree carries real libraries
 /// and not just the partial directory some core archives ship.
@@ -98,10 +101,121 @@ fn installed_variant_dir(tools_dir: &Path, variant: &str) -> Option<PathBuf> {
 fn patch_installed_variants(tools_dir: &Path, variants: &[&str]) -> fbuild_core::Result<()> {
     for variant in variants {
         if let Some(mcu_dir) = installed_variant_dir(tools_dir, variant) {
+            // A stamped tree is final: its compat patches ran in staging, ahead
+            // of the stamp (decision 8a), so patching it here would make the
+            // stamp describe bytes nobody hashed. Only a legacy tree - the ones
+            // installed before stamping existed - is patched in place, and it
+            // stays without an identity.
+            if read_stamp(&mcu_dir).is_some() {
+                continue;
+            }
             patch_mcu_compatibility(&mcu_dir, variant)?;
         }
     }
     Ok(())
+}
+
+/// Recipe of the SDK component. The compat patches now run in staging, ahead of
+/// the stamp (decision 8a); anything that changes what they do to the tree
+/// changes every SDK content id, so it bumps this.
+const SDK_RECIPE: u32 = 1;
+
+/// The `esp32-arduino-libs/<variant>` (older archives: `sdk/<variant>`) tree
+/// inside an extracted libs archive, wherever the producer put its wrapper
+/// directory.
+fn staged_variant_dir(temp_dir: &Path, variant: &str) -> Option<PathBuf> {
+    fn visit(dir: &Path, variant: &str, depth: usize) -> Option<PathBuf> {
+        if depth > 4 {
+            return None;
+        }
+        let entries = std::fs::read_dir(dir).ok()?;
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if !path.is_dir() {
+                continue;
+            }
+            if entry.file_name() == variant {
+                return Some(path);
+            }
+            if let Some(found) = visit(&path, variant, depth + 1) {
+                return Some(found);
+            }
+        }
+        None
+    }
+    visit(temp_dir, variant, 0)
+}
+
+/// Write one SDK variant's identity at the root of its staging tree.
+fn stamp_sdk_component(
+    root: &Path,
+    variant: &str,
+    version: &str,
+) -> fbuild_core::Result<ComponentIdentity> {
+    let content_id = content_id(root, &[])?;
+    let identity =
+        ComponentIdentity::new(&format!("sdk-{variant}"), version, content_id, SDK_RECIPE);
+    write_stamp(root, &identity)?;
+    Ok(identity)
+}
+
+/// Keep the staged identity only if the merge reproduced the staged bytes.
+///
+/// A stamp is a promise that these exact bytes were hashed, and the merged tree
+/// is what ships. A pre-existing partial variant tree (or a copy that did not
+/// preserve a link) makes the two disagree, so the component keeps no identity
+/// and the planner compiles from source rather than certifying bytes that were
+/// never hashed.
+fn reconcile_sdk_stamp(
+    tools_dir: &Path,
+    variant: &str,
+    staged: &ComponentIdentity,
+) -> fbuild_core::Result<()> {
+    let Some(installed) = installed_variant_dir(tools_dir, variant) else {
+        return Ok(());
+    };
+    let merged_id = content_id(&installed, &[])?;
+    if merged_id == staged.content_id {
+        return Ok(());
+    }
+    tracing::warn!(
+        "{variant} SDK: the merged tree does not match the staged identity ({merged_id} vs {}); dropping its component stamp",
+        staged.content_id
+    );
+    remove_stamp(&installed)
+}
+
+/// Extract a fetched libs archive, stamp the requested variant in the extract
+/// dir, then merge it into `tools/`.
+///
+/// Identity is taken in staging, after the compat patches and before the merge
+/// (decision 8a): a half-merged tree never certifies anything, and the patches
+/// are inside the hash because they run first.
+fn install_sdk_from_archive(
+    archive_path: &Path,
+    version: &str,
+    variant: &str,
+    tools_dir: &Path,
+    staging: &Path,
+) -> fbuild_core::Result<()> {
+    crate::extractor::extract(archive_path, staging)?;
+    let staged = match staged_variant_dir(staging, variant) {
+        Some(root) => {
+            patch_mcu_compatibility(&root, variant)?;
+            Some(stamp_sdk_component(&root, variant, version)?)
+        }
+        None => {
+            tracing::warn!(
+                "libs archive for {variant} carries no {variant} tree; merging it without a component identity"
+            );
+            None
+        }
+    };
+    merge_sdk_archive_entries(staging, tools_dir)?;
+    match staged {
+        Some(identity) => reconcile_sdk_stamp(tools_dir, variant, &identity),
+        None => Ok(()),
+    }
 }
 
 /// Fetch one variant's (possibly sliced) libs archive and merge it into `tools/`.
@@ -134,8 +248,7 @@ async fn install_sdk_archive(
             .map(|m| m.len() / 1_000_000)
             .unwrap_or(0)
     );
-    crate::extractor::extract(&archive_path, temp_dir.path())?;
-    merge_sdk_archive_entries(temp_dir.path(), tools_dir)
+    install_sdk_from_archive(&archive_path, version, variant, tools_dir, temp_dir.path())
 }
 
 /// Locate `libfreertos.a` inside an installed per-MCU SDK tree.
@@ -591,5 +704,171 @@ mod tests {
 
         seed_complete_mcu_sdk(&sdk_dir.join("esp32p4_es"));
         assert!(missing_sdk_variants(&tools_dir, &variants).is_empty());
+    }
+
+    /// The tar.xz a libs release ships: a wrapper directory the extractor has to
+    /// see through, and one variant tree below it.
+    fn write_libs_archive(path: &Path, entries: &[(&str, &str)]) {
+        let file = std::fs::File::create(path).unwrap();
+        let encoder = xz2::write::XzEncoder::new(file, 1);
+        let mut builder = tar::Builder::new(encoder);
+        for (name, content) in entries {
+            let mut header = tar::Header::new_gnu();
+            header.set_size(content.len() as u64);
+            header.set_mode(0o644);
+            header.set_cksum();
+            builder
+                .append_data(&mut header, name, content.as_bytes())
+                .unwrap();
+        }
+        builder.into_inner().unwrap().finish().unwrap();
+    }
+
+    const C3_ENTRIES: &[(&str, &str)] = &[
+        (
+            "esp32-arduino-libs/esp32c3/include/freertos/FreeRTOS-Kernel/include/freertos/FreeRTOS.h",
+            "",
+        ),
+        ("esp32-arduino-libs/esp32c3/flags/includes", "-Iinclude"),
+        ("esp32-arduino-libs/esp32c3/lib/libfreertos.a", "freertos"),
+        ("esp32-arduino-libs/esp32c3/lib/libdriver.a", "driver"),
+    ];
+
+    #[test]
+    fn a_fresh_sdk_install_stamps_the_variant_in_staging() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let archive = tmp.path().join("esp32-3.3.12-libs.tar.xz");
+        write_libs_archive(&archive, C3_ENTRIES);
+        let tools_dir = tmp.path().join("tools");
+        let staging = tmp.path().join("staging");
+
+        install_sdk_from_archive(&archive, "3.3.12", "esp32c3", &tools_dir, &staging).unwrap();
+
+        let installed = installed_variant_dir(&tools_dir, "esp32c3").expect("complete SDK tree");
+        let stamp = read_stamp(&installed).expect("a fresh install carries an identity");
+        assert_eq!(stamp.component, "sdk-esp32c3");
+        assert_eq!(stamp.version, "3.3.12");
+        assert_eq!(stamp.recipe, SDK_RECIPE);
+        assert_eq!(
+            stamp.content_id,
+            content_id(&installed, &[]).unwrap(),
+            "the stamp must describe the merged tree, not a pre-merge one"
+        );
+    }
+
+    #[test]
+    fn sdk_compat_patches_run_ahead_of_the_stamp() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let archive = tmp.path().join("esp32-3.3.12-libs.tar.xz");
+        write_libs_archive(
+            &archive,
+            &[
+                (
+                    "esp32-arduino-libs/esp32c2/include/freertos/FreeRTOS-Kernel/include/freertos/FreeRTOS.h",
+                    "",
+                ),
+                (
+                    "esp32-arduino-libs/esp32c2/include/bt/controller/esp32c2/esp_bt_cfg.h",
+                    "cfg",
+                ),
+                ("esp32-arduino-libs/esp32c2/flags/includes", "-Iinclude"),
+                ("esp32-arduino-libs/esp32c2/lib/libfreertos.a", "freertos"),
+            ],
+        );
+        let tools_dir = tmp.path().join("tools");
+        let staging = tmp.path().join("staging");
+
+        install_sdk_from_archive(&archive, "3.3.12", "esp32c2", &tools_dir, &staging).unwrap();
+
+        let installed = installed_variant_dir(&tools_dir, "esp32c2").expect("complete SDK tree");
+        // Both compat mutations landed...
+        assert!(
+            installed
+                .join("include/controller/esp32c2/esp_bt_cfg.h")
+                .is_file()
+        );
+        assert!(
+            installed
+                .join("include/hal/include/hal/touch_sensor_legacy_types.h")
+                .is_file()
+        );
+        // ...and are inside the identity, so a patch taken after the stamp would
+        // show up as a mismatch here.
+        let stamp = read_stamp(&installed).expect("identity");
+        assert_eq!(stamp.content_id, content_id(&installed, &[]).unwrap());
+    }
+
+    #[test]
+    fn a_merge_into_a_preexisting_tree_drops_the_identity() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let archive = tmp.path().join("esp32-3.3.12-libs.tar.xz");
+        write_libs_archive(&archive, C3_ENTRIES);
+        let tools_dir = tmp.path().join("tools");
+        let staging = tmp.path().join("staging");
+        // A file the archive does not carry survives the merge, so the merged
+        // tree is not the tree that was hashed.
+        write(
+            &tools_dir
+                .join(NEW_SDK_LAYOUT)
+                .join("esp32c3")
+                .join("lib")
+                .join("liblegacy.a"),
+            "legacy",
+        );
+
+        install_sdk_from_archive(&archive, "3.3.12", "esp32c3", &tools_dir, &staging).unwrap();
+
+        let installed = installed_variant_dir(&tools_dir, "esp32c3").expect("complete SDK tree");
+        assert!(
+            installed.join("lib").join("liblegacy.a").is_file(),
+            "the merge must not delete unrelated files"
+        );
+        assert!(
+            read_stamp(&installed).is_none(),
+            "an unreproduced tree must not keep an identity"
+        );
+    }
+
+    #[test]
+    fn a_stamped_variant_is_never_patched_again() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let tools_dir = tmp.path().join("tools");
+        let mcu_dir = tools_dir.join(NEW_SDK_LAYOUT).join("esp32c2");
+        seed_complete_mcu_sdk(&mcu_dir);
+        write_stamp(
+            &mcu_dir,
+            &ComponentIdentity::new("sdk-esp32c2", "3.3.12", "stamped".to_string(), SDK_RECIPE),
+        )
+        .unwrap();
+
+        patch_installed_variants(&tools_dir, &["esp32c2"]).unwrap();
+
+        assert!(
+            !mcu_dir
+                .join("include/hal/include/hal/touch_sensor_legacy_types.h")
+                .exists(),
+            "a stamped component is final; patching it would invalidate its identity"
+        );
+    }
+
+    #[test]
+    fn an_unstamped_variant_is_still_patched_in_place() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let tools_dir = tmp.path().join("tools");
+        let mcu_dir = tools_dir.join(NEW_SDK_LAYOUT).join("esp32c2");
+        seed_complete_mcu_sdk(&mcu_dir);
+
+        patch_installed_variants(&tools_dir, &["esp32c2"]).unwrap();
+
+        assert!(
+            mcu_dir
+                .join("include/hal/include/hal/touch_sensor_legacy_types.h")
+                .is_file(),
+            "a legacy tree without a stamp keeps getting its compat patches"
+        );
+        assert!(
+            read_stamp(&mcu_dir).is_none(),
+            "no backfill: no stamp appears"
+        );
     }
 }

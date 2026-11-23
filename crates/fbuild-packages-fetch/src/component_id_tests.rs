@@ -1,5 +1,5 @@
 use super::component_id::{
-    ComponentIdentity, SCHEMA, STAMP_FILE, content_id, read_stamp, write_stamp,
+    ComponentIdentity, SCHEMA, STAMP_FILE, content_id, read_stamp, remove_stamp, write_stamp,
 };
 use std::path::Path;
 
@@ -170,4 +170,21 @@ fn an_unreadable_stamp_is_no_identity() {
     let dir = staged(&[("a.txt", b"a")]);
     std::fs::write(dir.path().join(STAMP_FILE), b"{not json").unwrap();
     assert_eq!(read_stamp(dir.path()), None);
+}
+
+#[test]
+fn removing_a_stamp_leaves_no_identity() {
+    let root = staged(&[("a.h", b"x")]);
+    write_stamp(
+        root.path(),
+        &ComponentIdentity::new("core", "3.3.12", "id".to_string(), 0),
+    )
+    .unwrap();
+    assert!(read_stamp(root.path()).is_some());
+
+    remove_stamp(root.path()).unwrap();
+
+    assert!(read_stamp(root.path()).is_none());
+    // Idempotent: withdrawing an identity twice is not an error.
+    remove_stamp(root.path()).unwrap();
 }

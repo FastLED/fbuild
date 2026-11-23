@@ -8,7 +8,10 @@ file below the 1000 LOC gate.
 - `mod.rs` — `Esp32Framework` struct, constructors, `Package`/`Framework` trait
   impls, and the legacy `validate` helper.
 - `libs.rs` — `ensure_libs` / `ensure_mcu_libs` (download + extract the ESP-IDF
-  SDK and per-MCU skeleton libs into `tools/`).
+  SDK and per-MCU skeleton libs into `tools/`), and the SDK variant's
+  component identity: compat patches run in the extract dir, the stamp and
+  its content id are taken there, and the merge re-checks the id before the
+  stamp is allowed to stay (decision 8a, FastLED/fbuild#1882).
 - `paths.rs` — Simple framework path accessors (cores, variants, bootloader,
   partitions, gen_esp32part.py, core sources).
 - `sdk_paths.rs` — SDK include directories, library flags, defines, linker
