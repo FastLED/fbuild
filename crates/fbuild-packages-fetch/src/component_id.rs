@@ -159,6 +159,23 @@ pub fn read_stamp(root: &Path) -> Option<ComponentIdentity> {
     (identity.schema == SCHEMA).then_some(identity)
 }
 
+/// Remove the stamp at `root`, if any.
+///
+/// Used when the bytes a stamp described did not survive a later step: the
+/// component then has no identity and is rebuilt from source. Idempotent - a
+/// component that already has no identity is not an error.
+pub fn remove_stamp(root: &Path) -> Result<()> {
+    let path = NormalizedPath::new(root).join(STAMP_FILE);
+    match std::fs::remove_file(path.as_path()) {
+        Ok(()) => Ok(()),
+        Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(()),
+        Err(error) => Err(FbuildError::PackageError(format!(
+            "could not remove the component identity at {}: {error}",
+            path.display()
+        ))),
+    }
+}
+
 fn hash_file(path: &Path, relative: &str, hasher: &mut Sha256) -> Result<()> {
     let mut file = std::fs::File::open(path).map_err(|error| {
         FbuildError::PackageError(format!("could not read component file {relative}: {error}"))
