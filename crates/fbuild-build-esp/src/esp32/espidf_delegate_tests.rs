@@ -464,6 +464,32 @@ fn the_silicon_defaults_file_carries_the_family_symbol() {
     assert_eq!(symbols, ["CONFIG_ESP32P4_REV_MIN_300=y"], "{text}");
 }
 
+/// The defaults file must never land inside the IDF build root.
+///
+/// `idf.py set-target` implies `fullclean`, and IDF refuses to clean a
+/// non-empty directory that is not a CMake build tree, so a defaults file
+/// written into `<build>/idf` made every ESP32-P4 family build die at
+/// `set-target` with "Directory ... doesn't seem to be a CMake build directory"
+/// (measured 2026-11-23, FastLED/fbuild#2133). The build root has to stay
+/// exactly as fbuild created it: empty.
+#[test]
+fn the_silicon_defaults_never_land_in_the_idf_build_root() {
+    let dir = tempfile::TempDir::new().unwrap();
+    let build_root = NormalizedPath::new(dir.path());
+    let idf_build = build_root.join("idf");
+    std::fs::create_dir_all(idf_build.as_path()).unwrap();
+
+    let defaults_dir = super::silicon_defaults_dir(&build_root);
+    assert!(
+        defaults_dir.relative_to(&idf_build).is_none(),
+        "the defaults directory must sit outside the IDF build root: {defaults_dir}"
+    );
+    let path = super::write_silicon_defaults(&defaults_dir, &super::P4_REV3).unwrap();
+    assert!(path.as_path().is_file(), "{path}");
+    let entries = std::fs::read_dir(idf_build.as_path()).unwrap().count();
+    assert_eq!(entries, 0, "the IDF build root must stay empty");
+}
+
 /// `SDKCONFIG_DEFAULTS` replaces IDF's own list, so the project's files are
 /// appended after the family entry — and only the ones that exist, because IDF
 /// aborts a configure that names a missing file.

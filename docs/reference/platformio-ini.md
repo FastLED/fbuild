@@ -187,8 +187,12 @@ board_build.build_system = espidf
 
   | MCU | Toolchain profile | First install |
   |---|---|---|
-  | `esp32s3` | Xtensa | ~1.8 GB |
-  | `esp32c3`, `esp32c5`, `esp32c6`, `esp32p4` | RISC-V | ~2.8 GB |
+  | `esp32s3` | Xtensa | ~2.1 GB |
+  | `esp32c3`, `esp32c5`, `esp32c6`, `esp32p4` | RISC-V | ~3.1 GB |
+
+  Measured 2026-11-23 on linux-amd64 against the pinned release: `du -sb`
+  over the install cache (source tree, Python environment, CMake, Ninja and
+  the profile's own cross toolchain).
 
   The two profiles share the source tree, the Python environment, CMake and
   Ninja, so a machine that builds both families pays for those once. Any other
