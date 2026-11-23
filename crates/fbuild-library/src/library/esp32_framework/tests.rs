@@ -763,3 +763,41 @@ fn sdk_libs_installed_requires_the_board_chip_variant_tree() {
     seed(&sdk_dir.join("esp32p4_es"));
     assert!(fw.sdk_libs_installed("esp32p4", "esp32p4_es"));
 }
+
+#[test]
+fn test_core_component_identity_is_stamped_at_the_framework_root() {
+    use fbuild_packages_fetch::component_id::read_stamp;
+
+    let tmp = tempfile::TempDir::new().unwrap();
+    let staging = tmp.path();
+    // A framework that has already had its SDK libraries merged into tools/, the
+    // way the post-install merge leaves it. Only the core half may be identified.
+    std::fs::create_dir_all(staging.join("cores/esp32")).unwrap();
+    std::fs::write(staging.join("cores/esp32/Arduino.h"), b"#pragma once").unwrap();
+    std::fs::create_dir_all(staging.join("tools/esp32-arduino-libs/esp32s3/lib")).unwrap();
+    std::fs::write(
+        staging.join("tools/esp32-arduino-libs/esp32s3/lib/libesp32.a"),
+        b"sdk",
+    )
+    .unwrap();
+
+    super::stamp_core_component(staging, "3.3.11").unwrap();
+
+    let identity = read_stamp(staging).expect("the core root must carry a stamp");
+    assert_eq!(identity.component, "core");
+    assert_eq!(identity.version, "3.3.11");
+    assert_eq!(identity.recipe, super::CORE_RECIPE);
+    assert_eq!(identity.content_id.len(), 64);
+
+    // The SDK merge writes into tools/ after the core install commits, so the
+    // core identity must not move when it does.
+    let before = identity.content_id;
+    std::fs::create_dir_all(staging.join("tools/esp32-arduino-libs/esp32c6/lib")).unwrap();
+    std::fs::write(
+        staging.join("tools/esp32-arduino-libs/esp32c6/lib/libesp32.a"),
+        b"other chip",
+    )
+    .unwrap();
+    super::stamp_core_component(staging, "3.3.11").unwrap();
+    assert_eq!(read_stamp(staging).unwrap().content_id, before);
+}
