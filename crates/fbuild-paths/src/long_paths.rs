@@ -177,6 +177,14 @@ impl Resolution {
     }
 }
 
+/// Per-user dismissal state shared by dev and production CLI invocations.
+pub fn repair_snooze_path() -> Option<NormalizedPath> {
+    crate::normalized_home().map(|home| {
+        home.join(crate::FBUILD_DIR_NAME)
+            .join("long-path-repair-snooze.json")
+    })
+}
+
 /// Read the current registry policy without changing this process's snapshot.
 pub fn probe() -> Observation {
     match fs::long_path_support() {

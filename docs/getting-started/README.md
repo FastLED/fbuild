@@ -42,13 +42,15 @@ fbuild --fix-win
 This requests Windows administrator approval and changes only
 `HKLM\SYSTEM\CurrentControlSet\Control\FileSystem\LongPathsEnabled` to DWORD `1`.
 If it is already enabled, no elevation is requested. The elevated helper exits
-without starting a daemon or a build. Interactive ESP32 commands also offer a
-`[y/N]` repair prompt; after approval, the pending command resumes in a fresh
-process with ordinary privileges. Existing daemon operations finish before
-replacement. Help, version, diagnostics, and the repair command remain usable.
+without starting a daemon or a build. Interactive fbuild startup offers a
+`[y/N]` repair prompt when long paths are disabled. After approval, the pending
+command resumes in a fresh process with ordinary privileges. Existing daemon
+operations finish before replacement. Declining the offer or cancelling UAC
+snoozes it for seven days for the current Windows user. Help and version stay
+prompt-free, and `fbuild --fix-win` can be used during the snooze.
 
 When repair is declined, cancelled, blocked by policy, or unavailable in CI,
-fbuild selects a short cache and warns on stderr. Terminal warnings are yellow;
+build commands select a short cache and warn on stderr. Terminal warnings are yellow;
 redirected output and HTTP responses contain plain text. The warning gives the
 effective cache, extraction scratch, build fallback, and repair command.
 
