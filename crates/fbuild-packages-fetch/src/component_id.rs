@@ -75,7 +75,10 @@ pub fn content_id(root: &Path, excluded: &[&str]) -> Result<String> {
             root.display()
         )));
     }
-    let excluded: Vec<String> = excluded.iter().map(|name| slash_key(name)).collect();
+    let excluded: Vec<String> = excluded
+        .iter()
+        .map(|name| NormalizedPath::new(name).display_slash())
+        .collect();
     let mut hasher = Sha256::new();
     hasher.update(DOMAIN);
     let walk = walkdir::WalkDir::new(root.as_path())
@@ -114,7 +117,7 @@ pub fn content_id(root: &Path, excluded: &[&str]) -> Result<String> {
             hasher.update(b"l\0");
             hasher.update(relative.as_bytes());
             hasher.update(b"\0");
-            hasher.update(slash_key(&target.to_string_lossy()).as_bytes());
+            hasher.update(NormalizedPath::new(&target).display_slash().as_bytes());
             hasher.update(b"\0");
             continue;
         }
@@ -186,12 +189,8 @@ fn is_excluded(path: &Path, root: &NormalizedPath, excluded: &[String]) -> bool 
 
 fn relative_key(path: &Path, root: &NormalizedPath) -> Option<String> {
     let relative = NormalizedPath::new(path).relative_to(root)?;
-    let key = slash_key(&relative.display_slash());
+    let key = relative.display_slash();
     (!key.is_empty()).then_some(key)
-}
-
-fn slash_key(value: &str) -> String {
-    value.replace('\\', "/")
 }
 
 fn hex(bytes: &[u8]) -> String {
