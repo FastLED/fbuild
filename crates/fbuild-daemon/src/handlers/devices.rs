@@ -71,16 +71,16 @@ fn device_info(state: &DeviceState) -> DeviceInfo {
         previous_port: state.previous_port.clone(),
         description: state.description.clone(),
         available_for_exclusive: state.is_available_for_exclusive(),
-        exclusive_lease: state.exclusive_lease.as_ref().map(lease_info),
+        exclusive_lease: state.active_exclusive_lease().map(lease_info),
         monitor_count: state.monitor_count(),
     }
 }
 
 fn device_status_response(state: DeviceState) -> DeviceStatusResponse {
     let available = state.is_available_for_exclusive();
-    let holder = state.exclusive_lease.as_ref().map(|l| l.client_id.clone());
+    let holder = state.active_exclusive_lease().map(|l| l.client_id.clone());
     let monitors = state.monitor_count();
-    let exclusive_lease = state.exclusive_lease.as_ref().map(lease_info);
+    let exclusive_lease = state.active_exclusive_lease().map(lease_info);
     let monitor_leases = state.monitor_leases.values().map(lease_info).collect();
     DeviceStatusResponse {
         success: true,
@@ -115,12 +115,14 @@ pub async fn device_lease(
     state.refresh_devices_and_broadcast_serial_moves().await;
 
     let result = match req.lease_type.as_str() {
-        "exclusive" => state.device_manager.acquire_exclusive(
+        "exclusive" => state.device_manager.acquire_exclusive_with_ttl(
             &port,
             &client_id,
             &req.description,
             req.track_serial,
+            req.ttl_seconds,
         ),
+        "monitor" if req.ttl_seconds.is_some() => Err(DeviceLeaseError::TtlRequiresExclusive),
         "monitor" => state.device_manager.acquire_monitor(
             &port,
             &client_id,

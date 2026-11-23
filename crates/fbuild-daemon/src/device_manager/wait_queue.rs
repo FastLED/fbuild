@@ -189,8 +189,9 @@ impl DeviceManager {
         let mut current = port.to_string();
         for _ in 0..8 {
             let next = {
-                let devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
-                super::renumbered_target(&devices, &current).map(|state| state.port.clone())
+                let inventory = self.inventory.lock().unwrap_or_else(|e| e.into_inner());
+                super::renumbered_target(&inventory.devices, &current)
+                    .map(|state| state.port.clone())
             };
             match next {
                 Some(next) => current = next,
@@ -245,13 +246,14 @@ impl DeviceManager {
         ticket: Option<QueueTicket>,
     ) -> AdmissionPoll {
         let (holder, is_holder) = {
-            let devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
-            let Some(state) = devices.get(port) else {
+            let inventory = self.inventory.lock().unwrap_or_else(|e| e.into_inner());
+            let state = inventory.devices.get(port);
+            let holder = inventory.exclusive_holder(port, state);
+            if state.is_none() && holder.is_none() {
                 // Unknown ports (emulator/probe routes) stay outside the lease
                 // path, matching `admit_operation` (FastLED/fbuild#1864).
                 return AdmissionPoll::Admitted;
-            };
-            let holder = state.exclusive_lease.clone();
+            }
             let is_holder = holder
                 .as_ref()
                 .is_some_and(|held| Some(held.lease_id.as_str()) == lease_id);

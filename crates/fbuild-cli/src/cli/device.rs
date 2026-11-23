@@ -113,9 +113,10 @@ pub async fn run_device(action: DeviceAction) -> fbuild_core::Result<()> {
             lease_type,
             description,
             track_serial,
+            ttl_seconds,
         } => {
             let resp = client
-                .device_lease(&port, &lease_type, &description, track_serial)
+                .device_lease(&port, &lease_type, &description, track_serial, ttl_seconds)
                 .await?;
             if resp.success {
                 output::result(format!("lease acquired on '{}'", port));

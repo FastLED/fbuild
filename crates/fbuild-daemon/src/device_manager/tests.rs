@@ -132,7 +132,8 @@ fn device_not_found_errors() {
 fn disconnected_device_rejects_leases() {
     let mgr = make_manager_with_device("COM3");
     {
-        let mut devices = mgr.devices.lock().unwrap();
+        let mut inventory = mgr.inventory.lock().unwrap();
+        let devices = &mut inventory.devices;
         devices.get_mut("COM3").unwrap().is_connected = false;
     }
     assert!(mgr.acquire_exclusive("COM3", "c1", "x", false).is_err());
@@ -144,7 +145,8 @@ fn disconnected_device_rejects_leases() {
 fn cleanup_removes_disconnected_unlocked() {
     let mgr = make_manager_with_device("COM3");
     {
-        let mut devices = mgr.devices.lock().unwrap();
+        let mut inventory = mgr.inventory.lock().unwrap();
+        let devices = &mut inventory.devices;
         devices.get_mut("COM3").unwrap().is_connected = false;
     }
     assert_eq!(mgr.cleanup_stale_devices(), 1);
@@ -339,7 +341,8 @@ fn trusted_hash_invalid_after_disconnect() {
     // recorded — exactly the condition
     // `trusted_firmware_hash` must treat as "unsafe to trust".
     {
-        let mut devices = mgr.devices.lock().unwrap();
+        let mut inventory = mgr.inventory.lock().unwrap();
+        let devices = &mut inventory.devices;
         let state = devices.get_mut("COM3").unwrap();
         state.is_connected = false;
         state.last_disconnect_at = Some(Instant::now());
@@ -358,7 +361,8 @@ fn trusted_hash_survives_older_disconnect_stamp() {
     // Plant an old disconnect stamp first, then re-set trust
     // later (what happens on a re-enumerate + fresh deploy).
     {
-        let mut devices = mgr.devices.lock().unwrap();
+        let mut inventory = mgr.inventory.lock().unwrap();
+        let devices = &mut inventory.devices;
         let state = devices.get_mut("COM3").unwrap();
         state.last_disconnect_at = Some(Instant::now());
     }
@@ -373,7 +377,8 @@ fn cleanup_preserves_leased_disconnected() {
     mgr.acquire_exclusive("COM3", "c1", "deploy", false)
         .unwrap();
     {
-        let mut devices = mgr.devices.lock().unwrap();
+        let mut inventory = mgr.inventory.lock().unwrap();
+        let devices = &mut inventory.devices;
         devices.get_mut("COM3").unwrap().is_connected = false;
     }
     assert_eq!(mgr.cleanup_stale_devices(), 0);

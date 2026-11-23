@@ -253,9 +253,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                     // refuses the attach BEFORE the port is opened, so a client
                     // whose board another workflow reserved can never reset,
                     // flash, or write it by attaching a serial session.
-                    if let Err(error) = ctx
-                        .device_manager
-                        .admit_operation(&port, lease_id.as_deref())
+                    if let Err(error) = ctx.admit_device_operation(&port, lease_id.as_deref()).await
                     {
                         let err_msg = SerialServerMessage::Error {
                             message: format!("serial attach refused: {}", error.message()),

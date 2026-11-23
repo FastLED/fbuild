@@ -445,6 +445,8 @@ pub struct DeviceLeaseRequest {
     /// Follow a USB device by serial number across port renumbering.
     #[serde(default)]
     pub track_serial: bool,
+    /// Optional lifetime for an exclusive lease, in seconds.
+    pub ttl_seconds: Option<std::num::NonZeroU32>,
 }
 
 fn default_exclusive() -> String {
