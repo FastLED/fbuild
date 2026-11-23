@@ -236,10 +236,10 @@ async fn exclusive_takeover_and_release_all_persist_across_restart() {
 fn usb_device(port: &str) -> DiscoveredDevice {
     DiscoveredDevice {
         port: port.to_string(),
-        device_id: "1234:5678".to_string(),
+        device_id: "test-usb-device".to_string(),
         description: "Test Device".to_string(),
-        vid: Some(0x1234),
-        pid: Some(0x5678),
+        vid: None,
+        pid: None,
         vendor_name: None,
         product_name: None,
         is_cdc: None,
