@@ -9,6 +9,11 @@ use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
 const SAM_CORE_VERSION: &str = "1.6.12";
 const SAM_CORE_URL: &str = "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-sam/1.6.12/framework-arduino-sam-1.6.12.tar.gz";
+// SHA-256 of the archive above (37,924,299 bytes), computed
+// 2026-11-22 from the exact registry URL this module builds. The registry
+// artifact is immutable per version, so the pin cannot go stale without a
+// version bump; that bump must recompute it (FastLED/fbuild#2128).
+const SAM_CORE_SHA256: &str = "c657856d3aa8e8355c2feac26b8865b580725a914ac614a0b8c1d5fdd27494b9";
 
 /// Arduino SAM core framework manager.
 pub struct SamCores {
@@ -24,7 +29,7 @@ impl SamCores {
                 SAM_CORE_VERSION,
                 SAM_CORE_URL,
                 SAM_CORE_URL,
-                None,
+                Some(SAM_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             ),
@@ -43,7 +48,7 @@ impl SamCores {
                 SAM_CORE_VERSION,
                 SAM_CORE_URL,
                 SAM_CORE_URL,
-                None,
+                Some(SAM_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             )
@@ -60,7 +65,7 @@ impl SamCores {
                 SAM_CORE_VERSION,
                 SAM_CORE_URL,
                 SAM_CORE_URL,
-                None,
+                Some(SAM_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
                 cache_root,
@@ -267,5 +272,31 @@ mod tests {
         let tmp = tempfile::TempDir::new().unwrap();
         let result = SamCores::validate(tmp.path());
         assert!(result.is_err());
+    }
+
+    /// The archive is pinned, so a changed or truncated download is rejected
+    /// instead of unpacked (FastLED/fbuild#2128).
+    #[test]
+    fn the_sam_core_archive_is_checksum_pinned() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        assert!(
+            SAM_CORE_SHA256.len() == 64
+                && SAM_CORE_SHA256
+                    .chars()
+                    .all(|c| c.is_ascii_hexdigit() && !c.is_ascii_uppercase()),
+            "checksum must be 64 lowercase hex digits: {}",
+            SAM_CORE_SHA256
+        );
+        assert_eq!(
+            SamCores::new(tmp.path()).base.checksum.as_deref(),
+            Some(SAM_CORE_SHA256)
+        );
+        assert_eq!(
+            SamCores::with_cache_root(tmp.path(), &tmp.path().join("cache"))
+                .base
+                .checksum
+                .as_deref(),
+            Some(SAM_CORE_SHA256)
+        );
     }
 }

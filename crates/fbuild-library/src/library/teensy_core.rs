@@ -12,6 +12,11 @@ use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 /// Framework package used by platform-teensy 5.1.0.
 const TEENSY_CORE_VERSION: &str = "1.160.0";
 const TEENSY_CORE_URL: &str = "https://dl.registry.platformio.org/download/platformio/tool/framework-arduinoteensy/1.160.0/framework-arduinoteensy-1.160.0.tar.gz";
+// SHA-256 of the archive above (22,462,028 bytes), computed
+// 2026-11-22 from the exact registry URL this module builds. The registry
+// artifact is immutable per version, so the pin cannot go stale without a
+// version bump; that bump must recompute it (FastLED/fbuild#2128).
+const TEENSY_CORE_SHA256: &str = "b1c21d181257eee1ac34bdaf417ab79608dab1a22ff5d44370fee35d56ede34d";
 
 /// Teensy cores framework manager.
 pub struct TeensyCores {
@@ -27,7 +32,7 @@ impl TeensyCores {
                 TEENSY_CORE_VERSION,
                 TEENSY_CORE_URL,
                 TEENSY_CORE_URL,
-                None,
+                Some(TEENSY_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             ),
@@ -46,7 +51,7 @@ impl TeensyCores {
                 TEENSY_CORE_VERSION,
                 TEENSY_CORE_URL,
                 TEENSY_CORE_URL,
-                None,
+                Some(TEENSY_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
             )
@@ -63,7 +68,7 @@ impl TeensyCores {
                 TEENSY_CORE_VERSION,
                 TEENSY_CORE_URL,
                 TEENSY_CORE_URL,
-                None,
+                Some(TEENSY_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
                 cache_root,
@@ -337,5 +342,31 @@ mod tests {
         let result = TeensyCores::validate(tmp.path());
         assert!(result.is_err());
         assert!(result.unwrap_err().to_string().contains("Arduino.h"));
+    }
+
+    /// The archive is pinned, so a changed or truncated download is rejected
+    /// instead of unpacked (FastLED/fbuild#2128).
+    #[test]
+    fn the_framework_arduinoteensy_archive_is_checksum_pinned() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        assert!(
+            TEENSY_CORE_SHA256.len() == 64
+                && TEENSY_CORE_SHA256
+                    .chars()
+                    .all(|c| c.is_ascii_hexdigit() && !c.is_ascii_uppercase()),
+            "checksum must be 64 lowercase hex digits: {}",
+            TEENSY_CORE_SHA256
+        );
+        assert_eq!(
+            TeensyCores::new(tmp.path()).base.checksum.as_deref(),
+            Some(TEENSY_CORE_SHA256)
+        );
+        assert_eq!(
+            TeensyCores::with_cache_root(tmp.path(), &tmp.path().join("cache"))
+                .base
+                .checksum
+                .as_deref(),
+            Some(TEENSY_CORE_SHA256)
+        );
     }
 }
