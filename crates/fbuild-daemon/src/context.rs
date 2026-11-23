@@ -254,7 +254,7 @@ impl DaemonContext {
     }
 
     /// Construct with a caller-supplied [`BroadcastHub`]. Used by
-    /// `main.rs` so the tracing layer can be registered against
+    /// embedders so the tracing layer can be registered against
     /// `hub.log_tx` before the daemon emits its first
     /// `tracing::info!` (otherwise the layer would need a late-bound
     /// handle through a global OnceLock).
@@ -268,6 +268,22 @@ impl DaemonContext {
         shutdown_tx: tokio::sync::watch::Sender<bool>,
         spawner_cwd: String,
         broadcast_hub: BroadcastHub,
+    ) -> Self {
+        Self::with_device_manager(
+            port,
+            shutdown_tx,
+            spawner_cwd,
+            broadcast_hub,
+            Arc::new(DeviceManager::new()),
+        )
+    }
+
+    pub(crate) fn with_device_manager(
+        port: u16,
+        shutdown_tx: tokio::sync::watch::Sender<bool>,
+        spawner_cwd: String,
+        broadcast_hub: BroadcastHub,
+        device_manager: Arc<DeviceManager>,
     ) -> Self {
         let now_unix = std::time::SystemTime::now()
             .duration_since(std::time::UNIX_EPOCH)
@@ -296,7 +312,7 @@ impl DaemonContext {
             current_operation: Arc::new(std::sync::RwLock::new(None)),
             dependency_install: Arc::new(std::sync::RwLock::new(None)),
             project_locks: DashMap::new(),
-            device_manager: Arc::new(DeviceManager::new()),
+            device_manager,
             status_manager: StatusManager::new(
                 fbuild_paths::get_daemon_status_file(),
                 std::process::id(),
@@ -596,6 +612,23 @@ impl DaemonContext {
             }
         }
         self.rebind_recent_device_port_moves().await;
+    }
+
+    /// Resolve saved reservations against observed ports before admitting
+    /// operations that otherwise use a port name without enumerating devices.
+    pub(crate) async fn refresh_saved_device_leases(&self) {
+        if self.device_manager.has_saved_exclusive_leases() {
+            self.refresh_devices_and_broadcast_serial_moves().await;
+        }
+    }
+
+    pub(crate) async fn admit_device_operation(
+        &self,
+        port: &str,
+        lease_id: Option<&str>,
+    ) -> Result<(), crate::device_manager::DeviceLeaseError> {
+        self.refresh_saved_device_leases().await;
+        self.device_manager.admit_operation(port, lease_id)
     }
 
     pub async fn refresh_devices_if_stale_and_broadcast_serial_moves(

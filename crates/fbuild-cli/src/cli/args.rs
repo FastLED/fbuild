@@ -933,6 +933,9 @@ pub enum DeviceAction {
         /// Follow this USB device by serial number across port renumbering
         #[arg(long)]
         track_serial: bool,
+        /// Expire an exclusive lease after this many seconds
+        #[arg(long)]
+        ttl_seconds: Option<std::num::NonZeroU32>,
     },
     /// Release a lease on a device
     Release {

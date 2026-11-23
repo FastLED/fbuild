@@ -25,11 +25,12 @@
 //! added). This directory is not a binary target — cargo only auto-discovers
 //! `src/bin/*/main.rs`.
 
+mod device_leases;
 mod self_eviction;
 
 use crate::context::{
-    BroadcastHub, DEAD_CLIENT_SERIAL_RECLAIM_INTERVAL, DaemonContext, IDLE_TIMEOUT,
-    STALE_LOCK_CHECK_INTERVAL, self_eviction_timeout,
+    BroadcastHub, DEAD_CLIENT_SERIAL_RECLAIM_INTERVAL, IDLE_TIMEOUT, STALE_LOCK_CHECK_INTERVAL,
+    self_eviction_timeout,
 };
 use crate::handlers::{
     boards, build_progress, cache, devices, emulator, health, libraries, locks, operations,
@@ -41,7 +42,6 @@ use axum::routing::{get, post};
 use clap::Parser;
 use fbuild_build::compile_backend::CompileBackend;
 use self_eviction::try_self_evict;
-use std::sync::Arc;
 use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
 
@@ -327,26 +327,18 @@ async fn run_async(heap_profile_rate: Option<usize>) -> i32 {
     // daemon's full lifetime — no need to duplicate it on the context.
     drop(compile_backend);
 
+    startup.set_phase("device_leases");
     let (shutdown_tx, mut shutdown_rx) = tokio::sync::watch::channel(false);
-    let context = Arc::new(DaemonContext::with_hub(
-        port,
-        shutdown_tx,
-        args.spawner_cwd,
-        broadcast_hub,
-    ));
-    // FastLED/fbuild#1476: record which image this daemon runs from and who
-    // launched it, so a CLI that keeps restarting "stale" daemons can be
-    // matched against daemon.log.
-    tracing::info!(
-        pid = std::process::id(),
-        version = env!("CARGO_PKG_VERSION"),
-        exe = %context.source_exe,
-        source_mtime = context.source_mtime,
-        launched_by_broker = context.launched_by_broker,
-        "fbuild-daemon identity"
-    );
-    DaemonContext::install_dependency_status_subscriber(&context);
-    crate::broker::backend::spawn_backend_endpoint_if_requested(context.clone());
+    let context =
+        match device_leases::initialize_context(port, shutdown_tx, args.spawner_cwd, broadcast_hub)
+            .await
+        {
+            Ok(context) => context,
+            Err(error) => {
+                eprintln!("fatal: {error}");
+                return 1;
+            }
+        };
 
     // Operation routes refuse new work once shutdown has started, so an
     // exiting daemon never begins a build it would abandon.

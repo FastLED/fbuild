@@ -1,16 +1,21 @@
-//! In-memory device lease manager.
+//! Device lease manager.
 //!
 //! Tracks connected serial devices and manages exclusive/monitor leases.
 //! All locking is in-memory (no file-based locks per design rules).
 
 use serde::{Deserialize, Serialize};
-use std::collections::{HashMap, VecDeque};
+use std::collections::{HashMap, HashSet, VecDeque};
 use std::sync::Mutex;
 use std::sync::atomic::AtomicU64;
 use std::time::{Instant, SystemTime, UNIX_EPOCH};
-use uuid::Uuid;
 
+mod lease_store;
+mod leases;
+#[cfg(test)]
+mod restart_tests;
 mod wait_queue;
+
+use lease_store::LeaseStore;
 
 pub use wait_queue::{AdmissionPoll, QueueGuard, QueueTicket};
 
@@ -23,7 +28,7 @@ pub enum LeaseType {
 }
 
 /// A lease held on a device.
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DeviceLease {
     pub lease_id: String,
     pub client_id: String,
@@ -31,6 +36,15 @@ pub struct DeviceLease {
     pub description: String,
     pub acquired_at: f64,
     pub track_serial: bool,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub expires_at: Option<f64>,
+}
+
+impl DeviceLease {
+    fn is_active(&self) -> bool {
+        self.expires_at
+            .is_none_or(|deadline| DeviceManager::now_unix() < deadline)
+    }
 }
 
 /// Structured error for lease acquisition failures.
@@ -51,6 +65,7 @@ pub enum DeviceLeaseError {
     InvalidLeaseType {
         lease_type: String,
     },
+    TtlRequiresExclusive,
     /// A mutating operation was refused because another client holds an
     /// exclusive device lease and the caller did not present that lease.
     ForeignLeaseHeld {
@@ -58,6 +73,9 @@ pub enum DeviceLeaseError {
         holder: Box<DeviceLease>,
     },
     InvalidPreemption {
+        message: String,
+    },
+    Persistence {
         message: String,
     },
     /// An opt-in bounded wait for a reserved board ran out of time (or was
@@ -92,6 +110,7 @@ impl DeviceLeaseError {
                 "invalid lease_type '{}', must be 'exclusive' or 'monitor'",
                 lease_type
             ),
+            Self::TtlRequiresExclusive => "TTL requires an exclusive device lease".to_string(),
             Self::ForeignLeaseHeld { port, holder } => format!(
                 "device '{}' is reserved by exclusive lease '{}' held by client '{}' ({}); \
                  pass --lease-id {} to operate under that lease, or release it with \
@@ -104,7 +123,7 @@ impl DeviceLeaseError {
                 port,
                 holder.lease_id
             ),
-            Self::InvalidPreemption { message } => message.clone(),
+            Self::InvalidPreemption { message } | Self::Persistence { message } => message.clone(),
             Self::LeaseWaitTimedOut {
                 port,
                 waited_ms,
@@ -166,6 +185,9 @@ pub(crate) fn renumbered_target<'a>(
     devices: &'a HashMap<String, DeviceState>,
     port: &str,
 ) -> Option<&'a DeviceState> {
+    if devices.get(port).is_some_and(|state| state.is_connected) {
+        return None;
+    }
     devices
         .values()
         .find(|state| state.is_connected && state.previous_port.as_deref() == Some(port))
@@ -249,7 +271,13 @@ pub struct DevicePortMove {
 
 impl DeviceState {
     pub fn is_available_for_exclusive(&self) -> bool {
-        self.exclusive_lease.is_none()
+        self.active_exclusive_lease().is_none()
+    }
+
+    pub fn active_exclusive_lease(&self) -> Option<&DeviceLease> {
+        self.exclusive_lease
+            .as_ref()
+            .filter(|lease| lease.is_active())
     }
 
     pub fn monitor_count(&self) -> usize {
@@ -257,8 +285,7 @@ impl DeviceState {
     }
 
     pub fn has_tracked_serial_lease(&self) -> bool {
-        self.exclusive_lease
-            .as_ref()
+        self.active_exclusive_lease()
             .map(|lease| lease.track_serial)
             .unwrap_or(false)
             || self.monitor_leases.values().any(|lease| lease.track_serial)
@@ -282,9 +309,24 @@ struct DiscoveredDevice {
     location_paths: Vec<String>,
 }
 
+#[derive(Default)]
+struct DeviceInventory {
+    devices: HashMap<String, DeviceState>,
+    lease_store: Option<LeaseStore>,
+}
+
+impl DeviceInventory {
+    fn exclusive_holder(&self, port: &str, state: Option<&DeviceState>) -> Option<DeviceLease> {
+        if let Some(state) = state {
+            return state.active_exclusive_lease().cloned();
+        }
+        self.lease_store.as_ref()?.holder_at_last_known_port(port)
+    }
+}
+
 /// Thread-safe device manager.
 pub struct DeviceManager {
-    devices: Mutex<HashMap<String, DeviceState>>,
+    inventory: Mutex<DeviceInventory>,
     /// `Instant` of the most recent successful [`Self::refresh_devices`]
     /// call. Used by [`Self::refresh_devices_if_stale`] to skip the
     /// OS-level port enumeration (~20–30 ms on Windows) when the
@@ -305,14 +347,34 @@ impl Default for DeviceManager {
 }
 
 impl DeviceManager {
+    /// Restore exclusive reservations for the cache root owned by this daemon.
+    pub(crate) async fn with_lease_store(path: &std::path::Path) -> std::io::Result<Self> {
+        Ok(Self {
+            inventory: Mutex::new(DeviceInventory {
+                lease_store: Some(LeaseStore::open(path).await?),
+                ..DeviceInventory::default()
+            }),
+            ..Self::new()
+        })
+    }
+
     pub fn new() -> Self {
         Self {
-            devices: Mutex::new(HashMap::new()),
+            inventory: Mutex::new(DeviceInventory::default()),
             last_refresh_at: Mutex::new(None),
             recent_port_moves: Mutex::new(Vec::new()),
             waiters: Mutex::new(HashMap::new()),
             next_waiter_seq: AtomicU64::new(0),
         }
+    }
+
+    pub(crate) fn has_saved_exclusive_leases(&self) -> bool {
+        self.inventory
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .lease_store
+            .as_ref()
+            .is_some_and(LeaseStore::has_active_leases)
     }
 
     fn now_unix() -> f64 {
@@ -429,9 +491,50 @@ impl DeviceManager {
             .unwrap_or_else(|e| e.into_inner()) = Some(Instant::now());
     }
 
-    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     fn refresh_from_discovered(&self, discovered: Vec<DiscoveredDevice>) {
-        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
+        let mut inventory = self.inventory.lock().unwrap_or_else(|e| e.into_inner());
+        let DeviceInventory {
+            devices,
+            lease_store,
+        } = &mut *inventory;
+        let present_ports = discovered
+            .iter()
+            .map(|device| device.port.clone())
+            .collect();
+        self.refresh_inventory(devices, discovered, &present_ports);
+        if let Some(store) = lease_store {
+            let moves = store.restore(devices);
+            let moves = moves.into_iter().filter(|movement| {
+                if devices
+                    .get(&movement.previous_port)
+                    .is_some_and(|state| state.is_connected)
+                {
+                    return false;
+                }
+                if devices.get(&movement.previous_port).is_some_and(|state| {
+                    !state.is_connected
+                        && state.exclusive_lease.is_none()
+                        && state.monitor_leases.is_empty()
+                }) {
+                    devices.remove(&movement.previous_port);
+                }
+                self.migrate_waiters(&movement.previous_port, &movement.port);
+                true
+            });
+            self.recent_port_moves
+                .lock()
+                .unwrap_or_else(|e| e.into_inner())
+                .extend(moves);
+        }
+    }
+
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
+    fn refresh_inventory(
+        &self,
+        devices: &mut HashMap<String, DeviceState>,
+        discovered: Vec<DiscoveredDevice>,
+        present_ports: &HashSet<String>,
+    ) {
         let now = Self::now_unix();
 
         // Mark all devices as disconnected first. Track the previous
@@ -453,12 +556,11 @@ impl DeviceManager {
                 if let Some(serial) = device.serial_number.as_deref() {
                     let moved_from = devices.iter().find_map(|(old_port, state)| {
                         (state.serial_number.as_deref() == Some(serial)
-                            && !state.is_connected
+                            && !present_ports.contains(old_port)
                             && state.has_tracked_serial_lease())
                         .then(|| old_port.clone())
                     });
                     if let Some(old_port) = moved_from {
-                        let renumbered_from = old_port.clone();
                         if let Some(mut state) = devices.remove(&old_port) {
                             let serial_number = device.serial_number.clone();
                             state.previous_port = Some(old_port);
@@ -480,6 +582,8 @@ impl DeviceManager {
                                 state.location_paths = device.location_paths;
                             }
                             if let Some(previous_port) = state.previous_port.clone() {
+                                // Queued workflows follow the board to its new port.
+                                self.migrate_waiters(&previous_port, &key);
                                 self.recent_port_moves
                                     .lock()
                                     .unwrap_or_else(|e| e.into_inner())
@@ -489,10 +593,6 @@ impl DeviceManager {
                                         serial_number,
                                     });
                             }
-                            // Queued workflows follow the board: the queue is
-                            // keyed by port name, so leaving it behind would
-                            // strand a waiter on a port that no longer exists.
-                            self.migrate_waiters(&renumbered_from, &key);
                             devices.insert(key, state);
                             continue;
                         }
@@ -559,9 +659,10 @@ impl DeviceManager {
 
     /// Get all devices.
     pub fn get_all_devices(&self) -> HashMap<String, DeviceState> {
-        self.devices
+        self.inventory
             .lock()
             .unwrap_or_else(|e| e.into_inner())
+            .devices
             .clone()
     }
 
@@ -575,9 +676,10 @@ impl DeviceManager {
 
     /// Get status for a specific device (by port name).
     pub fn get_device_status(&self, port: &str) -> Option<DeviceState> {
-        self.devices
+        self.inventory
             .lock()
             .unwrap_or_else(|e| e.into_inner())
+            .devices
             .get(port)
             .cloned()
     }
@@ -598,216 +700,29 @@ impl DeviceManager {
         port: &str,
         lease_id: Option<&str>,
     ) -> Result<(), DeviceLeaseError> {
-        let devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
-        let Some(state) = devices.get(port) else {
+        let inventory = self.inventory.lock().unwrap_or_else(|e| e.into_inner());
+        let devices = &inventory.devices;
+        let state = devices.get(port);
+        if state.is_none_or(|state| !state.is_connected) {
             // A port that vanished because a tracked board re-enumerated is
             // *not* an unknown/emulator route: admitting the old name would
             // let a competitor operate while the lease sits on the new port.
-            let moved = renumbered_target(&devices, port);
-            return match moved {
-                Some(target) => Err(DeviceLeaseError::PortRenumbered {
+            if let Some(target) = renumbered_target(devices, port) {
+                return Err(DeviceLeaseError::PortRenumbered {
                     port: port.to_string(),
                     current_port: target.port.clone(),
-                    holder: target.exclusive_lease.clone().map(Box::new),
-                }),
-                None => Ok(()),
-            };
-        };
-        match &state.exclusive_lease {
+                    holder: target.active_exclusive_lease().cloned().map(Box::new),
+                });
+            }
+        }
+        match inventory.exclusive_holder(port, state) {
             None => Ok(()),
             Some(holder) if Some(holder.lease_id.as_str()) == lease_id => Ok(()),
             Some(holder) => Err(DeviceLeaseError::ForeignLeaseHeld {
                 port: port.to_string(),
-                holder: Box::new(holder.clone()),
+                holder: Box::new(holder),
             }),
         }
-    }
-
-    /// Acquire an exclusive lease on a device.
-    pub fn acquire_exclusive(
-        &self,
-        port: &str,
-        client_id: &str,
-        description: &str,
-        track_serial: bool,
-    ) -> Result<DeviceLease, DeviceLeaseError> {
-        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
-        let state = devices
-            .get_mut(port)
-            .ok_or_else(|| DeviceLeaseError::NotFound {
-                port: port.to_string(),
-            })?;
-
-        if !state.is_connected {
-            return Err(DeviceLeaseError::Disconnected {
-                port: port.to_string(),
-            });
-        }
-
-        if let Some(ref existing) = state.exclusive_lease {
-            return Err(DeviceLeaseError::ExclusiveConflict {
-                port: port.to_string(),
-                device_id: state.device_id.clone(),
-                description: state.description.clone(),
-                holder: Box::new(existing.clone()),
-            });
-        }
-
-        let lease = DeviceLease {
-            lease_id: Uuid::new_v4().to_string(),
-            client_id: client_id.to_string(),
-            lease_type: LeaseType::Exclusive,
-            description: description.to_string(),
-            acquired_at: Self::now_unix(),
-            track_serial,
-        };
-
-        state.exclusive_lease = Some(lease.clone());
-        tracing::info!(
-            "exclusive lease acquired on '{}' by client '{}'",
-            port,
-            client_id
-        );
-        Ok(lease)
-    }
-
-    /// Acquire a monitor lease on a device.
-    pub fn acquire_monitor(
-        &self,
-        port: &str,
-        client_id: &str,
-        description: &str,
-        track_serial: bool,
-    ) -> Result<DeviceLease, DeviceLeaseError> {
-        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
-        let state = devices
-            .get_mut(port)
-            .ok_or_else(|| DeviceLeaseError::NotFound {
-                port: port.to_string(),
-            })?;
-
-        if !state.is_connected {
-            return Err(DeviceLeaseError::Disconnected {
-                port: port.to_string(),
-            });
-        }
-
-        let lease = DeviceLease {
-            lease_id: Uuid::new_v4().to_string(),
-            client_id: client_id.to_string(),
-            lease_type: LeaseType::Monitor,
-            description: description.to_string(),
-            acquired_at: Self::now_unix(),
-            track_serial,
-        };
-
-        state
-            .monitor_leases
-            .insert(lease.lease_id.clone(), lease.clone());
-        tracing::info!(
-            "monitor lease acquired on '{}' by client '{}'",
-            port,
-            client_id
-        );
-        Ok(lease)
-    }
-
-    /// Release a lease by lease_id (searches all devices).
-    pub fn release_lease(&self, lease_id: &str) -> Result<(), String> {
-        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
-        for state in devices.values_mut() {
-            // Check exclusive
-            if let Some(ref exc) = state.exclusive_lease {
-                if exc.lease_id == lease_id {
-                    let port = state.port.clone();
-                    state.exclusive_lease = None;
-                    tracing::info!("exclusive lease '{}' released on '{}'", lease_id, port);
-                    return Ok(());
-                }
-            }
-            // Check monitors
-            if state.monitor_leases.remove(lease_id).is_some() {
-                tracing::info!("monitor lease '{}' released on '{}'", lease_id, state.port);
-                return Ok(());
-            }
-        }
-        Err(format!("lease '{}' not found", lease_id))
-    }
-
-    /// Release all leases for a device (by port).
-    pub fn release_device_leases(&self, port: &str) -> Result<usize, String> {
-        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
-        let state = devices
-            .get_mut(port)
-            .ok_or_else(|| format!("device '{}' not found", port))?;
-
-        let mut count = 0;
-        if state.exclusive_lease.take().is_some() {
-            count += 1;
-        }
-        count += state.monitor_leases.len();
-        state.monitor_leases.clear();
-        tracing::info!("released {} lease(s) on '{}'", count, port);
-        Ok(count)
-    }
-
-    /// Preempt a device: forcibly take it from the current holder.
-    /// Returns `(new_lease, preempted_client_id)`.
-    pub fn preempt_device(
-        &self,
-        port: &str,
-        client_id: &str,
-        reason: &str,
-    ) -> Result<(DeviceLease, Option<String>), DeviceLeaseError> {
-        if reason.is_empty() {
-            return Err(DeviceLeaseError::InvalidPreemption {
-                message: "preemption reason is required".to_string(),
-            });
-        }
-
-        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
-        let state = devices
-            .get_mut(port)
-            .ok_or_else(|| DeviceLeaseError::NotFound {
-                port: port.to_string(),
-            })?;
-
-        if !state.is_connected {
-            return Err(DeviceLeaseError::Disconnected {
-                port: port.to_string(),
-            });
-        }
-
-        // Capture preempted client before clearing
-        let preempted_client_id = state.exclusive_lease.as_ref().map(|l| l.client_id.clone());
-
-        // Log the preemption
-        if let Some(ref existing) = state.exclusive_lease {
-            tracing::warn!(
-                "preempting exclusive lease on '{}': holder='{}', new_client='{}', reason='{}'",
-                port,
-                existing.client_id,
-                client_id,
-                reason
-            );
-        }
-
-        // Clear all existing leases
-        state.exclusive_lease = None;
-        state.monitor_leases.clear();
-
-        // Grant exclusive to new client
-        let lease = DeviceLease {
-            lease_id: Uuid::new_v4().to_string(),
-            client_id: client_id.to_string(),
-            lease_type: LeaseType::Exclusive,
-            description: format!("preempted: {}", reason),
-            acquired_at: Self::now_unix(),
-            track_serial: false,
-        };
-
-        state.exclusive_lease = Some(lease.clone());
-        Ok((lease, preempted_client_id))
     }
 
     /// Return the currently-trusted firmware hash for `port`, if any.
@@ -822,7 +737,8 @@ impl DeviceManager {
     /// Returns `None` in every other case, so the deploy handler falls
     /// back to the regular `verify-flash` path on any doubt.
     pub fn trusted_firmware_hash(&self, port: &str) -> Option<[u8; 32]> {
-        let devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
+        let inventory = self.inventory.lock().unwrap_or_else(|e| e.into_inner());
+        let devices = &inventory.devices;
         let state = devices.get(port)?;
         if !state.is_connected {
             return None;
@@ -845,7 +761,8 @@ impl DeviceManager {
     /// yet: the hash will be recorded on the next deploy once
     /// `refresh_devices` has picked the port up.
     pub fn set_trusted_firmware_hash(&self, port: &str, hash: [u8; 32]) {
-        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
+        let mut inventory = self.inventory.lock().unwrap_or_else(|e| e.into_inner());
+        let devices = &mut inventory.devices;
         if let Some(state) = devices.get_mut(port) {
             state.trusted_firmware = Some(TrustedFirmwareHash {
                 hash,
@@ -858,7 +775,8 @@ impl DeviceManager {
     /// fails part-way through — partial writes mean we can't say
     /// what's on the chip anymore.
     pub fn clear_trusted_firmware_hash(&self, port: &str) {
-        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
+        let mut inventory = self.inventory.lock().unwrap_or_else(|e| e.into_inner());
+        let devices = &mut inventory.devices;
         if let Some(state) = devices.get_mut(port) {
             state.trusted_firmware = None;
         }
@@ -866,11 +784,12 @@ impl DeviceManager {
 
     /// Remove stale disconnected devices that have no leases.
     pub fn cleanup_stale_devices(&self) -> usize {
-        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
+        let mut inventory = self.inventory.lock().unwrap_or_else(|e| e.into_inner());
+        let devices = &mut inventory.devices;
         let stale: Vec<String> = devices
             .iter()
             .filter(|(_, s)| {
-                !s.is_connected && s.exclusive_lease.is_none() && s.monitor_leases.is_empty()
+                !s.is_connected && s.is_available_for_exclusive() && s.monitor_leases.is_empty()
             })
             .map(|(k, _)| k.clone())
             .collect();
@@ -883,7 +802,8 @@ impl DeviceManager {
 
     #[cfg(test)]
     pub(crate) fn insert_test_device(&self, port: &str) {
-        let mut devices = self.devices.lock().unwrap_or_else(|e| e.into_inner());
+        let mut inventory = self.inventory.lock().unwrap_or_else(|e| e.into_inner());
+        let devices = &mut inventory.devices;
         devices.insert(
             port.to_string(),
             DeviceState {

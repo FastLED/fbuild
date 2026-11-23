@@ -327,7 +327,7 @@ abort report next to its stale-PID warning, so the cause survives in the log.
 
 ### Workflow leases
 
-`fbuild device lease <port> --exclusive --track-serial` reserves the board for
+`fbuild device lease <port> --lease-type exclusive --track-serial` reserves the board for
 the workflow that acquired it. Every mutating device operation — deploy, reset,
 and the serial write path (`fbuild monitor`, the Python serial session, the
 `/ws/serial-monitor` `write` frame) — is refused for a caller that does not
@@ -341,6 +341,11 @@ lease follows the USB serial number across port renumbering: a queued
 `--lease-wait` workflow moves with the board instead of waiting on a port that no
 longer exists, and a caller still naming the pre-renumber port is told the new
 one (with the lease holder) rather than being admitted past the lease.
+
+Exclusive leases survive daemon restarts within the same cache root. Use
+`fbuild device release <port> --lease-id <id>` to release the original lease,
+even while the board is unplugged. Add `--ttl-seconds <seconds>` at acquisition
+to set an automatic expiration for the reservation.
 
 Fail-fast is the default. `fbuild deploy --lease-wait <seconds>` instead joins a
 per-port FIFO queue: the deploy waits for the holder to release, then proceeds in

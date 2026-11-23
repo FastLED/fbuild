@@ -37,8 +37,8 @@ pub async fn reset(
     // A foreign exclusive device lease reserves the board: a reset would
     // drop the holder's workflow mid-validation (FastLED/fbuild#1864).
     if let Err(error) = ctx
-        .device_manager
-        .admit_operation(&port, req.lease_id.as_deref())
+        .admit_device_operation(&port, req.lease_id.as_deref())
+        .await
     {
         return (
             StatusCode::CONFLICT,

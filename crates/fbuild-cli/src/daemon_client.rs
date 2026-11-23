@@ -669,6 +669,7 @@ impl DaemonClient {
         lease_type: &str,
         description: &str,
         track_serial: bool,
+        ttl_seconds: Option<std::num::NonZeroU32>,
     ) -> fbuild_core::Result<DeviceLeaseResponse> {
         let resp = self
             .client
@@ -681,6 +682,7 @@ impl DaemonClient {
                 "lease_type": lease_type,
                 "description": description,
                 "track_serial": track_serial,
+                "ttl_seconds": ttl_seconds,
             }))
             .timeout(std::time::Duration::from_secs(10))
             .send()
