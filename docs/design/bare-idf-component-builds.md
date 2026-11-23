@@ -284,7 +284,8 @@ stack already installed here (`framework-arduinoespressif32-libs` 1.9 GB +
 Python env **85.5 MB** (312.6 MB including its CPython), CMake + Ninja
 **153.6 MB** — about **1.8 GB** per release for one chip family, installed as a
 single fbuild operation with every archive sha256-pinned from the release's own
-`tools/tools.json` (no `install.sh`, no host `~/.espressif`). Two environment
+`tools/tools.json` (no `install.sh`, no host `~/.espressif`). The same profile
+re-measures at **2.10 GB** on the v5.5.6 pin (2026-11-23). Two environment
 requirements were measured and are pinned by tests: `IDF_TOOLS_PATH` must point
 at the python entry's `python_env/` (constraints lookup is offline, so a missing
 file is fatal), and the profile's `PATH` entries are *prepended* to the host
@@ -408,7 +409,9 @@ What that decision costs, stated rather than hidden:
 - **A project must own a `CMakeLists.txt`.** #1878's generated wrapper for
   PlatformIO-layout `src/` projects is not carried over; nothing on `main`
   asked for it, and it is what #1880's sdkconfig layering was built on.
-- **2.8 GB on first use** for a RISC-V chip, against 1.8 GB for esp32s3.
+- **3.1 GB on first use** for a RISC-V chip, against 2.1 GB for esp32s3
+  (re-measured 2026-11-23 at the v5.5.6 pin; the figures above are the
+  original v5.5.1 measurement).
 
 Measured 2026-11-21 on the steward host, `tests/platform/espidf_component_riscv`
 (the probe application from #1878, re-homed as a project with its own root

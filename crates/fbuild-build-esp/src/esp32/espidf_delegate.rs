@@ -233,15 +233,28 @@ fn reject_conflicting_sdkconfig(
     Ok(())
 }
 
-/// Write the family's defaults file into the delegated build root.
+/// Where fbuild puts the per-build `SDKCONFIG_DEFAULTS` entries it owns.
+///
+/// NEVER the IDF build root: `idf.py set-target` implies `fullclean`, and IDF
+/// refuses to clean a non-empty directory that is not a CMake build tree, so a
+/// defaults file inside `<build>/idf` made every ESP32-P4 family build die at
+/// `set-target` (measured 2026-11-23, FastLED/fbuild#2133). A sibling directory
+/// keeps the IDF build root exactly as fbuild created it: empty.
+fn silicon_defaults_dir(build_root: &NormalizedPath) -> NormalizedPath {
+    build_root.join("fbuild-idf-defaults")
+}
+
+/// Write the family's defaults file into the directory [`silicon_defaults_dir`] owns.
 ///
 /// It goes into fbuild's build directory, not the project: it is derived data
 /// for this build, and the project stays the user's.
 fn write_silicon_defaults(
-    build_dir: &NormalizedPath,
+    defaults_dir: &NormalizedPath,
     family: &SiliconFamily,
 ) -> Result<NormalizedPath> {
-    let path = build_dir.join(family.file_name);
+    std::fs::create_dir_all(defaults_dir.as_path())
+        .map_err(|error| FbuildError::Other(format!("creating {}: {error}", defaults_dir)))?;
+    let path = defaults_dir.join(family.file_name);
     let mut text = String::from(
         "# Written by fbuild: the ESP32-P4 silicon family the board declares.\n\
          # Changing these symbols by hand builds an image for other silicon.\n",
@@ -591,7 +604,8 @@ pub(super) async fn delegate_build(
     if let Some(family) = family {
         reject_conflicting_sdkconfig(&NormalizedPath::new(&params.project_dir), family)?;
     }
-    let build_dir = NormalizedPath::new(&ctx.build_dir).join("idf");
+    let build_root = NormalizedPath::new(&ctx.build_dir);
+    let build_dir = build_root.join("idf");
     std::fs::create_dir_all(build_dir.as_path()).map_err(|error| {
         FbuildError::Other(format!(
             "creating the delegated build root {build_dir}: {error}"
@@ -612,7 +626,10 @@ pub(super) async fn delegate_build(
                 ctx.board.sdk_variant(),
                 family.file_name
             ));
-            Some(write_silicon_defaults(&build_dir, family)?)
+            Some(write_silicon_defaults(
+                &silicon_defaults_dir(&build_root),
+                family,
+            )?)
         }
         None => None,
     };
