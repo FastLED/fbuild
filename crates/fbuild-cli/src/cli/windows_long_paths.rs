@@ -2,6 +2,7 @@
 
 use std::io::IsTerminal;
 use std::path::Path;
+use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 use fbuild_core::platform::{fs, host, process};
 use fbuild_core::{FbuildError, Result};
@@ -11,7 +12,7 @@ use super::args::{Cli, Commands};
 use crate::{daemon_client::DaemonClient, output};
 
 pub(crate) fn should_prompt(observation: &Observation, interactive: bool, ci: bool) -> bool {
-    observation.requires_fallback() && interactive && !ci
+    matches!(observation, Observation::Disabled) && interactive && !ci
 }
 
 pub(crate) fn consented(answer: &str) -> bool {
@@ -70,106 +71,6 @@ fn is_build_operation(cli: &Cli) -> bool {
     )
 }
 
-fn is_esp32_operation(cli: &Cli) -> bool {
-    let (project, environments): (&str, Vec<&str>) = match &cli.command {
-        Some(
-            Commands::Build {
-                project_dir,
-                environment,
-                ..
-            }
-            | Commands::Deploy {
-                project_dir,
-                environment,
-                ..
-            }
-            | Commands::TestEmu {
-                project_dir,
-                environment,
-                ..
-            },
-        ) => (
-            project_dir
-                .as_deref()
-                .or(cli.project_dir.as_deref())
-                .unwrap_or("."),
-            environment.iter().map(String::as_str).collect(),
-        ),
-        Some(Commands::Install {
-            project_dir,
-            environments,
-            ..
-        }) => (
-            project_dir
-                .as_deref()
-                .or(cli.project_dir.as_deref())
-                .unwrap_or("."),
-            environments.iter().map(String::as_str).collect(),
-        ),
-        Some(Commands::CompileMany { board, .. } | Commands::Ci { board, .. }) => {
-            return fbuild_config::BoardConfig::from_board_id(
-                board,
-                &std::collections::HashMap::new(),
-            )
-            .is_ok_and(|board| board.platform() == Some(fbuild_core::Platform::Espressif32));
-        }
-        None => (
-            cli.project_dir.as_deref().unwrap_or("."),
-            cli.environment.iter().map(String::as_str).collect(),
-        ),
-        _ => return false,
-    };
-    let install = matches!(&cli.command, Some(Commands::Install { .. }));
-    let config_path = if install {
-        fbuild_core::path::NormalizedPath::new(Path::new(project).join("platformio.ini"))
-    } else {
-        std::env::var_os("PLATFORMIO_PROJECT_CONFIG")
-            .map(fbuild_core::path::NormalizedPath::new)
-            .unwrap_or_else(|| {
-                fbuild_core::path::NormalizedPath::new(Path::new(project).join("platformio.ini"))
-            })
-    };
-    let Ok(config) = fbuild_config::PlatformIOConfig::from_path_with_overrides(
-        &config_path,
-        if install {
-            fbuild_config::pio_env::PioEnvOverrides::empty()
-        } else {
-            fbuild_config::pio_env::PioEnvOverrides::from_map(
-                crate::daemon_client::capture_pio_env(),
-            )
-        },
-    ) else {
-        return false; // The ordinary handler reports configuration errors.
-    };
-    selected_config_requires_esp32(
-        &config,
-        &environments,
-        matches!(&cli.command, Some(Commands::Install { all_envs: true, .. })),
-    )
-}
-
-fn selected_config_requires_esp32(
-    config: &fbuild_config::PlatformIOConfig,
-    environments: &[&str],
-    all_envs: bool,
-) -> bool {
-    let environments = if all_envs {
-        config.get_environments()
-    } else if environments.is_empty() {
-        config.get_default_environment().into_iter().collect()
-    } else {
-        environments.to_vec()
-    };
-    environments.iter().any(|env| {
-        config
-            .get_env_config(env)
-            .ok()
-            .and_then(|config| config.get("platform").cloned())
-            .and_then(|platform| fbuild_core::Platform::from_platform_str(&platform))
-            == Some(fbuild_core::Platform::Espressif32)
-    })
-}
-
 /// The hidden helper runs before tracing, cache discovery, or daemon acquisition.
 pub fn run_helper() -> Result<()> {
     fs::enable_long_paths().map_err(|error| {
@@ -225,41 +126,87 @@ pub async fn run_fix_win() -> Result<()> {
     Ok(())
 }
 
+const SNOOZE_DURATION: Duration = Duration::from_secs(7 * 24 * 60 * 60);
+
+async fn snoozed(path: &Path, now: Duration) -> bool {
+    let Ok(data) = fbuild_core::fs::read(path).await else {
+        return false;
+    };
+    let Ok(dismissed_at) = serde_json::from_slice::<Duration>(&data) else {
+        return false;
+    };
+    now.checked_sub(dismissed_at)
+        .is_some_and(|elapsed| elapsed < SNOOZE_DURATION)
+}
+
+async fn save_snooze(path: &Path, now: Duration) -> std::io::Result<()> {
+    if let Some(parent) = path.parent() {
+        fbuild_core::fs::create_dir_all(parent).await?;
+    }
+    fbuild_core::fs::write_atomic(path, serde_json::to_vec(&now)?).await
+}
+
+fn startup_offer(cli: &Cli, observation: &Observation, interactive: bool, ci: bool) -> bool {
+    !cli.fix_win && !cli.fix_win_helper && should_prompt(observation, interactive, ci)
+}
+
+async fn offer_repair() -> Result<Option<i32>> {
+    let path = long_paths::repair_snooze_path();
+    let now = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap_or_default();
+    if let Some(path) = &path {
+        if snoozed(path.as_path(), now).await {
+            return Ok(None);
+        }
+    }
+
+    if output::confirmation_prompt(
+        "Enable Windows long paths now? This changes a system setting and requires administrator approval.",
+    )? {
+        match repair().await {
+            Ok(true) => {
+                reconcile_daemon_owner().await?;
+                return relaunch_command().await.map(Some);
+            }
+            Ok(false) => output::visible_warning("Administrator approval was cancelled."),
+            Err(error) => {
+                output::visible_warning(error);
+                return Ok(None);
+            }
+        }
+    }
+
+    let dismissed_at = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap_or_default();
+    if let Some(path) = path {
+        if let Err(error) = save_snooze(path.as_path(), dismissed_at).await {
+            tracing::warn!(%error, "could not save Windows long-path repair snooze");
+        }
+    }
+    Ok(None)
+}
+
 /// Returns the exit status of a freshly relaunched pending command after repair.
 pub async fn prepare(cli: &Cli) -> Result<Option<i32>> {
-    if !host::is_windows() || !is_build_operation(cli) {
+    if !host::is_windows() {
         return Ok(None);
     }
     let observation = long_paths::probe();
     let interactive = std::io::stdin().is_terminal() && std::io::stderr().is_terminal();
-    if is_build_operation(cli)
-        && is_esp32_operation(cli)
-        && should_prompt(&observation, interactive, ci_session())
-    {
-        output::visible_warning(
-            "Windows long-path support is disabled or unavailable. ESP32 package paths may exceed Windows limits. Run fbuild --fix-win to repair it.",
-        );
-        if output::confirmation_prompt(
-            "Enable Windows long paths now? This changes a system setting and requires administrator approval.",
-        )? {
-            match repair().await {
-                Ok(true) => {
-                    reconcile_daemon_owner().await?;
-                    return relaunch_command().await.map(Some);
-                }
-                Ok(false) => output::visible_warning(
-                    "Administrator approval was cancelled; selecting a short-path fallback.",
-                ),
-                Err(error) => {
-                    output::visible_warning(format!("{error} Selecting a short-path fallback."))
-                }
-            }
+    if startup_offer(cli, &observation, interactive, ci_session()) {
+        if let Some(code) = offer_repair().await? {
+            return Ok(Some(code));
         }
     }
-    tokio::task::spawn_blocking(long_paths::initialize)
-        .await
-        .map_err(|error| FbuildError::Other(format!("path selection worker failed: {error}")))??;
+
     if is_build_operation(cli) {
+        tokio::task::spawn_blocking(long_paths::initialize)
+            .await
+            .map_err(|error| {
+                FbuildError::Other(format!("path selection worker failed: {error}"))
+            })??;
         if let Some(advisory) = long_paths::advisory() {
             output::visible_warning(advisory);
         }
@@ -270,17 +217,9 @@ pub async fn prepare(cli: &Cli) -> Result<Option<i32>> {
 async fn relaunch_command() -> Result<i32> {
     tokio::task::spawn_blocking(|| {
         let executable = fbuild_core::platform::executable::current_image()?;
-        // allow-direct-spawn: command construction only; spawn_contained owns execution and inherited terminal streams.
-        let mut command = std::process::Command::new(executable.as_path());
+        let mut command = process::command(executable.as_path());
         command.args(std::env::args_os().skip(1));
-        let mut child = process::spawn_contained(
-            &mut command,
-            process::ContainedStdio {
-                stdin: process::StdioSource::Parent,
-                stdout: process::StdioSource::Parent,
-                stderr: process::StdioSource::Parent,
-            },
-        )?;
+        let mut child = process::spawn_contained_in_terminal(&mut command)?;
         child.wait()
     })
     .await
@@ -372,7 +311,7 @@ mod tests {
     #[test]
     fn repair_prompt_is_interactive_and_never_runs_in_ci() {
         assert!(should_prompt(&Observation::Disabled, true, false));
-        assert!(should_prompt(
+        assert!(!should_prompt(
             &Observation::Unknown("access denied".into()),
             true,
             false
@@ -381,6 +320,35 @@ mod tests {
         assert!(!should_prompt(&Observation::NotApplicable, true, false));
         assert!(!should_prompt(&Observation::Disabled, false, false));
         assert!(!should_prompt(&Observation::Disabled, true, true));
+    }
+
+    #[test]
+    fn startup_offers_repair_for_device_list() {
+        use clap::Parser;
+        let cli = Cli::try_parse_from(["fbuild", "device", "list"]).unwrap();
+        assert!(startup_offer(&cli, &Observation::Disabled, true, false));
+        let explicit = Cli::try_parse_from(["fbuild", "--fix-win"]).unwrap();
+        assert!(!startup_offer(
+            &explicit,
+            &Observation::Disabled,
+            true,
+            false
+        ));
+    }
+
+    #[tokio::test]
+    async fn startup_snooze_survives_fresh_reads_and_expires_after_seven_days() {
+        use std::time::Duration;
+
+        let home = tempfile::tempdir().unwrap();
+        let path = home.path().join("preferences").join("long-path-snooze");
+        let dismissed = Duration::from_secs(1_000_000);
+        let seven_days = Duration::from_secs(7 * 24 * 60 * 60);
+        assert!(!snoozed(&path, dismissed).await);
+        save_snooze(&path, dismissed).await.unwrap();
+        assert!(snoozed(&path, dismissed).await);
+        assert!(snoozed(&path, dismissed + seven_days - Duration::from_nanos(1)).await);
+        assert!(!snoozed(&path, dismissed + seven_days).await);
     }
 
     #[test]
@@ -431,20 +399,6 @@ mod tests {
             &Observation::Unknown("new".into())
         ));
         assert!(!setting_changed(None, &Observation::NotApplicable));
-    }
-
-    #[test]
-    fn prompt_selection_follows_requested_environment() {
-        let root = tempfile::tempdir().unwrap();
-        let path = root.path().join("platformio.ini");
-        std::fs::write(&path,
-            "[platformio]\ndefault_envs = uno\n[env:uno]\nplatform = atmelavr\nboard = uno\n[env:esp]\nplatform = espressif32\nboard = esp32dev\n",
-        ).unwrap();
-        let config = fbuild_config::PlatformIOConfig::from_path(&path).unwrap();
-        assert!(!selected_config_requires_esp32(&config, &[], false));
-        assert!(selected_config_requires_esp32(&config, &[], true));
-        assert!(selected_config_requires_esp32(&config, &["esp"], false));
-        assert!(!selected_config_requires_esp32(&config, &["uno"], false));
     }
 
     #[test]

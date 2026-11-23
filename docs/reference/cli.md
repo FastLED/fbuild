@@ -21,8 +21,10 @@ Global options:
 | `--no-shrink` | Disable all shrink optimizations. |
 | `--fix-win` | Enable Windows long paths with UAC approval, then exit without building. |
 
-Windows ESP32 commands offer a `[y/N]` repair prompt in an interactive terminal.
-CI and redirected input use a short-path fallback with a warning. See
+On Windows, interactive startup offers long-path repair when needed. Declining
+the offer or cancelling UAC snoozes it for seven days. `fbuild --fix-win` remains
+available during the snooze. In CI and with redirected input or stderr, builds
+use the short-path fallback when long paths are disabled. See
 [Windows long paths](../getting-started/README.md#windows-long-paths) for cache
 overrides, restart behavior, and remaining tool limits.
 

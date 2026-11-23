@@ -163,10 +163,32 @@ pub fn spawn_contained(
     command: &mut Command,
     stdio: ContainedStdio<'_>,
 ) -> std::io::Result<ContainedChild> {
+    spawn_contained_with_console(command, stdio, false)
+}
+
+/// Relaunch an interactive command in the caller's terminal.
+pub fn spawn_contained_in_terminal(command: &mut Command) -> std::io::Result<ContainedChild> {
+    spawn_contained_with_console(
+        command,
+        ContainedStdio {
+            stdin: StdioSource::Parent,
+            stdout: StdioSource::Parent,
+            stderr: StdioSource::Parent,
+        },
+        true,
+    )
+}
+
+fn spawn_contained_with_console(
+    command: &mut Command,
+    stdio: ContainedStdio<'_>,
+    show_console: bool,
+) -> std::io::Result<ContainedChild> {
     let stdio = running_process::SpawnStdio {
         stdin: into_running_stdio(stdio.stdin),
         stdout: into_running_stdio(stdio.stdout),
         stderr: into_running_stdio(stdio.stderr),
+        show_console,
         ..running_process::SpawnStdio::default()
     };
     let inner = match CONTAINMENT.get() {

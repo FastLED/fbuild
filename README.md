@@ -154,8 +154,9 @@ For source installs, platform notes, and first-run cache behavior, start with
 the [getting started guide](docs/getting-started/README.md).
 
 On Windows, `fbuild --fix-win` enables long paths with administrator approval.
-Interactive ESP32 commands offer this repair when needed; declining uses a
-short cache and prints a yellow warning. See [Windows setup](docs/getting-started/README.md#windows-long-paths).
+Interactive startup offers this repair when needed. Declining the offer or
+cancelling UAC snoozes it for seven days. Builds use a short cache while long
+paths are disabled. See [Windows setup](docs/getting-started/README.md#windows-long-paths).
 
 ## Command Quick Start
 
