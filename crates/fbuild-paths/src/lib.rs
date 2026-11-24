@@ -6,7 +6,7 @@
 use std::path::{Path, PathBuf};
 
 use fbuild_core::BuildProfile;
-use long_paths::{home_mode_root, try_get_home_mode_root};
+use long_paths::try_get_home_mode_root;
 
 pub mod daemon_ownership;
 pub mod debug_prefix_map;
@@ -105,19 +105,9 @@ pub fn tools_dir_label() -> String {
     format!("~/{FBUILD_DIR_NAME}/{mode}/{TOOLS_DIR_NAME}")
 }
 
-/// Root fbuild directory for the OTHER mode (cross-mode fallback).
-///
-/// If current mode is dev, returns prod root, and vice versa.
-/// Used for cross-mode daemon discovery.
+/// Home fbuild directory for the other mode.
 pub fn get_other_fbuild_root() -> PathBuf {
-    if let Some(resolution) = long_paths::current_resolution() {
-        return home_mode_root(&resolution.home, !resolution.dev_mode).into_path_buf();
-    }
-    home_mode_root(
-        &dirs_next().expect("could not determine home directory"),
-        !is_dev_mode(),
-    )
-    .into_path_buf()
+    long_paths::other_home_mode_root().into_path_buf()
 }
 
 /// Daemon files directory.

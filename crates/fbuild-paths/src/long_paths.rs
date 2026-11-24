@@ -240,7 +240,17 @@ pub(crate) fn try_get_home_mode_root() -> Option<NormalizedPath> {
     Some(home_mode_root(&crate::dirs_next()?, crate::is_dev_mode()))
 }
 
-pub(crate) fn home_mode_root(home: &Path, dev_mode: bool) -> NormalizedPath {
+pub(crate) fn other_home_mode_root() -> NormalizedPath {
+    if let Some(resolution) = current_resolution() {
+        return home_mode_root(&resolution.home, !resolution.dev_mode);
+    }
+    home_mode_root(
+        &crate::dirs_next().expect("could not determine home directory"),
+        !crate::is_dev_mode(),
+    )
+}
+
+fn home_mode_root(home: &Path, dev_mode: bool) -> NormalizedPath {
     NormalizedPath::new(home)
         .join(crate::FBUILD_DIR_NAME)
         .join(if dev_mode { "dev" } else { "prod" })
