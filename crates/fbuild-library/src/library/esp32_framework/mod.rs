@@ -22,10 +22,13 @@ mod identity;
 mod libs;
 mod parsing;
 mod paths;
+pub mod prebuilt_core;
 mod sdk_paths;
 
 #[cfg(test)]
 mod identity_tests;
+#[cfg(test)]
+mod prebuilt_core_tests;
 #[cfg(test)]
 mod tests;
 
