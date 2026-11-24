@@ -68,7 +68,12 @@ fn unpack_without_wrapper(archive: &Path, staging: &Path) -> fbuild_core::Result
     extractor::unpack(archive, unpacked.path())?;
     let entries = std::fs::read_dir(unpacked.path())?.collect::<std::io::Result<Vec<_>>>()?;
     let payload = match entries.as_slice() {
-        [entry] if entry.file_type()?.is_dir() => entry.path(),
+        [entry]
+            if entry.file_type()?.is_dir()
+                && (entry.path().join("bin").is_dir() || entry.path().join("cores").is_dir()) =>
+        {
+            entry.path()
+        }
         _ => unpacked.path().to_path_buf(),
     };
     for entry in std::fs::read_dir(payload)? {

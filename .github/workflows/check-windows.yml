@@ -282,10 +282,14 @@ jobs:
           $env:CI = 'true'
           $env:FBUILD_DEV_MODE = '0'
           $env:RUNNING_PROCESS_DISABLE = '1'
+          Remove-Item Env:FBUILD_CACHE_DIR, Env:FBUILD_BUILD_DIR -ErrorAction SilentlyContinue
           $registry = 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem'
           $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
           if ([Security.Principal.WindowsPrincipal]::new($identity).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
             throw 'the ESP32 fallback fixture must run as a non-administrator'
+          }
+          if ((Split-Path -Leaf $env:USERPROFILE) -ne [Environment]::UserName) {
+            throw "the ESP32 fallback fixture did not load the standard-user profile: $env:USERPROFILE"
           }
           if ((Get-ItemPropertyValue -Path $registry -Name LongPathsEnabled) -ne 0) {
             throw 'long paths must be disabled before ESP32 fallback testing'
@@ -325,13 +329,17 @@ jobs:
             }
           } finally {
             & .\fbuild.exe --no-update-check daemon stop
+            if ($LASTEXITCODE -ne 0) { throw "standard-user daemon did not stop: $LASTEXITCODE" }
             if (Test-Path -LiteralPath $fixedBase) { Remove-Item -LiteralPath $fixedBase -Recurse -Force }
           }
           '@ | Set-Content (Join-Path $fixture 'verify-fallback.ps1')
-              $test = Start-Process (Join-Path $PSHOME 'pwsh.exe') -Credential $credential -LoadUserProfile -Wait -PassThru `
+              $test = Start-Process (Join-Path $PSHOME 'pwsh.exe') -Credential $credential -LoadUserProfile -PassThru `
                 -ArgumentList '-NoProfile', '-File', ('"{0}"' -f (Join-Path $fixture 'verify-fallback.ps1')) `
                 -RedirectStandardOutput (Join-Path $fixture 'stdout.log') -RedirectStandardError (Join-Path $fixture 'stderr.log')
+              $finished = $test.WaitForExit(1200000)
+              if (-not $finished) { $test.Kill($true) }
               Get-Content (Join-Path $fixture 'stdout.log'), (Join-Path $fixture 'stderr.log')
+              if (-not $finished) { throw 'standard-user ESP32 fallback test timed out' }
               if ($test.ExitCode -ne 0) { throw "standard-user ESP32 fallback failed: $($test.ExitCode)" }
             } finally {
               Remove-LocalUser -Name $account -ErrorAction SilentlyContinue
