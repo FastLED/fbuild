@@ -18,11 +18,14 @@ use std::path::{Path, PathBuf};
 use crate::{CacheSubdir, Framework, PackageBase, PackageInfo};
 
 mod fs_utils;
+mod identity;
 mod libs;
 mod parsing;
 mod paths;
 mod sdk_paths;
 
+#[cfg(test)]
+mod identity_tests;
 #[cfg(test)]
 mod tests;
 
@@ -123,6 +126,20 @@ impl Esp32Framework {
         self.install_dir
             .clone()
             .unwrap_or_else(|| find_framework_root(&self.base.install_path()))
+    }
+
+    /// Canonical identity of this installed framework's components, or `None`
+    /// when it has none - an unstamped (legacy) tree, a required SDK variant
+    /// with no tree or no stamp, or an ambiguous component set.
+    ///
+    /// This is the framework term of a prebuilt fingerprint (decision 8a):
+    /// it is read from the stamps the components wrote in staging and is
+    /// independent of which other chips were ever built into the same tree, so
+    /// it can key a build fingerprint without a tree walk. `None` means the
+    /// caller must treat the framework as unidentifiable and compile from
+    /// source rather than inventing an identity.
+    pub fn framework_identity(&self, mcu: &str, sdk_variant: &str) -> Option<String> {
+        identity::framework_identity(&self.resolved_dir(), mcu, sdk_variant)
     }
 
     /// Return the ESP-IDF SDK version bundled with the installed framework.

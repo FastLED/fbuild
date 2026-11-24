@@ -350,3 +350,55 @@ fn hex(bytes: &[u8]) -> String {
     }
     out
 }
+
+/// Domain tag for [`component_term`], so a framework term can never collide with
+/// a component id that happens to hash the same bytes.
+const TERM_DOMAIN: &[u8] = b"fbuild-framework-term\0";
+/// Encoding of [`component_term`]. Bump it when what the term covers changes,
+/// so a term computed by an older reader never matches a newer one.
+pub const TERM_SCHEMA: u32 = 1;
+
+/// Canonical term over the component identities of one framework tree.
+///
+/// This is the **framework term** of a prebuilt fingerprint (decision 8a): the
+/// build already hashes its board, toolchain and flag metadata, and this adds
+/// the bytes of the framework those flags point at. A term is
+/// order-independent - components are sorted by name - and install-history
+/// independent, because each component's id is taken over its own staging tree
+/// and therefore never depends on which other chips the user has built.
+///
+/// Returns `None` when there is no identity to certify:
+/// - an empty identity list (a framework with no stamps has no identity, and
+///   the caller falls back to compiling from source rather than inventing one),
+/// - two identities for the same component name (an ambiguous tree cannot
+///   present a canonical single id).
+#[must_use]
+pub fn component_term(identities: &[ComponentIdentity]) -> Option<String> {
+    if identities.is_empty() {
+        return None;
+    }
+    let mut ordered: Vec<&ComponentIdentity> = identities.iter().collect();
+    ordered.sort_by(|left, right| left.component.cmp(&right.component));
+    if ordered
+        .windows(2)
+        .any(|pair| pair[0].component == pair[1].component)
+    {
+        return None;
+    }
+    let mut hasher = Sha256::new();
+    hasher.update(TERM_DOMAIN);
+    hasher.update(TERM_SCHEMA.to_le_bytes());
+    hasher.update((ordered.len() as u64).to_le_bytes());
+    for identity in ordered {
+        for field in [
+            identity.component.as_str(),
+            identity.version.as_str(),
+            identity.content_id.as_str(),
+        ] {
+            hasher.update(field.as_bytes());
+            hasher.update([0u8]);
+        }
+        hasher.update(identity.recipe.to_le_bytes());
+    }
+    Some(hex(&hasher.finalize()))
+}

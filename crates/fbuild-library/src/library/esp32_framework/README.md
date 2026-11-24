@@ -13,6 +13,10 @@ file below the 1000 LOC gate.
   the stamp and its content id are taken there, and the merge re-checks the id
   before the stamp is allowed to stay. A stamped tree is never patched in place
   (decision 8a, FastLED/fbuild#1882).
+- `identity.rs` — the framework term: reads the `core`, `sdk-<variant>` and
+  `mcu-<mcu>` stamps of an installed tree into one canonical id, or `None`
+  when any required component has no identity. Stamps only — never a tree walk
+  (decision 8a, FastLED/fbuild#1882).
 - `paths.rs` — Simple framework path accessors (cores, variants, bootloader,
   partitions, gen_esp32part.py, core sources).
 - `sdk_paths.rs` — SDK include directories, library flags, defines, linker

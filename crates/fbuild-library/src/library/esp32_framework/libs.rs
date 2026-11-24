@@ -47,7 +47,7 @@ fn merge_sdk_archive_entries(temp_dir: &Path, tools_dir: &Path) -> fbuild_core::
     Ok(())
 }
 
-fn mcu_sdk_dir_candidates(tools_dir: &Path, mcu: &str) -> [PathBuf; 2] {
+pub(super) fn mcu_sdk_dir_candidates(tools_dir: &Path, mcu: &str) -> [PathBuf; 2] {
     [
         tools_dir.join(NEW_SDK_LAYOUT).join(mcu),
         tools_dir.join(OLD_SDK_LAYOUT).join(mcu),
@@ -74,7 +74,7 @@ fn mcu_sdk_complete(mcu_dir: &Path) -> bool {
 /// so installing only `mcu` leaves the directory the SDK include paths and
 /// prebuilt archives name missing — ESP32-P4 ES boards link against
 /// `esp32p4_es` (FastLED/fbuild#1897).
-fn required_sdk_variants<'a>(mcu: &'a str, sdk_variant: &'a str) -> Vec<&'a str> {
+pub(super) fn required_sdk_variants<'a>(mcu: &'a str, sdk_variant: &'a str) -> Vec<&'a str> {
     let mut variants = vec![mcu];
     if !sdk_variant.is_empty() && sdk_variant != mcu {
         variants.push(sdk_variant);
@@ -92,7 +92,7 @@ fn missing_sdk_variants(tools_dir: &Path, variants: &[&str]) -> Vec<String> {
 }
 
 /// The complete `tools/<layout>/<variant>/` SDK tree, new layout preferred.
-fn installed_variant_dir(tools_dir: &Path, variant: &str) -> Option<PathBuf> {
+pub(super) fn installed_variant_dir(tools_dir: &Path, variant: &str) -> Option<PathBuf> {
     mcu_sdk_dir_candidates(tools_dir, variant)
         .into_iter()
         .find(|mcu_dir| mcu_sdk_complete(mcu_dir))
@@ -110,7 +110,7 @@ fn patch_installed_variants(tools_dir: &Path, variants: &[&str]) -> fbuild_core:
 /// Recipe of the SDK component. The compat patches now run in staging, ahead of
 /// the stamp (decision 8a); anything that changes what they do to the tree
 /// changes every SDK content id, so it bumps this.
-const SDK_RECIPE: u32 = 1;
+pub(super) const SDK_RECIPE: u32 = 1;
 
 /// The `esp32-arduino-libs/<variant>` (older archives: `sdk/<variant>`) tree
 /// inside an extracted libs archive, wherever the producer put its wrapper
