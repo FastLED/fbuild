@@ -15,6 +15,7 @@ fn validate_extraction_tree(root: &Path, destination: &Path, required: bool) -> 
         return Ok(());
     }
     let destination = NormalizedPath::new(destination);
+    let source = NormalizedPath::new(root);
     for entry in walkdir::WalkDir::new(root).follow_links(false) {
         let entry = entry.map_err(|error| {
             FbuildError::PackageError(format!(
@@ -26,9 +27,14 @@ fn validate_extraction_tree(root: &Path, destination: &Path, required: bool) -> 
         } else {
             LEGACY_FILE_UNITS
         };
-        let relative = entry.path().strip_prefix(root).map_err(|error| {
-            FbuildError::PackageError(format!("invalid extracted Windows path: {error}"))
-        })?;
+        let relative = NormalizedPath::new(entry.path())
+            .relative_to(&source)
+            .ok_or_else(|| {
+                FbuildError::PackageError(format!(
+                    "extracted Windows path is outside the source directory: {}",
+                    entry.path().display()
+                ))
+            })?;
         let path = destination.join(relative);
         if fbuild_core::platform::fs::legacy_path_units(&path) + 1 > limit {
             return Err(FbuildError::PackageError(format!(
