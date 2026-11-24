@@ -49,7 +49,7 @@ pub fn is_dev_mode() -> bool {
         .unwrap_or(false)
 }
 
-/// Root fbuild directory: `~/.fbuild/{dev|prod}`
+/// Runtime fbuild root, normally `~/.fbuild/{dev|prod}`.
 ///
 /// Panics without a home directory; [`try_get_fbuild_root`] degrades instead.
 pub fn get_fbuild_root() -> PathBuf {
@@ -66,8 +66,19 @@ pub fn try_get_fbuild_root() -> Option<PathBuf> {
     if let Some(resolution) = long_paths::current_resolution() {
         return Some(resolution.fbuild_root.clone().into_path_buf());
     }
-    let mode = if is_dev_mode() { "dev" } else { "prod" };
-    Some(dirs_next()?.join(FBUILD_DIR_NAME).join(mode))
+    try_get_home_mode_root()
+}
+
+fn try_get_home_mode_root() -> Option<PathBuf> {
+    if let Some(resolution) = long_paths::current_resolution() {
+        return Some(home_mode_root(&resolution.home, resolution.dev_mode));
+    }
+    Some(home_mode_root(&dirs_next()?, is_dev_mode()))
+}
+
+fn home_mode_root(home: &Path, dev_mode: bool) -> PathBuf {
+    home.join(FBUILD_DIR_NAME)
+        .join(if dev_mode { "dev" } else { "prod" })
 }
 
 /// The segment holding fbuild-managed external tools, under
@@ -80,13 +91,13 @@ pub const TOOLS_DIR_NAME: &str = "tools";
 /// Panics when the home directory cannot be determined; see
 /// [`try_get_tools_dir`].
 pub fn get_tools_dir() -> PathBuf {
-    get_fbuild_root().join(TOOLS_DIR_NAME)
+    try_get_tools_dir().expect("could not determine home directory")
 }
 
 /// [`get_tools_dir`] for callers that report a missing home directory rather
 /// than panicking on it.
 pub fn try_get_tools_dir() -> Option<PathBuf> {
-    Some(try_get_fbuild_root()?.join(TOOLS_DIR_NAME))
+    Some(try_get_home_mode_root()?.join(TOOLS_DIR_NAME))
 }
 
 /// Human-facing label for [`get_tools_dir`] when the real path cannot be
@@ -106,17 +117,30 @@ pub fn tools_dir_label() -> String {
 /// If current mode is dev, returns prod root, and vice versa.
 /// Used for cross-mode daemon discovery.
 pub fn get_other_fbuild_root() -> PathBuf {
-    let home = long_paths::current_resolution()
-        .map(|resolution| resolution.home.clone().into_path_buf())
-        .or_else(dirs_next)
-        .expect("could not determine home directory");
-    let mode = if is_dev_mode() { "prod" } else { "dev" };
-    home.join(FBUILD_DIR_NAME).join(mode)
+    if let Some(resolution) = long_paths::current_resolution() {
+        return home_mode_root(&resolution.home, !resolution.dev_mode);
+    }
+    home_mode_root(
+        &dirs_next().expect("could not determine home directory"),
+        !is_dev_mode(),
+    )
 }
 
 /// Daemon files directory.
 pub fn get_daemon_dir() -> PathBuf {
     get_fbuild_root().join("daemon")
+}
+
+/// Stable location for daemon ownership across versions and Windows policy changes.
+fn daemon_coordination_dir() -> PathBuf {
+    try_get_home_mode_root()
+        .expect("could not determine home directory")
+        .join("daemon")
+}
+
+/// Durable device reservations shared across daemon runtime layouts.
+pub fn get_daemon_device_leases_file() -> PathBuf {
+    daemon_coordination_dir().join("exclusive-device-leases.json")
 }
 
 /// Daemon PID file path.

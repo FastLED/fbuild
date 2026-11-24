@@ -9,7 +9,7 @@ pub(super) async fn initialize_context(
     spawner_cwd: String,
     broadcast_hub: BroadcastHub,
 ) -> Result<Arc<DaemonContext>, String> {
-    let path = fbuild_paths::get_daemon_dir().join("exclusive-device-leases.json");
+    let path = fbuild_paths::get_daemon_device_leases_file();
     let manager = crate::device_manager::DeviceManager::with_lease_store(&path)
         .await
         .map_err(|error| {

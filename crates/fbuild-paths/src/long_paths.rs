@@ -18,7 +18,8 @@ use serde::{Deserialize, Serialize};
 const MAX_SHORT_ROOT_UNITS: usize = 64;
 /// Conservative legacy directory limit, including the terminating NUL.
 const MAX_LEGACY_DIRECTORY_UNITS: usize = 248;
-const MARKER_FILE: &str = "windows-short-paths.json";
+const LEGACY_MARKER_FILE: &str = "windows-short-paths.json";
+const MARKER_FILE: &str = "windows-short-paths-v2.json";
 const MARKER_SCHEMA: u32 = 1;
 const HASH_HEX_UNITS: usize = 12;
 
@@ -212,9 +213,7 @@ pub fn initialize() -> Result<&'static Resolution> {
         .ok_or_else(|| FbuildError::ConfigError("could not determine home directory".into()))?;
     let home = absolute_normalized(&home)?;
     let dev_mode = std::env::var("FBUILD_DEV_MODE").is_ok_and(|value| value == "1");
-    let fbuild_root = home
-        .join(crate::FBUILD_DIR_NAME)
-        .join(if dev_mode { "dev" } else { "prod" });
+    let fbuild_root = NormalizedPath::new(crate::home_mode_root(&home, dev_mode));
     let inputs = Inputs {
         #[cfg(test)]
         short_base: fbuild_root.clone(),
@@ -321,10 +320,10 @@ where
     let marker_path = input.fbuild_root.join(MARKER_FILE);
     if !input.observation.requires_fallback() {
         if input.cache_override.is_none() {
-            if let Some(marker) = read_marker(&marker_path)? {
-                let roots = automatic_roots(&input, short_base)?;
-                validate_marker(&marker_path, &marker, &roots.cache, &roots.scratch)?;
+            if let Some((path, marker)) = retained_marker(&input.fbuild_root)? {
+                let roots = automatic_roots(&input, short_base, Some((&path, &marker)))?;
                 ensure_automatic_roots(&roots, false)?;
+                resolution.fbuild_root = roots.mode;
                 resolution.cache_root = marker.cache_root;
                 resolution.scratch_root = marker.scratch_root;
                 resolution.cache_dir_source = "retained-windows-short-path-fallback";
@@ -347,10 +346,18 @@ where
         resolution.scratch_root = scratch;
         resolution.short_build_root = Some(builds);
     } else {
-        let roots = automatic_roots(&input, short_base)?;
+        let marker = read_marker(&marker_path)?;
+        let roots = automatic_roots(
+            &input,
+            short_base,
+            marker
+                .as_ref()
+                .map(|marker| (marker_path.as_path(), marker)),
+        )?;
         validate_short_root(&roots.cache)?;
         validate_short_root(&roots.scratch)?;
         ensure_automatic_roots(&roots, true)?;
+        resolution.fbuild_root = roots.mode;
         resolution.cache_root = roots.cache.clone();
         resolution.scratch_root = roots.scratch.clone();
         resolution.short_build_root = Some(roots.builds);
@@ -367,6 +374,16 @@ where
     Ok(resolution)
 }
 
+fn retained_marker(home_mode_root: &Path) -> Result<Option<(PathBuf, SelectionMarker)>> {
+    for name in [MARKER_FILE, LEGACY_MARKER_FILE] {
+        let path = home_mode_root.join(name);
+        if let Some(marker) = read_marker(&path)? {
+            return Ok(Some((path, marker)));
+        }
+    }
+    Ok(None)
+}
+
 struct ShortRoots {
     user: NormalizedPath,
     mode: NormalizedPath,
@@ -375,20 +392,54 @@ struct ShortRoots {
     builds: NormalizedPath,
 }
 
-fn automatic_roots<F>(input: &Inputs, short_base: F) -> Result<ShortRoots>
+fn automatic_roots<F>(
+    input: &Inputs,
+    short_base: F,
+    saved: Option<(&Path, &SelectionMarker)>,
+) -> Result<ShortRoots>
 where
     F: FnOnce() -> std::io::Result<NormalizedPath>,
 {
     let base = short_base().map_err(|error| fallback_error("resolve the short root", &error))?;
-    let user = absolute_normalized(&base)?.join(format!("fb-{}", path_hash(&input.home)));
-    let mode = user.join(if input.dev_mode { "dev" } else { "prod" });
-    Ok(ShortRoots {
-        cache: mode.join("cache"),
-        scratch: mode.join("tmp"),
-        builds: mode.join("b"),
-        mode,
-        user,
-    })
+    let base = absolute_normalized(&base)?;
+    let user_hash = path_hash(&input.home);
+    let shared_name = base.join("fbuild-cache");
+    let preferred = ShortRoots::new(shared_name.join(&user_hash), input.dev_mode, true);
+    let legacy = ShortRoots::new(base.join(format!("fb-{user_hash}")), input.dev_mode, false);
+    if let Some((path, marker)) = saved {
+        if validate_marker(path, marker, &preferred.cache, &preferred.scratch).is_ok() {
+            return Ok(preferred);
+        }
+        validate_marker(path, marker, &legacy.cache, &legacy.scratch)?;
+        return Ok(legacy);
+    }
+
+    // A standard user can establish a private base on a permissive system
+    // drive. If that name belongs to another account, keep this account on
+    // its own independently secured drive-root directory.
+    if fs::ensure_private_directory(&shared_name).is_ok() {
+        Ok(preferred)
+    } else {
+        Ok(legacy)
+    }
+}
+
+impl ShortRoots {
+    fn new(user: NormalizedPath, dev_mode: bool, compact: bool) -> Self {
+        let (dev, prod, cache, scratch) = if compact {
+            ("d", "p", "c", "t")
+        } else {
+            ("dev", "prod", "cache", "tmp")
+        };
+        let mode = user.join(if dev_mode { dev } else { prod });
+        Self {
+            cache: mode.join(cache),
+            scratch: mode.join(scratch),
+            builds: mode.join("b"),
+            mode,
+            user,
+        }
+    }
 }
 
 fn ensure_automatic_roots(roots: &ShortRoots, include_builds: bool) -> Result<()> {
