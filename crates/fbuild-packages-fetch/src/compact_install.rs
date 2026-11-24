@@ -7,6 +7,14 @@ use sha2::{Digest, Sha256};
 
 use crate::{PackageBase, disk_cache::Kind, extractor};
 
+const STAGING_PREFIX: &str = "s";
+const KEY_LEN: usize = 16;
+
+pub(crate) fn staging_target_name(name: &str) -> Option<&str> {
+    name.strip_prefix(STAGING_PREFIX)
+        .filter(|key| key.len() == KEY_LEN && key.bytes().all(|byte| byte.is_ascii_hexdigit()))
+}
+
 impl PackageBase {
     /// Opt in when a package supports installation without its archive wrapper.
     pub fn with_compact_windows_install(mut self) -> Self {
@@ -38,13 +46,13 @@ impl PackageBase {
             hash.update(part.as_bytes());
         }
         let hex = format!("{:x}", hash.finalize());
-        Some(NormalizedPath::new(self.cache.cache_root()).join(&hex[..16]))
+        Some(NormalizedPath::new(self.cache.cache_root()).join(&hex[..KEY_LEN]))
     }
 
     pub(crate) fn install_staging_path(&self, target: &Path) -> NormalizedPath {
         let name = target.file_name().unwrap_or_default().to_string_lossy();
         if self.uses_compact_windows_install() {
-            NormalizedPath::new(target.with_file_name(format!("s{name}")))
+            NormalizedPath::new(target.with_file_name(format!("{STAGING_PREFIX}{name}")))
         } else {
             NormalizedPath::new(target.with_file_name(format!("{name}_staging")))
         }
