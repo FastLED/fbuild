@@ -72,6 +72,13 @@ struct Partial {
     last_modified: Option<String>,
 }
 
+/// The response of one attempt plus how its body must be written.
+struct Opened {
+    response: reqwest::Response,
+    append: bool,
+    offset: u64,
+}
+
 pub struct Fetcher {
     dest: NormalizedPath,
     client: reqwest::Client,
@@ -193,10 +200,8 @@ impl Fetcher {
         partial: &NormalizedPath,
         sidecar: &NormalizedPath,
     ) -> Result<(), FetchError> {
-        let state = tokio::fs::read(sidecar.as_path())
+        let state = read_state(sidecar)
             .await
-            .ok()
-            .and_then(|bytes| serde_json::from_slice::<Partial>(&bytes).ok())
             .filter(|state| state.sha256 == asset.sha256);
         let offset = partial_len(partial).await;
         if state.is_none() || offset == 0 || offset >= asset.size_bytes {
@@ -209,9 +214,8 @@ impl Fetcher {
         self.attempt(url, asset, partial, sidecar, true).await
     }
 
-    /// One HTTP attempt. `resume` asks for `bytes=<partial len>-` guarded by
-    /// `If-Range`; a `200` answer means the range was refused, so the body is
-    /// written from byte 0.
+    /// One HTTP attempt: `open` decides whether the body appends to the
+    /// partial, `stream` enforces the digest while it arrives.
     async fn attempt(
         &self,
         url: &str,
@@ -220,16 +224,29 @@ impl Fetcher {
         sidecar: &NormalizedPath,
         resume: bool,
     ) -> Result<(), FetchError> {
+        let opened = self.open(url, asset, partial, sidecar, resume).await?;
+        self.stream(url, asset, partial, sidecar, opened).await
+    }
+
+    /// Send the request and decide whether its body appends to the partial.
+    /// A `resume` attempt asks for `bytes=<partial len>-` guarded by
+    /// `If-Range`; a `200` answer means the range was refused, so the body is
+    /// written from byte 0.
+    async fn open(
+        &self,
+        url: &str,
+        asset: &Asset,
+        partial: &NormalizedPath,
+        sidecar: &NormalizedPath,
+        resume: bool,
+    ) -> Result<Opened, FetchError> {
         let offset = if resume {
             partial_len(partial).await
         } else {
             0
         };
         let state = if resume {
-            tokio::fs::read(sidecar.as_path())
-                .await
-                .ok()
-                .and_then(|bytes| serde_json::from_slice::<Partial>(&bytes).ok())
+            read_state(sidecar).await
         } else {
             None
         };
@@ -285,6 +302,29 @@ impl Fetcher {
         };
         self.write_sidecar(sidecar, asset, etag, last_modified)
             .await;
+        Ok(Opened {
+            response,
+            append,
+            offset,
+        })
+    }
+
+    /// Write the body into the partial while hashing it, so an over-long body
+    /// is refused before it writes past the declared size and a short one is
+    /// never committed.
+    async fn stream(
+        &self,
+        url: &str,
+        asset: &Asset,
+        partial: &NormalizedPath,
+        sidecar: &NormalizedPath,
+        opened: Opened,
+    ) -> Result<(), FetchError> {
+        let Opened {
+            mut response,
+            append,
+            offset,
+        } = opened;
         let mut hasher = Sha256::new();
         if append {
             hash_prefix(partial, &mut hasher)
@@ -300,7 +340,6 @@ impl Fetcher {
             .await
             .map_err(|error| self.io(partial, error))?;
         let mut total = if append { offset } else { 0 };
-        let mut response = response;
         loop {
             let chunk = match tokio::time::timeout(CHUNK_TIMEOUT, response.chunk()).await {
                 Ok(Ok(Some(chunk))) => chunk,
@@ -320,8 +359,8 @@ impl Fetcher {
             };
             total += chunk.len() as u64;
             if total > asset.size_bytes {
-                // Over-long body: never write past the declared size, and
-                // never resume from a prefix of the wrong resource.
+                // Never write past the declared size, and never resume from a
+                // prefix of the wrong resource.
                 remove(partial).await;
                 remove(sidecar).await;
                 return Err(FetchError::Transport {
@@ -411,6 +450,13 @@ fn content_range_start(response: &reqwest::Response) -> Option<u64> {
         .trim()
         .parse()
         .ok()
+}
+
+async fn read_state(sidecar: &NormalizedPath) -> Option<Partial> {
+    tokio::fs::read(sidecar.as_path())
+        .await
+        .ok()
+        .and_then(|bytes| serde_json::from_slice(&bytes).ok())
 }
 
 async fn partial_len(path: &NormalizedPath) -> u64 {

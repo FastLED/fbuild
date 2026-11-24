@@ -17,6 +17,9 @@ fn body(len: usize) -> Vec<u8> {
     (0..len).map(|i| (i % 251) as u8).collect()
 }
 
+/// (Range, If-Range) seen by the fixture, in request order.
+type Wire = Vec<(Option<String>, Option<String>)>;
+
 #[derive(Clone, Default)]
 struct Plan {
     body: Arc<String>,
@@ -25,7 +28,7 @@ struct Plan {
     corrupt: bool,
     delay: u64,
     count: Arc<AtomicUsize>,
-    seen: Arc<Mutex<Vec<(Option<String>, Option<String>)>>>,
+    seen: Arc<Mutex<Wire>>,
 }
 
 impl Plan {
