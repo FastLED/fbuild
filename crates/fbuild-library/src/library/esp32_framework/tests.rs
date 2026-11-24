@@ -801,3 +801,133 @@ fn test_core_component_identity_is_stamped_at_the_framework_root() {
     super::stamp_core_component(staging, "3.3.11").unwrap();
     assert_eq!(read_stamp(staging).unwrap().content_id, before);
 }
+
+// --- MCU skeleton component identity (decision 8a, FastLED/fbuild#1882) ---
+
+fn skeleton_extract(root: &Path, wrapper: &str, mcu: &str) {
+    let dir = root.join(wrapper).join(mcu);
+    std::fs::create_dir_all(dir.join("flags")).unwrap();
+    std::fs::write(dir.join("flags/includes"), "-Iinclude\n").unwrap();
+    std::fs::create_dir_all(dir.join("include/hal/include/hal")).unwrap();
+    std::fs::write(dir.join("include/hal/include/hal/hal.h"), "//hal\n").unwrap();
+}
+
+#[test]
+fn skeleton_identity_is_taken_in_staging_and_survives_the_merge() {
+    use fbuild_packages_fetch::component_id::{content_id, read_stamp};
+    let tmp = tempfile::TempDir::new().unwrap();
+    let staging = tmp.path().join("staging");
+    let tools = tmp.path().join("tools");
+    std::fs::create_dir_all(&tools).unwrap();
+    skeleton_extract(&staging, "c2_arduino_compile_skeleton", "esp32c2");
+
+    let merged = super::libs::install_skeleton_from_archive(
+        &staging,
+        &tools,
+        "esp32c2",
+        "c2_arduino_compile_skeleton",
+    )
+    .unwrap();
+    assert!(merged);
+
+    let installed = tools.join("esp32-arduino-libs").join("esp32c2");
+    let identity = read_stamp(&installed).expect("the merged skeleton must carry its stamp");
+    assert_eq!(identity.component, "mcu-esp32c2");
+    assert_eq!(identity.version, "c2_arduino_compile_skeleton");
+    assert_eq!(identity.recipe, super::libs::MCU_SKELETON_RECIPE);
+    // The compat patch ran before the stamp, so the header it writes is inside
+    // the identity rather than a post-stamp mutation of the installed tree.
+    assert!(
+        installed
+            .join("include/hal/include/hal/touch_sensor_legacy_types.h")
+            .exists()
+    );
+    assert_eq!(
+        identity.content_id,
+        content_id(&installed, &[]).unwrap(),
+        "the merged tree must reproduce the staged bytes"
+    );
+}
+
+#[test]
+fn skeleton_identity_is_withdrawn_when_the_merge_does_not_reproduce_the_staged_bytes() {
+    use fbuild_packages_fetch::component_id::read_stamp;
+    let tmp = tempfile::TempDir::new().unwrap();
+    let staging = tmp.path().join("staging");
+    let tools = tmp.path().join("tools");
+    // A pre-existing partial tree at the destination: the merge adds the staged
+    // files next to it, so the installed bytes are not the staged bytes.
+    let installed = tools.join("esp32-arduino-libs").join("esp32c2");
+    std::fs::create_dir_all(&installed).unwrap();
+    std::fs::write(installed.join("leftover-from-core-archive.txt"), b"partial").unwrap();
+    skeleton_extract(&staging, "skeleton", "esp32c2");
+
+    super::libs::install_skeleton_from_archive(&staging, &tools, "esp32c2", "skeleton").unwrap();
+
+    assert!(
+        read_stamp(&installed).is_none(),
+        "a tree that does not match the staged identity must keep no identity"
+    );
+    assert!(installed.join("leftover-from-core-archive.txt").exists());
+}
+
+#[test]
+fn skeleton_archive_without_the_requested_mcu_carries_no_identity() {
+    use fbuild_packages_fetch::component_id::read_stamp;
+    let tmp = tempfile::TempDir::new().unwrap();
+    let staging = tmp.path().join("staging");
+    let tools = tmp.path().join("tools");
+    std::fs::create_dir_all(&tools).unwrap();
+    skeleton_extract(&staging, "skeleton", "esp32c6");
+
+    let merged =
+        super::libs::install_skeleton_from_archive(&staging, &tools, "esp32c2", "skeleton")
+            .unwrap();
+
+    assert!(!merged);
+    assert!(!tools.join("esp32-arduino-libs").join("esp32c2").exists());
+    assert!(read_stamp(&staging).is_none());
+}
+
+#[test]
+fn a_stamped_tree_is_not_patched_in_place() {
+    use fbuild_packages_fetch::component_id::{
+        ComponentIdentity, content_id, read_stamp, write_stamp,
+    };
+    let tmp = tempfile::TempDir::new().unwrap();
+    let mcu_dir = tmp.path().join("esp32c2");
+    std::fs::create_dir_all(mcu_dir.join("include")).unwrap();
+    std::fs::write(mcu_dir.join("include/hal.h"), "//hal\n").unwrap();
+    let stamped = read_stamp(&mcu_dir);
+    assert!(stamped.is_none());
+    // An unstamped (legacy) tree is patched in place and stays identity-less.
+    super::libs::patch_unless_stamped(&mcu_dir, "esp32c2").unwrap();
+    assert!(
+        mcu_dir
+            .join("include/hal/include/hal/touch_sensor_legacy_types.h")
+            .exists()
+    );
+    assert!(read_stamp(&mcu_dir).is_none());
+
+    // The same tree, stamped: the patch must not run.
+    let id = content_id(&mcu_dir, &[]).unwrap();
+    write_stamp(
+        &mcu_dir,
+        &ComponentIdentity::new(
+            "mcu-esp32c2",
+            "skeleton",
+            id,
+            super::libs::MCU_SKELETON_RECIPE,
+        ),
+    )
+    .unwrap();
+    std::fs::remove_file(mcu_dir.join("include/hal/include/hal/touch_sensor_legacy_types.h"))
+        .unwrap();
+    super::libs::patch_unless_stamped(&mcu_dir, "esp32c2").unwrap();
+    assert!(
+        !mcu_dir
+            .join("include/hal/include/hal/touch_sensor_legacy_types.h")
+            .exists(),
+        "a stamped tree must never be mutated after stamping"
+    );
+}
