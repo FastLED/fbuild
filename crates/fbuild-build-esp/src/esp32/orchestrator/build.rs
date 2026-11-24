@@ -174,6 +174,10 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 },
                 sdk_defines,
                 shrink_mode: params.shrink.as_str().to_string(),
+                // The framework bytes the flags above point at. `None` for a
+                // legacy tree, which keeps hashing as it did before the field
+                // existed (docs/design/artifact-serving-decisions.md §8a).
+                framework_identity: framework.framework_identity(&ctx.board.mcu, &sdk_variant),
             },
             &ctx,
         )?;

@@ -1,6 +1,6 @@
 use super::component_id::{
-    ComponentIdentity, SCHEMA, content_id, entries_survived, has_stamp, is_stamp_file, read_stamp,
-    remove_stamp, stamp_file_name, write_stamp,
+    ComponentIdentity, SCHEMA, component_term, content_id, entries_survived, has_stamp,
+    is_stamp_file, read_stamp, remove_stamp, stamp_file_name, write_stamp,
 };
 use std::path::Path;
 
@@ -291,4 +291,70 @@ fn entries_survived_reports_a_missing_root() {
     let staged_tree = staged(&[("include/hal.h", b"//hal")]);
     let empty = tempfile::TempDir::new().unwrap();
     assert!(!entries_survived(staged_tree.path(), &empty.path().join("nope"), &[]).unwrap());
+}
+
+fn identity(component: &str, version: &str, content_id: &str, recipe: u32) -> ComponentIdentity {
+    ComponentIdentity::new(component, version, content_id.to_string(), recipe)
+}
+
+#[test]
+fn component_term_is_order_independent() {
+    let core = identity("core", "3.3.12", "aaa", 0);
+    let sdk = identity("sdk-esp32c3", "3.3.12", "bbb", 1);
+    let skeleton = identity("mcu-esp32c3", "3.3.12", "ccc", 1);
+    let forward = component_term(&[core.clone(), sdk.clone(), skeleton.clone()]);
+    let backward = component_term(&[skeleton, sdk, core]);
+    assert_eq!(forward, backward);
+    assert!(forward.is_some());
+}
+
+#[test]
+fn component_term_changes_with_a_content_id() {
+    let before = component_term(&[identity("core", "3.3.12", "aaa", 0)]).unwrap();
+    let after = component_term(&[identity("core", "3.3.12", "aab", 0)]).unwrap();
+    assert_ne!(before, after);
+}
+
+#[test]
+fn component_term_changes_with_a_recipe() {
+    let before = component_term(&[identity("sdk-esp32c3", "3.3.12", "aaa", 1)]).unwrap();
+    let after = component_term(&[identity("sdk-esp32c3", "3.3.12", "aaa", 2)]).unwrap();
+    assert_ne!(before, after);
+}
+
+#[test]
+fn component_term_changes_with_a_version() {
+    let before = component_term(&[identity("core", "3.3.12", "aaa", 0)]).unwrap();
+    let after = component_term(&[identity("core", "3.3.13", "aaa", 0)]).unwrap();
+    assert_ne!(before, after);
+}
+
+#[test]
+fn component_term_changes_with_a_component_name() {
+    let before = component_term(&[identity("sdk-esp32c3", "3.3.12", "aaa", 1)]).unwrap();
+    let after = component_term(&[identity("sdk-esp32c6", "3.3.12", "aaa", 1)]).unwrap();
+    assert_ne!(before, after);
+}
+
+#[test]
+fn component_term_of_no_identity_is_none() {
+    assert_eq!(component_term(&[]), None);
+}
+
+#[test]
+fn component_term_of_a_duplicated_component_is_none() {
+    let first = identity("sdk-esp32c3", "3.3.12", "aaa", 1);
+    let second = identity("sdk-esp32c3", "3.3.12", "bbb", 1);
+    assert_eq!(component_term(&[first, second]), None);
+}
+
+#[test]
+fn component_term_covers_every_component() {
+    let one = component_term(&[identity("core", "3.3.12", "aaa", 0)]).unwrap();
+    let two = component_term(&[
+        identity("core", "3.3.12", "aaa", 0),
+        identity("sdk-esp32c3", "3.3.12", "bbb", 1),
+    ])
+    .unwrap();
+    assert_ne!(one, two);
 }

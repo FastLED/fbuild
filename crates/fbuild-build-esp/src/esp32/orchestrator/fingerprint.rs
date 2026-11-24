@@ -37,6 +37,18 @@ pub(super) struct Esp32FingerprintMetadata {
     /// `off` <-> `printf` must invalidate the fast path and relink
     /// (FastLED/fbuild#1459).
     pub shrink_mode: String,
+    /// The framework term: the component identities of the installed framework
+    /// (docs/design/artifact-serving-decisions.md §8a). Every other field here
+    /// describes the board, the toolchain and the flags; this one covers the
+    /// framework bytes those flags point at, so an SDK re-install or a compat
+    /// patch that lands the same paths with different bytes cannot replay a
+    /// stale fast path.
+    ///
+    /// Absent (a legacy, unstamped tree) is left out of the serialized metadata
+    /// entirely, so those fast paths hash exactly as they did before this field
+    /// existed; only a tree that carries identities gains the term.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub framework_identity: Option<String>,
 }
 
 #[cfg(test)]
@@ -73,6 +85,7 @@ mod tests {
             toolchain_version: toolchain_version.into(),
             sdk_defines: vec!["-DESP_PLATFORM".into()],
             shrink_mode: "off".into(),
+            framework_identity: None,
         }
     }
 
@@ -99,6 +112,32 @@ mod tests {
             serde_json::to_vec(&shrink_off).unwrap(),
             serde_json::to_vec(&shrink_printf).unwrap()
         );
+    }
+
+    #[test]
+    fn framework_identity_changes_fast_path_metadata() {
+        let legacy = metadata("toolchain-xtensa-esp32s3", "14.2.0");
+        let mut stamped = metadata("toolchain-xtensa-esp32s3", "14.2.0");
+        stamped.framework_identity = Some("0f0f".into());
+        assert_ne!(
+            serde_json::to_vec(&legacy).unwrap(),
+            serde_json::to_vec(&stamped).unwrap()
+        );
+
+        let mut other_bytes = metadata("toolchain-xtensa-esp32s3", "14.2.0");
+        other_bytes.framework_identity = Some("1e1e".into());
+        assert_ne!(
+            serde_json::to_vec(&stamped).unwrap(),
+            serde_json::to_vec(&other_bytes).unwrap()
+        );
+    }
+
+    #[test]
+    fn an_unstamped_framework_leaves_the_metadata_unchanged() {
+        // A legacy tree must hash exactly as it did before this field existed:
+        // the term is skipped, not serialized as null.
+        let json = serde_json::to_value(metadata("toolchain-xtensa-esp32s3", "14.2.0")).unwrap();
+        assert!(json.get("framework_identity").is_none());
     }
 
     #[test]
