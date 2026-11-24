@@ -2,7 +2,7 @@
 
 use super::args::{Cli, Commands, DaemonAction, IdeAction};
 use super::compile_many::{build_ci_pio_env, normalize_ci_sketch_entry, normalize_ci_sketches};
-use clap::Parser;
+use clap::{CommandFactory, Parser};
 
 #[test]
 fn deploy_admin_and_no_admin_conflict() {
@@ -567,4 +567,76 @@ fn global_shrink_flag_is_accepted() {
     let argv = ["fbuild", "--shrink=safe", "build", "tests/platform/uno"];
     let cli = Cli::try_parse_from(argv).expect("parse");
     assert_eq!(cli.shrink, Some(super::args::CliShrinkMode::Safe));
+}
+
+// ---------- prebuilt artifact switches (FastLED/fbuild#1882, decision 8b) ----------
+
+#[test]
+fn build_accepts_the_hidden_core_opt_in() {
+    let cli = Cli::try_parse_from(["fbuild", "build", "--prebuilt-core", "tests/platform/uno"])
+        .expect("--prebuilt-core must parse");
+    assert!(cli.prebuilt_core);
+    assert!(!cli.no_prebuilt_libs);
+    assert!(matches!(cli.command, Some(Commands::Build { .. })));
+}
+
+#[test]
+fn no_prebuilt_libs_is_global_and_parses_before_the_subcommand() {
+    let cli = Cli::try_parse_from([
+        "fbuild",
+        "--no-prebuilt-libs",
+        "build",
+        "tests/platform/uno",
+    ])
+    .expect("--no-prebuilt-libs must parse");
+    assert!(cli.no_prebuilt_libs);
+    assert!(!cli.prebuilt_core);
+}
+
+#[test]
+fn the_opt_out_and_the_core_opt_in_conflict() {
+    let argv = [
+        "fbuild",
+        "build",
+        "--prebuilt-core",
+        "--no-prebuilt-libs",
+        "tests/platform/uno",
+    ];
+    assert!(
+        Cli::try_parse_from(argv).is_err(),
+        "--prebuilt-core and --no-prebuilt-libs must conflict",
+    );
+}
+
+#[test]
+fn the_rejected_spellings_do_not_parse() {
+    for spelling in ["--prebuilt", "--no-prebuilt", "--prebuilt-libs-core"] {
+        let argv = ["fbuild", "build", spelling, "tests/platform/uno"];
+        assert!(
+            Cli::try_parse_from(argv).is_err(),
+            "{spelling} must not parse (decision 8b)",
+        );
+    }
+}
+
+#[test]
+fn help_hides_the_research_opt_in_but_documents_the_opt_out() {
+    let mut command = Cli::command();
+    let mut buffer: Vec<u8> = Vec::new();
+    command
+        .write_long_help(&mut buffer)
+        .expect("write long help");
+    let help = String::from_utf8(buffer).expect("help is utf-8");
+    assert!(
+        help.contains("--no-prebuilt-libs"),
+        "--no-prebuilt-libs is the public switch and must be documented",
+    );
+    assert!(
+        !help.contains("prebuilt-core"),
+        "--prebuilt-core is a research opt-in and must stay hidden",
+    );
+    assert!(
+        !help.contains("--prebuilt ") && !help.contains("--no-prebuilt "),
+        "the rejected spellings must not appear in --help; got:\n{help}",
+    );
 }

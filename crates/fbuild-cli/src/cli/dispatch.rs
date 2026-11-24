@@ -286,6 +286,12 @@ pub async fn async_main() {
                 environment.as_deref(),
                 shrink_mode,
             );
+            // Decision 8b's flags are resolved here, at the argv/env boundary
+            // (the daemon never reads the caller's environment), and reported
+            // honestly: the core-object serving ladder does not exist yet.
+            super::prebuilt_notice::report_build_prebuilt(
+                super::prebuilt_notice::resolve_from_cli(cli.no_prebuilt_libs, cli.prebuilt_core),
+            );
             if platformio {
                 pio_build(
                     &project_dir,

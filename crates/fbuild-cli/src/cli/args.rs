@@ -117,6 +117,25 @@ pub struct Cli {
     #[arg(long = "no-update-check")]
     pub no_update_check: bool,
 
+    /// Compile framework libraries from source instead of downloading
+    /// fbuild's prebuilt per-chip archives (slower first build; use when
+    /// offline or debugging an ABI problem). Env-var equivalent:
+    /// `FBUILD_NO_PREBUILT_LIBS=1`. Also disables the research core-object
+    /// opt-in, which it always wins over. See FastLED/fbuild#1882.
+    #[arg(long = "no-prebuilt-libs", global = true)]
+    pub no_prebuilt_libs: bool,
+
+    /// Research opt-in: allow fbuild's exact-fingerprint prebuilt framework
+    /// **core objects**. Hidden until the feature leaves research; deleted in
+    /// the PR that flips the default. The public opt-out wins over it.
+    #[arg(
+        long = "prebuilt-core",
+        global = true,
+        hide = true,
+        conflicts_with = "no_prebuilt_libs"
+    )]
+    pub prebuilt_core: bool,
+
     /// Enable Windows long paths with administrator approval (UAC)
     #[arg(long, global = true)]
     pub fix_win: bool,

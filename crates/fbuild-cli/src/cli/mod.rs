@@ -43,6 +43,7 @@ pub mod plotter;
 pub mod port_doctor;
 pub mod port_doctor_fix;
 pub mod port_scan;
+mod prebuilt_notice;
 pub mod purge;
 pub mod reset;
 pub mod serial_probe;
