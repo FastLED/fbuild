@@ -20,6 +20,7 @@ pub mod platformio_registry;
 #[path = "platformio_registry_fixture.rs"]
 pub mod platformio_registry_fixture;
 pub mod platformio_repository;
+pub mod prebuilt;
 pub mod submodules;
 
 mod ape_perms;
