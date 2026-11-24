@@ -325,8 +325,10 @@ jobs:
             & .\fbuild.exe --no-update-check build -e esp32s3 --no-timestamp
             if ($LASTEXITCODE -ne 0) { throw "ESP32-S3 build failed: $LASTEXITCODE" }
             $selection = Get-Content (Join-Path $env:USERPROFILE '.fbuild\prod\windows-short-paths-v2.json') -Raw | ConvertFrom-Json
-            $fixedPattern = '^' + [regex]::Escape($fixedBase) + '\\[0-9a-f]{12}\\p\\c$'
-            if ($selection.cache_root -notmatch $fixedPattern) { throw "standard user did not select the fixed cache: $($selection.cache_root)" }
+            $fixedPattern = '^' + [regex]::Escape($fixedBase.Replace('\', '/')) + '/[0-9a-f]{12}/p/c$'
+            if ($selection.cache_root.Replace('\', '/') -notmatch $fixedPattern) {
+              throw "standard user did not select the fixed cache: $($selection.cache_root)"
+            }
             $packages = @(Get-ChildItem -LiteralPath $selection.cache_root -Directory | Where-Object { $_.Name -match '^[0-9a-f]{16}$' })
             if ($packages.Count -lt 2) { throw 'expected compact toolchain and framework installs' }
             foreach ($package in $packages) {
