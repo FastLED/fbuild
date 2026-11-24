@@ -173,7 +173,9 @@ fn new_fallback_leaves_the_legacy_selection_available_for_older_binaries() {
     let temp = tempdir();
     let input = inputs(&temp, Observation::Disabled);
     let legacy = ShortRoots::new(
-        input.short_base.join(format!("fb-{}", path_hash(&input.home))),
+        input
+            .short_base
+            .join(format!("fb-{}", path_hash(&input.home))),
         false,
         false,
     );
