@@ -6,6 +6,7 @@
 use std::path::{Path, PathBuf};
 
 use fbuild_core::BuildProfile;
+use long_paths::try_get_home_mode_root;
 
 pub mod daemon_ownership;
 pub mod debug_prefix_map;
@@ -49,7 +50,7 @@ pub fn is_dev_mode() -> bool {
         .unwrap_or(false)
 }
 
-/// Root fbuild directory: `~/.fbuild/{dev|prod}`
+/// Runtime fbuild root, normally `~/.fbuild/{dev|prod}`.
 ///
 /// Panics without a home directory; [`try_get_fbuild_root`] degrades instead.
 pub fn get_fbuild_root() -> PathBuf {
@@ -66,8 +67,7 @@ pub fn try_get_fbuild_root() -> Option<PathBuf> {
     if let Some(resolution) = long_paths::current_resolution() {
         return Some(resolution.fbuild_root.clone().into_path_buf());
     }
-    let mode = if is_dev_mode() { "dev" } else { "prod" };
-    Some(dirs_next()?.join(FBUILD_DIR_NAME).join(mode))
+    try_get_home_mode_root().map(fbuild_core::path::NormalizedPath::into_path_buf)
 }
 
 /// The segment holding fbuild-managed external tools, under
@@ -80,13 +80,17 @@ pub const TOOLS_DIR_NAME: &str = "tools";
 /// Panics when the home directory cannot be determined; see
 /// [`try_get_tools_dir`].
 pub fn get_tools_dir() -> PathBuf {
-    get_fbuild_root().join(TOOLS_DIR_NAME)
+    try_get_tools_dir().expect("could not determine home directory")
 }
 
 /// [`get_tools_dir`] for callers that report a missing home directory rather
 /// than panicking on it.
 pub fn try_get_tools_dir() -> Option<PathBuf> {
-    Some(try_get_fbuild_root()?.join(TOOLS_DIR_NAME))
+    Some(
+        try_get_home_mode_root()?
+            .join(TOOLS_DIR_NAME)
+            .into_path_buf(),
+    )
 }
 
 /// Human-facing label for [`get_tools_dir`] when the real path cannot be
@@ -101,17 +105,9 @@ pub fn tools_dir_label() -> String {
     format!("~/{FBUILD_DIR_NAME}/{mode}/{TOOLS_DIR_NAME}")
 }
 
-/// Root fbuild directory for the OTHER mode (cross-mode fallback).
-///
-/// If current mode is dev, returns prod root, and vice versa.
-/// Used for cross-mode daemon discovery.
+/// Home fbuild directory for the other mode.
 pub fn get_other_fbuild_root() -> PathBuf {
-    let home = long_paths::current_resolution()
-        .map(|resolution| resolution.home.clone().into_path_buf())
-        .or_else(dirs_next)
-        .expect("could not determine home directory");
-    let mode = if is_dev_mode() { "prod" } else { "dev" };
-    home.join(FBUILD_DIR_NAME).join(mode)
+    long_paths::other_home_mode_root().into_path_buf()
 }
 
 /// Daemon files directory.

@@ -276,10 +276,26 @@ jobs:
             if ($warning -notmatch 'WARNING:' -or $warning -notmatch 'fix-win' -or $warning.Contains([char]27)) {
               throw 'fallback warning is missing or contains ANSI in redirected stderr'
             }
+            $fallbackBase = Join-Path $env:SystemDrive 'fbuild-cache'
+            $fallbackPattern = [regex]::Escape($fallbackBase) + '\\[0-9a-f]{12}\\p\\c'
+            $selected = [regex]::Match($warning, $fallbackPattern, 'IgnoreCase')
+            if (-not $selected.Success) {
+              throw "fallback cache was not selected under $fallbackBase"
+            }
+            $fallbackRoot = Split-Path -Parent $selected.Value
             & $cli --no-update-check build tests/platform/uno --dry-run
             if ($LASTEXITCODE -ne 0) { throw 'disabled-policy daemon handoff failed' }
             $after = Get-Content (Join-Path $env:USERPROFILE '.fbuild\prod\daemon\root-owner.json') -Raw | ConvertFrom-Json
             if ($before.pid -eq $after.pid) { throw 'daemon was reused after the registry changed' }
+            $fallbackPid = Get-Content (Join-Path $fallbackRoot 'daemon\fbuild_daemon.pid') -Raw
+            if ([int]$fallbackPid -ne $after.pid) {
+              throw "fallback daemon PID was not written under $fallbackRoot"
+            }
+            New-ItemProperty -Path $registry -Name LongPathsEnabled -PropertyType DWord -Value 1 -Force | Out-Null
+            & $cli --no-update-check build tests/platform/uno --dry-run
+            if ($LASTEXITCODE -ne 0) { throw 'enabled-policy daemon handoff failed' }
+            $repairedPid = Get-Content (Join-Path $fallbackRoot 'daemon\fbuild_daemon.pid') -Raw
+            if ([int]$repairedPid -eq $after.pid) { throw 'daemon was reused after long paths were enabled' }
             & $cli --no-update-check daemon stop
             if ($LASTEXITCODE -ne 0) { throw 'smoke daemon did not stop' }
           } finally {

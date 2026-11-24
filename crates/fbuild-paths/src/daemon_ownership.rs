@@ -1,7 +1,7 @@
 //! Soldr-style daemon lifecycle ownership for the compiler cache root
 //! (FastLED/fbuild#1154 / #1159).
 //!
-//! Two cross-process file locks, both scoped to `get_daemon_dir()` and
+//! Two cross-process file locks, both scoped to the home-mode daemon directory and
 //! deliberately outside zccache's own object-cache synchronization:
 //!
 //! - [`RootOwnershipGuard`] — version-blind, per-cache-root exclusive
@@ -26,8 +26,6 @@ use std::path::Path;
 
 use fbuild_core::file_lock::{self, FileLockGuard, FileLockMode};
 use fbuild_core::path::NormalizedPath;
-
-use crate::get_daemon_dir;
 
 /// Expected executable stem of the fbuild daemon binary. Used with
 /// `fbuild_core::platform::process::pid_exe_stem_matches` to verify a PID
@@ -117,19 +115,31 @@ pub fn try_acquire_spawn_lock_result_at(path: &Path) -> std::io::Result<Option<S
         .map(|_guard| SpawnLockGuard { _guard }))
 }
 
+/// Stable location for daemon ownership across versions and Windows policy changes.
+pub(crate) fn daemon_coordination_dir() -> NormalizedPath {
+    crate::long_paths::try_get_home_mode_root()
+        .expect("could not determine home directory")
+        .join("daemon")
+}
+
+/// Durable device reservations shared across daemon runtime layouts.
+pub fn device_leases_path() -> NormalizedPath {
+    daemon_coordination_dir().join("exclusive-device-leases.json")
+}
+
 /// Path to the root-ownership lock file.
 pub fn root_owner_lock_path() -> NormalizedPath {
-    get_daemon_dir().join(ROOT_OWNER_LOCK_NAME).into()
+    daemon_coordination_dir().join(ROOT_OWNER_LOCK_NAME)
 }
 
 /// Path to the spawn-herd lock file.
 pub fn spawn_lock_path() -> NormalizedPath {
-    get_daemon_dir().join(SPAWN_LOCK_NAME).into()
+    daemon_coordination_dir().join(SPAWN_LOCK_NAME)
 }
 
 /// Path to the [`OwnerClaim`] JSON file.
 pub fn owner_claim_path() -> NormalizedPath {
-    get_daemon_dir().join(OWNER_CLAIM_NAME).into()
+    daemon_coordination_dir().join(OWNER_CLAIM_NAME)
 }
 
 /// Advisory claim written by the daemon after it has acquired root

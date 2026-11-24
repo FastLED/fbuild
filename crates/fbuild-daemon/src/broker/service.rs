@@ -46,7 +46,7 @@ pub enum ServiceError {
 /// | index       | `<cache>/index`                          | `CacheIndex`  |
 /// | temp        | `<fbuild_root>/tmp`                       | `CacheTmp`    |
 /// | log         | `get_daemon_dir()` (daemon.log lives here)| `CacheLogs`  |
-/// | lock        | `get_daemon_dir()` (pid/port/lock files) | `CacheLocks`  |
+/// | lock        | Home-mode daemon coordination directory  | `CacheLocks`  |
 /// | runtime     | daemon binary directory                  | `CacheRuntime`|
 /// | config      | `get_fbuild_root()`                       | `CacheConfig` |
 fn entries(roots: &CacheRoots) -> [(CacheRootKind, &Path); 7] {

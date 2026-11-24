@@ -143,11 +143,69 @@ fn deep_explicit_cache_uses_fallback_and_reports_both_paths() {
 }
 
 #[test]
+fn automatic_fallback_resolves_daemon_and_cache_under_the_same_base() {
+    let temp = tempdir();
+    let input = inputs(&temp, Observation::Disabled);
+    let base = input.short_base.join("fbuild-cache");
+    let resolution = resolve(input).unwrap();
+    assert!(is_within(&resolution.fbuild_root, &base));
+    assert!(is_within(&resolution.cache_root, &resolution.fbuild_root));
+    assert!(is_within(&resolution.scratch_root, &resolution.fbuild_root));
+}
+
+#[test]
+fn unavailable_fixed_base_preserves_an_isolated_fallback() {
+    let temp = tempdir();
+    let input = inputs(&temp, Observation::Disabled);
+    let base = input.short_base.join("fbuild-cache");
+    std::fs::write(&base, b"existing file").unwrap();
+    let first = resolve(input).unwrap();
+    assert!(!is_within(&first.fbuild_root, &base));
+    assert!(is_within(&first.cache_root, &first.fbuild_root));
+    assert_eq!(std::fs::read(base).unwrap(), b"existing file");
+    let retained = resolve(inputs(&temp, Observation::Enabled)).unwrap();
+    assert_eq!(first.fbuild_root, retained.fbuild_root);
+    assert_eq!(first.cache_root, retained.cache_root);
+}
+
+#[test]
+fn new_fallback_leaves_the_legacy_selection_available_for_older_binaries() {
+    let temp = tempdir();
+    let input = inputs(&temp, Observation::Disabled);
+    let legacy = ShortRoots::new(
+        input
+            .short_base
+            .join(format!("fb-{}", path_hash(&input.home))),
+        false,
+        false,
+    );
+    let legacy_marker = input.fbuild_root.join(LEGACY_MARKER_FILE);
+    write_marker(
+        &legacy_marker,
+        &SelectionMarker {
+            schema: MARKER_SCHEMA,
+            cache_root: legacy.cache.clone(),
+            scratch_root: legacy.scratch,
+        },
+    )
+    .unwrap();
+    let saved = std::fs::read(&legacy_marker).unwrap();
+    let enabled = resolve(inputs(&temp, Observation::Enabled)).unwrap();
+    assert_eq!(enabled.cache_root, legacy.cache);
+    let current = resolve(input).unwrap();
+    assert_ne!(current.cache_root, legacy.cache);
+    assert_eq!(std::fs::read(&legacy_marker).unwrap(), saved);
+    let reenabled = resolve(inputs(&temp, Observation::Enabled)).unwrap();
+    assert_eq!(reenabled.cache_root, current.cache_root);
+}
+
+#[test]
 fn enabled_policy_retains_automatic_cache_from_durable_marker() {
     let temp = tempdir();
     let first = resolve(inputs(&temp, Observation::Disabled)).unwrap();
     std::fs::write(first.cache_root.join("package"), b"existing package").unwrap();
     let next = resolve(inputs(&temp, Observation::Enabled)).unwrap();
+    assert_eq!(first.fbuild_root, next.fbuild_root);
     assert_eq!(first.cache_root, next.cache_root);
     assert_eq!(
         next.cache_dir_source,
@@ -256,8 +314,9 @@ fn explicit_cache_is_normalized_before_shortness_is_checked() {
 #[test]
 fn repeated_fallback_initialization_preserves_valid_marker() {
     let temp = tempdir();
-    let first = resolve(inputs(&temp, Observation::Disabled)).unwrap();
-    let marker_path = first.fbuild_root.join(MARKER_FILE);
+    let input = inputs(&temp, Observation::Disabled);
+    let marker_path = input.fbuild_root.join(MARKER_FILE);
+    let first = resolve(input).unwrap();
     let mut saved: serde_json::Value =
         serde_json::from_slice(&std::fs::read(&marker_path).unwrap()).unwrap();
     saved["preserve_extra_field"] = serde_json::json!(true);
@@ -481,9 +540,9 @@ fn link_fixture(original: &Path, link: &Path) -> bool {
 fn fallback_rejects_linked_private_user_root_without_writing_through_it() {
     let temp = tempdir();
     let input = inputs(&temp, Observation::Disabled);
-    let private_root = input
-        .short_base
-        .join(format!("fb-{}", path_hash(&input.home)));
+    let base = input.short_base.join("fbuild-cache");
+    fs::ensure_private_directory(&base).unwrap();
+    let private_root = base.join(path_hash(&input.home));
     let outside = temp.path().join("outside");
     std::fs::create_dir_all(&outside).unwrap();
     if !link_fixture(&outside, &private_root) {
@@ -499,11 +558,12 @@ fn fallback_rejects_linked_mode_without_writing_through_it() {
     let input = inputs(&temp, Observation::Disabled);
     let private_root = input
         .short_base
-        .join(format!("fb-{}", path_hash(&input.home)));
+        .join("fbuild-cache")
+        .join(path_hash(&input.home));
     fs::ensure_private_directory(&private_root).unwrap();
     let outside = temp.path().join("outside");
     std::fs::create_dir_all(&outside).unwrap();
-    if !link_fixture(&outside, &private_root.join("prod")) {
+    if !link_fixture(&outside, &private_root.join("p")) {
         return;
     }
     assert!(resolve(input).is_err());
@@ -516,12 +576,13 @@ fn fallback_rejects_linked_cache_without_writing_through_it() {
     let input = inputs(&temp, Observation::Disabled);
     let mode_root = input
         .short_base
-        .join(format!("fb-{}", path_hash(&input.home)))
-        .join("prod");
+        .join("fbuild-cache")
+        .join(path_hash(&input.home))
+        .join("p");
     fs::ensure_private_directory(&mode_root).unwrap();
     let outside = temp.path().join("outside");
     std::fs::create_dir_all(&outside).unwrap();
-    if !link_fixture(&outside, &mode_root.join("cache")) {
+    if !link_fixture(&outside, &mode_root.join("c")) {
         return;
     }
     assert!(resolve(input).is_err());
@@ -534,12 +595,13 @@ fn fallback_rejects_linked_scratch_without_writing_through_it() {
     let input = inputs(&temp, Observation::Disabled);
     let mode_root = input
         .short_base
-        .join(format!("fb-{}", path_hash(&input.home)))
-        .join("prod");
+        .join("fbuild-cache")
+        .join(path_hash(&input.home))
+        .join("p");
     fs::ensure_private_directory(&mode_root).unwrap();
     let outside = temp.path().join("outside");
     std::fs::create_dir_all(&outside).unwrap();
-    if !link_fixture(&outside, &mode_root.join("tmp")) {
+    if !link_fixture(&outside, &mode_root.join("t")) {
         return;
     }
     assert!(resolve(input).is_err());
