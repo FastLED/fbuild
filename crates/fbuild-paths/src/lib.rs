@@ -6,6 +6,7 @@
 use std::path::{Path, PathBuf};
 
 use fbuild_core::BuildProfile;
+use long_paths::{home_mode_root, try_get_home_mode_root};
 
 pub mod daemon_ownership;
 pub mod debug_prefix_map;
@@ -69,18 +70,6 @@ pub fn try_get_fbuild_root() -> Option<PathBuf> {
     try_get_home_mode_root()
 }
 
-fn try_get_home_mode_root() -> Option<PathBuf> {
-    if let Some(resolution) = long_paths::current_resolution() {
-        return Some(home_mode_root(&resolution.home, resolution.dev_mode));
-    }
-    Some(home_mode_root(&dirs_next()?, is_dev_mode()))
-}
-
-fn home_mode_root(home: &Path, dev_mode: bool) -> PathBuf {
-    home.join(FBUILD_DIR_NAME)
-        .join(if dev_mode { "dev" } else { "prod" })
-}
-
 /// The segment holding fbuild-managed external tools, under
 /// [`get_fbuild_root`]: `tools`.
 pub const TOOLS_DIR_NAME: &str = "tools";
@@ -129,18 +118,6 @@ pub fn get_other_fbuild_root() -> PathBuf {
 /// Daemon files directory.
 pub fn get_daemon_dir() -> PathBuf {
     get_fbuild_root().join("daemon")
-}
-
-/// Stable location for daemon ownership across versions and Windows policy changes.
-fn daemon_coordination_dir() -> PathBuf {
-    try_get_home_mode_root()
-        .expect("could not determine home directory")
-        .join("daemon")
-}
-
-/// Durable device reservations shared across daemon runtime layouts.
-pub fn get_daemon_device_leases_file() -> PathBuf {
-    daemon_coordination_dir().join("exclusive-device-leases.json")
 }
 
 /// Daemon PID file path.

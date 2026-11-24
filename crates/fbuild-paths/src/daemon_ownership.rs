@@ -22,12 +22,11 @@
 //! the lock when the holding process exits (including a hard kill); the
 //! file itself is not the lock.
 
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use fbuild_core::file_lock::{self, FileLockGuard, FileLockMode};
 use fbuild_core::path::NormalizedPath;
 
-use crate::daemon_coordination_dir;
 
 /// Expected executable stem of the fbuild daemon binary. Used with
 /// `fbuild_core::platform::process::pid_exe_stem_matches` to verify a PID
@@ -115,6 +114,18 @@ pub fn try_acquire_spawn_lock_at(path: &Path) -> Option<SpawnLockGuard> {
 pub fn try_acquire_spawn_lock_result_at(path: &Path) -> std::io::Result<Option<SpawnLockGuard>> {
     Ok(file_lock::try_acquire(path, FileLockMode::Exclusive)?
         .map(|_guard| SpawnLockGuard { _guard }))
+}
+
+/// Stable location for daemon ownership across versions and Windows policy changes.
+pub(crate) fn daemon_coordination_dir() -> PathBuf {
+    crate::long_paths::try_get_home_mode_root()
+        .expect("could not determine home directory")
+        .join("daemon")
+}
+
+/// Durable device reservations shared across daemon runtime layouts.
+pub fn device_leases_path() -> PathBuf {
+    daemon_coordination_dir().join("exclusive-device-leases.json")
 }
 
 /// Path to the root-ownership lock file.

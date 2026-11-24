@@ -220,7 +220,7 @@ impl CacheRoots {
         let mut roots = Self::from_resolved(runtime_dir.into(), cache, crate::get_fbuild_root());
         roots.temp = crate::dev_or_prod_temp_root();
         roots.log = crate::get_daemon_dir();
-        roots.lock = crate::daemon_coordination_dir();
+        roots.lock = crate::daemon_ownership::daemon_coordination_dir();
         roots
     }
 
