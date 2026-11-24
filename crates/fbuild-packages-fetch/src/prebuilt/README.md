@@ -11,7 +11,9 @@ current Index descriptor.
 | `mod.rs` | `Query` (exact identity), `Asset`, `Resolution`/`MissReason`, `sha256`/`valid_sha`, `operator_urls` |
 | `reader.rs` | `Reader`: Index → per-tool shard, TTL cache, descriptor-verified shard loads |
 | `fetch.rs` | `Fetcher`: URL ladder, `Range`/`If-Range` resume, streaming size+SHA checks, process-local single-flight |
+| `extract.rs` | `extract`/`extract_async`: single-pass tar.zst extraction, descriptor re-verified while streaming, staging + atomic commit, completion marker |
 | `fetch_tests.rs` | local HTTP fixtures: resume, refused range, 416, corrupt source, over-long/short body, single-flight |
+| `extract_tests.rs` | real tar.zst fixtures: layout, reuse, flipped/truncated body, traversal, absolute path, symlink, occupied dest, size ceiling, wrong format |
 | `tests.rs` | local axum fixtures: exact hit, miss, cached/network descriptor checks, operator order |
 
 Rules that decide a hit:
@@ -35,5 +37,13 @@ Anything else is a `Resolution::Miss` and the caller builds from source.
    URL twice (resume, then from scratch), and collapses concurrent fetches of one
    digest in this process to a single download.
 
-Archive extraction, staging/partial GC, the disk-cache LRU and a daemon-wide
-single-flight are not in this module.
+5. `extract` accepts `.tar.zst` only, reads the archive **once** and recomputes
+   the descriptor's `size_bytes` and SHA-256 while decompressing, refuses
+   absolute paths, `..`, symlinks, hard links and non-regular entries, bounds
+   the decompressed size and entry count, extracts into a staging directory and
+   moves it into place only after the marker is written. A destination carrying
+   a matching marker is reused without touching the archive; anything else there
+   is refused, never merged into.
+
+Staging/partial GC, the disk-cache LRU and a daemon-wide single-flight are not
+in this module.
