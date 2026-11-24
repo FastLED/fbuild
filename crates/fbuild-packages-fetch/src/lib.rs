@@ -7,6 +7,7 @@
 
 pub mod cache;
 mod chip_slice;
+mod compact_install;
 mod variants;
 pub use variants::FetchRequest;
 pub mod cache_archive;
@@ -263,6 +264,7 @@ pub struct PackageBase {
     /// The board MCU whose published chip slice this package may install
     /// (`esp32s3`). `None` keeps the plain single-archive behaviour.
     pub(crate) slice_chip: Option<String>,
+    compact_windows_install: bool,
     /// Stands in for a published slice under `cfg(test)`, where the mirror
     /// manifest is never loaded.
     #[cfg(test)]
@@ -306,6 +308,7 @@ impl PackageBase {
             cache,
             cache_subdir,
             disk_cache,
+            compact_windows_install: false,
             submodules: submodules::SubmodulePlan::default(),
             slice_chip: None,
             #[cfg(test)]
@@ -335,6 +338,7 @@ impl PackageBase {
             cache: Cache::with_cache_root(project_dir, cache_root),
             cache_subdir,
             disk_cache,
+            compact_windows_install: false,
             submodules: submodules::SubmodulePlan::default(),
             slice_chip: None,
             #[cfg(test)]
@@ -377,6 +381,9 @@ impl PackageBase {
 
     /// Get the install path in the cache.
     pub fn install_path(&self) -> PathBuf {
+        if let Some(path) = self.compact_install_path(None) {
+            return path.into_path_buf();
+        }
         match self.cache_subdir {
             CacheSubdir::Toolchains => self
                 .cache
@@ -508,7 +515,6 @@ impl PackageBase {
             })?;
         }
 
-        // Append _staging to dir name (can't use with_extension — version has dots)
         let _install_lock =
             install_lock::acquire_for_install(&target_path, &self.name, &self.version).await?;
         // Re-check under the lock: a concurrent installer may have committed
@@ -527,13 +533,7 @@ impl PackageBase {
         // Move it aside, then install fresh.
         Self::quarantine_incomplete_install(&target_path)?;
 
-        let staging_path = target_path.with_file_name(format!(
-            "{}_staging",
-            target_path
-                .file_name()
-                .unwrap_or_default()
-                .to_string_lossy()
-        ));
+        let staging_path = self.install_staging_path(&target_path);
 
         // Clean up stale staging directory
         if staging_path.exists() {
@@ -572,7 +572,7 @@ impl PackageBase {
             None::<String>,
         ));
         tracing::info!("extracting {} v{}", self.name, self.version);
-        extractor::extract(&archive_path, &staging_path)?;
+        self.extract_install_archive(&archive_path, &staging_path)?;
 
         // Remove the archive after extraction
         let _ = std::fs::remove_file(&archive_path);

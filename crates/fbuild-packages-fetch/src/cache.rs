@@ -31,6 +31,10 @@ pub struct Cache {
 }
 
 impl Cache {
+    pub(crate) fn cache_root(&self) -> &Path {
+        &self.cache_root
+    }
+
     /// Create a new Cache for the given project directory.
     pub fn new(project_dir: &Path) -> Self {
         Self {

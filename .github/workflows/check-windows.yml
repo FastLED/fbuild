@@ -344,6 +344,15 @@ jobs:
             if ($LASTEXITCODE -ne 0) { throw "cold ESP32-S3 install failed: $LASTEXITCODE" }
             & .\fbuild.exe --no-update-check build -e esp32s3 --no-timestamp
             if ($LASTEXITCODE -ne 0) { throw "ESP32-S3 build failed: $LASTEXITCODE" }
+            $selection = Get-Content (Join-Path $env:USERPROFILE '.fbuild\prod\windows-short-paths-v2.json') -Raw | ConvertFrom-Json
+            $packages = @(Get-ChildItem -LiteralPath $selection.cache_root -Directory | Where-Object { $_.Name -match '^[0-9a-f]{16}$' })
+            if ($packages.Count -lt 2) { throw 'expected compact toolchain and framework installs' }
+            foreach ($package in $packages) {
+              Get-ChildItem -LiteralPath $package.FullName -Recurse -Force | ForEach-Object {
+                $limit = if ($_.PSIsContainer) { 247 } else { 259 }
+                if ($_.FullName.Length -gt $limit) { throw "legacy path limit exceeded: $($_.FullName)" }
+              }
+            }
             if ((Get-ItemPropertyValue -Path $registry -Name LongPathsEnabled) -ne 0) {
               throw 'long-path policy changed during ESP32 fallback testing'
             }

@@ -4,33 +4,51 @@
 
 use std::path::Path;
 
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::{FbuildError, Result};
 
 /// Check the actual extracted layout before an installer marks it complete.
-fn validate_extraction_tree(root: &Path, required: bool) -> Result<()> {
+fn validate_extraction_tree(root: &Path, destination: &Path, required: bool) -> Result<()> {
     const LEGACY_DIRECTORY_UNITS: usize = 248;
+    const LEGACY_FILE_UNITS: usize = 260;
     if !required {
         return Ok(());
     }
+    let destination = NormalizedPath::new(destination);
     for entry in walkdir::WalkDir::new(root).follow_links(false) {
         let entry = entry.map_err(|error| {
             FbuildError::PackageError(format!(
                 "could not validate extracted Windows paths: {error}"
             ))
         })?;
-        if fbuild_core::platform::fs::legacy_path_units(entry.path()) + 1 > LEGACY_DIRECTORY_UNITS {
+        let limit = if entry.file_type().is_dir() {
+            LEGACY_DIRECTORY_UNITS
+        } else {
+            LEGACY_FILE_UNITS
+        };
+        let relative = entry.path().strip_prefix(root).map_err(|error| {
+            FbuildError::PackageError(format!("invalid extracted Windows path: {error}"))
+        })?;
+        let path = destination.join(relative);
+        if fbuild_core::platform::fs::legacy_path_units(&path) + 1 > limit {
             return Err(FbuildError::PackageError(format!(
                 "Windows short-path fallback cannot safely use extracted path {}. Run fbuild --fix-win or use a shorter package location.",
-                entry.path().display()
+                path.display()
             )));
         }
     }
     Ok(())
 }
 
-fn validate_extraction(root: &Path) -> Result<()> {
+pub(crate) fn validate_extraction(root: &Path) -> Result<()> {
+    validate_extraction_at(root, root)
+}
+
+/// Check the legacy Windows limits before copying an extracted tree to its install path.
+pub fn validate_extraction_at(root: &Path, destination: &Path) -> Result<()> {
     validate_extraction_tree(
         root,
+        destination,
         fbuild_paths::long_paths::current_resolution()
             .is_some_and(|resolution| resolution.observation.requires_fallback()),
     )
@@ -40,6 +58,11 @@ fn validate_extraction(root: &Path) -> Result<()> {
 ///
 /// Supported formats: .tar.gz, .tgz, .tar.bz2, .tar.xz, .txz, .tar.zst, .zip
 pub fn extract(archive_path: &Path, dest_dir: &Path) -> Result<()> {
+    unpack(archive_path, dest_dir)?;
+    validate_extraction(dest_dir)
+}
+
+pub(crate) fn unpack(archive_path: &Path, dest_dir: &Path) -> Result<()> {
     let name = archive_path
         .file_name()
         .unwrap_or_default()
@@ -104,13 +127,15 @@ pub fn mark_ape_executables(root: &Path) -> Result<usize> {
 /// Extract a `.zip` archive. Public so callers (e.g. lnk materializer)
 /// can dispatch without depending on the source file's extension.
 pub fn extract_zip_public(archive_path: &Path, dest_dir: &Path) -> Result<()> {
-    extract_zip(archive_path, dest_dir)
+    extract_zip(archive_path, dest_dir)?;
+    validate_extraction(dest_dir)
 }
 
 /// Extract a `.tar.gz` archive. Public so callers (e.g. lnk materializer)
 /// can dispatch without depending on the source file's extension.
 pub fn extract_tar_gz_public(archive_path: &Path, dest_dir: &Path) -> Result<()> {
-    extract_tar_gz(archive_path, dest_dir)
+    extract_tar_gz(archive_path, dest_dir)?;
+    validate_extraction(dest_dir)
 }
 
 fn extract_tar_gz(archive_path: &Path, dest_dir: &Path) -> Result<()> {
@@ -124,7 +149,6 @@ fn extract_tar_gz(archive_path: &Path, dest_dir: &Path) -> Result<()> {
             e
         ))
     })?;
-    validate_extraction(dest_dir)?;
     Ok(())
 }
 
@@ -139,7 +163,6 @@ fn extract_tar_bz2(archive_path: &Path, dest_dir: &Path) -> Result<()> {
             e
         ))
     })?;
-    validate_extraction(dest_dir)?;
     Ok(())
 }
 
@@ -160,7 +183,6 @@ fn extract_tar_zst(archive_path: &Path, dest_dir: &Path) -> Result<()> {
             e
         ))
     })?;
-    validate_extraction(dest_dir)?;
     Ok(())
 }
 
@@ -175,7 +197,6 @@ fn extract_tar_xz(archive_path: &Path, dest_dir: &Path) -> Result<()> {
             e
         ))
     })?;
-    validate_extraction(dest_dir)?;
     Ok(())
 }
 
@@ -196,7 +217,6 @@ fn extract_zip(archive_path: &Path, dest_dir: &Path) -> Result<()> {
             e
         ))
     })?;
-    validate_extraction(dest_dir)?;
     // Zip entries without Unix attributes extract without the exec bit; every
     // zip caller (not just staged package installs) needs APE tools runnable.
     mark_ape_executables(dest_dir)?;
@@ -214,10 +234,10 @@ mod tests {
         let directory = root.path().join("d".repeat(246 - units));
         std::fs::create_dir(&directory).unwrap();
         std::fs::write(directory.join("123456789.h"), b"header").unwrap();
-        validate_extraction_tree(root.path(), true).unwrap();
+        validate_extraction_tree(root.path(), root.path(), true).unwrap();
 
         std::fs::write(directory.join("1234567890.h"), b"too long").unwrap();
-        assert!(validate_extraction_tree(root.path(), true).is_err());
+        assert!(validate_extraction_tree(root.path(), root.path(), true).is_err());
     }
 
     #[test]
@@ -228,7 +248,7 @@ mod tests {
         });
         std::fs::create_dir_all(&deep).unwrap();
         std::fs::write(deep.join("header.h"), b"// SDK header").unwrap();
-        let error = validate_extraction_tree(root.path(), true)
+        let error = validate_extraction_tree(root.path(), root.path(), true)
             .unwrap_err()
             .to_string();
         assert!(error.contains("--fix-win"), "{error}");
@@ -243,7 +263,7 @@ mod tests {
         });
         std::fs::create_dir_all(&deep).unwrap();
         std::fs::write(deep.join("header.h"), b"// SDK header").unwrap();
-        validate_extraction_tree(root.path(), false).unwrap();
+        validate_extraction_tree(root.path(), root.path(), false).unwrap();
         assert!(deep.join("header.h").exists());
     }
 

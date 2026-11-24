@@ -47,7 +47,8 @@ impl Esp32Toolchain {
                 checksum.as_deref(),
                 CacheSubdir::Toolchains,
                 project_dir,
-            ),
+            )
+            .with_compact_windows_install(),
             install_dir: None,
             prefix: prefix.to_string(),
         }
@@ -76,7 +77,8 @@ impl Esp32Toolchain {
                 CacheSubdir::Toolchains,
                 project_dir,
                 cache_root,
-            ),
+            )
+            .with_compact_windows_install(),
             install_dir: None,
             prefix: prefix.to_string(),
         }
@@ -119,7 +121,8 @@ impl Esp32Toolchain {
                 checksum,
                 CacheSubdir::Toolchains,
                 project_dir,
-            ),
+            )
+            .with_compact_windows_install(),
             install_dir: None,
             prefix: prefix.to_string(),
         }
@@ -143,7 +146,8 @@ impl Esp32Toolchain {
                 Some(&payload.sha256),
                 CacheSubdir::Toolchains,
                 project_dir,
-            ),
+            )
+            .with_compact_windows_install(),
             install_dir: None,
             prefix: prefix.to_string(),
         }

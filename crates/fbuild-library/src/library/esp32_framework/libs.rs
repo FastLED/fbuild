@@ -15,6 +15,19 @@ const FREERTOS_ARCHIVE: &str = "libfreertos.a";
 const NEW_SDK_LAYOUT: &str = "esp32-arduino-libs";
 const OLD_SDK_LAYOUT: &str = "sdk";
 
+fn sdk_tempdir(prefix: &str) -> std::io::Result<tempfile::TempDir> {
+    if fbuild_paths::long_paths::current_resolution()
+        .is_some_and(|resolution| resolution.observation.requires_fallback())
+    {
+        return tempfile::Builder::new()
+            .prefix("s")
+            .tempdir_in(fbuild_paths::dev_or_prod_temp_root());
+    }
+    tempfile::Builder::new()
+        .prefix(prefix)
+        .tempdir_in(fbuild_paths::temp_subdir("esp32-framework"))
+}
+
 fn looks_like_mcu_sdk_dir(path: &Path) -> bool {
     let Some(name) = path.file_name().and_then(|n| n.to_str()) else {
         return false;
@@ -249,9 +262,7 @@ async fn install_sdk_archive(
     // Extract to a short temp path to avoid Windows MAX_PATH (260 char) limit.
     // Rooted under the daemon's `tmp/esp32-framework/` so the extract scratch
     // dir stays in one user-visible location — FastLED/fbuild#844 bridge pair 10.
-    let temp_dir = tempfile::Builder::new()
-        .prefix("fbuild_sdk_")
-        .tempdir_in(fbuild_paths::temp_subdir("esp32-framework"))?;
+    let temp_dir = sdk_tempdir("fbuild_sdk_")?;
 
     tracing::info!(
         "extracting ESP32 SDK libs ({variant}, {} MB)",
@@ -542,9 +553,7 @@ impl Esp32Framework {
 
         // Rooted under `~/.fbuild/{dev|prod}/tmp/esp32-framework/` —
         // FastLED/fbuild#844 bridge pair 10.
-        let temp_dir = tempfile::Builder::new()
-            .prefix("fbuild_skel_")
-            .tempdir_in(fbuild_paths::temp_subdir("esp32-framework"))?;
+        let temp_dir = sdk_tempdir("fbuild_skel_")?;
 
         tracing::info!("extracting {} skeleton libs", mcu);
         crate::extractor::extract(&archive_path, temp_dir.path())?;
