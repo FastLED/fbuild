@@ -17,6 +17,11 @@ file below the 1000 LOC gate.
   `mcu-<mcu>` stamps of an installed tree into one canonical id, or `None`
   when any required component has no identity. Stamps only — never a tree walk
   (decision 8a, FastLED/fbuild#1882).
+- `prebuilt_core.rs` — the canonical prebuilt-core fingerprint: hashes the ABI
+  schema, toolchain, framework term, MCU/SDK variant, the canonical argv of every
+  compiled unit and the config/header digests into one key, or `None` when the
+  tree has no identity or an input is missing. Install-history and
+  install-path independent; never writes a stamp (decision 8, FastLED/fbuild#1882).
 - `paths.rs` — Simple framework path accessors (cores, variants, bootloader,
   partitions, gen_esp32part.py, core sources).
 - `sdk_paths.rs` — SDK include directories, library flags, defines, linker
@@ -30,4 +35,5 @@ file below the 1000 LOC gate.
 
 External API surface (`Esp32Framework` and its inherent / trait methods) is
 unchanged. The only re-export from the parent module remains
-`crate::library::Esp32Framework`.
+`crate::library::Esp32Framework`; `prebuilt_core` is a public module so a
+caller can name `PrebuiltCorePlan` and the input structs explicitly.
