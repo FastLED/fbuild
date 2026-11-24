@@ -6,6 +6,13 @@
 //! stamp inside its own subtree, so it is either absent or complete with its
 //! identity; a tree installed before this landed has no stamp and therefore no
 //! identity, and the planner compiles from source instead of guessing.
+//!
+//! Two components can share one directory: the MCU skeleton contributes its
+//! entries under `tools/esp32-arduino-libs/<mcu>/`, which is the directory the
+//! SDK variant of that chip owns. Stamps are therefore **one file per
+//! component** ([`stamp_file_name`]), and a component merged into a directory
+//! another one already populated is verified over the entries it contributed
+//! ([`entries_survived`]) instead of over the whole merged tree.
 
 use std::io::Read;
 use std::path::Path;
@@ -15,8 +22,10 @@ use fbuild_core::{FbuildError, Result, platform::fs};
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
-/// Stamp file, written at the component's root.
-pub const STAMP_FILE: &str = "component-identity.json";
+/// Prefix of a component's stamp file: `<prefix><component>.json`.
+pub const STAMP_PREFIX: &str = "component-identity.";
+/// Suffix of a component's stamp file.
+pub const STAMP_SUFFIX: &str = ".json";
 /// Schema of [`ComponentIdentity`]. A stamp carrying any other schema value has
 /// no identity: an older or newer writer is not this reader's contract.
 pub const SCHEMA: u32 = 1;
@@ -28,6 +37,28 @@ const DOMAIN: &[u8] = b"fbuild-component-identity\0";
 /// never part of a staging tree, but excluding it keeps an id taken over an
 /// installed tree equal to the id taken over the staging tree it came from.
 const INSTALL_SENTINEL: &str = ".install_complete";
+
+/// Stamp file name for `component`, written at that component's root.
+///
+/// One file per component, so the SDK variant and the MCU skeleton of the same
+/// chip - which both install into `tools/esp32-arduino-libs/<mcu>/` - keep
+/// separate identities instead of overwriting each other's.
+#[must_use]
+pub fn stamp_file_name(component: &str) -> String {
+    format!("{STAMP_PREFIX}{component}{STAMP_SUFFIX}")
+}
+
+/// Whether `relative`, a component-root-relative key, names a stamp file.
+///
+/// Stamps are only ever written at a component's root, so a nested file that
+/// happens to carry the prefix is content, not identity.
+#[must_use]
+pub fn is_stamp_file(relative: &str) -> bool {
+    !relative.contains('/')
+        && relative.starts_with(STAMP_PREFIX)
+        && relative.ends_with(STAMP_SUFFIX)
+        && relative.len() > STAMP_PREFIX.len() + STAMP_SUFFIX.len()
+}
 
 /// One component's identity, written into that component's subtree.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -66,7 +97,8 @@ impl ComponentIdentity {
 /// the SDK trees it merges into later).
 ///
 /// Directories carry no identity of their own, so an empty directory is
-/// invisible; every file and symlink below `root` is included.
+/// invisible; every file and symlink below `root` is included, and the stamps of
+/// every other component at `root` are not.
 pub fn content_id(root: &Path, excluded: &[&str]) -> Result<String> {
     let root = NormalizedPath::new(root);
     if !root.as_path().is_dir() {
@@ -75,10 +107,7 @@ pub fn content_id(root: &Path, excluded: &[&str]) -> Result<String> {
             root.display()
         )));
     }
-    let excluded: Vec<String> = excluded
-        .iter()
-        .map(|name| NormalizedPath::new(name).display_slash())
-        .collect();
+    let excluded = excluded_keys(excluded);
     let mut hasher = Sha256::new();
     hasher.update(DOMAIN);
     let walk = walkdir::WalkDir::new(root.as_path())
@@ -96,48 +125,83 @@ pub fn content_id(root: &Path, excluded: &[&str]) -> Result<String> {
         let Some(relative) = relative_key(entry.path(), &root) else {
             continue;
         };
-        if relative == STAMP_FILE || relative == INSTALL_SENTINEL {
+        if is_stamp_file(&relative) || relative == INSTALL_SENTINEL {
             continue;
         }
-        let metadata = entry.metadata().map_err(|error| {
-            FbuildError::PackageError(format!(
-                "could not read component entry {relative}: {error}"
-            ))
-        })?;
-        let file_type = metadata.file_type();
-        if file_type.is_dir() {
-            continue;
-        }
-        if file_type.is_symlink() {
-            let target = std::fs::read_link(entry.path()).map_err(|error| {
-                FbuildError::PackageError(format!(
-                    "could not read component symlink {relative}: {error}"
-                ))
-            })?;
-            hasher.update(b"l\0");
-            hasher.update(relative.as_bytes());
-            hasher.update(b"\0");
-            hasher.update(NormalizedPath::new(&target).display_slash().as_bytes());
-            hasher.update(b"\0");
-            continue;
-        }
-        if !file_type.is_file() {
-            // Devices and reparse points are not part of a component's content.
-            continue;
-        }
-        hasher.update(b"f\0");
-        hasher.update(relative.as_bytes());
-        hasher.update(b"\0");
-        hasher.update([u8::from(fs::is_executable(&metadata))]);
-        hasher.update(metadata.len().to_le_bytes());
-        hash_file(entry.path(), &relative, &mut hasher)?;
+        hash_entry(entry.path(), &relative, &mut hasher)?;
     }
     Ok(hex(&hasher.finalize()))
 }
 
-/// Write `identity` at `root`.
+/// Whether every entry of `staged_root` reproduced byte for byte at the same
+/// relative path under `installed_root`.
+///
+/// Equality of whole-tree ids cannot be the test where a component merges into a
+/// directory that already holds another component's files: the MCU skeleton
+/// copies its entries into the SDK variant's `tools/esp32-arduino-libs/<mcu>/`,
+/// and on ESP32-C2 the core archive ships a partial tree of that same directory,
+/// so the installed tree is a superset by design. This walks the staged tree and
+/// compares the same paths on the installed side; a missing entry, a changed
+/// byte, a flipped exec bit or a different link target all report `false`.
+pub fn entries_survived(
+    staged_root: &Path,
+    installed_root: &Path,
+    excluded: &[&str],
+) -> Result<bool> {
+    let staged_root = NormalizedPath::new(staged_root);
+    if !staged_root.as_path().is_dir() {
+        return Ok(false);
+    }
+    let installed_root = NormalizedPath::new(installed_root);
+    if !installed_root.as_path().is_dir() {
+        return Ok(false);
+    }
+    let excluded = excluded_keys(excluded);
+    let mut staged = Sha256::new();
+    let mut installed = Sha256::new();
+    staged.update(DOMAIN);
+    installed.update(DOMAIN);
+    let walk = walkdir::WalkDir::new(staged_root.as_path())
+        .follow_links(false)
+        .sort_by_file_name()
+        .into_iter()
+        .filter_entry(|entry| !is_excluded(entry.path(), &staged_root, &excluded));
+    for entry in walk {
+        let entry = entry.map_err(|error| {
+            FbuildError::PackageError(format!(
+                "could not read component tree {}: {error}",
+                staged_root.display()
+            ))
+        })?;
+        let Some(relative) = relative_key(entry.path(), &staged_root) else {
+            continue;
+        };
+        if is_stamp_file(&relative) || relative == INSTALL_SENTINEL {
+            continue;
+        }
+        let file_type = entry.file_type();
+        if !file_type.is_file() && !file_type.is_symlink() {
+            continue;
+        }
+        let counterpart = installed_root.join(&relative);
+        if std::fs::symlink_metadata(counterpart.as_path()).is_err() {
+            return Ok(false);
+        }
+        hash_entry(entry.path(), &relative, &mut staged)?;
+        hash_entry(counterpart.as_path(), &relative, &mut installed)?;
+    }
+    Ok(staged.finalize() == installed.finalize())
+}
+
+/// Write `identity` at `root`, under its own component's file name.
 pub fn write_stamp(root: &Path, identity: &ComponentIdentity) -> Result<()> {
-    let path = NormalizedPath::new(root).join(STAMP_FILE);
+    if identity.component.is_empty() || identity.component.contains('/') {
+        return Err(FbuildError::PackageError(format!(
+            "cannot write a component identity for {:?}: a component name is part of its stamp file name",
+            identity.component
+        )));
+    }
+    let path = NormalizedPath::new(root).join(stamp_file_name(&identity.component));
     let bytes = serde_json::to_vec_pretty(identity).map_err(|error| {
         FbuildError::PackageError(format!("could not encode component identity: {error}"))
     })?;
@@ -149,23 +213,39 @@ pub fn write_stamp(root: &Path, identity: &ComponentIdentity) -> Result<()> {
     })
 }
 
-/// Read the stamp at `root`, or `None` when the component has no identity: no
-/// stamp, an unreadable one, or one written under another schema.
+/// Read `component`'s stamp at `root`, or `None` when it has no identity: no
+/// stamp, an unreadable one, one written under another schema, or one filed
+/// under a different component's name.
 #[must_use]
-pub fn read_stamp(root: &Path) -> Option<ComponentIdentity> {
-    let path = NormalizedPath::new(root).join(STAMP_FILE);
-    let bytes = std::fs::read(path.as_path()).ok()?;
-    let identity: ComponentIdentity = serde_json::from_slice(&bytes).ok()?;
-    (identity.schema == SCHEMA).then_some(identity)
+pub fn read_stamp(root: &Path, component: &str) -> Option<ComponentIdentity> {
+    let path = NormalizedPath::new(root).join(stamp_file_name(component));
+    let identity = read_stamp_file(path.as_path())?;
+    (identity.component == component).then_some(identity)
 }
 
-/// Remove the stamp at `root`, if any.
+/// Whether `root` carries at least one component identity, of any component.
+///
+/// Used where a tree must not be mutated in place: whichever component stamped
+/// it, the bytes on disk are final.
+#[must_use]
+pub fn has_stamp(root: &Path) -> bool {
+    let root = NormalizedPath::new(root);
+    let Ok(entries) = std::fs::read_dir(root.as_path()) else {
+        return false;
+    };
+    entries.flatten().any(|entry| {
+        let name = entry.file_name().to_string_lossy().into_owned();
+        is_stamp_file(&name) && read_stamp_file(&entry.path()).is_some()
+    })
+}
+
+/// Remove `component`'s stamp at `root`, if any.
 ///
 /// Used when the bytes a stamp described did not survive a later step: the
 /// component then has no identity and is rebuilt from source. Idempotent - a
 /// component that already has no identity is not an error.
-pub fn remove_stamp(root: &Path) -> Result<()> {
-    let path = NormalizedPath::new(root).join(STAMP_FILE);
+pub fn remove_stamp(root: &Path, component: &str) -> Result<()> {
+    let path = NormalizedPath::new(root).join(stamp_file_name(component));
     match std::fs::remove_file(path.as_path()) {
         Ok(()) => Ok(()),
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(()),
@@ -174,6 +254,52 @@ pub fn remove_stamp(root: &Path) -> Result<()> {
             path.display()
         ))),
     }
+}
+
+fn read_stamp_file(path: &Path) -> Option<ComponentIdentity> {
+    let bytes = std::fs::read(path).ok()?;
+    let identity: ComponentIdentity = serde_json::from_slice(&bytes).ok()?;
+    (identity.schema == SCHEMA).then_some(identity)
+}
+
+/// Hash one file or symlink's contribution: a `f`/`l` tag, the relative key the
+/// entry carries, and the bytes (plus exec bit and length) or the link target.
+///
+/// `relative` is the key the entry carries rather than one derived from `path`,
+/// so the same bytes at two paths hash differently and a rename changes an id.
+fn hash_entry(path: &Path, relative: &str, hasher: &mut Sha256) -> Result<()> {
+    let metadata = std::fs::symlink_metadata(path).map_err(|error| {
+        FbuildError::PackageError(format!(
+            "could not read component entry {relative}: {error}"
+        ))
+    })?;
+    let file_type = metadata.file_type();
+    if file_type.is_dir() {
+        return Ok(());
+    }
+    if file_type.is_symlink() {
+        let target = std::fs::read_link(path).map_err(|error| {
+            FbuildError::PackageError(format!(
+                "could not read component symlink {relative}: {error}"
+            ))
+        })?;
+        hasher.update(b"l\0");
+        hasher.update(relative.as_bytes());
+        hasher.update(b"\0");
+        hasher.update(NormalizedPath::new(&target).display_slash().as_bytes());
+        hasher.update(b"\0");
+        return Ok(());
+    }
+    if !file_type.is_file() {
+        // Devices and reparse points are not part of a component's content.
+        return Ok(());
+    }
+    hasher.update(b"f\0");
+    hasher.update(relative.as_bytes());
+    hasher.update(b"\0");
+    hasher.update([u8::from(fs::is_executable(&metadata))]);
+    hasher.update(metadata.len().to_le_bytes());
+    hash_file(path, relative, hasher)
 }
 
 fn hash_file(path: &Path, relative: &str, hasher: &mut Sha256) -> Result<()> {
@@ -190,6 +316,13 @@ fn hash_file(path: &Path, relative: &str, hasher: &mut Sha256) -> Result<()> {
         }
         hasher.update(&buffer[..read]);
     }
+}
+
+fn excluded_keys(excluded: &[&str]) -> Vec<String> {
+    excluded
+        .iter()
+        .map(|name| NormalizedPath::new(name).display_slash())
+        .collect()
 }
 
 fn is_excluded(path: &Path, root: &NormalizedPath, excluded: &[String]) -> bool {
