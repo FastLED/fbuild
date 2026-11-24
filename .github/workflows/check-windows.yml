@@ -288,9 +288,16 @@ jobs:
           if ([Security.Principal.WindowsPrincipal]::new($identity).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
             throw 'the ESP32 fallback fixture must run as a non-administrator'
           }
-          if ((Split-Path -Leaf $env:USERPROFILE) -ne [Environment]::UserName) {
-            throw "the ESP32 fallback fixture did not load the standard-user profile: $env:USERPROFILE"
+          $profileKey = 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\' + $identity.User.Value
+          $profilePath = Get-ItemPropertyValue -LiteralPath $profileKey -Name ProfileImagePath
+          $profilePath = [Environment]::ExpandEnvironmentVariables($profilePath)
+          if (-not (Test-Path -LiteralPath $profilePath -PathType Container)) {
+            throw "the standard-user profile directory was not loaded: $profilePath"
           }
+          $env:USERPROFILE = $profilePath
+          $env:HOME = $profilePath
+          $env:LOCALAPPDATA = Join-Path $profilePath 'AppData\Local'
+          $env:APPDATA = Join-Path $profilePath 'AppData\Roaming'
           if ((Get-ItemPropertyValue -Path $registry -Name LongPathsEnabled) -ne 0) {
             throw 'long paths must be disabled before ESP32 fallback testing'
           }
