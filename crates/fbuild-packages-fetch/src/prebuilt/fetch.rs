@@ -184,8 +184,10 @@ impl Fetcher {
         Err(FetchError::Exhausted { last_error })
     }
 
+    /// The map holds one gate per digest; a poisoned map still holds valid
+    /// gates, and `ban_poison_panic` forbids cascading the panic.
     fn gate(&self, sha: &str) -> Arc<AsyncMutex<()>> {
-        let mut gates = self.gates.lock().expect("gate map poisoned");
+        let mut gates = self.gates.lock().unwrap_or_else(|error| error.into_inner());
         gates
             .entry(sha.to_owned())
             .or_insert_with(|| Arc::new(AsyncMutex::new(())))
