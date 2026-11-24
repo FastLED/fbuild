@@ -38,9 +38,7 @@ fn framework_with(root: &Path) -> Esp32Framework {
 
 /// A stamped framework: core at the root, one stamped SDK variant per chip.
 fn stamped_framework(root: &Path, chips: &[&str]) {
-    use fbuild_packages_fetch::component_id::{
-        ComponentIdentity, content_id, write_stamp,
-    };
+    use fbuild_packages_fetch::component_id::{ComponentIdentity, content_id, write_stamp};
 
     std::fs::create_dir_all(root.join("cores/esp32")).unwrap();
     std::fs::write(root.join("cores/esp32/Arduino.h"), "#pragma once\n").unwrap();
@@ -87,7 +85,9 @@ fn framework_identity_is_install_history_independent() {
     let tmp = tempfile::TempDir::new().unwrap();
     stamped_framework(tmp.path(), &["esp32c3"]);
     let fw = framework_with(tmp.path());
-    let before = fw.framework_identity("esp32c3", "esp32c3").expect("identity");
+    let before = fw
+        .framework_identity("esp32c3", "esp32c3")
+        .expect("identity");
 
     // Building another chip into the same core tree adds that chip's component.
     stamped_framework(tmp.path(), &["esp32dev"]);
@@ -108,7 +108,10 @@ fn framework_identity_of_an_unstamped_framework_is_none() {
     complete_sdk_tree(&root.join("tools/esp32-arduino-libs/esp32c3"));
 
     // A legacy tree: complete on disk, no identity anywhere.
-    assert_eq!(framework_with(root).framework_identity("esp32c3", "esp32c3"), None);
+    assert_eq!(
+        framework_with(root).framework_identity("esp32c3", "esp32c3"),
+        None
+    );
 }
 
 #[test]
@@ -125,7 +128,11 @@ fn framework_identity_requires_every_sdk_variant_stamp() {
         None
     );
     // Without the extra variant the same tree is identified.
-    assert!(framework_with(tmp.path()).framework_identity("esp32p4", "esp32p4").is_some());
+    assert!(
+        framework_with(tmp.path())
+            .framework_identity("esp32p4", "esp32p4")
+            .is_some()
+    );
 }
 
 #[test]
@@ -145,7 +152,9 @@ fn framework_identity_includes_the_mcu_skeleton() {
     let tmp = tempfile::TempDir::new().unwrap();
     stamped_framework(tmp.path(), &["esp32c2"]);
     let fw = framework_with(tmp.path());
-    let without_skeleton = fw.framework_identity("esp32c2", "esp32c2").expect("identity");
+    let without_skeleton = fw
+        .framework_identity("esp32c2", "esp32c2")
+        .expect("identity");
 
     let mcu_dir = tmp.path().join("tools/esp32-arduino-libs/esp32c2");
     write_stamp(
@@ -159,7 +168,9 @@ fn framework_identity_includes_the_mcu_skeleton() {
     )
     .unwrap();
 
-    let with_skeleton = fw.framework_identity("esp32c2", "esp32c2").expect("identity");
+    let with_skeleton = fw
+        .framework_identity("esp32c2", "esp32c2")
+        .expect("identity");
     assert_ne!(
         without_skeleton, with_skeleton,
         "the skeleton's bytes are part of the framework"
