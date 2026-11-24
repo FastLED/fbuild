@@ -298,6 +298,10 @@ jobs:
           $env:HOME = $profilePath
           $env:LOCALAPPDATA = Join-Path $profilePath 'AppData\Local'
           $env:APPDATA = Join-Path $profilePath 'AppData\Roaming'
+          $env:UV_CACHE_DIR = Join-Path $env:LOCALAPPDATA 'uv\cache'
+          $env:TEMP = Join-Path $env:LOCALAPPDATA 'Temp'
+          $env:TMP = $env:TEMP
+          New-Item -ItemType Directory -Force -Path $env:TEMP | Out-Null
           if ((Get-ItemPropertyValue -Path $registry -Name LongPathsEnabled) -ne 0) {
             throw 'long paths must be disabled before ESP32 fallback testing'
           }
