@@ -6,7 +6,7 @@
 
 use std::ffi::OsString;
 use std::io::Write;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::sync::{Mutex, OnceLock};
 
 use fbuild_core::path::NormalizedPath;
@@ -213,7 +213,7 @@ pub fn initialize() -> Result<&'static Resolution> {
         .ok_or_else(|| FbuildError::ConfigError("could not determine home directory".into()))?;
     let home = absolute_normalized(&home)?;
     let dev_mode = std::env::var("FBUILD_DEV_MODE").is_ok_and(|value| value == "1");
-    let fbuild_root = NormalizedPath::new(home_mode_root(&home, dev_mode));
+    let fbuild_root = home_mode_root(&home, dev_mode);
     let inputs = Inputs {
         #[cfg(test)]
         short_base: fbuild_root.clone(),
@@ -233,15 +233,16 @@ pub fn current_resolution() -> Option<&'static Resolution> {
     RESOLUTION.get()
 }
 
-pub(crate) fn try_get_home_mode_root() -> Option<PathBuf> {
+pub(crate) fn try_get_home_mode_root() -> Option<NormalizedPath> {
     if let Some(resolution) = current_resolution() {
         return Some(home_mode_root(&resolution.home, resolution.dev_mode));
     }
     Some(home_mode_root(&crate::dirs_next()?, crate::is_dev_mode()))
 }
 
-pub(crate) fn home_mode_root(home: &Path, dev_mode: bool) -> PathBuf {
-    home.join(crate::FBUILD_DIR_NAME)
+pub(crate) fn home_mode_root(home: &Path, dev_mode: bool) -> NormalizedPath {
+    NormalizedPath::new(home)
+        .join(crate::FBUILD_DIR_NAME)
         .join(if dev_mode { "dev" } else { "prod" })
 }
 
@@ -386,7 +387,9 @@ where
     Ok(resolution)
 }
 
-fn retained_marker(home_mode_root: &Path) -> Result<Option<(PathBuf, SelectionMarker)>> {
+fn retained_marker(
+    home_mode_root: &NormalizedPath,
+) -> Result<Option<(NormalizedPath, SelectionMarker)>> {
     for name in [MARKER_FILE, LEGACY_MARKER_FILE] {
         let path = home_mode_root.join(name);
         if let Some(marker) = read_marker(&path)? {

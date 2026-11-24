@@ -22,7 +22,7 @@
 //! the lock when the holding process exits (including a hard kill); the
 //! file itself is not the lock.
 
-use std::path::{Path, PathBuf};
+use std::path::Path;
 
 use fbuild_core::file_lock::{self, FileLockGuard, FileLockMode};
 use fbuild_core::path::NormalizedPath;
@@ -116,30 +116,30 @@ pub fn try_acquire_spawn_lock_result_at(path: &Path) -> std::io::Result<Option<S
 }
 
 /// Stable location for daemon ownership across versions and Windows policy changes.
-pub(crate) fn daemon_coordination_dir() -> PathBuf {
+pub(crate) fn daemon_coordination_dir() -> NormalizedPath {
     crate::long_paths::try_get_home_mode_root()
         .expect("could not determine home directory")
         .join("daemon")
 }
 
 /// Durable device reservations shared across daemon runtime layouts.
-pub fn device_leases_path() -> PathBuf {
+pub fn device_leases_path() -> NormalizedPath {
     daemon_coordination_dir().join("exclusive-device-leases.json")
 }
 
 /// Path to the root-ownership lock file.
 pub fn root_owner_lock_path() -> NormalizedPath {
-    daemon_coordination_dir().join(ROOT_OWNER_LOCK_NAME).into()
+    daemon_coordination_dir().join(ROOT_OWNER_LOCK_NAME)
 }
 
 /// Path to the spawn-herd lock file.
 pub fn spawn_lock_path() -> NormalizedPath {
-    daemon_coordination_dir().join(SPAWN_LOCK_NAME).into()
+    daemon_coordination_dir().join(SPAWN_LOCK_NAME)
 }
 
 /// Path to the [`OwnerClaim`] JSON file.
 pub fn owner_claim_path() -> NormalizedPath {
-    daemon_coordination_dir().join(OWNER_CLAIM_NAME).into()
+    daemon_coordination_dir().join(OWNER_CLAIM_NAME)
 }
 
 /// Advisory claim written by the daemon after it has acquired root

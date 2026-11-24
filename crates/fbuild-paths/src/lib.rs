@@ -67,7 +67,7 @@ pub fn try_get_fbuild_root() -> Option<PathBuf> {
     if let Some(resolution) = long_paths::current_resolution() {
         return Some(resolution.fbuild_root.clone().into_path_buf());
     }
-    try_get_home_mode_root()
+    try_get_home_mode_root().map(fbuild_core::path::NormalizedPath::into_path_buf)
 }
 
 /// The segment holding fbuild-managed external tools, under
@@ -86,7 +86,11 @@ pub fn get_tools_dir() -> PathBuf {
 /// [`get_tools_dir`] for callers that report a missing home directory rather
 /// than panicking on it.
 pub fn try_get_tools_dir() -> Option<PathBuf> {
-    Some(try_get_home_mode_root()?.join(TOOLS_DIR_NAME))
+    Some(
+        try_get_home_mode_root()?
+            .join(TOOLS_DIR_NAME)
+            .into_path_buf(),
+    )
 }
 
 /// Human-facing label for [`get_tools_dir`] when the real path cannot be
@@ -107,12 +111,13 @@ pub fn tools_dir_label() -> String {
 /// Used for cross-mode daemon discovery.
 pub fn get_other_fbuild_root() -> PathBuf {
     if let Some(resolution) = long_paths::current_resolution() {
-        return home_mode_root(&resolution.home, !resolution.dev_mode);
+        return home_mode_root(&resolution.home, !resolution.dev_mode).into_path_buf();
     }
     home_mode_root(
         &dirs_next().expect("could not determine home directory"),
         !is_dev_mode(),
     )
+    .into_path_buf()
 }
 
 /// Daemon files directory.

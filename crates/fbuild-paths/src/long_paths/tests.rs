@@ -148,9 +148,9 @@ fn automatic_fallback_resolves_daemon_and_cache_under_the_same_base() {
     let input = inputs(&temp, Observation::Disabled);
     let base = input.short_base.join("fbuild-cache");
     let resolution = resolve(input).unwrap();
-    assert!(resolution.fbuild_root.starts_with(&base));
-    assert!(resolution.cache_root.starts_with(&resolution.fbuild_root));
-    assert!(resolution.scratch_root.starts_with(&resolution.fbuild_root));
+    assert!(is_within(&resolution.fbuild_root, &base));
+    assert!(is_within(&resolution.cache_root, &resolution.fbuild_root));
+    assert!(is_within(&resolution.scratch_root, &resolution.fbuild_root));
 }
 
 #[test]
@@ -160,8 +160,8 @@ fn unavailable_fixed_base_preserves_an_isolated_fallback() {
     let base = input.short_base.join("fbuild-cache");
     std::fs::write(&base, b"existing file").unwrap();
     let first = resolve(input).unwrap();
-    assert!(!first.fbuild_root.starts_with(&base));
-    assert!(first.cache_root.starts_with(&first.fbuild_root));
+    assert!(!is_within(&first.fbuild_root, &base));
+    assert!(is_within(&first.cache_root, &first.fbuild_root));
     assert_eq!(std::fs::read(base).unwrap(), b"existing file");
     let retained = resolve(inputs(&temp, Observation::Enabled)).unwrap();
     assert_eq!(first.fbuild_root, retained.fbuild_root);
