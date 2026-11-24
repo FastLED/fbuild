@@ -298,6 +298,68 @@ jobs:
             if ([int]$repairedPid -eq $after.pid) { throw 'daemon was reused after long paths were enabled' }
             & $cli --no-update-check daemon stop
             if ($LASTEXITCODE -ne 0) { throw 'smoke daemon did not stop' }
+
+            # Exercise the reported package pair from a fresh, non-admin
+            # profile while the machine-wide long-path policy remains off.
+            New-ItemProperty -Path $registry -Name LongPathsEnabled -PropertyType DWord -Value 0 -Force | Out-Null
+            $account = 'fb' + [Guid]::NewGuid().ToString('N').Substring(0, 12)
+            $password = ConvertTo-SecureString ([Guid]::NewGuid().ToString('N') + 'Aa9!') -AsPlainText -Force
+            $credential = [pscredential]::new("$env:COMPUTERNAME\$account", $password)
+            $fixture = Join-Path $env:PUBLIC $account
+            try {
+              $testUser = New-LocalUser -Name $account -Password $password
+              Add-LocalGroupMember -SID 'S-1-5-32-545' -Member $testUser
+              New-Item -ItemType Directory -Path $fixture | Out-Null
+              & icacls $fixture /grant "${account}:(OI)(CI)M" | Out-Null
+              if ($LASTEXITCODE -ne 0) { throw 'could not grant the test account access to its fixture' }
+              Copy-Item $cli, $daemon -Destination $fixture
+              @'
+          $ErrorActionPreference = 'Stop'
+          $env:CI = 'true'
+          $env:FBUILD_DEV_MODE = '0'
+          $env:RUNNING_PROCESS_DISABLE = '1'
+          $registry = 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem'
+          $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+          if ([Security.Principal.WindowsPrincipal]::new($identity).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+            throw 'the ESP32 fallback fixture must run as a non-administrator'
+          }
+          if ((Get-ItemPropertyValue -Path $registry -Name LongPathsEnabled) -ne 0) {
+            throw 'long paths must be disabled before ESP32 fallback testing'
+          }
+          Set-Location $PSScriptRoot
+          New-Item -ItemType Directory -Path 'src' | Out-Null
+          @"
+          [env:esp32s3]
+          platform = https://github.com/pioarduino/platform-espressif32/releases/download/55.03.312-1/platform-espressif32.zip
+          board = esp32-s3-devkitc-1
+          framework = arduino
+          "@ | Set-Content platformio.ini
+          @"
+          #include <Arduino.h>
+          void setup() {}
+          void loop() {}
+          "@ | Set-Content src/main.cpp
+          try {
+            & .\fbuild.exe --no-update-check install -e esp32s3
+            if ($LASTEXITCODE -ne 0) { throw "cold ESP32-S3 install failed: $LASTEXITCODE" }
+            & .\fbuild.exe --no-update-check build -e esp32s3 --no-timestamp
+            if ($LASTEXITCODE -ne 0) { throw "ESP32-S3 build failed: $LASTEXITCODE" }
+            if ((Get-ItemPropertyValue -Path $registry -Name LongPathsEnabled) -ne 0) {
+              throw 'long-path policy changed during ESP32 fallback testing'
+            }
+          } finally {
+            & .\fbuild.exe --no-update-check daemon stop
+          }
+          '@ | Set-Content (Join-Path $fixture 'verify-fallback.ps1')
+              $test = Start-Process (Join-Path $PSHOME 'pwsh.exe') -Credential $credential -LoadUserProfile -Wait -PassThru `
+                -ArgumentList '-NoProfile', '-File', ('"{0}"' -f (Join-Path $fixture 'verify-fallback.ps1')) `
+                -RedirectStandardOutput (Join-Path $fixture 'stdout.log') -RedirectStandardError (Join-Path $fixture 'stderr.log')
+              Get-Content (Join-Path $fixture 'stdout.log'), (Join-Path $fixture 'stderr.log')
+              if ($test.ExitCode -ne 0) { throw "standard-user ESP32 fallback failed: $($test.ExitCode)" }
+            } finally {
+              Remove-LocalUser -Name $account -ErrorAction SilentlyContinue
+              Remove-Item -LiteralPath $fixture -Recurse -Force -ErrorAction SilentlyContinue
+            }
           } finally {
             if ($null -eq $original) {
               Remove-ItemProperty -Path $registry -Name LongPathsEnabled -ErrorAction SilentlyContinue

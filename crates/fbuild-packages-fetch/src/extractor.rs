@@ -208,6 +208,19 @@ mod tests {
     use super::*;
 
     #[test]
+    fn windows_fallback_distinguishes_directory_and_file_limits() {
+        let root = tempfile::tempdir().unwrap();
+        let units = fbuild_core::platform::fs::legacy_path_units(root.path());
+        let directory = root.path().join("d".repeat(246 - units));
+        std::fs::create_dir(&directory).unwrap();
+        std::fs::write(directory.join("123456789.h"), b"header").unwrap();
+        validate_extraction_tree(root.path(), true).unwrap();
+
+        std::fs::write(directory.join("1234567890.h"), b"too long").unwrap();
+        assert!(validate_extraction_tree(root.path(), true).is_err());
+    }
+
+    #[test]
     fn windows_path_fallback_rejects_sdk_members_that_still_exceed_the_limit() {
         let root = tempfile::tempdir().unwrap();
         let deep = (0..18).fold(root.path().to_path_buf(), |path, _| {
