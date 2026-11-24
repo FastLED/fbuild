@@ -5,7 +5,7 @@ use std::path::{Path, PathBuf};
 use super::Esp32Framework;
 use super::fs_utils::copy_dir_recursive;
 use fbuild_packages_fetch::component_id::{
-    ComponentIdentity, content_id, read_stamp, remove_stamp, write_stamp,
+    ComponentIdentity, content_id, entries_survived, has_stamp, remove_stamp, write_stamp,
 };
 
 /// Archive whose presence proves a per-MCU SDK tree carries real libraries
@@ -175,26 +175,26 @@ fn reconcile_sdk_stamp(
     let Some(installed) = installed_variant_dir(tools_dir, variant) else {
         return Ok(());
     };
-    reconcile_stamp(&installed, staged, &format!("{variant} SDK"))
+    let survived = content_id(&installed, &[])? == staged.content_id;
+    keep_stamp_if(&installed, survived, staged, &format!("{variant} SDK"))
 }
 
-/// Drop `staged`'s stamp from `installed` unless the merge reproduced the
-/// staged bytes. Shared by every component: the merged tree is what ships, so a
+/// Drop `staged`'s stamp from `installed` unless the bytes it described survived
+/// the merge. Shared by every component: the merged tree is what ships, so a
 /// mismatch means the tree carries no identity rather than a false one.
-fn reconcile_stamp(
+fn keep_stamp_if(
     installed: &Path,
+    survived: bool,
     staged: &ComponentIdentity,
     label: &str,
 ) -> fbuild_core::Result<()> {
-    let merged_id = content_id(installed, &[])?;
-    if merged_id == staged.content_id {
+    if survived {
         return Ok(());
     }
     tracing::warn!(
-        "{label}: the merged tree does not match the staged identity ({merged_id} vs {}); dropping its component stamp",
-        staged.content_id
+        "{label}: the merged tree does not reproduce the staged identity; dropping its component stamp"
     );
-    remove_stamp(installed)
+    remove_stamp(installed, &staged.component)
 }
 
 /// Extract a fetched libs archive, stamp the requested variant in the extract
@@ -320,7 +320,7 @@ fn merge_skeleton_mcu_entries(
 /// tree is final, and patching it would make the stamp describe bytes nobody
 /// hashed (decision 8a). Legacy trees stay patched and stay identity-less.
 pub(super) fn patch_unless_stamped(mcu_dir: &Path, mcu: &str) -> fbuild_core::Result<()> {
-    if read_stamp(mcu_dir).is_some() {
+    if has_stamp(mcu_dir) {
         return Ok(());
     }
     patch_mcu_compatibility(mcu_dir, mcu)
@@ -384,20 +384,22 @@ pub(super) const MCU_SKELETON_RECIPE: u32 = 1;
 /// taking its identity in staging first (decision 8a).
 ///
 /// The compat patches and the stamp both run on the staged tree, and the merge
-/// re-checks the id: a copy into an unrelated pre-existing partial directory
-/// leaves the installed tree without an identity instead of certifying bytes
-/// that were never hashed.
+/// re-checks the entries the skeleton contributed: a merge that did not reproduce
+/// them leaves the component without an identity rather than certifying bytes
+/// that were never hashed, while files another component contributed to the same
+/// directory are not the skeleton's business.
 pub(super) fn install_skeleton_from_archive(
     temp_dir: &Path,
     tools_dir: &Path,
     mcu: &str,
     version: &str,
 ) -> fbuild_core::Result<bool> {
-    let staged = match staged_variant_dir(temp_dir, mcu) {
+    let staged_root = staged_variant_dir(temp_dir, mcu);
+    let staged = match staged_root.as_ref() {
         Some(root) => {
-            patch_mcu_compatibility(&root, mcu)?;
+            patch_mcu_compatibility(root, mcu)?;
             Some(stamp_component(
-                &root,
+                root,
                 &format!("mcu-{mcu}"),
                 version,
                 MCU_SKELETON_RECIPE,
@@ -411,12 +413,17 @@ pub(super) fn install_skeleton_from_archive(
         }
     };
     let merged = merge_skeleton_mcu_entries(temp_dir, tools_dir, mcu)?;
-    if let Some(identity) = staged.as_ref() {
+    if let (Some(identity), Some(root)) = (staged.as_ref(), staged_root.as_ref()) {
         if let Some(installed) = mcu_sdk_dir_candidates(tools_dir, mcu)
             .into_iter()
             .find(|mcu_dir| mcu_dir.is_dir())
         {
-            reconcile_stamp(&installed, identity, &format!("mcu-{mcu}"))?;
+            // The destination already holds another component's files - the SDK
+            // variant of this chip, and on ESP32-C2 a partial tree from the core
+            // archive - so the skeleton is verified over the entries it
+            // contributed, not over the whole merged directory.
+            let survived = entries_survived(root, &installed, &[])?;
+            keep_stamp_if(&installed, survived, identity, &format!("mcu-{mcu}"))?;
         }
     }
     Ok(merged)
@@ -571,6 +578,7 @@ impl Esp32Framework {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use fbuild_packages_fetch::component_id::read_stamp;
 
     fn write(path: &Path, content: &str) {
         if let Some(parent) = path.parent() {
@@ -819,7 +827,8 @@ mod tests {
         install_sdk_from_archive(&archive, "3.3.12", "esp32c3", &tools_dir, &staging).unwrap();
 
         let installed = installed_variant_dir(&tools_dir, "esp32c3").expect("complete SDK tree");
-        let stamp = read_stamp(&installed).expect("a fresh install carries an identity");
+        let stamp =
+            read_stamp(&installed, "sdk-esp32c3").expect("a fresh install carries an identity");
         assert_eq!(stamp.component, "sdk-esp32c3");
         assert_eq!(stamp.version, "3.3.12");
         assert_eq!(stamp.recipe, SDK_RECIPE);
@@ -868,7 +877,7 @@ mod tests {
         );
         // ...and are inside the identity, so a patch taken after the stamp would
         // show up as a mismatch here.
-        let stamp = read_stamp(&installed).expect("identity");
+        let stamp = read_stamp(&installed, "sdk-esp32c2").expect("identity");
         assert_eq!(stamp.content_id, content_id(&installed, &[]).unwrap());
     }
 
@@ -898,7 +907,7 @@ mod tests {
             "the merge must not delete unrelated files"
         );
         assert!(
-            read_stamp(&installed).is_none(),
+            read_stamp(&installed, "sdk-esp32c3").is_none(),
             "an unreproduced tree must not keep an identity"
         );
     }
@@ -926,6 +935,19 @@ mod tests {
     }
 
     #[test]
+    fn a_component_stamp_is_withdrawn_when_its_entries_did_not_survive() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        let installed = tmp.path().join("esp32c2");
+        std::fs::create_dir_all(&installed).unwrap();
+        let identity = ComponentIdentity::new("mcu-esp32c2", "skeleton", "id".to_string(), 1);
+        write_stamp(&installed, &identity).unwrap();
+        keep_stamp_if(&installed, true, &identity, "mcu-esp32c2").unwrap();
+        assert!(read_stamp(&installed, "mcu-esp32c2").is_some());
+        keep_stamp_if(&installed, false, &identity, "mcu-esp32c2").unwrap();
+        assert!(read_stamp(&installed, "mcu-esp32c2").is_none());
+    }
+
+    #[test]
     fn an_unstamped_variant_is_still_patched_in_place() {
         let tmp = tempfile::TempDir::new().unwrap();
         let tools_dir = tmp.path().join("tools");
@@ -941,7 +963,7 @@ mod tests {
             "a legacy tree without a stamp keeps getting its compat patches"
         );
         assert!(
-            read_stamp(&mcu_dir).is_none(),
+            read_stamp(&mcu_dir, "sdk-esp32c2").is_none(),
             "no backfill: no stamp appears"
         );
     }

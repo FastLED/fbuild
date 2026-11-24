@@ -783,7 +783,7 @@ fn test_core_component_identity_is_stamped_at_the_framework_root() {
 
     super::stamp_core_component(staging, "3.3.11").unwrap();
 
-    let identity = read_stamp(staging).expect("the core root must carry a stamp");
+    let identity = read_stamp(staging, "core").expect("the core root must carry a stamp");
     assert_eq!(identity.component, "core");
     assert_eq!(identity.version, "3.3.11");
     assert_eq!(identity.recipe, super::CORE_RECIPE);
@@ -799,7 +799,7 @@ fn test_core_component_identity_is_stamped_at_the_framework_root() {
     )
     .unwrap();
     super::stamp_core_component(staging, "3.3.11").unwrap();
-    assert_eq!(read_stamp(staging).unwrap().content_id, before);
+    assert_eq!(read_stamp(staging, "core").unwrap().content_id, before);
 }
 
 // --- MCU skeleton component identity (decision 8a, FastLED/fbuild#1882) ---
@@ -831,7 +831,8 @@ fn skeleton_identity_is_taken_in_staging_and_survives_the_merge() {
     assert!(merged);
 
     let installed = tools.join("esp32-arduino-libs").join("esp32c2");
-    let identity = read_stamp(&installed).expect("the merged skeleton must carry its stamp");
+    let identity =
+        read_stamp(&installed, "mcu-esp32c2").expect("the merged skeleton must carry its stamp");
     assert_eq!(identity.component, "mcu-esp32c2");
     assert_eq!(identity.version, "c2_arduino_compile_skeleton");
     assert_eq!(identity.recipe, super::libs::MCU_SKELETON_RECIPE);
@@ -850,13 +851,15 @@ fn skeleton_identity_is_taken_in_staging_and_survives_the_merge() {
 }
 
 #[test]
-fn skeleton_identity_is_withdrawn_when_the_merge_does_not_reproduce_the_staged_bytes() {
+fn skeleton_identity_survives_a_preexisting_partial_tree_at_the_destination() {
+    // ESP32-C2 in Arduino-ESP32 3.3.x: the core archive ships a partial
+    // tools/esp32-arduino-libs/esp32c2/ that lacks FreeRTOS, so the skeleton
+    // merge always lands next to files the skeleton did not contribute. Whole-tree
+    // equality would withdraw the identity on the one MCU skeletons exist for.
     use fbuild_packages_fetch::component_id::read_stamp;
     let tmp = tempfile::TempDir::new().unwrap();
     let staging = tmp.path().join("staging");
     let tools = tmp.path().join("tools");
-    // A pre-existing partial tree at the destination: the merge adds the staged
-    // files next to it, so the installed bytes are not the staged bytes.
     let installed = tools.join("esp32-arduino-libs").join("esp32c2");
     std::fs::create_dir_all(&installed).unwrap();
     std::fs::write(installed.join("leftover-from-core-archive.txt"), b"partial").unwrap();
@@ -865,10 +868,41 @@ fn skeleton_identity_is_withdrawn_when_the_merge_does_not_reproduce_the_staged_b
     super::libs::install_skeleton_from_archive(&staging, &tools, "esp32c2", "skeleton").unwrap();
 
     assert!(
-        read_stamp(&installed).is_none(),
-        "a tree that does not match the staged identity must keep no identity"
+        read_stamp(&installed, "mcu-esp32c2").is_some(),
+        "the entries the skeleton contributed did survive the merge"
     );
     assert!(installed.join("leftover-from-core-archive.txt").exists());
+}
+
+#[test]
+fn a_skeleton_merge_keeps_the_sdk_variant_identity_that_shares_its_directory() {
+    // The SDK variant of a chip and its MCU skeleton install into the same
+    // directory, so the skeleton's stamp must not overwrite the SDK's.
+    use fbuild_packages_fetch::component_id::{
+        ComponentIdentity, content_id, read_stamp, write_stamp,
+    };
+    let tmp = tempfile::TempDir::new().unwrap();
+    let staging = tmp.path().join("staging");
+    let tools = tmp.path().join("tools");
+    let installed = tools.join("esp32-arduino-libs").join("esp32c2");
+    std::fs::create_dir_all(installed.join("lib")).unwrap();
+    std::fs::write(installed.join("lib/libdriver.a"), "driver").unwrap();
+    let sdk_id = content_id(&installed, &[]).unwrap();
+    write_stamp(
+        &installed,
+        &ComponentIdentity::new("sdk-esp32c2", "3.3.12", sdk_id.clone(), 1),
+    )
+    .unwrap();
+
+    skeleton_extract(&staging, "skeleton", "esp32c2");
+    super::libs::install_skeleton_from_archive(&staging, &tools, "esp32c2", "skeleton").unwrap();
+
+    assert_eq!(
+        read_stamp(&installed, "sdk-esp32c2").map(|stamp| stamp.content_id),
+        Some(sdk_id),
+        "the SDK identity must survive a skeleton merge into the same directory"
+    );
+    assert!(read_stamp(&installed, "mcu-esp32c2").is_some());
 }
 
 #[test]
@@ -886,7 +920,7 @@ fn skeleton_archive_without_the_requested_mcu_carries_no_identity() {
 
     assert!(!merged);
     assert!(!tools.join("esp32-arduino-libs").join("esp32c2").exists());
-    assert!(read_stamp(&staging).is_none());
+    assert!(read_stamp(&staging, "mcu-esp32c2").is_none());
 }
 
 #[test]
@@ -898,7 +932,7 @@ fn a_stamped_tree_is_not_patched_in_place() {
     let mcu_dir = tmp.path().join("esp32c2");
     std::fs::create_dir_all(mcu_dir.join("include")).unwrap();
     std::fs::write(mcu_dir.join("include/hal.h"), "//hal\n").unwrap();
-    let stamped = read_stamp(&mcu_dir);
+    let stamped = read_stamp(&mcu_dir, "mcu-esp32c2");
     assert!(stamped.is_none());
     // An unstamped (legacy) tree is patched in place and stays identity-less.
     super::libs::patch_unless_stamped(&mcu_dir, "esp32c2").unwrap();
@@ -907,7 +941,7 @@ fn a_stamped_tree_is_not_patched_in_place() {
             .join("include/hal/include/hal/touch_sensor_legacy_types.h")
             .exists()
     );
-    assert!(read_stamp(&mcu_dir).is_none());
+    assert!(read_stamp(&mcu_dir, "mcu-esp32c2").is_none());
 
     // The same tree, stamped: the patch must not run.
     let id = content_id(&mcu_dir, &[]).unwrap();
