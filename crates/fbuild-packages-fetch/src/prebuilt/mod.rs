@@ -19,7 +19,9 @@
 //!   platform, the `fp-<first 16 hex>` flavor, a `fbuild-fp:<fingerprint>`
 //!   `provides` entry and a single well-formed URL list — anything else is a
 //!   miss and the caller builds from source.
+mod fetch;
 mod reader;
+pub use fetch::{Artifact, FetchError, Fetcher};
 pub use reader::Reader;
 use serde::{Deserialize, Serialize};
 

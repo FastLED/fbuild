@@ -10,6 +10,8 @@ current Index descriptor.
 |---|---|
 | `mod.rs` | `Query` (exact identity), `Asset`, `Resolution`/`MissReason`, `sha256`/`valid_sha`, `operator_urls` |
 | `reader.rs` | `Reader`: Index → per-tool shard, TTL cache, descriptor-verified shard loads |
+| `fetch.rs` | `Fetcher`: URL ladder, `Range`/`If-Range` resume, streaming size+SHA checks, process-local single-flight |
+| `fetch_tests.rs` | local HTTP fixtures: resume, refused range, 416, corrupt source, over-long/short body, single-flight |
 | `tests.rs` | local axum fixtures: exact hit, miss, cached/network descriptor checks, operator order |
 
 Rules that decide a hit:
@@ -25,6 +27,13 @@ Rules that decide a hit:
    `fbuild-fp:<fingerprint>` `provides` entry, a 64-hex asset SHA and a
    non-empty https URL list with no multi-part assets.
 
-Anything else is a `Resolution::Miss` and the caller builds from source. The
-fetch ladder, archive extraction, staging GC and the daemon single-flight are
-not in this module.
+Anything else is a `Resolution::Miss` and the caller builds from source.
+
+4. `Fetcher` enforces the asset's exact `size_bytes` and SHA-256 while the body
+   streams, resumes a partial with `Range` + `If-Range` against the recorded
+   ETag/Last-Modified (restarting on a `200`, discarding on a `416`), tries each
+   URL twice (resume, then from scratch), and collapses concurrent fetches of one
+   digest in this process to a single download.
+
+Archive extraction, staging/partial GC, the disk-cache LRU and a daemon-wide
+single-flight are not in this module.
