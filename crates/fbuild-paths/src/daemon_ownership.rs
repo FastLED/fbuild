@@ -27,7 +27,6 @@ use std::path::{Path, PathBuf};
 use fbuild_core::file_lock::{self, FileLockGuard, FileLockMode};
 use fbuild_core::path::NormalizedPath;
 
-
 /// Expected executable stem of the fbuild daemon binary. Used with
 /// `fbuild_core::platform::process::pid_exe_stem_matches` to verify a PID
 /// found in a legacy pid file / claim / status file is actually an
