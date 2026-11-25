@@ -16,6 +16,7 @@
 use clap::Subcommand;
 use fbuild_core::{FbuildError, Result};
 
+use super::port_scan_usb_problems;
 use crate::output;
 
 #[derive(Subcommand)]
@@ -159,58 +160,35 @@ fn run_scan(offline: bool) -> Result<()> {
     // a non-OK status (all PJRC/Teensy composite ports). FastLED/fbuild#962.
     let ports = fbuild_serial::ports::available_ports()
         .map_err(|e| FbuildError::SerialError(format!("serial port enumeration failed: {e}")))?;
-    let rendered = render_scan(&ports);
+    let (rendered, diagnostics) = scan_report(
+        &ports,
+        &port_scan_usb_problems::collect_usb_problem_sources(),
+    );
     // render_scan terminates every row with '\n'; strip the trailing newline
     // so result()'s newline doesn't double up.
     output::result(rendered.trim_end_matches('\n'));
-    let problem_devices = fbuild_serial::ports::present_usb_problem_devices();
-    if !problem_devices.is_empty() {
-        // This is actionable final command output. Keep it visible under the
-        // default tracing filter instead of requiring users to set RUST_LOG.
-        output::diagnostic(format!(
-            "warning: {}",
-            format_usb_problem_warning(&problem_devices)
-        ));
+    // Actionable diagnostics are final command output: keep them visible under
+    // the default tracing filter instead of requiring RUST_LOG.
+    for diagnostic in diagnostics {
+        output::diagnostic(diagnostic);
     }
     Ok(())
 }
 
-fn format_usb_problem_warning(devices: &[fbuild_serial::ports::UsbProblemDevice]) -> String {
-    use std::fmt::Write as _;
-    let mut warning = String::from(
-        "Windows reports present USB device(s) with hardware problems; fbuild cannot associate these unidentified nodes with a target board:",
-    );
-    let mut hub_seen = false;
-    for device in devices {
-        let location = device
-            .location
-            .as_deref()
-            .map(|value| format!(" at {value}"))
-            .unwrap_or_default();
-        let topology = match device.behind_external_hub {
-            Some(true) => {
-                hub_seen = true;
-                " behind an external USB hub"
-            }
-            Some(false) => " on a direct root USB port",
-            None => " (USB topology unavailable)",
-        };
-        let name = device
-            .friendly_name
-            .as_deref()
-            .unwrap_or("Unknown USB device");
-        let _ = write!(
-            warning,
-            "\n  - {name}: Windows problem code {}{location}{topology}",
-            device.problem_code
-        );
-    }
-    if hub_seen {
-        warning.push_str(
-            "\nRecommendation: connect platform USB devices directly to a motherboard USB port; external hubs can introduce power/reset/timing conditions that disrupt USB enumeration.",
-        );
-    }
-    warning
+/// Compose everything `port scan` emits: the port table plus one diagnostic
+/// block per host surface that reported a present-but-faulty USB node.
+///
+/// Kept as one function so a test can prove both halves come out of the same
+/// call the command makes — a helper tested on its own would not catch the
+/// Linux collector being dropped from that call (FastLED/fbuild#1091).
+pub(crate) fn scan_report(
+    ports: &[fbuild_serial::ports::DetectedPort],
+    sources: &port_scan_usb_problems::UsbProblemSources,
+) -> (String, Vec<String>) {
+    (
+        render_scan(ports),
+        port_scan_usb_problems::usb_problem_diagnostics(sources),
+    )
 }
 
 /// Fetch the FastLED/boards display-name artifact backing
@@ -885,46 +863,6 @@ mod tests {
     }
 
     #[test]
-    fn usb_problem_warning_recommends_root_port_for_hub_node() {
-        let devices = vec![fbuild_serial::ports::UsbProblemDevice {
-            instance_id: r"USB\VID_0000&PID_0002\failure".to_string(),
-            problem_code: 43,
-            friendly_name: Some(
-                "Unknown USB Device (Device Descriptor Request Failed)".to_string(),
-            ),
-            location: Some("Port_#0001.Hub_#0011".to_string()),
-            behind_external_hub: Some(true),
-            parent_instance_id: None,
-            device_class: None,
-            location_paths: Vec::new(),
-        }];
-        let warning = format_usb_problem_warning(&devices);
-        assert!(warning.contains("problem code 43"));
-        assert!(warning.contains("behind an external USB hub"));
-        assert!(warning.contains("Port_#0001.Hub_#0011"));
-        assert!(warning.contains("connect platform USB devices directly"));
-        assert!(warning.contains("cannot associate"));
-    }
-
-    #[test]
-    fn usb_problem_warning_does_not_overclaim_direct_root_node() {
-        let devices = vec![fbuild_serial::ports::UsbProblemDevice {
-            instance_id: r"USB\VID_0000&PID_0002\failure".to_string(),
-            problem_code: 43,
-            friendly_name: None,
-            location: Some("Port_#0014.Hub_#0001".to_string()),
-            behind_external_hub: Some(false),
-            parent_instance_id: None,
-            device_class: None,
-            location_paths: Vec::new(),
-        }];
-        let warning = format_usb_problem_warning(&devices);
-        assert!(warning.contains("Unknown USB device"));
-        assert!(warning.contains("on a direct root USB port"));
-        assert!(!warning.contains("connect platform USB devices directly"));
-    }
-
-    #[test]
     fn teensy_16c0_port_resolves_pjrc_from_runtime_fixture() {
         let _usb = install_name_fixture();
         // The enumeration fix (fbuild-serial's Windows walk) is what makes a
@@ -1041,5 +979,50 @@ mod tests {
         let out = render_scan(&ports);
         // 2 USB + 1 non-USB. Plural for both since neither is exactly 1.
         assert!(out.trim_end().ends_with("2 USB ports, 1 non-USB port"));
+    }
+
+    /// FastLED/fbuild#1091: a present-but-faulty USB node exposes no tty, so
+    /// it is absent from the table and `port scan` used to show only "no
+    /// serial ports visible". This drives `scan_report` — the same call
+    /// `run_scan` makes — because a formatter-only test would still pass with
+    /// the Linux collector unwired.
+    #[test]
+    fn scan_report_surfaces_linux_faults_alongside_the_port_table() {
+        use fbuild_serial::sysfs_usb::{
+            LINUX_PROBLEM_DRIVERLESS_CDC_INTERFACE, LinuxUsbProblemDevice,
+        };
+        let ports = vec![usb_port("ttyACM2", 0x303A, 0x1001, None, Some("SER"))];
+        let sources = port_scan_usb_problems::UsbProblemSources {
+            windows: Vec::new(),
+            linux: vec![LinuxUsbProblemDevice {
+                sysfs_path: "5-2.2.3.3".to_string(),
+                problem_code: LINUX_PROBLEM_DRIVERLESS_CDC_INTERFACE,
+                reason: "CDC interface has no bound driver",
+                vendor_id: Some(0x303A),
+                product_id: Some(0x1001),
+                product: Some("USB JTAG/serial debug unit".to_string()),
+                behind_external_hub: Some(false),
+                parent_sysfs_path: None,
+            }],
+        };
+        let (table, diagnostics) = scan_report(&ports, &sources);
+        assert!(table.contains("ttyACM2"), "got: {table}");
+        assert_eq!(diagnostics.len(), 1, "got: {diagnostics:?}");
+        assert!(
+            diagnostics[0].contains("Linux reports"),
+            "got: {diagnostics:?}"
+        );
+        assert!(diagnostics[0].contains("5-2.2.3.3"), "got: {diagnostics:?}");
+    }
+
+    /// A healthy bench adds no diagnostic noise: the port table is the whole
+    /// payload when neither surface reports a faulty node.
+    #[test]
+    fn scan_report_is_silent_without_host_faults() {
+        let ports = vec![usb_port("COM1", 0x303A, 0x1001, None, None)];
+        let sources = port_scan_usb_problems::UsbProblemSources::default();
+        let (table, diagnostics) = scan_report(&ports, &sources);
+        assert!(table.contains("COM1"));
+        assert!(diagnostics.is_empty(), "got: {diagnostics:?}");
     }
 }
