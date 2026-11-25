@@ -132,11 +132,26 @@ class DaemonDeath:
         return f"the shared soldr daemon killed the compile{where}: " + ", ".join(signs)
 
 
-def emit_daemon_verdict(daemon: DaemonDeath, returncode: int) -> None:
-    """Annotate the run so a red trunk is not read as a code failure."""
+def emit_daemon_verdict(
+    daemon: DaemonDeath, returncode: int, evidence: TestEvidence
+) -> None:
+    """Annotate the run so a red trunk is not read as a code failure.
+
+    A daemon death explains a *compile* that never produced output. It never
+    excuses a test the suite itself reported as failed: when the runner also
+    saw ``test result: FAILED`` or a compiler error, the daemon hit is context,
+    not a verdict, and claiming "not a code failure" would hide a real break.
+    """
 
     verdict = daemon.verdict()
     if not verdict:
+        return
+    if evidence.tests_failed or evidence.compiler_failed:
+        print(
+            f"::error::{verdict}; the suite also reported a failure of its own, "
+            "so this is NOT proven infra -- read the failing test",
+            flush=True,
+        )
         return
     print(
         f"::{'error' if returncode else 'warning'}::INFRA - {verdict}; not a code failure",
@@ -172,7 +187,7 @@ def main() -> int:
             evidence = evidence.observe(line)
             daemon = daemon.observe(line)
         returncode = child.wait()
-    emit_daemon_verdict(daemon, returncode)
+    emit_daemon_verdict(daemon, returncode, evidence)
     output = os.environ.get("GITHUB_OUTPUT")
     if output:
         with Path(output).open("a") as stream:

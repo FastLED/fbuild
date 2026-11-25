@@ -183,6 +183,28 @@ class DaemonVerdictWiringTests(unittest.TestCase):
         self.assertIn("soldr-daemon-7f93f978", summary)
         self.assertIn("#2178", summary)
 
+    def test_real_test_failure_vetoes_the_infra_claim(self):
+        """A failed test is never "not a code failure" (#2186 merge group 45701476278).
+
+        Shape captured live: 8 relay resets, a lost connection, AND
+        `test result: FAILED. 5 passed; 1 failed`. The daemon did drop compiles,
+        but the runner's own failure stands -- the annotation must not excuse it.
+        """
+
+        code, stdout, summary = self.run_wrapper(
+            [
+                RELAY_RESET_LINE,
+                LOST_LINE,
+                "test result: FAILED. 5 passed; 1 failed; 3 ignored; 0 measured",
+            ]
+        )
+        self.assertEqual(101, code)
+        self.assertNotIn("not a code failure", stdout)
+        self.assertIn("NOT proven infra", stdout)
+        # The daemon hit is still named, so the operator sees both facts.
+        self.assertIn("soldr-daemon-7f93f978", stdout)
+        self.assertEqual("", summary)
+
     def test_clean_run_writes_no_infra_verdict(self):
         code, stdout, summary = self.run_wrapper(["test result: ok. 3 passed"])
         self.assertEqual(101, code)
