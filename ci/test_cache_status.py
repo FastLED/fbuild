@@ -31,8 +31,25 @@ def normalized(line: str) -> str:
     return clean.removeprefix("cargo:warning=").strip()
 
 
+FORWARDED_PREFIX = re.compile(r"^(?:warning|note|error): [\w@./+-]+: ")
+
+
+def forwarded_body(message: str) -> str:
+    """The event itself, without cc-rs's ``warning: <package>: `` decoration.
+
+    One kill is reported twice by cargo -- once as the build script's own
+    ``warning: <package>: ...`` line and once as the forwarded
+    ``cargo:warning=...`` copy -- so the decoration must not inflate the count.
+    """
+
+    return FORWARDED_PREFIX.sub("", message)
+
+
 def _append(seen: tuple[str, ...], message: str) -> tuple[str, ...]:
-    return seen if message in seen else (*seen, message)
+    body = forwarded_body(message)
+    if any(forwarded_body(existing) == body for existing in seen):
+        return seen
+    return (*seen, message)
 
 
 @dataclass(frozen=True)

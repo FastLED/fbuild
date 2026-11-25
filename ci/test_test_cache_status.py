@@ -111,6 +111,34 @@ class DaemonDeathTests(unittest.TestCase):
         result = self.evidence(RELAY_RESET_LINE, RELAY_RESET_LINE)
         self.assertEqual(1, len(result.resets))
 
+    def test_one_kill_reported_twice_is_counted_once(self):
+        """cargo prints one kill twice: its own `warning:` line, then a forwarded copy.
+
+        Shape captured from the real Dell job 139429807645 (2026-11-25T18:47:30Z):
+        the same event at +229.60s as `warning: ring@0.17.14: ...` and at +229.61s
+        as `cargo:warning=...`. Two renderings, one kill -- a count of 2 would
+        overstate how many compiles the daemon actually dropped.
+        """
+
+        body = LOST_LINE[LOST_LINE.index("zccache-soldr:") :]
+        forwarded = "  229.61   cargo:warning=" + body
+        result = self.evidence(LOST_LINE, forwarded)
+        self.assertEqual(1, len(result.lost))
+        self.assertIn("1 lost-connection report(s)", result.verdict())
+
+    def test_real_dell_log_reports_one_kill(self):
+        """The captured Dell log: 3 identical relay lines + both lost renderings."""
+
+        body = LOST_LINE[LOST_LINE.index("zccache-soldr:") :]
+        forwarded = "  229.61   cargo:warning=" + body
+        result = self.evidence(
+            RELAY_RESET_LINE, RELAY_RESET_LINE, RELAY_RESET_LINE, LOST_LINE, forwarded
+        )
+        verdict = result.verdict()
+        self.assertIn("1 relay reset(s) (soldr#3377)", verdict)
+        self.assertIn("1 lost-connection report(s)", verdict)
+        self.assertIn("soldr-daemon-7f93f978", verdict)
+
 
 class DaemonVerdictWiringTests(unittest.TestCase):
     """The verdict must reach the step summary through the real entry point."""
