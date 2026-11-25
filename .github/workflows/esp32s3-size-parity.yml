@@ -35,7 +35,7 @@ jobs:
       - uses: astral-sh/setup-uv@v3
 
       - name: Setup soldr
-        uses: zackees/setup-soldr@v0
+        uses: zackees/setup-soldr@d6691de4f0328034ba0825e39aa02ed8413a3a1f
         with:
           cache-key-suffix: esp32s3-size-parity-size-parity
           cache: true

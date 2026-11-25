@@ -160,7 +160,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
-      - uses: zackees/setup-soldr@v0
+      - uses: zackees/setup-soldr@d6691de4f0328034ba0825e39aa02ed8413a3a1f
         with:
           s3-bucket: forge-ci-cache
           s3-endpoint: sfo3.digitaloceanspaces.com
