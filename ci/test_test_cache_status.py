@@ -37,6 +37,20 @@ class TestCacheStatusTests(unittest.TestCase):
             result = self.evidence(build, "test result: FAILED.", "error: test failed")
             self.assertFalse(result.assertion_failure_only(101))
 
+    def test_failed_build_record_is_not_a_compiler_failure(self):
+        """A failed build-finished record alone says nothing about the code.
+
+        The daemon kill ends the build script with exit 101, so cargo always
+        emits this record; treating it as a compiler failure made the infra
+        verdict veto itself.
+        """
+
+        result = self.evidence('{"reason":"build-finished","success":false}')
+        self.assertTrue(result.build_failed)
+        self.assertFalse(result.build_finished)
+        self.assertFalse(result.compiler_failed)
+        self.assertFalse(result.tests_failed)
+
     def test_doctest_compilation_failure_rejects(self):
         result = self.evidence(
             '{"reason":"build-finished","success":true}',
@@ -203,6 +217,43 @@ class DaemonVerdictWiringTests(unittest.TestCase):
         self.assertIn("NOT proven infra", stdout)
         # The daemon hit is still named, so the operator sees both facts.
         self.assertIn("soldr-daemon-7f93f978", stdout)
+        self.assertEqual("", summary)
+
+    def test_daemon_kill_own_build_failure_is_still_infra(self):
+        """The kill's own exit 101 must not veto the kill's classification.
+
+        Shape captured live (#2186 push run 45707669541, job 139533914957): relay
+        resets and a lost connection, then cargo reports a failed
+        ``build-finished`` record and cc-rs an exit 101 -- with no rustc
+        diagnostic and no failed test. The earlier veto read that record as a
+        compiler failure and printed "NOT proven infra" for a job that had no
+        code failure at all.
+        """
+
+        code, stdout, summary = self.run_wrapper(
+            [
+                RELAY_RESET_LINE,
+                LOST_LINE,
+                '{"reason":"build-finished","success":false}',
+                "error occurred in cc-rs: command did not execute successfully",
+            ]
+        )
+        self.assertEqual(101, code)
+        self.assertNotIn("NOT proven infra", stdout)
+        self.assertIn("::error::INFRA -", stdout)
+        self.assertIn("soldr-daemon-7f93f978", summary)
+
+    def test_real_compiler_diagnostic_still_vetoes(self):
+        """A genuine rustc error keeps the veto even when no test ran."""
+
+        code, stdout, summary = self.run_wrapper(
+            [
+                RELAY_RESET_LINE,
+                '{"reason":"compiler-message","message":{"level":"error"}}',
+            ]
+        )
+        self.assertEqual(101, code)
+        self.assertIn("NOT proven infra", stdout)
         self.assertEqual("", summary)
 
     def test_clean_run_writes_no_infra_verdict(self):

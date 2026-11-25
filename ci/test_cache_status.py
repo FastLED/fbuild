@@ -54,7 +54,16 @@ def _append(seen: tuple[str, ...], message: str) -> tuple[str, ...]:
 
 @dataclass(frozen=True)
 class TestEvidence:
+    """What the runner itself proved about the build it just ran.
+
+    ``build_failed`` is NOT a code signal: a daemon kill reaches cargo as a
+    build-script exit 101, so ``{"reason":"build-finished","success":false}``
+    is the *consequence* of the very death being classified and cannot veto
+    that classification. Only a rustc error diagnostic or a failed test does.
+    """
+
     build_finished: bool = False
+    build_failed: bool = False
     compiler_failed: bool = False
     tests_failed: bool = False
     last_error: str = ""
@@ -64,6 +73,7 @@ class TestEvidence:
         if clean.startswith("soldr[cache] "):
             return self
         finished = self.build_finished
+        build_failed = self.build_failed
         failed = self.compiler_failed or "Couldn't compile the test." in clean
         try:
             record: JsonValue = json.loads(clean)
@@ -72,13 +82,14 @@ class TestEvidence:
         if isinstance(record, dict):
             if record.get("reason") == "build-finished":
                 finished = record.get("success") is True
-                failed = failed or not finished
+                build_failed = build_failed or not finished
             if record.get("reason") == "compiler-message":
                 message = record.get("message")
                 if isinstance(message, dict) and message.get("level") == "error":
                     failed = True
         return TestEvidence(
             finished,
+            build_failed,
             failed,
             self.tests_failed or clean.startswith("test result: FAILED."),
             clean if clean.startswith("error:") else self.last_error,
@@ -88,6 +99,7 @@ class TestEvidence:
         return (
             returncode == 101
             and self.build_finished
+            and not self.build_failed
             and not self.compiler_failed
             and self.tests_failed
             and re.fullmatch(r"error: (?:test|doctest) failed(?:,.*)?", self.last_error)
@@ -139,8 +151,10 @@ def emit_daemon_verdict(
 
     A daemon death explains a *compile* that never produced output. It never
     excuses a test the suite itself reported as failed: when the runner also
-    saw ``test result: FAILED`` or a compiler error, the daemon hit is context,
-    not a verdict, and claiming "not a code failure" would hide a real break.
+    saw ``test result: FAILED`` or a rustc error diagnostic, the daemon hit is
+    context, not a verdict, and claiming "not a code failure" would hide a real
+    break. A bare failed ``build-finished`` record is deliberately NOT evidence:
+    the kill itself ends the build script with exit 101.
     """
 
     verdict = daemon.verdict()
