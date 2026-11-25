@@ -4,11 +4,10 @@
 reviews:
   auto_review:
     enabled: false
+  review_status: false
   commit_status: false
   fail_commit_status: false
   request_changes_workflow: false
-  pre_merge_checks:
-    enabled: true
   path_instructions:
     # FastLED/fbuild#838 — mock-vs-integration test review.
     # Dylint can't tell a "mock" from a normal #[cfg(test)] struct, so the
