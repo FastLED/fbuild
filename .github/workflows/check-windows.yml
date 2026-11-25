@@ -261,6 +261,104 @@ jobs:
             }
             & $cli --fix-win --no-update-check
             if ($LASTEXITCODE -ne 0) { throw 'already-enabled repair failed' }
+            # Exercise the reported package pair from a fresh, non-admin
+            # profile while the machine-wide long-path policy remains off.
+            New-ItemProperty -Path $registry -Name LongPathsEnabled -PropertyType DWord -Value 0 -Force | Out-Null
+            $account = 'fb' + [Guid]::NewGuid().ToString('N').Substring(0, 12)
+            $password = ConvertTo-SecureString ([Guid]::NewGuid().ToString('N') + 'Aa9!') -AsPlainText -Force
+            $credential = [pscredential]::new("$env:COMPUTERNAME\$account", $password)
+            $fixture = Join-Path $env:PUBLIC $account
+            $fixedBase = Join-Path ("{0}\" -f $env:SystemDrive) 'fbuild-cache'
+            if (Test-Path -LiteralPath $fixedBase) { throw "the native fixture needs an empty fixed cache base: $fixedBase" }
+            try {
+              $testUser = New-LocalUser -Name $account -Password $password
+              Add-LocalGroupMember -SID 'S-1-5-32-545' -Member $testUser
+              New-Item -ItemType Directory -Path $fixture | Out-Null
+              & icacls $fixture /grant "${account}:(OI)(CI)M" | Out-Null
+              if ($LASTEXITCODE -ne 0) { throw 'could not grant the test account access to its fixture' }
+              Copy-Item $cli, $daemon -Destination $fixture
+              @'
+          $ErrorActionPreference = 'Stop'
+          $env:CI = 'true'
+          $env:FBUILD_DEV_MODE = '0'
+          $env:RUNNING_PROCESS_DISABLE = '1'
+          Remove-Item Env:FBUILD_CACHE_DIR, Env:FBUILD_BUILD_DIR -ErrorAction SilentlyContinue
+          $registry = 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem'
+          $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+          if ([Security.Principal.WindowsPrincipal]::new($identity).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+            throw 'the ESP32 fallback fixture must run as a non-administrator'
+          }
+          $profileKey = 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\' + $identity.User.Value
+          $profilePath = Get-ItemPropertyValue -LiteralPath $profileKey -Name ProfileImagePath
+          $profilePath = [Environment]::ExpandEnvironmentVariables($profilePath)
+          if (-not (Test-Path -LiteralPath $profilePath -PathType Container)) {
+            throw "the standard-user profile directory was not loaded: $profilePath"
+          }
+          $env:USERPROFILE = $profilePath
+          $env:HOME = $profilePath
+          $env:LOCALAPPDATA = Join-Path $profilePath 'AppData\Local'
+          $env:APPDATA = Join-Path $profilePath 'AppData\Roaming'
+          $env:UV_CACHE_DIR = Join-Path $env:LOCALAPPDATA 'uv\cache'
+          $env:TEMP = Join-Path $env:LOCALAPPDATA 'Temp'
+          $env:TMP = $env:TEMP
+          New-Item -ItemType Directory -Force -Path $env:TEMP | Out-Null
+          if ((Get-ItemPropertyValue -Path $registry -Name LongPathsEnabled) -ne 0) {
+            throw 'long paths must be disabled before ESP32 fallback testing'
+          }
+          $fixedBase = Join-Path ("{0}\" -f $env:SystemDrive) 'fbuild-cache'
+          Set-Location $PSScriptRoot
+          New-Item -ItemType Directory -Path 'src' | Out-Null
+          @"
+          [env:esp32s3]
+          platform = https://github.com/pioarduino/platform-espressif32/releases/download/55.03.312-1/platform-espressif32.zip
+          board = esp32-s3-devkitc-1
+          framework = arduino
+          "@ | Set-Content platformio.ini
+          @"
+          #include <Arduino.h>
+          void setup() {}
+          void loop() {}
+          "@ | Set-Content src/main.cpp
+          try {
+            & .\fbuild.exe --no-update-check install -e esp32s3
+            if ($LASTEXITCODE -ne 0) { throw "cold ESP32-S3 install failed: $LASTEXITCODE" }
+            & .\fbuild.exe --no-update-check build -e esp32s3 --no-timestamp
+            if ($LASTEXITCODE -ne 0) { throw "ESP32-S3 build failed: $LASTEXITCODE" }
+            $selection = Get-Content (Join-Path $env:USERPROFILE '.fbuild\prod\windows-short-paths-v2.json') -Raw | ConvertFrom-Json
+            $fixedPattern = '^' + [regex]::Escape($fixedBase.Replace('\', '/')) + '/[0-9a-f]{12}/p/c$'
+            if ($selection.cache_root.Replace('\', '/') -notmatch $fixedPattern) {
+              throw "standard user did not select the fixed cache: $($selection.cache_root)"
+            }
+            $packages = @(Get-ChildItem -LiteralPath $selection.cache_root -Directory | Where-Object { $_.Name -match '^[0-9a-f]{16}$' })
+            if ($packages.Count -lt 2) { throw 'expected compact toolchain and framework installs' }
+            foreach ($package in $packages) {
+              Get-ChildItem -LiteralPath $package.FullName -Recurse -Force | ForEach-Object {
+                $limit = if ($_.PSIsContainer) { 247 } else { 259 }
+                if ($_.FullName.Length -gt $limit) { throw "legacy path limit exceeded: $($_.FullName)" }
+              }
+            }
+            if ((Get-ItemPropertyValue -Path $registry -Name LongPathsEnabled) -ne 0) {
+              throw 'long-path policy changed during ESP32 fallback testing'
+            }
+          } finally {
+            & .\fbuild.exe --no-update-check daemon stop
+            if ($LASTEXITCODE -ne 0) { throw "standard-user daemon did not stop: $LASTEXITCODE" }
+            if (Test-Path -LiteralPath $fixedBase) { Remove-Item -LiteralPath $fixedBase -Recurse -Force }
+          }
+          '@ | Set-Content (Join-Path $fixture 'verify-fallback.ps1')
+              $test = Start-Process (Join-Path $PSHOME 'pwsh.exe') -Credential $credential -LoadUserProfile -PassThru `
+                -ArgumentList '-NoProfile', '-File', ('"{0}"' -f (Join-Path $fixture 'verify-fallback.ps1')) `
+                -RedirectStandardOutput (Join-Path $fixture 'stdout.log') -RedirectStandardError (Join-Path $fixture 'stderr.log')
+              $finished = $test.WaitForExit(1200000)
+              if (-not $finished) { $test.Kill($true) }
+              Get-Content (Join-Path $fixture 'stdout.log'), (Join-Path $fixture 'stderr.log')
+              if (-not $finished) { throw 'standard-user ESP32 fallback test timed out' }
+              if ($test.ExitCode -ne 0) { throw "standard-user ESP32 fallback failed: $($test.ExitCode)" }
+            } finally {
+              Remove-LocalUser -Name $account -ErrorAction SilentlyContinue
+              Remove-Item -LiteralPath $fixture -Recurse -Force -ErrorAction SilentlyContinue
+            }
+            New-ItemProperty -Path $registry -Name LongPathsEnabled -PropertyType DWord -Value 1 -Force | Out-Null
             $env:FBUILD_DEV_MODE = '0'
             $env:RUNNING_PROCESS_DISABLE = '1'
             & $cli --no-update-check build tests/platform/uno --dry-run
@@ -298,6 +396,7 @@ jobs:
             if ([int]$repairedPid -eq $after.pid) { throw 'daemon was reused after long paths were enabled' }
             & $cli --no-update-check daemon stop
             if ($LASTEXITCODE -ne 0) { throw 'smoke daemon did not stop' }
+
           } finally {
             if ($null -eq $original) {
               Remove-ItemProperty -Path $registry -Name LongPathsEnabled -ErrorAction SilentlyContinue

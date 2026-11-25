@@ -2,15 +2,19 @@
 
 use std::path::{Path, PathBuf};
 
-/// Find the actual framework root inside an extracted archive.
 /// Recursively copy a directory tree.
 pub(crate) fn copy_dir_recursive(src: &Path, dest: &Path) -> fbuild_core::Result<()> {
+    fbuild_packages_fetch::extractor::validate_extraction_at(src, dest)?;
+    copy_tree(src, dest)
+}
+
+fn copy_tree(src: &Path, dest: &Path) -> fbuild_core::Result<()> {
     std::fs::create_dir_all(dest)?;
     for entry in std::fs::read_dir(src)?.flatten() {
         let src_path = entry.path();
         let dest_path = dest.join(entry.file_name());
         if src_path.is_dir() {
-            copy_dir_recursive(&src_path, &dest_path)?;
+            copy_tree(&src_path, &dest_path)?;
         } else {
             std::fs::copy(&src_path, &dest_path)?;
         }

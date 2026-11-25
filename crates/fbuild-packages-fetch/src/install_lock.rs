@@ -50,6 +50,14 @@ pub(crate) async fn acquire_for_install(
     .await
 }
 
+pub(crate) fn try_acquire_for_reconciliation(install_path: &Path) -> Option<InstallLockGuard> {
+    let path = install_lock_dir(install_path).ok()?;
+    std::fs::create_dir(&path).ok()?;
+    let guard = InstallLockGuard { path };
+    write_lock_owner(&guard.path, "cache reconciliation", "").ok()?;
+    Some(guard)
+}
+
 fn install_lock_dir(install_path: &Path) -> Result<PathBuf> {
     let parent = install_path.parent().ok_or_else(|| {
         FbuildError::PackageError(format!(

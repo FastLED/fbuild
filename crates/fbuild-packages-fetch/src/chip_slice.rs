@@ -31,6 +31,9 @@ impl PackageBase {
     /// The chip-scoped install path, when this package prefers a slice.
     pub fn chip_install_path(&self) -> Option<NormalizedPath> {
         let chip = self.slice_chip.as_deref()?;
+        if let Some(path) = self.compact_install_path(Some(chip)) {
+            return Some(path);
+        }
         let shared = self.install_path();
         let name = shared.file_name()?.to_string_lossy().into_owned();
         Some(NormalizedPath::new(

@@ -56,7 +56,8 @@ impl Esp32Framework {
                 None,
                 CacheSubdir::Platforms,
                 project_dir,
-            ),
+            )
+            .with_compact_windows_install(),
             install_dir: None,
         }
     }
@@ -73,7 +74,8 @@ impl Esp32Framework {
                 CacheSubdir::Platforms,
                 project_dir,
                 cache_root,
-            ),
+            )
+            .with_compact_windows_install(),
             install_dir: None,
         }
     }
@@ -95,7 +97,8 @@ impl Esp32Framework {
                 None,
                 CacheSubdir::Platforms,
                 project_dir,
-            ),
+            )
+            .with_compact_windows_install(),
             install_dir: None,
         }
     }
@@ -119,6 +122,7 @@ impl Esp32Framework {
                 CacheSubdir::Platforms,
                 project_dir,
             )
+            .with_compact_windows_install()
             .with_override(ovr),
             install_dir: None,
         }

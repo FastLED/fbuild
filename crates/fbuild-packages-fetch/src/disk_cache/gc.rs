@@ -194,8 +194,51 @@ pub fn reconcile(index: &CacheIndex) -> rusqlite::Result<GcReport> {
         remove_partial_dirs(phase_root, &mut report);
         remove_orphan_entries(phase_root, &known_paths, &mut report);
     }
+    remove_compact_staging(&cache_root, &mut report);
 
     Ok(report)
+}
+
+fn remove_compact_staging(cache_root: &Path, report: &mut GcReport) {
+    let Ok(entries) = std::fs::read_dir(cache_root) else {
+        return;
+    };
+    for entry in entries.flatten() {
+        let name = entry.file_name();
+        let Some(target) = crate::compact_install::staging_target_name(&name.to_string_lossy())
+            .map(|name| cache_root.join(name))
+        else {
+            continue;
+        };
+        let Some(_install) = crate::install_lock::try_acquire_for_reconciliation(&target) else {
+            continue;
+        };
+        if entry.file_type().is_ok_and(|kind| kind.is_dir())
+            && std::fs::remove_dir_all(entry.path()).is_ok()
+        {
+            report.orphan_files_removed += 1;
+        }
+    }
+}
+
+#[cfg(test)]
+#[test]
+fn compact_staging_reconciliation_skips_active_installers() {
+    let cache = tempfile::tempdir().unwrap();
+    let root = cache.path();
+    let target = root.join("1234567890abcdef");
+    let staging = root.join("s1234567890abcdef");
+    std::fs::create_dir(&staging).unwrap();
+    let install = crate::install_lock::try_acquire_for_reconciliation(&target).unwrap();
+    let mut report = GcReport::default();
+    remove_compact_staging(root, &mut report);
+    assert!(staging.is_dir());
+    assert_eq!(report.orphan_files_removed, 0);
+
+    drop(install);
+    remove_compact_staging(root, &mut report);
+    assert!(!staging.exists());
+    assert_eq!(report.orphan_files_removed, 1);
 }
 
 /// Remove leaf directories (version-level) that are not tracked by the index.
