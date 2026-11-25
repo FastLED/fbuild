@@ -14,13 +14,20 @@
 //!   *prefix* never authorizes a hit;
 //! - the Index descriptor binds the shard's exact byte count **and** SHA-256,
 //!   and both are re-checked on every read, cached or freshly fetched;
+//! - [`extract`] is the only way an archive becomes a tree: it verifies the
+//!   descriptor again while decompressing and never writes outside the root;
 //! - a release must name the exact tool, the exact version, a
 //!   `min_client_version` this client satisfies, a `none`/`<arch>`/`<abi>`
 //!   platform, the `fp-<first 16 hex>` flavor, a `fbuild-fp:<fingerprint>`
 //!   `provides` entry and a single well-formed URL list — anything else is a
 //!   miss and the caller builds from source.
+mod extract;
 mod fetch;
 mod reader;
+pub use extract::{
+    ExtractError, ExtractedTree, MARKER, MAX_EXTRACTED_BYTES, extract, extract_async,
+    extract_with_limit,
+};
 pub use fetch::{Artifact, FetchError, Fetcher};
 pub use reader::Reader;
 use serde::{Deserialize, Serialize};
