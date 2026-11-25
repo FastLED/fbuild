@@ -136,7 +136,7 @@ jobs:
         with:
           ref: ${{ needs.verify.outputs.candidate_sha }}
           persist-credentials: false
-      - uses: zackees/setup-soldr@v0
+      - uses: zackees/setup-soldr@4a5346d95cf3181b65dc726311f69000d0b94029
         with:
           s3-bucket: forge-ci-cache
           s3-endpoint: sfo3.digitaloceanspaces.com
