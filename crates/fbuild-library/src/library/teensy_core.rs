@@ -35,7 +35,8 @@ impl TeensyCores {
                 Some(TEENSY_CORE_SHA256),
                 CacheSubdir::Platforms,
                 project_dir,
-            ),
+            )
+            .with_compact_windows_install(),
             install_dir: None,
         }
     }
@@ -55,7 +56,8 @@ impl TeensyCores {
                 CacheSubdir::Platforms,
                 project_dir,
             )
-            .with_override(ovr),
+            .with_override(ovr)
+            .with_compact_windows_install(),
             install_dir: None,
         }
     }
@@ -72,7 +74,8 @@ impl TeensyCores {
                 CacheSubdir::Platforms,
                 project_dir,
                 cache_root,
-            ),
+            )
+            .with_compact_windows_install(),
             install_dir: None,
         }
     }
@@ -277,6 +280,23 @@ fn collect_sources(dir: &Path) -> Vec<PathBuf> {
 mod tests {
     use super::*;
     use crate::Package;
+
+    #[test]
+    fn all_constructors_use_compact_install_under_windows_fallback() {
+        let fixture = tempfile::tempdir().unwrap();
+        let project = fixture.path();
+        let resolution = crate::library::disabled_long_paths(project);
+        let package_override =
+            fbuild_config::PackageOverride::new("https://example.com/core.zip", "test");
+        for core in [
+            TeensyCores::new(project),
+            TeensyCores::with_override(project, package_override),
+            TeensyCores::with_cache_root(project, resolution.cache_root.as_ref()),
+        ] {
+            assert!(core.base.uses_compact_windows_install(Some(&resolution)));
+            assert!(!core.base.uses_compact_windows_install(None));
+        }
+    }
 
     #[test]
     fn test_teensy_cores_not_installed() {

@@ -261,7 +261,7 @@ jobs:
             }
             & $cli --fix-win --no-update-check
             if ($LASTEXITCODE -ne 0) { throw 'already-enabled repair failed' }
-            # Exercise the reported package pair from a fresh, non-admin
+            # Exercise the reported boards from a fresh, non-admin
             # profile while the machine-wide long-path policy remains off.
             New-ItemProperty -Path $registry -Name LongPathsEnabled -PropertyType DWord -Value 0 -Force | Out-Null
             $account = 'fb' + [Guid]::NewGuid().ToString('N').Substring(0, 12)
@@ -286,7 +286,7 @@ jobs:
           $registry = 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem'
           $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
           if ([Security.Principal.WindowsPrincipal]::new($identity).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-            throw 'the ESP32 fallback fixture must run as a non-administrator'
+            throw 'the fallback fixture must run as a non-administrator'
           }
           $profileKey = 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\' + $identity.User.Value
           $profilePath = Get-ItemPropertyValue -LiteralPath $profileKey -Name ProfileImagePath
@@ -303,7 +303,7 @@ jobs:
           $env:TMP = $env:TEMP
           New-Item -ItemType Directory -Force -Path $env:TEMP | Out-Null
           if ((Get-ItemPropertyValue -Path $registry -Name LongPathsEnabled) -ne 0) {
-            throw 'long paths must be disabled before ESP32 fallback testing'
+            throw 'long paths must be disabled before fallback testing'
           }
           $fixedBase = Join-Path ("{0}\" -f $env:SystemDrive) 'fbuild-cache'
           Set-Location $PSScriptRoot
@@ -312,6 +312,21 @@ jobs:
           [env:esp32s3]
           platform = https://github.com/pioarduino/platform-espressif32/releases/download/55.03.312-1/platform-espressif32.zip
           board = esp32-s3-devkitc-1
+          framework = arduino
+
+          [env:rpipicow]
+          platform = raspberrypi
+          board = rpipicow
+          framework = arduino
+
+          [env:teensy41]
+          platform = teensy
+          board = teensy41
+          framework = arduino
+
+          [env:blackpill_f411ce]
+          platform = ststm32
+          board = blackpill_f411ce
           framework = arduino
           "@ | Set-Content platformio.ini
           @"
@@ -331,6 +346,13 @@ jobs:
             }
             $packages = @(Get-ChildItem -LiteralPath $selection.cache_root -Directory | Where-Object { $_.Name -match '^[0-9a-f]{16}$' })
             if ($packages.Count -lt 2) { throw 'expected compact toolchain and framework installs' }
+            foreach ($boardEnv in @('rpipicow', 'teensy41', 'blackpill_f411ce')) {
+              & .\fbuild.exe --no-update-check build -e $boardEnv --no-timestamp
+              if ($LASTEXITCODE -ne 0) { throw "${boardEnv} build failed: $LASTEXITCODE" }
+              $previousCount = $packages.Count
+              $packages = @(Get-ChildItem -LiteralPath $selection.cache_root -Directory | Where-Object { $_.Name -match '^[0-9a-f]{16}$' })
+              if ($packages.Count -le $previousCount) { throw "expected a compact core install for $boardEnv" }
+            }
             foreach ($package in $packages) {
               Get-ChildItem -LiteralPath $package.FullName -Recurse -Force | ForEach-Object {
                 $limit = if ($_.PSIsContainer) { 247 } else { 259 }
@@ -338,7 +360,7 @@ jobs:
               }
             }
             if ((Get-ItemPropertyValue -Path $registry -Name LongPathsEnabled) -ne 0) {
-              throw 'long-path policy changed during ESP32 fallback testing'
+              throw 'long-path policy changed during fallback testing'
             }
           } finally {
             & .\fbuild.exe --no-update-check daemon stop
@@ -352,8 +374,8 @@ jobs:
               $finished = $test.WaitForExit(1200000)
               if (-not $finished) { $test.Kill($true) }
               Get-Content (Join-Path $fixture 'stdout.log'), (Join-Path $fixture 'stderr.log')
-              if (-not $finished) { throw 'standard-user ESP32 fallback test timed out' }
-              if ($test.ExitCode -ne 0) { throw "standard-user ESP32 fallback failed: $($test.ExitCode)" }
+              if (-not $finished) { throw 'standard-user fallback test timed out' }
+              if ($test.ExitCode -ne 0) { throw "standard-user fallback failed: $($test.ExitCode)" }
             } finally {
               Remove-LocalUser -Name $account -ErrorAction SilentlyContinue
               Remove-Item -LiteralPath $fixture -Recurse -Force -ErrorAction SilentlyContinue
