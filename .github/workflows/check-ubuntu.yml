@@ -92,6 +92,13 @@ jobs:
     env:
       SOLDR_S3_CACHE_ACCESS_KEY: ${{ secrets.SOLDR_S3_CACHE_ACCESS_KEY }}
       SOLDR_S3_CACHE_SECRET_KEY: ${{ secrets.SOLDR_S3_CACHE_SECRET_KEY }}
+      # FastLED/fbuild#2178: the Dell pool's shared soldr daemon can drop a
+      # compile mid-build (exit 101 from a build.rs step, no rustc diagnostic).
+      # The wrapper retries that once when the daemon is the only culprit and
+      # the spent wall clock still fits the budget below.
+      # 600s of the job's timeout leaves room for one second attempt.
+      FBUILD_CI_DAEMON_DEATH_RETRY: "1"
+      FBUILD_CI_DAEMON_RETRY_BUDGET_SECONDS: "600"
     steps:
       - name: Checkout source
         uses: actions/checkout@v6
@@ -274,6 +281,13 @@ jobs:
     env:
       SOLDR_S3_CACHE_ACCESS_KEY: ${{ secrets.SOLDR_S3_CACHE_ACCESS_KEY }}
       SOLDR_S3_CACHE_SECRET_KEY: ${{ secrets.SOLDR_S3_CACHE_SECRET_KEY }}
+      # FastLED/fbuild#2178: the Dell pool's shared soldr daemon can drop a
+      # compile mid-build (exit 101 from a build.rs step, no rustc diagnostic).
+      # The wrapper retries that once when the daemon is the only culprit and
+      # the spent wall clock still fits the budget below.
+      # 300s of the job's timeout leaves room for one second attempt.
+      FBUILD_CI_DAEMON_DEATH_RETRY: "1"
+      FBUILD_CI_DAEMON_RETRY_BUDGET_SECONDS: "300"
     steps:
       - name: Checkout source
         uses: actions/checkout@v6

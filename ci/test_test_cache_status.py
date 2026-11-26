@@ -7,7 +7,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from ci.test_cache_status import DaemonDeath, TestEvidence
+from ci.test_cache_status import (
+    DaemonDeath,
+    RetryDecision,
+    TestEvidence,
+    retry_decision,
+)
 
 
 class TestCacheStatusTests(unittest.TestCase):
@@ -261,3 +266,162 @@ class DaemonVerdictWiringTests(unittest.TestCase):
         self.assertEqual(101, code)
         self.assertNotIn("INFRA", stdout)
         self.assertEqual("", summary)
+
+
+class DaemonRetryDecisionTests(unittest.TestCase):
+    """The retry is bounded on every axis, so a real failure is never re-run (#2178)."""
+
+    def decision(
+        self,
+        *,
+        daemon: DaemonDeath | None = None,
+        evidence: TestEvidence | None = None,
+        returncode: int = 101,
+        elapsed_seconds: float = 60.0,
+        attempts: int = 1,
+        enabled: bool = True,
+        budget_seconds: float = 600.0,
+    ) -> RetryDecision:
+        return retry_decision(
+            daemon=daemon
+            if daemon is not None
+            else DaemonDeath().observe(RELAY_RESET_LINE),
+            evidence=evidence if evidence is not None else TestEvidence(),
+            returncode=returncode,
+            elapsed_seconds=elapsed_seconds,
+            attempts=attempts,
+            enabled=enabled,
+            budget_seconds=budget_seconds,
+        )
+
+    def test_infra_kill_within_budget_is_retried(self):
+        self.assertTrue(self.decision().allowed)
+
+    def test_successful_run_is_never_retried(self):
+        self.assertFalse(self.decision(returncode=0).allowed)
+
+    def test_real_test_failure_is_never_retried(self):
+        evidence = TestEvidence().observe(
+            "test result: FAILED. 5 passed; 1 failed; 3 ignored; 0 measured"
+        )
+        self.assertFalse(self.decision(evidence=evidence).allowed)
+
+    def test_rustc_diagnostic_is_never_retried(self):
+        evidence = TestEvidence().observe(
+            '{"reason":"compiler-message","message":{"level":"error"}}'
+        )
+        self.assertFalse(self.decision(evidence=evidence).allowed)
+
+    def test_clean_log_is_never_retried(self):
+        self.assertFalse(self.decision(daemon=DaemonDeath()).allowed)
+
+    def test_budget_exhausted_blocks_the_retry(self):
+        self.assertFalse(self.decision(elapsed_seconds=601.0).allowed)
+
+    def test_retry_is_opt_in(self):
+        self.assertFalse(self.decision(enabled=False).allowed)
+
+    def test_only_one_retry(self):
+        self.assertFalse(self.decision(attempts=2).allowed)
+
+
+class DaemonRetryWiringTests(unittest.TestCase):
+    """The retry must reach the real entry point with a real child process."""
+
+    def run_scripted(
+        self,
+        first_lines: list[str],
+        second_lines: list[str],
+        env_extra: dict[str, str],
+    ) -> tuple[int, str, int]:
+        def block(lines: list[str]) -> str:
+            return "cat <<'LINES'\n" + "\n".join(lines) + "\nLINES\n"
+
+        with tempfile.TemporaryDirectory() as raw:
+            root = Path(raw)
+            counter = root / "count"
+            shim = root / "soldr"
+            shim.write_text(
+                "#!/bin/sh\n"
+                'count_file="$SHIM_COUNTER"\n'
+                'count=$(cat "$count_file" 2>/dev/null || echo 0)\n'
+                "count=$((count + 1))\n"
+                'echo "$count" > "$count_file"\n'
+                'if [ "$count" -eq 1 ]; then\n' + block(first_lines) + "exit 101\n"
+                "fi\n" + block(second_lines) + "exit 0\n"
+            )
+            shim.chmod(0o755)
+            summary = root / "summary.md"
+            summary.touch()
+            env = dict(
+                os.environ,
+                PATH=f"{root}{os.pathsep}{os.environ['PATH']}",
+                GITHUB_STEP_SUMMARY=str(summary),
+                SHIM_COUNTER=str(counter),
+                **env_extra,
+            )
+            env.pop("GITHUB_OUTPUT", None)
+            env.pop("FBUILD_CI_DAEMON_DEATH_RETRY", None)
+            env.pop("FBUILD_CI_DAEMON_RETRY_BUDGET_SECONDS", None)
+            env.update(env_extra)
+            repo = Path(__file__).resolve().parents[1]
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    str(repo / "ci" / "test_cache_status.py"),
+                    "--",
+                    "soldr",
+                    "cargo",
+                    "test",
+                ],
+                cwd=repo,
+                env=env,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            invocations = int(counter.read_text()) if counter.exists() else 0
+            return result.returncode, result.stdout, invocations
+
+    def test_retry_reruns_a_daemon_kill_once_and_turns_green(self):
+        code, stdout, invocations = self.run_scripted(
+            [RELAY_RESET_LINE, LOST_LINE],
+            ["test result: ok. 3 passed"],
+            {"FBUILD_CI_DAEMON_DEATH_RETRY": "1"},
+        )
+        self.assertEqual(0, code)
+        self.assertEqual(2, invocations)
+        self.assertIn("retrying the command once", stdout)
+
+    def test_retry_is_off_without_the_opt_in(self):
+        code, stdout, invocations = self.run_scripted(
+            [RELAY_RESET_LINE, LOST_LINE],
+            ["test result: ok. 3 passed"],
+            {},
+        )
+        self.assertEqual(101, code)
+        self.assertEqual(1, invocations)
+
+    def test_exhausted_budget_blocks_the_retry(self):
+        code, _stdout, invocations = self.run_scripted(
+            [RELAY_RESET_LINE, LOST_LINE],
+            ["test result: ok. 3 passed"],
+            {
+                "FBUILD_CI_DAEMON_DEATH_RETRY": "1",
+                "FBUILD_CI_DAEMON_RETRY_BUDGET_SECONDS": "0",
+            },
+        )
+        self.assertEqual(101, code)
+        self.assertEqual(1, invocations)
+
+    def test_real_test_failure_is_not_retried_even_when_enabled(self):
+        code, _stdout, invocations = self.run_scripted(
+            [
+                RELAY_RESET_LINE,
+                "test result: FAILED. 5 passed; 1 failed; 3 ignored; 0 measured",
+            ],
+            ["test result: ok. 3 passed"],
+            {"FBUILD_CI_DAEMON_DEATH_RETRY": "1"},
+        )
+        self.assertEqual(101, code)
+        self.assertEqual(1, invocations)
