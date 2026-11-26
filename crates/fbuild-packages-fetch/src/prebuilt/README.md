@@ -13,6 +13,12 @@ current Index descriptor.
 | `fetch.rs` | `Fetcher`: URL ladder, `Range`/`If-Range` resume, streaming size+SHA checks, process-local single-flight |
 | `extract.rs` | `extract`/`extract_async`: single-pass tar.zst extraction, descriptor re-verified while streaming, staging + atomic commit, completion marker |
 | `gc.rs` | `sweep_staging`/`sweep_staging_async`: reaps abandoned `.<sha16>.<attempt>.staging` directories left by a killed extraction, with a grace period, a marker guard and a bounded removal count; `sweep_staging_tree`/`sweep_staging_tree_async` is the same policy walked over `{cache}/prebuilt/` |
+| `extract.rs` | `extract`/`extract_async`: streaming sha+size verify, hostile-entry refusal, staging + marker commit |
+| `extract_tests.rs` | real tar.zst fixtures: reuse, flipped/truncated bodies, traversal, symlink, occupied destination |
+| `gc.rs` | `sweep_staging{,_tree}`: reap abandoned `.<sha16>.<n>.staging` directories |
+| `gc_tests.rs` | staging fixtures with a synthetic clock: age, marker, symlink and depth bounds |
+| `obtain.rs` | `tree_root`/`obtain`: the identity → tree call site (where a tree lives, reuse vs refuse) |
+| `obtain_tests.rs` | local HTTP + cache layout: reuse without a request, conflict refused untouched, sweep covers the layout |
 | `fetch_tests.rs` | local HTTP fixtures: resume, refused range, 416, corrupt source, over-long/short body, single-flight |
 | `gc_tests.rs` | staging debris, marker guard, symlink refusal, foreign names, grace period, removal ceiling, the nested-tree walk (scoped to `{cache}/prebuilt/`, depth- and count-bounded, link-free) |
 | `extract_tests.rs` | real tar.zst fixtures: layout, reuse, flipped/truncated body, traversal, absolute path, symlink, occupied dest, size ceiling, wrong format |

@@ -28,16 +28,18 @@
 mod extract;
 mod fetch;
 mod gc;
+mod obtain;
 mod reader;
 pub use extract::{
-    ExtractError, ExtractedTree, MARKER, MAX_EXTRACTED_BYTES, extract, extract_async,
-    extract_with_limit,
+    Existing, ExtractError, ExtractedTree, MARKER, MAX_EXTRACTED_BYTES, existing_tree, extract,
+    extract_async, extract_with_limit,
 };
 pub use fetch::{Artifact, FetchError, Fetcher};
 pub use gc::{
     GcError, MAX_REMOVALS, MAX_SCAN_DEPTH, MAX_SCAN_DIRS, MIN_AGE, SweepReport, sweep_staging,
     sweep_staging_async, sweep_staging_tree, sweep_staging_tree_async,
 };
+pub use obtain::{FP_DIR_PREFIX, ObtainError, Obtained, obtain, tree_root};
 pub use reader::Reader;
 use serde::{Deserialize, Serialize};
 
