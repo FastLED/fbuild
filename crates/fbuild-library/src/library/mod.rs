@@ -70,7 +70,7 @@ fn disabled_long_paths(root: &std::path::Path) -> fbuild_paths::long_paths::Reso
     Resolution {
         observation: Observation::Disabled,
         home: root.clone(),
-        fbuild_root: root.join(".fbuild"),
+        fbuild_root: root.join(fbuild_paths::FBUILD_DIR_NAME),
         dev_mode: false,
         requested_cache_root: root.join("requested"),
         cache_root: root.join("c"),
