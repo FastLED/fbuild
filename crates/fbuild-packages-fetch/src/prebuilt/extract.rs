@@ -79,11 +79,53 @@ pub struct ExtractedTree {
 }
 
 /// Marker written last inside a tree, so a marker implies a full extraction.
+///
+/// `size_bytes` is the archive's size (what the descriptor pins) and
+/// `extracted_bytes` the bytes the tree holds; a reuse must report the same
+/// numbers a fresh extraction reports, so both are recorded.
 #[derive(Debug, Serialize, Deserialize)]
 struct TreeMarker {
     sha256: String,
     size_bytes: u64,
     entries: u64,
+    #[serde(default)]
+    extracted_bytes: u64,
+}
+
+/// What asking "does this destination already hold the tree for this archive?"
+/// found. Extraction only reports this; the call site decides.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum Existing {
+    /// Nothing claimable at the destination.
+    None,
+    /// The marker of exactly this archive: the tree can be reused as-is.
+    Same(ExtractedTree),
+    /// A tree, or a marker that does not parse, that this archive did not
+    /// produce. The digest is named when the marker could be read.
+    Different(Option<String>),
+}
+
+/// Report whether `dest` already holds the tree for `(sha256, size_bytes)`.
+///
+/// Total on purpose: an absent or unreadable marker is [`Existing::None`] (an
+/// occupied directory is still refused later by [`extract`]), and a marker that
+/// does not parse is [`Existing::Different`] — never "assume it is ours".
+pub fn existing_tree(dest: &Path, sha256: &str, size_bytes: u64) -> Existing {
+    let dest = NormalizedPath::new(dest);
+    let Ok(bytes) = std::fs::read(dest.join(MARKER).as_path()) else {
+        return Existing::None;
+    };
+    let Ok(marker) = serde_json::from_slice::<TreeMarker>(&bytes) else {
+        return Existing::Different(None);
+    };
+    if marker.sha256 != sha256 || marker.size_bytes != size_bytes {
+        return Existing::Different(Some(marker.sha256));
+    }
+    Existing::Same(ExtractedTree {
+        root: dest,
+        entries: marker.entries,
+        bytes: marker.extracted_bytes,
+    })
 }
 
 /// Extract `artifact` into `dest`, or return the tree already there.
@@ -112,7 +154,7 @@ pub fn extract_with_limit(
     }
     let staging = Staging::new(&dest, &artifact.sha256)?;
     let result = unpack(artifact, staging.path(), limit)?;
-    write_marker(staging.path(), artifact, result.entries)?;
+    write_marker(staging.path(), artifact, &result)?;
     staging.commit(&dest)?;
     Ok(ExtractedTree {
         root: dest,
@@ -150,25 +192,13 @@ fn completed(
     dest: &NormalizedPath,
     artifact: &Artifact,
 ) -> Result<Option<ExtractedTree>, ExtractError> {
-    let marker = dest.join(MARKER);
-    let Ok(bytes) = std::fs::read(marker.as_path()) else {
-        return Ok(None);
-    };
-    let Ok(marker) = serde_json::from_slice::<TreeMarker>(&bytes) else {
-        return Err(ExtractError::Occupied {
+    match existing_tree(dest.as_path(), &artifact.sha256, artifact.size_bytes) {
+        Existing::None => Ok(None),
+        Existing::Same(tree) => Ok(Some(tree)),
+        Existing::Different(_) => Err(ExtractError::Occupied {
             path: dest.display_slash(),
-        });
-    };
-    if marker.sha256 != artifact.sha256 || marker.size_bytes != artifact.size_bytes {
-        return Err(ExtractError::Occupied {
-            path: dest.display_slash(),
-        });
+        }),
     }
-    Ok(Some(ExtractedTree {
-        root: dest.clone(),
-        entries: marker.entries,
-        bytes: marker.size_bytes,
-    }))
 }
 
 struct Counted {
@@ -280,11 +310,12 @@ fn describe(kind: tar::EntryType) -> &'static str {
     }
 }
 
-fn write_marker(root: &Path, artifact: &Artifact, entries: u64) -> Result<(), ExtractError> {
+fn write_marker(root: &Path, artifact: &Artifact, counted: &Counted) -> Result<(), ExtractError> {
     let marker = TreeMarker {
         sha256: artifact.sha256.clone(),
         size_bytes: artifact.size_bytes,
-        entries,
+        entries: counted.entries,
+        extracted_bytes: counted.bytes,
     };
     let bytes =
         serde_json::to_vec(&marker).map_err(|error| ExtractError::Archive(error.to_string()))?;

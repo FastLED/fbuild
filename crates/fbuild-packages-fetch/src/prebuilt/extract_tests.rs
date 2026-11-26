@@ -144,6 +144,7 @@ fn extracts_every_file_and_directory() {
     let marker: TreeMarker = serde_json::from_slice(&marker).unwrap();
     assert_eq!(marker.sha256, artifact.sha256);
     assert_eq!(marker.size_bytes, artifact.size_bytes);
+    assert_eq!(marker.extracted_bytes, tree.bytes);
 }
 
 #[test]
@@ -151,7 +152,7 @@ fn a_completed_tree_is_reused_without_the_archive() {
     let (tmp, dest) = layout();
     let bytes = tar_zst(&[Item::File("keep.txt", b"cached".to_vec())]);
     let artifact = artifact(tmp.path(), "prebuilt.tar.zst", &bytes);
-    extract(&artifact, dest.as_path()).unwrap();
+    let fresh = extract(&artifact, dest.as_path()).unwrap();
 
     // The archive no longer exists, so a second extraction can only succeed
     // through the marker.
@@ -163,6 +164,10 @@ fn a_completed_tree_is_reused_without_the_archive() {
         std::fs::read(dest.join("keep.txt").as_path()).unwrap(),
         b"cached"
     );
+    // A reuse reports the same numbers a fresh extraction did: the marker must
+    // carry the tree's byte count, not the archive's.
+    assert_eq!(tree, fresh);
+    assert_eq!(tree.bytes, b"cached".len() as u64);
 }
 
 #[test]
