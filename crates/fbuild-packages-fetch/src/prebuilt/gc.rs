@@ -32,6 +32,10 @@ use std::time::{Duration, SystemTime};
 pub const MIN_AGE: Duration = Duration::from_secs(60 * 60);
 /// Most staging directories one sweep removes, so a call's work stays bounded.
 pub const MAX_REMOVALS: usize = 32;
+/// Most directories one tree sweep visits, so a wide cache stays bounded.
+pub const MAX_SCAN_DIRS: usize = 1024;
+/// Deepest level below the prebuilt root a tree sweep descends into.
+pub const MAX_SCAN_DEPTH: usize = 4;
 
 #[derive(Debug, thiserror::Error)]
 pub enum GcError {
@@ -68,6 +72,79 @@ pub async fn sweep_staging_async(
     tokio::task::spawn_blocking(move || sweep_staging(parent.as_path(), min_age))
         .await
         .map_err(|error| GcError::Join(error.to_string()))?
+}
+
+/// [`sweep_staging_tree`] on its own thread, for callers on the daemon runtime.
+pub async fn sweep_staging_tree_async(
+    cache_root: NormalizedPath,
+    min_age: Duration,
+) -> Result<SweepReport, GcError> {
+    tokio::task::spawn_blocking(move || sweep_staging_tree(cache_root.as_path(), min_age))
+        .await
+        .map_err(|error| GcError::Join(error.to_string()))?
+}
+
+/// Sweep every directory under the prebuilt tree root of `cache_root`.
+///
+/// [`sweep_staging`] reaps one directory, but an extracted tree is committed
+/// wherever its consumer chose to put it, so an abandoned staging sibling can
+/// sit at any depth below that root. This is the walk a daemon needs: every
+/// directory under `{cache_root}/prebuilt/` is swept, and nothing outside it
+/// is read.
+///
+/// Bounded and link-free: at most [`MAX_SCAN_DIRS`] directories and
+/// [`MAX_SCAN_DEPTH`] levels are visited, at most [`MAX_REMOVALS`]
+/// directories are removed in total, and a symlinked directory is never
+/// entered — a name inside the cache cannot redirect the walk elsewhere.
+pub fn sweep_staging_tree(cache_root: &Path, min_age: Duration) -> Result<SweepReport, GcError> {
+    sweep_staging_tree_at(cache_root, min_age, SystemTime::now())
+}
+
+/// [`sweep_staging_tree`] with an explicit clock, so the grace period is
+/// testable without touching file times.
+fn sweep_staging_tree_at(
+    cache_root: &Path,
+    min_age: Duration,
+    now: SystemTime,
+) -> Result<SweepReport, GcError> {
+    let root = crate::disk_cache::paths::prebuilt_root(cache_root);
+    let mut report = SweepReport::default();
+    // Only a real directory is walked: an absent root is an empty sweep (no
+    // extraction has ever run here), and a symlinked root is refused rather
+    // than followed.
+    let real_directory = std::fs::symlink_metadata(root.as_path())
+        .map(|metadata| metadata.is_dir() && !metadata.file_type().is_symlink())
+        .unwrap_or(false);
+    if !real_directory {
+        return Ok(report);
+    }
+    // Collect first: a sweep deletes whole directories, and walking a tree that
+    // is being deleted reports spurious entries.
+    let mut directories: Vec<NormalizedPath> = Vec::new();
+    for entry in walkdir::WalkDir::new(root.as_path())
+        .max_depth(MAX_SCAN_DEPTH)
+        .follow_links(false)
+    {
+        let entry = entry.map_err(|error| io_error(root.as_path(), error.into()))?;
+        if !entry.file_type().is_dir() {
+            continue;
+        }
+        directories.push(NormalizedPath::new(entry.path()));
+        if directories.len() >= MAX_SCAN_DIRS {
+            break;
+        }
+    }
+    for directory in directories {
+        if report.removed >= MAX_REMOVALS {
+            break;
+        }
+        let one = sweep_staging_at(directory.as_path(), min_age, now)?;
+        report.removed += one.removed;
+        report.freed_bytes = report.freed_bytes.saturating_add(one.freed_bytes);
+        report.kept_live += one.kept_live;
+        report.kept_marked += one.kept_marked;
+    }
+    Ok(report)
 }
 
 /// [`sweep_staging`] with an explicit clock, so the grace period is testable

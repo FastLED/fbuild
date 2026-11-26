@@ -165,3 +165,109 @@ fn the_staging_name_shape_is_exact() {
     assert!(!is_staging_name(&format!(".{DIGEST}0.0.staging")));
     assert!(!is_staging_name(".0123456789abcdeF.0.staging"));
 }
+
+// --- #1882 unit 10: the walk a daemon runs over the prebuilt tree root ---------
+
+/// A cache root holding `prebuilt/`, the only tree a sweep may touch.
+fn cache_layout() -> (tempfile::TempDir, NormalizedPath) {
+    let dir = tempfile::tempdir().unwrap();
+    let cache = NormalizedPath::new(dir.path());
+    std::fs::create_dir_all(cache.join("prebuilt").as_path()).unwrap();
+    (dir, cache)
+}
+
+/// Create `tail` under the cache's `prebuilt/` root and return it.
+fn under_prebuilt(cache: &NormalizedPath, tail: &str) -> NormalizedPath {
+    let path = cache.join("prebuilt").join(tail);
+    std::fs::create_dir_all(path.as_path()).unwrap();
+    path
+}
+
+#[test]
+fn a_stale_staging_sibling_inside_a_nested_tree_is_removed() {
+    let (_temp, cache) = cache_layout();
+    let tree = under_prebuilt(&cache, "fastled/3.3.12/esp32");
+    std::fs::write(tree.join("libcore.a").as_path(), b"core").unwrap();
+    let abandoned = attempt(&tree, ".0123456789abcdef.0.staging", 512);
+    let report = sweep_staging_tree_at(cache.as_path(), MIN_AGE, later()).unwrap();
+    assert_eq!(report.removed, 1);
+    assert_eq!(report.freed_bytes, 512);
+    assert!(!abandoned.as_path().exists());
+    // The committed tree beside it is untouched, marker or not.
+    assert!(tree.join("libcore.a").as_path().is_file());
+}
+
+#[test]
+fn a_fresh_staging_sibling_is_kept_by_the_walk() {
+    let (_temp, cache) = cache_layout();
+    let tree = under_prebuilt(&cache, "fastled/3.3.12/esp32");
+    let live = attempt(&tree, ".0123456789abcdef.4.staging", 8);
+    let report = sweep_staging_tree_at(cache.as_path(), MIN_AGE, SystemTime::now()).unwrap();
+    assert_eq!(
+        report,
+        SweepReport {
+            removed: 0,
+            freed_bytes: 0,
+            kept_live: 1,
+            kept_marked: 0
+        }
+    );
+    assert!(live.join("libexample.a").as_path().is_file());
+}
+
+#[test]
+fn a_staging_directory_outside_the_prebuilt_root_is_never_visited() {
+    let (_temp, cache) = cache_layout();
+    let foreign = cache.join("archives");
+    std::fs::create_dir_all(foreign.as_path()).unwrap();
+    let kept = attempt(&foreign, ".0123456789abcdef.0.staging", 4);
+    let report = sweep_staging_tree_at(cache.as_path(), MIN_AGE, later()).unwrap();
+    assert_eq!(report, SweepReport::default());
+    assert!(kept.as_path().is_dir());
+}
+
+#[test]
+fn the_walk_does_not_enter_a_symlinked_directory() {
+    let (temp, cache) = cache_layout();
+    let outside = NormalizedPath::new(temp.path().join("outside"));
+    std::fs::create_dir_all(outside.as_path()).unwrap();
+    let kept = attempt(&outside, ".0123456789abcdef.9.staging", 16);
+    let link = cache.join("prebuilt").join("elsewhere");
+    fbuild_core::platform::fs::symlink_dir(outside.as_path(), link.as_path()).unwrap();
+    let report = sweep_staging_tree_at(cache.as_path(), MIN_AGE, later()).unwrap();
+    assert_eq!(report, SweepReport::default());
+    assert!(kept.as_path().is_dir());
+}
+
+#[test]
+fn a_candidate_below_the_depth_bound_is_not_visited() {
+    let (_temp, cache) = cache_layout();
+    // Five levels below `prebuilt/`: the directory holding the candidate is at
+    // MAX_SCAN_DEPTH + 1, so neither it nor its contents are read.
+    let deep = under_prebuilt(&cache, "a/b/c/d/e");
+    let kept = attempt(&deep, ".0123456789abcdef.0.staging", 8);
+    let report = sweep_staging_tree_at(cache.as_path(), MIN_AGE, later()).unwrap();
+    assert_eq!(report, SweepReport::default());
+    assert!(kept.as_path().is_dir());
+}
+
+#[test]
+fn an_absent_prebuilt_root_is_an_empty_sweep() {
+    let dir = tempfile::tempdir().unwrap();
+    let cache = NormalizedPath::new(dir.path());
+    let report = sweep_staging_tree_at(cache.as_path(), MIN_AGE, later()).unwrap();
+    assert_eq!(report, SweepReport::default());
+}
+
+#[tokio::test]
+async fn the_async_tree_sweep_removes_a_nested_abandoned_attempt() {
+    let (_temp, cache) = cache_layout();
+    let tree = under_prebuilt(&cache, "fastled/3.3.12/esp32");
+    let abandoned = attempt(&tree, ".0123456789abcdef.0.staging", 6);
+    let report = sweep_staging_tree_async(cache.clone(), Duration::ZERO)
+        .await
+        .unwrap();
+    assert_eq!(report.removed, 1);
+    assert_eq!(report.freed_bytes, 6);
+    assert!(!abandoned.as_path().exists());
+}

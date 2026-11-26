@@ -26,6 +26,7 @@
 //! `src/bin/*/main.rs`.
 
 mod device_leases;
+mod prebuilt_gc;
 mod self_eviction;
 
 use crate::context::{
@@ -649,6 +650,11 @@ async fn run_async(heap_profile_rate: Option<usize>) -> i32 {
             }
         });
     }
+
+    // Prebuilt framework staging GC (#1882): a killed extraction leaves a
+    // `.<sha16>.<attempt>.staging` sibling behind. Daemon-owned per
+    // docs/design/artifact-serving-decisions.md decision 4 (startup + every 6 h).
+    prebuilt_gc::spawn_maintenance();
 
     // Spawn background GC loop — runs every 5 minutes
     {
