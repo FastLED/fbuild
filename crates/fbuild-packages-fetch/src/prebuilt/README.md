@@ -12,9 +12,9 @@ current Index descriptor.
 | `reader.rs` | `Reader`: Index → per-tool shard, TTL cache, descriptor-verified shard loads |
 | `fetch.rs` | `Fetcher`: URL ladder, `Range`/`If-Range` resume, streaming size+SHA checks, process-local single-flight |
 | `extract.rs` | `extract`/`extract_async`: single-pass tar.zst extraction, descriptor re-verified while streaming, staging + atomic commit, completion marker |
-| `gc.rs` | `sweep_staging`/`sweep_staging_async`: reaps abandoned `.<sha16>.<attempt>.staging` directories left by a killed extraction, with a grace period, a marker guard and a bounded removal count |
+| `gc.rs` | `sweep_staging`/`sweep_staging_async`: reaps abandoned `.<sha16>.<attempt>.staging` directories left by a killed extraction, with a grace period, a marker guard and a bounded removal count; `sweep_staging_tree`/`sweep_staging_tree_async` is the same policy walked over `{cache}/prebuilt/` |
 | `fetch_tests.rs` | local HTTP fixtures: resume, refused range, 416, corrupt source, over-long/short body, single-flight |
-| `gc_tests.rs` | staging debris, marker guard, symlink refusal, foreign names, grace period, removal ceiling |
+| `gc_tests.rs` | staging debris, marker guard, symlink refusal, foreign names, grace period, removal ceiling, the nested-tree walk (scoped to `{cache}/prebuilt/`, depth- and count-bounded, link-free) |
 | `extract_tests.rs` | real tar.zst fixtures: layout, reuse, flipped/truncated body, traversal, absolute path, symlink, occupied dest, size ceiling, wrong format |
 | `tests.rs` | local axum fixtures: exact hit, miss, cached/network descriptor checks, operator order |
 
@@ -51,7 +51,17 @@ Anything else is a `Resolution::Miss` and the caller builds from source.
    `.<first 16 hex of the sha256>.<decimal attempt>.staging`, only when they are
    older than a grace period, only when they carry no completion marker, and
    never through a symlink; a sweep removes at most `MAX_REMOVALS` of them and
-   reports what it freed. It is opt-in — no extraction calls it implicitly, so a
-   live attempt is never at risk.
+   reports what it freed. No extraction calls it implicitly, so a live attempt
+   is never at risk.
+
+7. `sweep_staging_tree` is the walk, not a second policy: an extracted tree is
+   committed wherever its consumer put it, so the abandoned sibling can sit at
+   any depth. It sweeps every directory under `{cache}/prebuilt/` (nothing
+   outside that root is read), at most `MAX_SCAN_DIRS` directories and
+   `MAX_SCAN_DEPTH` levels, at most `MAX_REMOVALS` directories in total, and it
+   never enters a symlinked directory. The daemon is the caller — once at
+   startup and every 6 h on a blocking task, per decision 4 of
+   `docs/design/artifact-serving-decisions.md`
+   (`crates/fbuild-daemon/src/bin/entry/prebuilt_gc.rs`).
 
 The disk-cache LRU and a daemon-wide single-flight are not in this module.

@@ -178,6 +178,15 @@ pub fn install_staging_dir(cache_root: &Path, kind: Kind, url: &str, version: &s
         .join(format!("{}.partial", safe_version))
 }
 
+/// Root of the extracted prebuilt framework trees: `{cache_root}/prebuilt/`.
+///
+/// `prebuilt::extract` stages a tree in a sibling of the destination it is
+/// about to commit, so every staging directory a prebuilt sweep may reap lives
+/// somewhere below this root and nowhere else.
+pub fn prebuilt_root(cache_root: &Path) -> PathBuf {
+    cache_root.join("prebuilt")
+}
+
 /// Sentinel file that marks a completed installation.
 pub fn install_complete_sentinel(installed_dir: &Path) -> PathBuf {
     installed_dir.join(".install_complete")
@@ -204,6 +213,12 @@ mod tests {
     fn test_index_path() {
         let root = Path::new("/tmp/cache");
         assert_eq!(index_path(root), Path::new("/tmp/cache/index.sqlite"));
+    }
+
+    #[test]
+    fn test_prebuilt_root() {
+        let root = Path::new("/tmp/cache");
+        assert_eq!(prebuilt_root(root), Path::new("/tmp/cache/prebuilt"));
     }
 
     #[test]
