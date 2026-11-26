@@ -11,17 +11,15 @@ current Index descriptor.
 | `mod.rs` | `Query` (exact identity), `Asset`, `Resolution`/`MissReason`, `sha256`/`valid_sha`, `operator_urls` |
 | `reader.rs` | `Reader`: Index → per-tool shard, TTL cache, descriptor-verified shard loads |
 | `fetch.rs` | `Fetcher`: URL ladder, `Range`/`If-Range` resume, streaming size+SHA checks, process-local single-flight |
+| `fetch_tests.rs` | local HTTP fixtures: resume, refused range, 416, corrupt source, over-long/short body, single-flight |
 | `extract.rs` | `extract`/`extract_async`: single-pass tar.zst extraction, descriptor re-verified while streaming, staging + atomic commit, completion marker |
-| `gc.rs` | `sweep_staging`/`sweep_staging_async`: reaps abandoned `.<sha16>.<attempt>.staging` directories left by a killed extraction, with a grace period, a marker guard and a bounded removal count; `sweep_staging_tree`/`sweep_staging_tree_async` is the same policy walked over `{cache}/prebuilt/` |
-| `extract.rs` | `extract`/`extract_async`: streaming sha+size verify, hostile-entry refusal, staging + marker commit |
-| `extract_tests.rs` | real tar.zst fixtures: reuse, flipped/truncated bodies, traversal, symlink, occupied destination |
-| `gc.rs` | `sweep_staging{,_tree}`: reap abandoned `.<sha16>.<n>.staging` directories |
-| `gc_tests.rs` | staging fixtures with a synthetic clock: age, marker, symlink and depth bounds |
+| `extract_tests.rs` | real tar.zst fixtures: layout, reuse, flipped/truncated body, traversal, absolute path, symlink, occupied destination, size ceiling, wrong format |
+| `gc.rs` | `sweep_staging{,_tree}`: reaps abandoned `.<sha16>.<attempt>.staging` directories left by a killed extraction — grace period, marker guard, bounded removal count, and the nested walk over `{cache}/prebuilt/` |
+| `gc_tests.rs` | staging fixtures with a synthetic clock: age, marker, symlink refusal, foreign names, depth and count bounds |
+| `lru.rs` | `trees`/`prune`/`touch`: budget-capped LRU eviction of complete trees, oldest-use first |
+| `lru_tests.rs` | real trees and markers: candidate rule, root guard, recency order, grace period, removal ceiling, opt-in budget |
 | `obtain.rs` | `tree_root`/`obtain`: the identity → tree call site (where a tree lives, reuse vs refuse) |
 | `obtain_tests.rs` | local HTTP + cache layout: reuse without a request, conflict refused untouched, sweep covers the layout |
-| `fetch_tests.rs` | local HTTP fixtures: resume, refused range, 416, corrupt source, over-long/short body, single-flight |
-| `gc_tests.rs` | staging debris, marker guard, symlink refusal, foreign names, grace period, removal ceiling, the nested-tree walk (scoped to `{cache}/prebuilt/`, depth- and count-bounded, link-free) |
-| `extract_tests.rs` | real tar.zst fixtures: layout, reuse, flipped/truncated body, traversal, absolute path, symlink, occupied dest, size ceiling, wrong format |
 | `tests.rs` | local axum fixtures: exact hit, miss, cached/network descriptor checks, operator order |
 
 Rules that decide a hit:
@@ -70,4 +68,16 @@ Anything else is a `Resolution::Miss` and the caller builds from source.
    `docs/design/artifact-serving-decisions.md`
    (`crates/fbuild-daemon/src/bin/entry/prebuilt_gc.rs`).
 
-The disk-cache LRU and a daemon-wide single-flight are not in this module.
+8. `prune` evicts a *complete* tree only: a directory below `{cache}/prebuilt/`
+   holding a regular `MARKER`, never the prebuilt root itself, never a staging
+   directory. Recency is the marker's modification time, which `obtain` bumps on
+   every reuse (`touch`), so a tree that keeps being used is never the first to
+   go. A tree whose marker is younger than the one-hour grace period is kept and
+   counted — a build may be reading it. Eviction is oldest-first, at most
+   `MAX_REMOVALS` trees per pass, and stops as soon as the remaining bytes fit
+   the budget the operator declared in `FBUILD_PREBUILT_BUDGET`; an unset or
+   unparseable budget disables the LRU entirely, so no existing cache is pruned
+   by surprise. The daemon runs it on the same 6 h schedule as the sweep.
+
+A daemon-wide single-flight and a source fallback with one retry are not in this
+module yet.

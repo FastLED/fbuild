@@ -22,7 +22,7 @@
 //!   bounded on a cache that accumulated many abandoned attempts, and every
 //!   removal error is reported instead of hidden.
 //!
-//! The disk-cache LRU and the bucket-key ownership are later cells of #1882.
+//! The disk-cache LRU is [`super::lru`]; bucket-key ownership is [`super::obtain`].
 use super::MARKER;
 use fbuild_core::path::NormalizedPath;
 use std::path::Path;
@@ -226,8 +226,8 @@ fn is_staging_name(name: &str) -> bool {
         && attempt.bytes().all(|byte| byte.is_ascii_digit())
 }
 
-/// Sum the regular files in an abandoned tree, not following links.
-fn tree_bytes(root: &Path) -> u64 {
+/// Sum the regular files in a tree, not following links.
+pub(crate) fn tree_bytes(root: &Path) -> u64 {
     walkdir::WalkDir::new(root)
         .follow_links(false)
         .into_iter()
