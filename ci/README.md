@@ -150,7 +150,7 @@ fail coverage. This policy is tracked in [#1698](https://github.com/FastLED/fbui
 - **`hooks/`** -- Claude Code hook scripts (tool guard, lint, readme guard, session lifecycle)
 - **`mirror/`** -- The PlatformIO-registry-to-bucket mirror tool (`mirror.py`, `rotate.py` for full passes, `update.py` for incremental ones) whose state DB `gen_mirror_manifest.py` reads (FastLED/fbuild#2040). Tested by `test_mirror_tool.py`.
 
-- **`test_cache_status.py`** streams the unchanged Cargo test selection with JSON compiler evidence; only a completed assertion failure enables setup-soldr failure saves. Compiler errors, incomplete logs and cancellation remain blocked.
+- **`test_cache_status.py`** streams the unchanged Cargo test selection with JSON compiler evidence; only a completed assertion failure enables setup-soldr failure saves. Compiler errors, incomplete logs and cancellation remain blocked. It also names a shared-soldr-daemon kill as infra (FastLED/fbuild#2178) and, when `FBUILD_CI_DAEMON_DEATH_RETRY=1`, re-runs the same command **once** if the daemon is the only culprit and the spent wall clock still fits `FBUILD_CI_DAEMON_RETRY_BUDGET_SECONDS` (default 600). A failed test or a rustc diagnostic is never retried.
 
 - **`find_direct_subprocess.py`** -- Linter for direct `Command::new` spawns outside the `fbuild-core::subprocess` wrappers (FastLED/fbuild#141), run with `--fail` by `check-ubuntu.yml` and `lint-subprocess.yml`. An `allow-direct-spawn` marker now needs a reason after the colon -- a bare marker no longer allowlists the site -- and mentions inside `//`, nested `/* ... */` comments or string/raw-string literals are not spawns. `test_find_direct_subprocess.py` drives both directions plus the live workspace scan.
 
