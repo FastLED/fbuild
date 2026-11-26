@@ -60,3 +60,23 @@ pub use samd_core::SamdCores;
 pub use silabs_core::SilabsCores;
 pub use stm32_core::Stm32Cores;
 pub use teensy_core::TeensyCores;
+
+#[cfg(test)]
+fn disabled_long_paths(root: &std::path::Path) -> fbuild_paths::long_paths::Resolution {
+    use fbuild_core::path::NormalizedPath;
+    use fbuild_paths::long_paths::{Observation, Resolution};
+
+    let root = NormalizedPath::new(root);
+    Resolution {
+        observation: Observation::Disabled,
+        home: root.clone(),
+        fbuild_root: root.join(".fbuild"),
+        dev_mode: false,
+        requested_cache_root: root.join("requested"),
+        cache_root: root.join("c"),
+        scratch_root: root.join("t"),
+        short_build_root: Some(root.join("b")),
+        build_override: None,
+        cache_dir_source: "windows-short-path-fallback",
+    }
+}

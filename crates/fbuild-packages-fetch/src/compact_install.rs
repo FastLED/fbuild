@@ -3,6 +3,7 @@
 use std::path::Path;
 
 use fbuild_core::path::NormalizedPath;
+use fbuild_paths::long_paths::{Resolution, current_resolution};
 use sha2::{Digest, Sha256};
 
 use crate::{PackageBase, disk_cache::Kind, extractor};
@@ -22,16 +23,17 @@ impl PackageBase {
         self
     }
 
-    fn uses_compact_windows_install(&self) -> bool {
+    /// Whether this package uses the compact layout under the supplied path policy.
+    pub fn uses_compact_windows_install(&self, resolution: Option<&Resolution>) -> bool {
         self.compact_windows_install
-            && fbuild_paths::long_paths::current_resolution().is_some_and(|resolution| {
+            && resolution.is_some_and(|resolution| {
                 resolution.observation.requires_fallback()
                     || resolution.cache_dir_source == "retained-windows-short-path-fallback"
             })
     }
 
     pub(crate) fn compact_install_path(&self, chip: Option<&str>) -> Option<NormalizedPath> {
-        if !self.uses_compact_windows_install() {
+        if !self.uses_compact_windows_install(current_resolution()) {
             return None;
         }
         let kind = Kind::from(self.cache_subdir);
@@ -51,7 +53,7 @@ impl PackageBase {
 
     pub(crate) fn install_staging_path(&self, target: &Path) -> NormalizedPath {
         let name = target.file_name().unwrap_or_default().to_string_lossy();
-        if self.uses_compact_windows_install() {
+        if self.uses_compact_windows_install(current_resolution()) {
             NormalizedPath::new(target.with_file_name(format!("{STAGING_PREFIX}{name}")))
         } else {
             NormalizedPath::new(target.with_file_name(format!("{name}_staging")))
@@ -63,7 +65,7 @@ impl PackageBase {
         archive: &Path,
         staging: &Path,
     ) -> fbuild_core::Result<()> {
-        if !self.uses_compact_windows_install() {
+        if !self.uses_compact_windows_install(current_resolution()) {
             return extractor::extract(archive, staging);
         }
         unpack_without_wrapper(archive, staging)?;
@@ -96,6 +98,53 @@ fn unpack_without_wrapper(archive: &Path, staging: &Path) -> fbuild_core::Result
 mod tests {
     use super::*;
     use std::io::Write;
+
+    #[test]
+    fn compact_install_handles_core_archive_layouts() {
+        for (wrapper, paths) in [
+            (
+                "rp2040-4.5.3",
+                ["cores/rp2040/Arduino.h", "pico-sdk/README.md"],
+            ),
+            (
+                "Arduino_Core_STM32-2.9.0",
+                ["cores/arduino/Arduino.h", "variants/README.md"],
+            ),
+            (
+                "",
+                [
+                    "cores/teensy4/Arduino.h",
+                    "libraries/FlexCAN_T4/FlexCAN_T4.h",
+                ],
+            ),
+        ] {
+            let fixture = tempfile::tempdir().unwrap();
+            let archive = fixture.path().join("core.zip");
+            let staging = fixture.path().join("staging");
+            std::fs::create_dir(&staging).unwrap();
+            let mut zip = zip::ZipWriter::new(std::fs::File::create(&archive).unwrap());
+            for path in paths {
+                let entry = if wrapper.is_empty() {
+                    path.to_owned()
+                } else {
+                    format!("{wrapper}/{path}")
+                };
+                zip.start_file(entry, zip::write::SimpleFileOptions::default())
+                    .unwrap();
+                zip.write_all(path.as_bytes()).unwrap();
+            }
+            zip.finish().unwrap();
+
+            unpack_without_wrapper(&archive, &staging).unwrap();
+
+            for path in paths {
+                assert_eq!(std::fs::read(staging.join(path)).unwrap(), path.as_bytes());
+            }
+            if !wrapper.is_empty() {
+                assert!(!staging.join(wrapper).exists());
+            }
+        }
+    }
 
     #[test]
     fn compact_install_strips_the_archive_wrapper_and_preserves_inner_paths() {
