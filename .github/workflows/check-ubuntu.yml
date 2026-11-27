@@ -184,20 +184,24 @@ jobs:
           # starts with umask 0000, while hosted Ubuntu defaults to 0022.
           umask 022
           uv run --no-project python ci/test_cache_status.py -- soldr cargo test --workspace
+      # Every `soldr cargo test` in this job goes through
+      # ci/test_cache_status.py: the targeted `--ignored` steps below compile too,
+      # and both #2197 merge-queue deaths landed inside one of them while
+      # FBUILD_CI_DAEMON_DEATH_RETRY=1 sat armed and unused (#2178).
       - name: Test optional SDK library linkage with native GCC LTO
         run: |
-          soldr cargo test -p fbuild-build-engine --lib optional_framework_archive_preserves_only_referenced_initializers -- --ignored
-          soldr cargo test -p fbuild-build-arm --lib optional_library_rescans_earlier_dependency_archive -- --ignored
+          uv run --no-project python ci/test_cache_status.py -- soldr cargo test -p fbuild-build-engine --lib optional_framework_archive_preserves_only_referenced_initializers -- --ignored
+          uv run --no-project python ci/test_cache_status.py -- soldr cargo test -p fbuild-build-arm --lib optional_library_rescans_earlier_dependency_archive -- --ignored
       - name: Test library assembly and archive policies with native GCC
         run: |
-          soldr cargo test -p fbuild-library --lib library_assembly -- --include-ignored
-          soldr cargo test -p fbuild-library --lib archive_policy_tests -- --include-ignored
-          soldr cargo test -p fbuild-build-engine --lib disabling_library_archives_preserves_core_isr_extraction -- --ignored
-          soldr cargo test -p fbuild-build-engine --lib incremental_policy_toggles_relink_same_elf_through_production_fast_path -- --ignored
+          uv run --no-project python ci/test_cache_status.py -- soldr cargo test -p fbuild-library --lib library_assembly -- --include-ignored
+          uv run --no-project python ci/test_cache_status.py -- soldr cargo test -p fbuild-library --lib archive_policy_tests -- --include-ignored
+          uv run --no-project python ci/test_cache_status.py -- soldr cargo test -p fbuild-build-engine --lib disabling_library_archives_preserves_core_isr_extraction -- --ignored
+          uv run --no-project python ci/test_cache_status.py -- soldr cargo test -p fbuild-build-engine --lib incremental_policy_toggles_relink_same_elf_through_production_fast_path -- --ignored
       - name: Test GNU linker overflow summaries
-        run: soldr cargo test -p fbuild-build --test it link_overflow::failed_link_reports_each_actual_region_capacity -- --ignored --nocapture
+        run: uv run --no-project python ci/test_cache_status.py -- soldr cargo test -p fbuild-build --test it link_overflow::failed_link_reports_each_actual_region_capacity -- --ignored --nocapture
       - name: Test large library archive
-        run: soldr cargo test -p fbuild-library large_archive_handles_windows_command_limit_and_quoted_paths -- --ignored --nocapture
+        run: uv run --no-project python ci/test_cache_status.py -- soldr cargo test -p fbuild-library large_archive_handles_windows_command_limit_and_quoted_paths -- --ignored --nocapture
 
   glibc-floor:
     # FastLED/fbuild#1629. The manylinux_2_17 tag is assigned from a filename
