@@ -111,6 +111,18 @@ fn packing_is_deterministic_across_mtimes_and_output_directories() {
     assert_eq!(first.key, second.key);
 }
 
+/// A served tree carries the manifest the client hydrates with, mapping each
+/// unit id to the object file the publisher packed for it.
+fn assert_served_manifest(tree: &NormalizedPath, units: &[(&str, &str)]) {
+    let body: serde_json::Value =
+        serde_json::from_slice(&std::fs::read(tree.join(OBJECTS_MANIFEST).as_path()).unwrap())
+            .unwrap();
+    assert_eq!(body["schema"], MANIFEST_SCHEMA);
+    for (unit, object) in units {
+        assert_eq!(body["units"][unit], *object, "{unit} -> {object}");
+    }
+}
+
 #[test]
 fn the_archive_round_trips_through_resolve_fetch_and_extract() {
     let runtime = tokio::runtime::Runtime::new().unwrap();
@@ -205,17 +217,12 @@ fn the_archive_round_trips_through_resolve_fetch_and_extract() {
             ),
             "the executable bit survives the round trip"
         );
-        let manifest: serde_json::Value =
-            serde_json::from_slice(&std::fs::read(tree.join(OBJECTS_MANIFEST).as_path()).unwrap())
-                .unwrap();
-        assert_eq!(manifest["schema"], MANIFEST_SCHEMA);
-        assert_eq!(
-            manifest["units"]["cores/esp32/main.c"],
-            "cores/esp32/main.c.o"
-        );
-        assert_eq!(
-            manifest["units"]["cores/esp32/hal.c"],
-            "cores/esp32/hal.c.o"
+        assert_served_manifest(
+            &tree,
+            &[
+                ("cores/esp32/main.c", "cores/esp32/main.c.o"),
+                ("cores/esp32/hal.c", "cores/esp32/hal.c.o"),
+            ],
         );
         server.abort();
     });
