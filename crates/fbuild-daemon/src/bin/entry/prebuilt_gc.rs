@@ -6,14 +6,19 @@
 //! killer, a reboot) cannot run that cleanup, so the directory survives holding
 //! up to the decompressed size ceiling — one abandoned attempt per kill.
 //!
-//! The reaping rules live in `fbuild_packages::prebuilt`; this module is the
-//! call site. Decision 4 of `docs/design/artifact-serving-decisions.md` makes
-//! the sweep daemon-owned: **on daemon startup and every 6 h, on a blocking
+//! The reaping and eviction rules live in `fbuild_packages::prebuilt`; this
+//! module is the call site. The budget-capped LRU ([`prune_once`]) runs on the
+//! same schedule and only when the operator declares `FBUILD_PREBUILT_BUDGET`.
+//! Decision 4 of `docs/design/artifact-serving-decisions.md` makes the sweep
+//! daemon-owned: **on daemon startup and every 6 h, on a blocking
 //! task that never touches the request path** — the same shape the package
 //! cache's own background GC already has (FastLED/fbuild#808).
 
 use fbuild_core::path::NormalizedPath;
-use fbuild_packages::prebuilt::{GcError, MIN_AGE, SweepReport, sweep_staging_tree_async};
+use fbuild_packages::prebuilt::{
+    EvictReport, GcError, LruError, MIN_AGE, SweepReport, declared_budget, prune_async,
+    sweep_staging_tree_async,
+};
 use std::path::Path;
 use std::time::Duration;
 
@@ -39,6 +44,29 @@ pub async fn sweep_once(cache_root: &Path) -> Result<SweepReport, GcError> {
     Ok(report)
 }
 
+/// Evict the least-recently-used trees down to `budget`.
+///
+/// The budget is the operator's: nothing here guesses one, and a `None` from
+/// [`declared_budget`] means the LRU never runs. The pass is bounded by the
+/// module's own removal ceiling and keeps every tree inside the grace period,
+/// so a build reading a fresh tree is never evicted from under it.
+pub async fn prune_once(cache_root: &Path, budget: u64) -> Result<EvictReport, LruError> {
+    let root = NormalizedPath::new(cache_root);
+    let report = prune_async(root, budget, MIN_AGE).await?;
+    if report.removed > 0 || report.kept_live > 0 {
+        tracing::info!(
+            "prebuilt LRU: removed {} of {} tree(s), {} freed, {} kept live, {} left of {}",
+            report.removed,
+            report.trees,
+            format_bytes(report.freed_bytes),
+            report.kept_live,
+            format_bytes(report.remaining_bytes),
+            format_bytes(report.budget_bytes),
+        );
+    }
+    Ok(report)
+}
+
 /// Spawn the sweep: once at startup, then every [`SWEEP_INTERVAL`].
 ///
 /// The walk runs on a blocking task (`sweep_staging_tree_async`), so a slow or
@@ -47,9 +75,16 @@ pub async fn sweep_once(cache_root: &Path) -> Result<SweepReport, GcError> {
 pub fn spawn_maintenance() {
     tokio::spawn(async move {
         let cache_root = fbuild_paths::get_cache_root();
+        // Resolved once: an unset budget disables the LRU for the whole run.
+        let budget = declared_budget();
         loop {
             if let Err(error) = sweep_once(cache_root.as_path()).await {
                 tracing::warn!("prebuilt staging sweep failed: {}", error);
+            }
+            if let Some(budget) = budget {
+                if let Err(error) = prune_once(cache_root.as_path(), budget).await {
+                    tracing::warn!("prebuilt LRU prune failed: {}", error);
+                }
             }
             tokio::time::sleep(SWEEP_INTERVAL).await;
         }

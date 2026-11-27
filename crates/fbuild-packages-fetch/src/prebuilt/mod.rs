@@ -20,6 +20,9 @@
 //!   behind, and touches nothing that is not one of them;
 //! - [`sweep_staging_tree`] is the walk a daemon runs over `{cache}/prebuilt/`,
 //!   because a tree is committed wherever its consumer chose to put it;
+//! - [`prune`] evicts the least-recently-used tree when the prebuilt root
+//!   exceeds the operator's budget, timing recency by marker modification time
+//!   and keeping every tree inside the grace period;
 //! - a release must name the exact tool, the exact version, a
 //!   `min_client_version` this client satisfies, a `none`/`<arch>`/`<abi>`
 //!   platform, the `fp-<first 16 hex>` flavor, a `fbuild-fp:<fingerprint>`
@@ -28,6 +31,7 @@
 mod extract;
 mod fetch;
 mod gc;
+mod lru;
 mod obtain;
 mod reader;
 pub use extract::{
@@ -38,6 +42,10 @@ pub use fetch::{Artifact, FetchError, Fetcher};
 pub use gc::{
     GcError, MAX_REMOVALS, MAX_SCAN_DEPTH, MAX_SCAN_DIRS, MIN_AGE, SweepReport, sweep_staging,
     sweep_staging_async, sweep_staging_tree, sweep_staging_tree_async,
+};
+pub use lru::{
+    BUDGET_ENV, EvictReport, LruError, TreeUse, budget_from, declared_budget, prune, prune_async,
+    touch, touch_async, trees,
 };
 pub use obtain::{FP_DIR_PREFIX, ObtainError, Obtained, obtain, tree_root};
 pub use reader::Reader;

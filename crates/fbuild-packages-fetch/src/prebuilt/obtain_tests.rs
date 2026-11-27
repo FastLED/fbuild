@@ -10,7 +10,7 @@ use std::sync::{
     Arc,
     atomic::{AtomicUsize, Ordering},
 };
-use std::time::Duration;
+use std::time::{Duration, SystemTime};
 use tar::{Builder, Header};
 
 fn digest(bytes: &[u8]) -> String {
@@ -167,6 +167,53 @@ async fn a_complete_tree_is_reused_without_a_single_request() {
     assert!(!second.downloaded, "a marked tree must not be re-fetched");
     assert_eq!(second.tree, first.tree);
     assert_eq!(calls.load(Ordering::SeqCst), 1);
+    task.abort();
+}
+
+/// Stamp the tree's marker as last used `age` ago, the way an idle tree reads.
+fn backdate_marker(tree_root: &NormalizedPath, age: Duration) {
+    let marker = tree_root.join(MARKER);
+    std::fs::File::options()
+        .write(true)
+        .open(marker.as_path())
+        .unwrap()
+        .set_times(std::fs::FileTimes::new().set_modified(SystemTime::now() - age))
+        .unwrap();
+}
+
+#[tokio::test]
+async fn a_reuse_records_itself_as_the_last_use() {
+    let archive = tar_zst("lib/libesp32.a", b"example");
+    let (url, calls, task) = server(archive.clone()).await;
+    let temp = tempfile::tempdir().unwrap();
+    let cache = temp.path().join("cache");
+    let query = query(&"b".repeat(64));
+    let asset = asset(&archive, vec![url]);
+    let fetcher = Fetcher::new(&temp.path().join("downloads"), reqwest::Client::new());
+
+    let first = obtain(cache.as_path(), &query, &asset, &fetcher)
+        .await
+        .unwrap();
+    // An idle tree: far past the LRU's grace period, so eviction would take it.
+    backdate_marker(&first.tree.root, Duration::from_secs(24 * 60 * 60));
+    let stale = std::fs::symlink_metadata(first.tree.root.join(MARKER).as_path())
+        .unwrap()
+        .modified()
+        .unwrap();
+
+    let second = obtain(cache.as_path(), &query, &asset, &fetcher)
+        .await
+        .unwrap();
+    assert!(!second.downloaded);
+    let used = std::fs::symlink_metadata(first.tree.root.join(MARKER).as_path())
+        .unwrap()
+        .modified()
+        .unwrap();
+    assert!(
+        used.duration_since(stale).unwrap() > Duration::from_secs(60 * 60),
+        "a reuse must bump the marker's last-use time, or the LRU evicts a tree that is in use"
+    );
+    assert_eq!(calls.load(Ordering::SeqCst), 1, "the reuse stays offline");
     task.abort();
 }
 

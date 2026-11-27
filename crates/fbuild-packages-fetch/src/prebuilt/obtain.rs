@@ -92,6 +92,11 @@ pub async fn obtain(
     let dest = tree_root(cache_root, query)?;
     match existing_tree(dest.as_path(), &asset.sha256, asset.size_bytes) {
         Existing::Same(tree) => {
+            // Recency for the disk-cache LRU is the marker's modification
+            // time, so a reuse (and only a reuse) moves this tree to the young
+            // end. A failed touch never fails the resolve: a cache that cannot
+            // be written is still a correct cache, just a less efficient one.
+            let _ = super::lru::touch_async(tree.root.clone(), std::time::SystemTime::now()).await;
             return Ok(Obtained {
                 tree,
                 downloaded: false,
