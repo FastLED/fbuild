@@ -33,18 +33,27 @@ use crate::provision::{
 /// `env_config` is the resolved `[env:<name>]` section from `platformio.ini`,
 /// used to honor `platform_packages` overrides (FastLED/fbuild#672). Pass
 /// `None` if no env is in scope — packages then use their pinned defaults.
+///
+/// `params` carries the project dir and the request's prebuilt-libs verdict
+/// (decision 1), which decides whether the SDK libs download may be a per-chip
+/// prebuilt slice (FastLED/fbuild#2196).
 pub(super) async fn resolve_pioarduino_packages(
-    project_dir: &Path,
+    params: &crate::BuildParams,
     board: &fbuild_config::BoardConfig,
     mcu_config: &Esp32McuConfig,
     env_config: Option<&HashMap<String, String>>,
-    prebuilt_libs: PrebuiltLibsPolicy,
 ) -> Result<(
     fbuild_packages::toolchain::Esp32Toolchain,
     fbuild_packages::library::Esp32Framework,
     Option<NormalizedPath>,
     fbuild_packages::PackageInfo,
 )> {
+    let project_dir = params.project_dir.as_path();
+    // Decision 1: the request's prebuilt-libs verdict decides the SHAPE of the
+    // SDK libs download -- a per-chip slice *is* the prebuilt artifact, so
+    // `--no-prebuilt-libs` takes the whole published bundle (FastLED/fbuild#2196).
+    let prebuilt_libs =
+        PrebuiltLibsPolicy::from_fetches_libs(params.prebuilt_libs.fetches_prebuilt_libs());
     // `build.chip_variant` (e.g. `esp32p4_es`) needs its own per-chip libs tree.
     let mcu = board.mcu.as_str();
     let sdk_variant = board.sdk_variant();

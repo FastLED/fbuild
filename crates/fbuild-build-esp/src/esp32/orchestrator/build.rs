@@ -100,21 +100,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
             super::disk_requirements::footprint_roots(&params.project_dir),
         );
         let _resolve_phase = perf.phase("pioarduino-resolve");
-        // Decision 1: the request's prebuilt-libs verdict decides the SHAPE of
-        // the SDK libs download -- a per-chip slice is the prebuilt artifact, so
-        // `--no-prebuilt-libs` takes the whole published bundle instead
-        // (FastLED/fbuild#2196).
-        let prebuilt_libs = fbuild_packages::PrebuiltLibsPolicy::from_fetches_libs(
-            params.prebuilt_libs.fetches_prebuilt_libs(),
-        );
-        let (toolchain, framework, esptool_bin, platform_info) = resolve_pioarduino_packages(
-            &params.project_dir,
-            &ctx.board,
-            &mcu_config,
-            env_config,
-            prebuilt_libs,
-        )
-        .await?;
+        let (toolchain, framework, esptool_bin, platform_info) =
+            resolve_pioarduino_packages(params, &ctx.board, &mcu_config, env_config).await?;
         drop(_resolve_phase);
         footprint.sample("pioarduino-resolve");
         let toolchain_info = fbuild_packages::Package::get_info(&toolchain);
