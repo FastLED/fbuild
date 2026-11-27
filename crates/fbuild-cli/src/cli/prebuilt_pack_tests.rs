@@ -3,16 +3,21 @@
 //! and stays out of `--help`.
 use super::{PackArgs, run_prebuilt_pack};
 use clap::CommandFactory as _;
+use fbuild_core::path::NormalizedPath;
 use serde_json::Value;
 use tempfile::TempDir;
 
 const FP: &str = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
 
-fn objects(dir: &TempDir) -> std::path::PathBuf {
-    let root = dir.path().join("objects");
-    std::fs::create_dir_all(root.join("cores")).unwrap();
-    std::fs::write(root.join("cores/main.c.o"), b"compiled core object").unwrap();
-    std::fs::write(root.join("cores/hal.c.o"), b"another object").unwrap();
+fn objects(dir: &TempDir) -> NormalizedPath {
+    let root = NormalizedPath::new(dir.path().join("objects"));
+    std::fs::create_dir_all(root.join("cores").as_path()).unwrap();
+    std::fs::write(
+        root.join("cores/main.c.o").as_path(),
+        b"compiled core object",
+    )
+    .unwrap();
+    std::fs::write(root.join("cores/hal.c.o").as_path(), b"another object").unwrap();
     root
 }
 

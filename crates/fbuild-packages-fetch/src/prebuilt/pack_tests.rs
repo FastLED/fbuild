@@ -16,16 +16,16 @@ fn digest(bytes: &[u8]) -> String {
 
 /// A small objects tree: a nested directory, an ordinary file, and an
 /// executable one so the mode path is exercised.
-fn objects() -> (TempDir, std::path::PathBuf) {
+fn objects() -> (TempDir, NormalizedPath) {
     let dir = TempDir::new().unwrap();
-    let root = dir.path().join("objects");
-    std::fs::create_dir_all(root.join("cores/esp32")).unwrap();
-    std::fs::write(root.join("cores/esp32/main.c.o"), b"main object").unwrap();
-    std::fs::write(root.join("cores/esp32/hal.c.o"), b"hal object").unwrap();
-    std::fs::write(root.join("README.txt"), b"packed by fbuild").unwrap();
+    let root = NormalizedPath::new(dir.path().join("objects"));
+    std::fs::create_dir_all(root.join("cores/esp32").as_path()).unwrap();
+    std::fs::write(root.join("cores/esp32/main.c.o").as_path(), b"main object").unwrap();
+    std::fs::write(root.join("cores/esp32/hal.c.o").as_path(), b"hal object").unwrap();
+    std::fs::write(root.join("README.txt").as_path(), b"packed by fbuild").unwrap();
     let tool = root.join("tool");
-    std::fs::write(&tool, b"#!/bin/sh\n").unwrap();
-    fbuild_core::platform::fs::set_executable(&tool).unwrap();
+    std::fs::write(tool.as_path(), b"#!/bin/sh\n").unwrap();
+    fbuild_core::platform::fs::set_executable(tool.as_path()).unwrap();
     (dir, root)
 }
 
@@ -82,7 +82,7 @@ fn packing_is_deterministic_across_mtimes_and_output_directories() {
     // Move every mtime forward: a publisher's clock must not change the digest.
     std::fs::File::options()
         .write(true)
-        .open(root.join("README.txt"))
+        .open(root.join("README.txt").as_path())
         .unwrap()
         .set_modified(std::time::SystemTime::now() + std::time::Duration::from_secs(9_000))
         .unwrap();
@@ -181,7 +181,7 @@ fn the_archive_round_trips_through_resolve_fetch_and_extract() {
         for relative in ["cores/esp32/main.c.o", "cores/esp32/hal.c.o", "README.txt"] {
             assert_eq!(
                 std::fs::read(tree.join(relative).as_path()).unwrap(),
-                std::fs::read(root.join(relative)).unwrap(),
+                std::fs::read(root.join(relative).as_path()).unwrap(),
                 "{relative} survived the round trip"
             );
         }
@@ -198,7 +198,11 @@ fn the_archive_round_trips_through_resolve_fetch_and_extract() {
 #[test]
 fn a_tree_with_a_symlink_is_refused_before_anything_is_written() {
     let (dir, root) = objects();
-    fbuild_core::platform::fs::symlink_file(&root.join("README.txt"), &root.join("link")).unwrap();
+    fbuild_core::platform::fs::symlink_file(
+        root.join("README.txt").as_path(),
+        root.join("link").as_path(),
+    )
+    .unwrap();
     let out = dir.path().join("out");
     let error = pack(&request(&root, &out, "https://bucket.example")).unwrap_err();
     assert!(matches!(error, PackError::EntryType(name, "symlink") if name == "link"));
@@ -208,8 +212,8 @@ fn a_tree_with_a_symlink_is_refused_before_anything_is_written() {
 #[test]
 fn an_empty_tree_is_refused() {
     let dir = TempDir::new().unwrap();
-    let root = dir.path().join("empty");
-    std::fs::create_dir_all(root.join("only/dirs")).unwrap();
+    let root = NormalizedPath::new(dir.path().join("empty"));
+    std::fs::create_dir_all(root.join("only/dirs").as_path()).unwrap();
     let error = pack(&request(
         &root,
         &dir.path().join("out"),
@@ -250,7 +254,7 @@ fn a_request_that_cannot_be_served_is_refused() {
 #[test]
 fn a_request_pointing_at_a_missing_tree_is_refused() {
     let dir = TempDir::new().unwrap();
-    let missing = dir.path().join("absent");
+    let missing = NormalizedPath::new(dir.path().join("absent"));
     let error = pack(&request(
         &missing,
         &dir.path().join("out"),
