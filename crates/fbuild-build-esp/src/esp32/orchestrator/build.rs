@@ -672,7 +672,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // #1882 / #2196 cell 3: ask the exact-fingerprint ladder for this build's
         // compiled core objects before the core is compiled (opt-in; a failure
         // is one log line, never a build error).
-        let prebuilt_lines = super::prebuilt_core::consult_and_hydrate(
+        let prebuilt = super::prebuilt_core::consult_and_hydrate(
             params,
             &ctx.board,
             &framework,
@@ -684,12 +684,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             core_build_dir,
         )
         .await;
-        for line in prebuilt_lines {
-            build_log_mutex
-                .lock()
-                .unwrap_or_else(|e| e.into_inner())
-                .push(line);
-        }
+        prebuilt.log_into(&build_log_mutex);
         let gate = fbuild_packages::library::library_compiler::job_gate(jobs);
         let local_libraries = crate::framework_libs::select_local_libraries(
             &params.project_dir,
@@ -952,6 +947,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &overlay_link_flags,
             &ctx.overlay_link_libs,
             &shrink_record,
+            Some(prebuilt.record()),
         );
 
         // 15. Size reporting + result assembly
