@@ -22,6 +22,8 @@ current Index descriptor.
 | `obtain_tests.rs` | local HTTP + cache layout: reuse without a request, conflict refused untouched, sweep covers the layout |
 | `serve.rs` | `serve`: the serving decision — prebuilt hit, one retry for a transient failure, otherwise `Served::Source` with a printable reason (no error escapes) |
 | `serve_tests.rs` | a failing-then-healthy HTTP server: retried once, dead source falls back after exactly two fetches, permanent refusals cost zero requests |
+| `pack.rs` | `pack`/`bucket_key`/`release`/`catalog`: the publisher's side — one deterministic archive, the decision-2 key, and the entry the client reads (never uploads, §8c) |
+| `pack_tests.rs` | real objects trees: key shape, determinism across mtimes, a full pack → serve → resolve → fetch → extract round trip, refusal cases |
 | `tests.rs` | local axum fixtures: exact hit, miss, cached/network descriptor checks, operator order |
 
 Rules that decide a hit:
@@ -91,5 +93,20 @@ Anything else is a `Resolution::Miss` and the caller builds from source.
    attempt. Everything that does not serve returns `Served::Source` with the
    attempts named, so the caller compiles framework from source and prints one
    honest line.
+
+10. `pack` is the publisher's side and is never called by a build. It writes
+    one `.tar.zst` whose entry order and metadata (mode from the executable
+    bit, uid/gid 0, empty uname/gname, mtime 0) are normalized, so the same
+    bytes pack to one digest on any host; it names the archive
+    `<product>-<ref>-<chip>.<sha16>.tar.zst` under decision 2's key and emits
+    the `Catalog` entry (`flavor fp-<16>`, `provides fbuild-fp:<fingerprint>`)
+    that the client above resolves against. A tree holding a symlink, a
+    special file, or nothing at all is refused before a byte is written, and a
+    non-https `base_url` is refused too — `extract` would reject such an
+    archive or the client could never fetch it. The archive is written to a
+    `.part` file, re-hashed from disk and only then renamed into place, so a
+    killed run leaves nothing publishable. Nothing here uploads: decision 8c
+    makes every bucket write a maintainer action. The command that drives it is
+    hidden (`fbuild __prebuilt-pack`).
 
 A daemon-wide single-flight is not in this module yet.

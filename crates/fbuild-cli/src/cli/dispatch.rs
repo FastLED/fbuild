@@ -31,6 +31,7 @@ use super::monitor_parse::parse_monitor_flags;
 use super::pio::{pio_build, pio_deploy, pio_monitor};
 use super::plotter::run_plotter;
 use super::port_scan::run_port;
+use super::prebuilt_pack::{PackArgs, run_prebuilt_pack};
 use super::purge::{run_purge, run_purge_gc};
 use super::reset::run_reset;
 use super::serial_probe::run_serial;
@@ -463,6 +464,35 @@ pub async fn async_main() {
             verbose,
             lease_id,
         }) => run_reset(project_dir, environment, port, lease_id, verbose).await,
+        Some(Commands::PrebuiltPack {
+            objects,
+            out,
+            vendor,
+            product,
+            channel,
+            reference,
+            chip,
+            framework,
+            fingerprint,
+            arch,
+            abi,
+            base_url,
+            min_client_version,
+        }) => run_prebuilt_pack(PackArgs {
+            objects,
+            out,
+            vendor,
+            product,
+            channel,
+            reference,
+            chip,
+            framework,
+            fingerprint,
+            arch,
+            abi,
+            base_url,
+            min_client_version,
+        }),
         Some(Commands::Purge {
             target,
             dry_run,

@@ -401,3 +401,23 @@ async fn a_traversing_filename_cannot_escape_the_destination() {
     assert!(!artifact.path.as_path().to_string_lossy().contains(".."));
     task.abort();
 }
+
+#[test]
+fn a_long_asset_name_keeps_the_archive_suffix_after_truncation() {
+    // A real v1 core-object name is 53 characters; shortening it must not cost
+    // the `.tar.zst` that `extract` requires (FastLED/fbuild#1882).
+    let name = "arduino-esp32-core-3.3.12-esp32dev.0123456789abcdef.tar.zst";
+    let sanitized = sanitized(name);
+    assert!(sanitized.chars().count() <= NAME_LIMIT, "{sanitized}");
+    assert!(sanitized.ends_with(".tar.zst"), "{sanitized}");
+    assert!(
+        sanitized.starts_with("arduino-esp32-core-3.3.12"),
+        "{sanitized}"
+    );
+}
+
+#[test]
+fn a_short_asset_name_is_untouched() {
+    assert_eq!(sanitized("prebuilt.tar.zst"), "prebuilt.tar.zst");
+    assert_eq!(sanitized("..danger/../x.zip"), "x.zip");
+}

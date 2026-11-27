@@ -37,6 +37,10 @@ use tokio::{
 /// Refuse an asset larger than this before allocating anything for it.
 pub const MAX_ASSET_BYTES: u64 = 8 * 1024 * 1024 * 1024;
 const BLOCK: usize = 64 * 1024;
+/// Longest local file name the fetcher keeps for an asset.
+const NAME_LIMIT: usize = 48;
+/// Archive suffixes this build can extract, longest first.
+const ARCHIVE_SUFFIXES: [&str; 5] = [".tar.zst", ".tar.xz", ".tar.gz", ".tgz", ".zip"];
 const CHUNK_TIMEOUT: Duration = Duration::from_secs(30);
 
 #[derive(Debug, thiserror::Error)]
@@ -504,7 +508,22 @@ fn sanitized(filename: &str) -> String {
     if base.is_empty() {
         return "asset.bin".into();
     }
-    base.chars().take(48).collect()
+    if base.chars().count() <= NAME_LIMIT {
+        return base.to_string();
+    }
+    // Truncating from the front only would drop the archive's shape, and
+    // `extract` serves `.tar.zst` only: a real v1 core-object name
+    // (`arduino-esp32-core-3.3.12-esp32dev.<sha16>.tar.zst`, 53 chars) would
+    // arrive as `…-esp32dev.<sha16 truncated>` and be refused as an
+    // unsupported format. Keep the suffix, shorten the stem (FastLED/fbuild#1882).
+    let suffix = ARCHIVE_SUFFIXES
+        .iter()
+        .find(|suffix| base.ends_with(**suffix))
+        .copied()
+        .unwrap_or_default();
+    let keep = NAME_LIMIT.saturating_sub(suffix.chars().count());
+    let head = base.chars().take(keep).collect::<String>();
+    format!("{}{suffix}", head.trim_end_matches('.'))
 }
 
 #[cfg(test)]

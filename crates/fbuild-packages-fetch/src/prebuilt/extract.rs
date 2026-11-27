@@ -277,11 +277,19 @@ fn write_entry<R: Read>(entry: &mut tar::Entry<'_, R>, root: &Path) -> Result<u6
         std::fs::create_dir_all(parent).map_err(|error| io_error(parent, error))?;
     }
     let mut file = std::fs::File::create(&target).map_err(|error| io_error(&target, error))?;
+    let executable = entry.header().mode().is_ok_and(|mode| mode & 0o111 != 0);
     let written = std::io::copy(entry, &mut file).map_err(|error| io_error(&target, error))?;
     if written != declared {
         return Err(ExtractError::Archive(format!(
             "{shown}: stored {written} of {declared} bytes"
         )));
+    }
+    // `File::create` cannot carry the archive's execute bits, and a tree that
+    // lost them is not the tree the publisher fingerprinted. Only the execute
+    // bits are applied - never setuid/setgid, whatever the header claims.
+    if executable {
+        fbuild_core::platform::fs::set_executable(&target)
+            .map_err(|error| io_error(&target, error))?;
     }
     Ok(written)
 }

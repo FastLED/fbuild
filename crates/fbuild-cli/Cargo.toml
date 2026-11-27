@@ -21,6 +21,7 @@ fbuild-daemon = { path = "../fbuild-daemon" }
 fbuild-deploy = { path = "../fbuild-deploy" }
 fbuild-library-select = { path = "../fbuild-library-select" }
 fbuild-packages = { path = "../fbuild-packages" }
+fbuild-packages-fetch = { path = "../fbuild-packages-fetch" }
 fbuild-paths = { path = "../fbuild-paths" }
 fbuild-serial = { path = "../fbuild-serial" }
 serialport = { workspace = true }

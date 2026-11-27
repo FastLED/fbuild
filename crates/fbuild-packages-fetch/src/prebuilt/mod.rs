@@ -26,6 +26,9 @@
 //! - a fetched hit that fails for a transient reason is retried once, and any
 //!   failure — transient or permanent — ends in a source build, never in a
 //!   build error (`serve`);
+//! - [`pack`] is the publisher's side and never the client's: it writes one
+//!   deterministic archive plus the release entry that describes it, and
+//!   uploads nothing (§8c makes that a maintainer action);
 //! - a release must name the exact tool, the exact version, a
 //!   `min_client_version` this client satisfies, a `none`/`<arch>`/`<abi>`
 //!   platform, the `fp-<first 16 hex>` flavor, a `fbuild-fp:<fingerprint>`
@@ -36,6 +39,7 @@ mod fetch;
 mod gc;
 mod lru;
 mod obtain;
+mod pack;
 mod reader;
 mod serve;
 pub use extract::{
@@ -52,6 +56,10 @@ pub use lru::{
     touch, touch_async, trees,
 };
 pub use obtain::{FP_DIR_PREFIX, ObtainError, Obtained, obtain, tree_root};
+pub use pack::{
+    Catalog, DEFAULT_PRODUCT, PackError, PackRequest, Packed, Release, ZSTD_LEVEL, bucket_key,
+    catalog, flavor_for, pack, release, tool_for,
+};
 pub use reader::Reader;
 use serde::{Deserialize, Serialize};
 pub use serve::{ATTEMPTS, Fallback, Served, serve};

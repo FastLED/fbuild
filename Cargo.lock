@@ -1119,6 +1119,7 @@ dependencies = [
  "fbuild-deploy",
  "fbuild-library-select",
  "fbuild-packages",
+ "fbuild-packages-fetch",
  "fbuild-paths",
  "fbuild-serial",
  "futures",
