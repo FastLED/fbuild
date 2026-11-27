@@ -107,6 +107,13 @@ pub struct BuildInfo {
     /// facts the terminal reports.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub shrink: Option<crate::shrink::record::ShrinkRecord>,
+    /// The prebuilt serving-ladder decision (FastLED/fbuild#2196 cell 4).
+    ///
+    /// `Some` on ESP32, where the ladder is consulted on every build, so the
+    /// `#1882` benchmark can read `used` and tell its two arms apart; `None`
+    /// on platforms that never consult it, whose JSON stays byte-identical.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub prebuilt_libs: Option<crate::prebuilt_record::PrebuiltLibsRecord>,
 }
 
 impl BuildInfo {
@@ -175,6 +182,7 @@ impl BuildInfo {
             env,
             aliases,
             shrink: None,
+            prebuilt_libs: None,
         }
     }
 
@@ -186,6 +194,20 @@ impl BuildInfo {
     #[must_use]
     pub fn with_shrink(mut self, record: Option<crate::shrink::record::ShrinkRecord>) -> Self {
         self.shrink = record;
+        self
+    }
+
+    /// Attach the build's prebuilt serving decision (FastLED/fbuild#2196).
+    ///
+    /// Builder-shaped for the same reason [`Self::with_shrink`] is: the
+    /// constructor and its call sites stay untouched, and a platform with no
+    /// prebuilt consult leaves the default `used: false` record.
+    #[must_use]
+    pub fn with_prebuilt_libs(
+        mut self,
+        record: Option<crate::prebuilt_record::PrebuiltLibsRecord>,
+    ) -> Self {
+        self.prebuilt_libs = record;
         self
     }
 }

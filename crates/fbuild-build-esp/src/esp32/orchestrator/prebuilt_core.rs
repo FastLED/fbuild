@@ -79,7 +79,8 @@ struct ObjectsManifest {
     units: std::collections::BTreeMap<String, String>,
 }
 
-/// What one consult produced, for the caller to log exactly once.
+/// What one consult produced, for the caller to log exactly once and to
+/// record in `build_info.json` (#2196 cell 4).
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub(super) struct Outcome {
     /// The honest line to print, if this build compiled from source.
@@ -88,6 +89,12 @@ pub(super) struct Outcome {
     pub hydrated: usize,
     /// The identity that was asked for, when the framework had one.
     pub fingerprint: Option<String>,
+    /// Where the served artifact came from (a catalog URL or its filename).
+    pub served_from: Option<String>,
+    /// The served artifact's identity key, when the ladder served a tree.
+    pub key: Option<String>,
+    /// SHA-256 of the served archive, when the ladder served a tree.
+    pub sha256: Option<String>,
 }
 
 impl Outcome {
@@ -110,6 +117,45 @@ impl Outcome {
             notice: Some(notice),
             hydrated: 0,
             fingerprint,
+            served_from: None,
+            key: None,
+            sha256: None,
+        }
+    }
+
+    /// The "prebuilt was never considered" outcome: no line, no record.
+    fn silent() -> Self {
+        Self {
+            notice: None,
+            hydrated: 0,
+            fingerprint: None,
+            served_from: None,
+            key: None,
+            sha256: None,
+        }
+    }
+
+    /// Push this consult's single log line, if it has one, onto `log`.
+    pub(super) fn log_into(&self, log: &std::sync::Mutex<fbuild_core::BuildLog>) {
+        let mut log = log.lock().unwrap_or_else(|error| error.into_inner());
+        for line in self.log_lines() {
+            log.push(line);
+        }
+    }
+
+    /// The `prebuilt_libs` block for `build_info.json` (decision 1, #2196 cell
+    /// 4): what this build linked against, and — for a source build — why.
+    pub(super) fn record(&self) -> crate::prebuilt_record::PrebuiltLibsRecord {
+        if self.hydrated > 0 {
+            crate::prebuilt_record::PrebuiltLibsRecord::served(
+                self.served_from
+                    .clone()
+                    .unwrap_or_else(|| "prebuilt".to_string()),
+                self.key.clone(),
+                self.sha256.clone(),
+            )
+        } else {
+            crate::prebuilt_record::PrebuiltLibsRecord::source(self.notice.clone())
         }
     }
 }
@@ -117,10 +163,10 @@ impl Outcome {
 /// Consult the ladder for this build's framework core objects and, on a hit,
 /// hydrate them into `core_build_dir`.
 ///
-/// Returns the lines this consult contributes to the build log: none when the
-/// policy does not opt in or the framework has no identity (a prebuilt core
-/// object is not even considered), one for a source build with its reason, and
-/// one for a served tree.
+/// Returns an [`Outcome`]: its log lines (none when the policy does not opt in
+/// or the framework has no identity — a prebuilt core object is not even
+/// considered — one for a source build with its reason, one for a served tree)
+/// plus the `prebuilt_libs` record the caller writes to `build_info.json`.
 pub(super) async fn consult_and_hydrate(
     params: &crate::BuildParams,
     board: &fbuild_config::BoardConfig,
@@ -129,9 +175,9 @@ pub(super) async fn consult_and_hydrate(
     toolchain: &fbuild_packages::PackageInfo,
     sources: impl IntoIterator<Item = NormalizedPath>,
     core_build_dir: &Path,
-) -> Vec<String> {
+) -> Outcome {
     if !params.prebuilt_libs.serves_core_objects() {
-        return Vec::new();
+        return Outcome::silent();
     }
     let sdk_variant = board.sdk_variant().to_string();
     let units: Vec<(String, NormalizedPath)> = sources
@@ -149,7 +195,7 @@ pub(super) async fn consult_and_hydrate(
         &sdk_variant,
         &units,
     ) else {
-        return Vec::new();
+        return Outcome::silent();
     };
     let cache_root = fbuild_paths::get_cache_root();
     consult(
@@ -161,7 +207,6 @@ pub(super) async fn consult_and_hydrate(
         core_build_dir,
     )
     .await
-    .log_lines()
 }
 
 /// Build the fingerprint for this framework, or `None` when it has no identity.
@@ -386,6 +431,15 @@ async fn consult(
                     notice: None,
                     hydrated,
                     fingerprint,
+                    served_from: Some(
+                        asset
+                            .urls
+                            .first()
+                            .cloned()
+                            .unwrap_or_else(|| asset.filename.clone()),
+                    ),
+                    key: Some(identity_key(&query)),
+                    sha256: Some(asset.sha256.clone()),
                 },
                 Ok(_) => Outcome::source(
                     "prebuilt core: the served tree covers none of this build's units".to_string(),
@@ -395,6 +449,20 @@ async fn consult(
             }
         }
     }
+}
+
+/// The published artifact's identity key — the same `{fw}/{version}/{arch}/fp-<sha16>`
+/// relative path [`fbuild_packages_fetch::prebuilt::tree_root`] extracts into and
+/// the bucket key mirrors, so a `build_info.json` record names the object a
+/// publisher uploaded.
+fn identity_key(query: &Query) -> String {
+    format!(
+        "{}/{}/{}/fp-{}",
+        query.framework,
+        query.version,
+        query.arch,
+        &query.fp[..16]
+    )
 }
 
 /// Copy a served tree's compiled objects to the paths this host's compiler

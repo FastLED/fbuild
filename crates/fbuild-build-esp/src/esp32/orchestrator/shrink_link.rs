@@ -158,6 +158,7 @@ pub(crate) fn emit_build_info(
     link_flags: &[String],
     libs: &[String],
     shrink: &ShrinkRecord,
+    prebuilt: Option<crate::prebuilt_record::PrebuiltLibsRecord>,
 ) {
     // Only platforms that produce a programmable image get metadata.
     let Some(prog) = crate::build_info::pick_prog_path(
@@ -182,7 +183,8 @@ pub(crate) fn emit_build_info(
         board.to_string(),
         env_name.to_string(),
     )
-    .with_shrink(Some(shrink.clone()));
+    .with_shrink(Some(shrink.clone()))
+    .with_prebuilt_libs(prebuilt);
     if let Err(e) = crate::build_info::emit_build_info(project_dir, env_name, &info) {
         tracing::warn!("emit_build_info failed: {e}");
     }

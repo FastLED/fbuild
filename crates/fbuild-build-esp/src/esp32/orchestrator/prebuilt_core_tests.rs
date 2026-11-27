@@ -286,3 +286,72 @@ async fn the_ladder_serves_a_published_tree_and_it_is_hydrated() {
     }
     task.abort();
 }
+
+/// #2196 cell 4: the record `build_info.json` carries. A served tree names the
+/// artifact it linked; a source build says `used: false` and keeps the ladder's
+/// reason, so the `#1882` benchmark can tell its two arms apart from the file.
+#[test]
+fn a_served_consult_records_the_artifact_it_hydrated() {
+    let outcome = Outcome {
+        notice: None,
+        hydrated: 2,
+        fingerprint: Some("a".repeat(64)),
+        served_from: Some("https://example.invalid/v1/core.tar.zst".to_string()),
+        key: Some("arduino-esp32/3.3.12/esp32c3/fp-0123456789abcdef".to_string()),
+        sha256: Some("b".repeat(64)),
+    };
+    let record = outcome.record();
+    assert!(record.used);
+    assert_eq!(record.source, "https://example.invalid/v1/core.tar.zst");
+    assert_eq!(
+        record.key.as_deref(),
+        Some("arduino-esp32/3.3.12/esp32c3/fp-0123456789abcdef")
+    );
+    assert_eq!(record.sha256.as_deref(), Some("b".repeat(64).as_str()));
+    assert_eq!(record.reason, None);
+}
+
+#[test]
+fn a_source_build_records_used_false_and_why() {
+    let outcome = Outcome::source(
+        "prebuilt core: no published tree for this identity (miss)".to_string(),
+        Some("c".repeat(64)),
+    );
+    let record = outcome.record();
+    assert!(!record.used);
+    assert_eq!(record.source, "source");
+    assert_eq!(record.key, None);
+    assert_eq!(record.sha256, None);
+    assert!(
+        record
+            .reason
+            .as_deref()
+            .is_some_and(|reason| reason.contains("no published tree")),
+        "a declined consult keeps its reason: {record:?}"
+    );
+}
+
+#[test]
+fn a_tree_that_covers_nothing_is_a_source_build() {
+    let outcome = Outcome::source("prebuilt core: covers none".to_string(), None);
+    assert!(!outcome.record().used);
+}
+
+/// The key the record names is the identity the publisher uploads under — the
+/// same `{framework}/{version}/{arch}/fp-<sha16>` relative path
+/// `prebuilt::tree_root` extracts into.
+#[test]
+fn the_recorded_key_is_the_published_tree_path() {
+    let fingerprint = "0123456789abcdef".repeat(4);
+    let query = Query {
+        framework: FRAMEWORK.to_string(),
+        arch: "esp32c3".to_string(),
+        abi: "esp32c3".to_string(),
+        version: "3.3.12".to_string(),
+        fp: fingerprint.clone(),
+    };
+    assert_eq!(
+        identity_key(&query),
+        format!("arduino-esp32/3.3.12/esp32c3/fp-{}", &fingerprint[..16])
+    );
+}

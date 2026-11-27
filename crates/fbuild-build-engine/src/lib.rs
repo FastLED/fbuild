@@ -36,6 +36,7 @@ pub mod parallel;
 pub mod perf_log;
 pub mod pipeline;
 pub mod prebuilt;
+pub mod prebuilt_record;
 pub mod provision;
 pub mod rebuild_signature;
 pub mod resolution;
