@@ -407,6 +407,52 @@ pub enum Commands {
         #[arg(long)]
         result: String,
     },
+    /// Internal publisher tool: pack a compiled core-object tree into the
+    /// prebuilt v1 archive and the Catalog entry that describes it. Hidden
+    /// because it is a maintainer action, and it never uploads anything.
+    /// FastLED/fbuild#1882.
+    #[command(name = "__prebuilt-pack", hide = true)]
+    PrebuiltPack {
+        /// Compiled core-object tree to publish.
+        #[arg(long)]
+        objects: String,
+        /// Directory to write the archive, release.json and the Catalog shard.
+        #[arg(long)]
+        out: String,
+        /// Bucket key vendor segment.
+        #[arg(long, default_value = "espressif")]
+        vendor: String,
+        /// Bucket key product segment (default: the core-object product).
+        #[arg(long)]
+        product: Option<String>,
+        /// Bucket key channel: release or nightly.
+        #[arg(long, default_value = "release")]
+        channel: String,
+        /// Upstream ref verbatim, e.g. 3.3.12.
+        #[arg(long)]
+        reference: String,
+        /// Chip the objects were compiled for, e.g. esp32dev.
+        #[arg(long)]
+        chip: String,
+        /// Framework the client queries with.
+        #[arg(long, default_value = "arduino-esp32")]
+        framework: String,
+        /// 64-hex fingerprint from Esp32Framework::prebuilt_core_plan.
+        #[arg(long)]
+        fingerprint: String,
+        /// Client platform arch, e.g. esp32.
+        #[arg(long)]
+        arch: String,
+        /// Client platform ABI, e.g. gcc@14.2.0.
+        #[arg(long)]
+        abi: String,
+        /// HTTPS base URL the key is served under, without a trailing slash.
+        #[arg(long = "base-url")]
+        base_url: String,
+        /// Oldest client that may read the entry.
+        #[arg(long, default_value_t = 1)]
+        min_client_version: u32,
+    },
     /// Monitor serial output
     Monitor {
         project_dir: Option<String>,

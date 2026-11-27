@@ -45,6 +45,7 @@ pub mod port_doctor_fix;
 pub mod port_scan;
 mod port_scan_usb_problems;
 mod prebuilt_notice;
+mod prebuilt_pack;
 pub mod purge;
 pub mod reset;
 pub mod serial_probe;
