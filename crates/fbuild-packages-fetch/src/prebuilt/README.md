@@ -20,6 +20,8 @@ current Index descriptor.
 | `lru_tests.rs` | real trees and markers: candidate rule, root guard, recency order, grace period, removal ceiling, opt-in budget |
 | `obtain.rs` | `tree_root`/`obtain`: the identity → tree call site (where a tree lives, reuse vs refuse) |
 | `obtain_tests.rs` | local HTTP + cache layout: reuse without a request, conflict refused untouched, sweep covers the layout |
+| `serve.rs` | `serve`: the serving decision — prebuilt hit, one retry for a transient failure, otherwise `Served::Source` with a printable reason (no error escapes) |
+| `serve_tests.rs` | a failing-then-healthy HTTP server: retried once, dead source falls back after exactly two fetches, permanent refusals cost zero requests |
 | `tests.rs` | local axum fixtures: exact hit, miss, cached/network descriptor checks, operator order |
 
 Rules that decide a hit:
@@ -79,5 +81,15 @@ Anything else is a `Resolution::Miss` and the caller builds from source.
    unparseable budget disables the LRU entirely, so no existing cache is pruned
    by surprise. The daemon runs it on the same 6 h schedule as the sweep.
 
-A daemon-wide single-flight and a source fallback with one retry are not in this
-module yet.
+9. `serve` is the only entry point a build should call, and it never returns
+   an error. A transient failure (transport, exhausted sources, integrity,
+   archive or IO error, a cancelled extraction) is retried **once** — the
+   fetcher keeps its partial bytes so the retry resumes, and each extraction
+   attempt stages in its own directory — while a permanent one (an invalid
+   identity, a flavor v1 refuses, an archive no descriptor can match, a foreign
+   tree already at the path) is refused without spending a request or a second
+   attempt. Everything that does not serve returns `Served::Source` with the
+   attempts named, so the caller compiles framework from source and prints one
+   honest line.
+
+A daemon-wide single-flight is not in this module yet.

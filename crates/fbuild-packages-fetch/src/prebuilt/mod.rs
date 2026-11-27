@@ -23,6 +23,9 @@
 //! - [`prune`] evicts the least-recently-used tree when the prebuilt root
 //!   exceeds the operator's budget, timing recency by marker modification time
 //!   and keeping every tree inside the grace period;
+//! - a fetched hit that fails for a transient reason is retried once, and any
+//!   failure — transient or permanent — ends in a source build, never in a
+//!   build error (`serve`);
 //! - a release must name the exact tool, the exact version, a
 //!   `min_client_version` this client satisfies, a `none`/`<arch>`/`<abi>`
 //!   platform, the `fp-<first 16 hex>` flavor, a `fbuild-fp:<fingerprint>`
@@ -34,6 +37,7 @@ mod gc;
 mod lru;
 mod obtain;
 mod reader;
+mod serve;
 pub use extract::{
     Existing, ExtractError, ExtractedTree, MARKER, MAX_EXTRACTED_BYTES, existing_tree, extract,
     extract_async, extract_with_limit,
@@ -50,6 +54,7 @@ pub use lru::{
 pub use obtain::{FP_DIR_PREFIX, ObtainError, Obtained, obtain, tree_root};
 pub use reader::Reader;
 use serde::{Deserialize, Serialize};
+pub use serve::{ATTEMPTS, Fallback, Served, serve};
 
 /// Why a query could not be resolved. Never a silent upgrade to a nearby hit.
 #[derive(Debug, Clone, PartialEq, Eq)]
