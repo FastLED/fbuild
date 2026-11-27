@@ -53,19 +53,15 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let start = Instant::now();
         // Env-gated per-phase timer (FBUILD_PERF_LOG=1); zero overhead when unset.
         let mut perf = crate::perf_log::PerfTimer::new("esp32-orchestrator");
-
         // Wrapper-binary discovery removed in FastLED/fbuild#800 â€” every
         // compile dispatches through the embedded zccache service.
         let compiler_cache: Option<std::path::PathBuf> = None;
-
         // 1-2. Parse config, load board, setup build dirs, resolve src dir, collect flags
         let mut ctx = crate::pipeline::BuildContext::new_with_perf(params, Some(&mut perf)).await?;
-
         // An opted-in environment is finished here (FastLED/fbuild#1971).
         if build_system == EspBuildSystem::EspIdf {
             return espidf_delegate::delegate_build(params, ctx).await;
         }
-
         // Compute eh_frame strip policy once per build (FastLED/fbuild#243).
         // Reads sdkconfig from the project dir (ESP32 only) so panic-backtrace
         // / gdbstub users automatically Preserve.
@@ -76,7 +72,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
             params.profile,
             Some(&sdkconfig),
         );
-
         // 3. Load MCU config from embedded JSON
         let mcu_config = get_mcu_config(&ctx.board.mcu)?;
 
@@ -86,7 +81,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
             ctx.board.mcu,
             mcu_config.architecture
         );
-
         // 4-6. Resolve platform, toolchain, and framework.
         // Look up the env's `platform_packages` overrides so the platform
         // (`platform-espressif32`) and framework (`framework-arduinoespressif32`)
@@ -115,17 +109,13 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 &ctx.board.mcu,
             ));
         let mcu_config = fixups::for_toolchain(mcu_config, &toolchain_info);
-        let _toolchain_cache_dir = fbuild_packages::Package::get_info(&toolchain).install_path;
-        let _framework_cache_dir = fbuild_packages::Package::get_info(&framework).install_path;
         // Aliases for build dirs (already set up by BuildContext::new())
         let build_dir = &ctx.build_dir;
         let core_build_dir = &ctx.core_build_dir;
         let src_build_dir = &ctx.src_build_dir;
-
         // SDK directory selector: matches the chip's ROM revision (e.g.
         // `esp32p4_es` for ESP32-P4 eco0â€“eco2). Falls back to `mcu`.
         let sdk_variant = ctx.board.sdk_variant().to_string();
-
         // Read link-affecting config before the expensive include/library/source discovery steps
         // so the no-op fast path can return early on warm builds.
         let sdk_ld_flags = fixups::effective_sdk_ld_flags(
@@ -239,7 +229,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 ));
             }
         }
-
         // FastLED/fbuild#800: the `zccache start` daemon-spawn was deleted.
         // The embedded service is part of fbuild-daemon's own lifecycle.
         // Toolchain and framework install independently (FastLED/fbuild#1559).
@@ -328,7 +317,6 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let lib_ignore = ctx.config.get_lib_ignore(&params.env_name)?;
 
         use fbuild_packages::Toolchain;
-
         // Read user build_flags early â€” needed for both library and sketch compilation.
         // SDK defines (from flags/defines) are prepended so user flags can override them.
         let mut user_flags = sdk_defines.clone();
@@ -633,9 +621,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 ),
                 Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
                 Err(error) => tracing::warn!(
-                    "failed to remove framework core cache {}: {}",
-                    core_cache.path().display(),
-                    error
+                    "failed to remove framework core cache {}: {error}",
+                    core_cache.path().display()
                 ),
             }
         }
@@ -664,10 +651,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
             let _g = perf.phase("core-cache-hydrate");
             let outcome =
                 core_cache.hydrate(core_build_dir, &compiler, &all_core_sources, &user_overlay);
-            build_log_mutex
-                .lock()
-                .unwrap_or_else(|e| e.into_inner())
-                .push(core_cache.hydrate_summary(&outcome));
+            let mut log = build_log_mutex.lock().unwrap_or_else(|e| e.into_inner());
+            log.push(core_cache.hydrate_summary(&outcome));
             match &outcome {
                 Ok(stats) if stats.copied > 0 || stats.skipped > 0 => tracing::info!(
                     "framework core cache hydrate key={} copied={} skipped={} from {}",
@@ -676,18 +661,34 @@ impl BuildOrchestrator for Esp32Orchestrator {
                     stats.skipped,
                     core_cache.path().display()
                 ),
-                Ok(_) => tracing::debug!(
-                    "framework core cache miss key={} at {}",
+                Ok(_) => {}
+                Err(e) => tracing::warn!(
+                    "framework core cache hydrate failed key={} at {}: {e}",
                     core_cache.key(),
                     core_cache.path().display()
                 ),
-                Err(e) => tracing::warn!(
-                    "framework core cache hydrate failed key={} at {}: {}",
-                    core_cache.key(),
-                    core_cache.path().display(),
-                    e
-                ),
             }
+        }
+        // #1882 / #2196 cell 3: ask the exact-fingerprint ladder for this build's
+        // compiled core objects before the core is compiled (opt-in; a failure
+        // is one log line, never a build error).
+        let prebuilt_lines = super::prebuilt_core::consult_and_hydrate(
+            params,
+            &ctx.board,
+            &framework,
+            &compiler,
+            &toolchain_info,
+            all_core_sources
+                .iter()
+                .map(fbuild_core::path::NormalizedPath::new),
+            core_build_dir,
+        )
+        .await;
+        for line in prebuilt_lines {
+            build_log_mutex
+                .lock()
+                .unwrap_or_else(|e| e.into_inner())
+                .push(line);
         }
         let gate = fbuild_packages::library::library_compiler::job_gate(jobs);
         let local_libraries = crate::framework_libs::select_local_libraries(

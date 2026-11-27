@@ -1040,12 +1040,14 @@ name = "fbuild-build-esp"
 version = "2.5.56"
 dependencies = [
  "async-trait",
+ "axum",
  "blake3",
  "fbuild-build-engine",
  "fbuild-config",
  "fbuild-core",
  "fbuild-library-select",
  "fbuild-packages",
+ "fbuild-packages-fetch",
  "fbuild-paths",
  "fbuild-test-support",
  "fbuild-toolchain",
@@ -1070,6 +1072,7 @@ dependencies = [
  "walkdir",
  "zccache",
  "zip",
+ "zstd",
 ]
 
 [[package]]
