@@ -37,6 +37,7 @@ pub(crate) mod helpers;
 mod job_pool;
 mod local_libs;
 mod packages;
+mod prebuilt_core;
 mod prefix_map;
 mod shrink_link;
 
