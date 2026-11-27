@@ -90,6 +90,11 @@ pub struct BuildRequest {
     /// See FastLED/fbuild#1459.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub shrink: Option<String>,
+    /// Resolved prebuilt-artifact policy (`disabled`/`libs`/`core`), forwarded
+    /// because the daemon does not inherit the caller's flags or environment
+    /// (FastLED/fbuild#2196, decision 1). Absent = `libs`.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub prebuilt_libs: Option<String>,
 }
 
 /// POST /api/deploy
@@ -1232,5 +1237,55 @@ mod tests {
         assert_eq!(req.emulator.unwrap(), "avr8js");
         assert!(!req.show_timestamp);
         assert_eq!(req.request_id.unwrap(), "test-1");
+    }
+
+    /// Decision 1's new field is `#[serde(default)]`: an older CLI that never
+    /// sends `prebuilt_libs` must keep building with the default policy rather
+    /// than be rejected (FastLED/fbuild#2196).
+    #[test]
+    fn build_request_without_prebuilt_libs_deserializes_to_none() {
+        let json = r#"{
+            "project_dir": "/tmp/p",
+            "environment": "uno",
+            "jobs": null,
+            "profile": null,
+            "request_id": null,
+            "caller_pid": null,
+            "caller_cwd": null,
+            "symbol_analysis_path": null
+        }"#;
+        let req: BuildRequest = serde_json::from_str(json).unwrap();
+        assert!(req.prebuilt_libs.is_none());
+        assert_eq!(
+            req.prebuilt_libs
+                .as_deref()
+                .and_then(fbuild_build::prebuilt::PrebuiltPolicy::parse)
+                .unwrap_or_default(),
+            fbuild_build::prebuilt::PrebuiltPolicy::Libs
+        );
+    }
+
+    /// The daemon takes the verdict from the REQUEST, never from its own
+    /// environment: the spelling is the policy's own stable string.
+    #[test]
+    fn build_request_carries_the_resolved_policy_spelling() {
+        let json = r#"{
+            "project_dir": "/tmp/p",
+            "environment": "uno",
+            "jobs": null,
+            "profile": null,
+            "request_id": null,
+            "caller_pid": null,
+            "caller_cwd": null,
+            "symbol_analysis_path": null,
+            "prebuilt_libs": "disabled"
+        }"#;
+        let req: BuildRequest = serde_json::from_str(json).unwrap();
+        assert_eq!(
+            req.prebuilt_libs
+                .as_deref()
+                .and_then(fbuild_build::prebuilt::PrebuiltPolicy::parse),
+            Some(fbuild_build::prebuilt::PrebuiltPolicy::Disabled)
+        );
     }
 }

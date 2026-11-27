@@ -258,6 +258,13 @@ pub async fn build(
         let fired_normal_terminal = Arc::new(AtomicBool::new(false));
 
         let params = fbuild_build::BuildParams {
+            // Decision 1: the request carries the verdict; the daemon never
+            // reads its own environment for it (FastLED/fbuild#2196).
+            prebuilt_libs: req
+                .prebuilt_libs
+                .as_deref()
+                .and_then(fbuild_build::prebuilt::PrebuiltPolicy::parse)
+                .unwrap_or_default(),
             project_dir: project_dir.clone(),
             shrink: req
                 .shrink
@@ -712,6 +719,13 @@ pub async fn build(
         };
 
         let params = fbuild_build::BuildParams {
+            // Decision 1: the request carries the verdict; the daemon never
+            // reads its own environment for it (FastLED/fbuild#2196).
+            prebuilt_libs: req
+                .prebuilt_libs
+                .as_deref()
+                .and_then(fbuild_build::prebuilt::PrebuiltPolicy::parse)
+                .unwrap_or_default(),
             project_dir: project_dir.clone(),
             shrink: req
                 .shrink

@@ -44,6 +44,7 @@ void loop() { digitalWrite(LED_BUILTIN, HIGH); }
         .join(fbuild_paths::BUILD_DIR_NAME)
         .join("pico/release");
     let params = BuildParams {
+        prebuilt_libs: Default::default(),
         project_dir: project.to_path_buf(),
         shrink: Default::default(),
         env_name: "pico".into(),
@@ -137,6 +138,7 @@ void loop() {}
 async fn assert_mbed_build(template: BuildParams) {
     let (project, _dependency) = mbed_fixture();
     let params = BuildParams {
+        prebuilt_libs: Default::default(),
         project_dir: project.path().to_path_buf(),
         env_name: "mbed".into(),
         extra_build_flags: vec!["-DMBED_LIBRARY_FLAG=42".into()],
@@ -164,6 +166,7 @@ async fn assert_mbed_build(template: BuildParams) {
     assert!(result.elf_path.expect("Mbed ELF").is_file());
     assert!(result.size_info.unwrap().total_flash > 0);
     let clean = BuildParams {
+        prebuilt_libs: Default::default(),
         clean_only: true,
         ..params
     };

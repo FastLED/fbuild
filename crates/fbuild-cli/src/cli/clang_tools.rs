@@ -57,6 +57,8 @@ pub async fn run_iwyu(
             None,
             false,                                 // bloat_analysis
             fbuild_build::shrink::ShrinkMode::Off, // compile_commands only
+            // compile_commands.json only: the fetch shape is irrelevant.
+            fbuild_build::prebuilt::PrebuiltPolicy::default(),
         )
         .await?;
         if !db_path.exists() {
@@ -529,6 +531,7 @@ pub async fn run_clang_tool(
         None,
         false, // bloat_analysis
         fbuild_build::shrink::ShrinkMode::Auto,
+        fbuild_build::prebuilt::PrebuiltPolicy::default(),
     )
     .await?;
 

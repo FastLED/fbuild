@@ -290,9 +290,12 @@ pub async fn async_main() {
             // Decision 8b's flags are resolved here, at the argv/env boundary
             // (the daemon never reads the caller's environment), and reported
             // honestly: the core-object serving ladder does not exist yet.
-            super::prebuilt_notice::report_build_prebuilt(
-                super::prebuilt_notice::resolve_from_cli(cli.no_prebuilt_libs, cli.prebuilt_core),
-            );
+            // The same resolved verdict is both reported and FORWARDED: a flag
+            // that changes the notice but not the request is the silent no-op
+            // FastLED/fbuild#2196 exists to remove.
+            let prebuilt_policy =
+                super::prebuilt_notice::resolve_from_cli(cli.no_prebuilt_libs, cli.prebuilt_core);
+            super::prebuilt_notice::report_build_prebuilt(prebuilt_policy);
             if platformio {
                 pio_build(
                     &project_dir,
@@ -318,6 +321,7 @@ pub async fn async_main() {
                     output_dir,
                     bloat_analysis,
                     shrink_mode,
+                    prebuilt_policy,
                 )
                 .await
             }

@@ -211,6 +211,16 @@ pub struct BuildParams {
     /// because the daemon does not inherit the caller's flags. Distinct from
     /// `extra_build_flags`: shrinkers change the link, not the compile line.
     pub shrink: crate::shrink::ShrinkMode,
+    /// What this build may use from the prebuilt framework artifact store
+    /// (`docs/design/artifact-serving-decisions.md` decision 1).
+    ///
+    /// Resolved once at the CLI boundary from `--no-prebuilt-libs` /
+    /// `--prebuilt-core` and forwarded per request like `shrink`, because the
+    /// daemon does not inherit the caller's flags *or* its environment. The
+    /// ESP32 orchestrator turns it into the fetch layer's
+    /// `PrebuiltLibsPolicy`, which decides whether the SDK libs download may be
+    /// the per-chip prebuilt slice (FastLED/fbuild#2196).
+    pub prebuilt_libs: crate::prebuilt::PrebuiltPolicy,
     /// The CLI caller's PATH, forwarded per request so bare-name tool
     /// spawns (esptool, python, objcopy) resolve against the caller's
     /// environment instead of the daemon's spawn-time PATH

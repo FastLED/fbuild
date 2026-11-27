@@ -9,7 +9,7 @@ pub mod cache;
 mod chip_slice;
 mod compact_install;
 mod variants;
-pub use variants::FetchRequest;
+pub use variants::{FetchRequest, PrebuiltLibsPolicy};
 pub mod cache_archive;
 pub mod component_id;
 pub mod disk_cache;

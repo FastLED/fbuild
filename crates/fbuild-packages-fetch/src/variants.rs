@@ -40,6 +40,46 @@ fn slice_shard(name: &str) -> Option<&'static str> {
     }
 }
 
+/// Whether a fetch may be satisfied by a per-chip prebuilt **slice**, or must
+/// take the whole published bundle.
+///
+/// Decision 1 of `docs/design/artifact-serving-decisions.md` makes
+/// `--no-prebuilt-libs` the only public opt-out, and requires it to change what
+/// is fetched rather than only what is printed. A per-chip slice *is* the
+/// prebuilt artifact (`lib/<chip>` is the bulk of the tree), so a build that
+/// must compile framework libraries from source cannot use one: it needs the
+/// complete published bundle (FastLED/fbuild#2196).
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum PrebuiltLibsPolicy {
+    /// Default: the per-chip slice is the smaller download.
+    #[default]
+    Slices,
+    /// `--no-prebuilt-libs` / `FBUILD_NO_PREBUILT_LIBS`: never a slice.
+    WholeBundle,
+}
+
+impl PrebuiltLibsPolicy {
+    /// The policy a build request's `fetches_prebuilt_libs()` verdict implies.
+    ///
+    /// The decision itself is made once, at the CLI boundary
+    /// (`fbuild_build::prebuilt::PrebuiltPolicy`); the fetch layer only needs
+    /// the boolean, so it takes the verdict and not the whole enum.
+    #[must_use]
+    pub fn from_fetches_libs(fetches_prebuilt_libs: bool) -> Self {
+        if fetches_prebuilt_libs {
+            Self::Slices
+        } else {
+            Self::WholeBundle
+        }
+    }
+
+    /// Whether the per-chip slice branch may be selected.
+    #[must_use]
+    pub fn allows_slices(self) -> bool {
+        matches!(self, Self::Slices)
+    }
+}
+
 /// A package fetch with an optional board MCU hint. ESP SDK libs and the
 /// unified Xtensa toolchain use it.
 pub struct FetchRequest<'a> {
@@ -47,6 +87,9 @@ pub struct FetchRequest<'a> {
     pub version: &'a str,
     pub url: &'a str,
     pub variant: Option<&'a str>,
+    /// Whether this request may take a per-chip slice
+    /// (FastLED/fbuild#2196, decision 1).
+    pub prebuilt_libs: PrebuiltLibsPolicy,
 }
 
 struct Selection {
@@ -67,9 +110,15 @@ fn select(
     entry: Option<&MirrorEntry>,
     base: &str,
 ) -> Result<Selection> {
+    if !request.prebuilt_libs.allows_slices() && slice_shard(request.name).is_some() {
+        tracing::info!(
+            "prebuilt libs disabled; {} takes the whole published bundle, never a chip slice",
+            request.name
+        );
+    }
     let chip = request
         .variant
-        .filter(|_| slice_shard(request.name).is_some())
+        .filter(|_| request.prebuilt_libs.allows_slices() && slice_shard(request.name).is_some())
         .map(chip_name);
     if let (Some(chip), Some(entry)) = (&chip, entry) {
         if !entry.yanked {
@@ -135,6 +184,7 @@ pub(crate) async fn published_slice(
         version,
         url,
         variant: Some(chip),
+        prebuilt_libs: PrebuiltLibsPolicy::Slices,
     };
     let selection = select(
         &request,
@@ -269,6 +319,14 @@ mod tests {
             version: "3.3.5",
             url: VENDOR,
             variant: Some(chip),
+            prebuilt_libs: PrebuiltLibsPolicy::default(),
+        }
+    }
+
+    fn without_prebuilt(chip: &str) -> FetchRequest<'_> {
+        FetchRequest {
+            prebuilt_libs: PrebuiltLibsPolicy::WholeBundle,
+            ..request(chip)
         }
     }
 
@@ -307,6 +365,7 @@ mod tests {
             version: "14.2.0_20241119",
             url: VENDOR,
             variant: Some(chip),
+            prebuilt_libs: PrebuiltLibsPolicy::default(),
         };
         let sliced = select(&toolchain("ESP32-S3"), Some(&entry), BASE).unwrap();
         assert_eq!(
@@ -400,6 +459,47 @@ mod tests {
         let mut other = request("esp32s3");
         other.name = "toolchain";
         assert!(select(&other, Some(&entry), BASE).unwrap().slice.is_none());
+    }
+
+    /// Decision 1's opt-out must change the SELECTION, not only the notice
+    /// line (FastLED/fbuild#2196). With prebuilt libs disabled the fetch layer
+    /// takes the whole published bundle and never the `@esp-libs` chip slice --
+    /// a slice *is* the prebuilt artifact the user just refused.
+    #[tokio::test]
+    async fn disabled_prebuilt_libs_select_the_whole_bundle_never_a_slice() {
+        let entry = match manifest(true).entry_lookup(VENDOR, None).await {
+            EntryLookup::Found(entry) => entry,
+            _ => panic!("missing entry"),
+        };
+        // The control: the same request with the default policy takes the slice,
+        // so the assertion below cannot pass for the wrong reason.
+        let sliced = select(&request("ESP32-S3"), Some(&entry), BASE).unwrap();
+        assert_eq!(sliced.url, "https://bucket.example/slices/s3.tar.zst");
+
+        let whole = select(&without_prebuilt("ESP32-S3"), Some(&entry), BASE).unwrap();
+        assert_eq!(whole.url, "https://mirror.example/whole.tar.xz");
+        assert!(whole.slice.is_none(), "a slice was selected while disabled");
+        assert!(whole.chip.is_none(), "the selection is still chip-scoped");
+
+        // No mirrored entry: the vendor URL, and still no slice.
+        let direct = select(&without_prebuilt("ESP32-S3"), None, BASE).unwrap();
+        assert_eq!(direct.url, VENDOR);
+        assert!(direct.slice.is_none());
+    }
+
+    #[test]
+    fn policy_from_the_build_request_verdict() {
+        assert_eq!(
+            PrebuiltLibsPolicy::from_fetches_libs(true),
+            PrebuiltLibsPolicy::Slices
+        );
+        assert_eq!(
+            PrebuiltLibsPolicy::from_fetches_libs(false),
+            PrebuiltLibsPolicy::WholeBundle
+        );
+        assert_eq!(PrebuiltLibsPolicy::default(), PrebuiltLibsPolicy::Slices);
+        assert!(PrebuiltLibsPolicy::default().allows_slices());
+        assert!(!PrebuiltLibsPolicy::WholeBundle.allows_slices());
     }
 
     #[tokio::test]

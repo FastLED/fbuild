@@ -15,6 +15,7 @@ use fbuild_core::platformio_package::{
     PackageKind as RegistryPackageKind, PackageSource, RegistrySpec, ResolvedPayload,
     parse_package_spec,
 };
+use fbuild_packages::PrebuiltLibsPolicy;
 use sha2::{Digest, Sha256};
 
 use super::super::mcu_config::{Esp32McuConfig, get_mcu_config};
@@ -37,6 +38,7 @@ pub(super) async fn resolve_pioarduino_packages(
     board: &fbuild_config::BoardConfig,
     mcu_config: &Esp32McuConfig,
     env_config: Option<&HashMap<String, String>>,
+    prebuilt_libs: PrebuiltLibsPolicy,
 ) -> Result<(
     fbuild_packages::toolchain::Esp32Toolchain,
     fbuild_packages::library::Esp32Framework,
@@ -93,6 +95,7 @@ pub(super) async fn resolve_pioarduino_packages(
             sdk_variant,
             libs_url.as_deref(),
             skeleton_url.as_deref(),
+            prebuilt_libs,
         )
         .await
     };
@@ -779,7 +782,18 @@ async fn provision_sdk_libs(
         row.status = ProvisionStatus::Present;
     } else if mode.fetches() {
         if framework_ready {
-            match ensure_sdk_libs(framework, mcu, sdk_variant, libs_url, skeleton_url).await {
+            match ensure_sdk_libs(
+                framework,
+                mcu,
+                sdk_variant,
+                libs_url,
+                skeleton_url,
+                // `fbuild install` provisions exactly what a default build
+                // fetches; the opt-out is a per-build decision.
+                PrebuiltLibsPolicy::default(),
+            )
+            .await
+            {
                 Ok(()) => row.status = ProvisionStatus::Fetched,
                 Err(error) => {
                     row.status = ProvisionStatus::Failed;

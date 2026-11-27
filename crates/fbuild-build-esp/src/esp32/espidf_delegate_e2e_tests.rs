@@ -74,6 +74,7 @@ fn params(
     env_name: &str,
 ) -> crate::BuildParams {
     crate::BuildParams {
+        prebuilt_libs: Default::default(),
         project_dir: project.as_path().to_path_buf(),
         shrink: Default::default(),
         env_name: env_name.into(),

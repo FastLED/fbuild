@@ -65,6 +65,11 @@ pub struct BuildRequest {
     /// Resolved `--shrink` mode forwarded to the daemon (FastLED/fbuild#1459).
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub shrink: Option<String>,
+    /// Resolved prebuilt-artifact policy (`disabled`/`libs`/`core`), forwarded
+    /// because the daemon does not inherit the caller's flags or environment
+    /// (FastLED/fbuild#2196, decision 1).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub prebuilt_libs: Option<String>,
 }
 
 /// `POST /api/install-deps` request. Mirrors

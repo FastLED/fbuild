@@ -185,6 +185,7 @@ pub async fn deploy(
             fbuild_core::BuildProfile::Release,
         );
         let params = fbuild_build::BuildParams {
+            prebuilt_libs: Default::default(),
             project_dir: project_dir.clone(),
             shrink: Default::default(),
             env_name: env_name.clone(),

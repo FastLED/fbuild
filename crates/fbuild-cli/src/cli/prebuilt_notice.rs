@@ -15,8 +15,11 @@
 //!   build compiles the framework from source. Said as a warning, because the
 //!   requested behaviour is missing.
 //! - `--no-prebuilt-libs` (or `FBUILD_NO_PREBUILT_LIBS=1`) — the build
-//!   compiles framework libraries from source; nothing prebuilt is fetched.
-//!   Said as a plain result line, because that *is* what happens.
+//!   compiles framework libraries from source and the SDK download takes the
+//!   whole published bundle instead of a pre-built per-chip slice, so the
+//!   verdict now changes the fetch itself and not only this line
+//!   (FastLED/fbuild#2196). Said as a plain result line, because that *is*
+//!   what happens.
 //!
 //! The default ([`PrebuiltPolicy::Libs`]) stays silent: it is what every build
 //! does, and a line per build would be noise. Both notices disappear as the
@@ -31,8 +34,9 @@ pub fn decision_notice(policy: PrebuiltPolicy) -> Option<String> {
     match policy {
         PrebuiltPolicy::Libs => None,
         PrebuiltPolicy::Disabled => Some(
-            "prebuilt: --no-prebuilt-libs — compiling framework libraries from source \
-             (no prebuilt archives are fetched; FastLED/fbuild#1882)"
+            "prebuilt: --no-prebuilt-libs — compiling framework libraries from source; \
+             the SDK download takes the whole published bundle instead of a \
+             pre-built per-chip slice (FastLED/fbuild#1882)"
                 .to_string(),
         ),
         PrebuiltPolicy::Core => Some(
@@ -87,6 +91,7 @@ mod tests {
         let line = decision_notice(PrebuiltPolicy::Disabled).expect("disabled notice");
         assert!(line.contains("--no-prebuilt-libs"), "{line}");
         assert!(line.contains("from source"), "{line}");
+        assert!(line.contains("whole published bundle"), "{line}");
         assert!(!line.starts_with("WARNING:"), "{line}");
     }
 }

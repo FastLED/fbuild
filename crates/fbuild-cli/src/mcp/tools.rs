@@ -112,6 +112,7 @@ pub(super) async fn execute_tool(
                 generate_compiledb: false,
                 compiledb_only: false,
                 shrink: None,
+                prebuilt_libs: None,
                 request_id: Some(uuid_v4()),
                 caller_pid,
                 caller_cwd,

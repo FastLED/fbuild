@@ -301,6 +301,7 @@ pub async fn test_emu(
         .with_flatten_env(req.flatten_env)
         .resolve();
         let params = fbuild_build::BuildParams {
+            prebuilt_libs: Default::default(),
             project_dir: project_dir.clone(),
             shrink: Default::default(),
             env_name: env_name.clone(),

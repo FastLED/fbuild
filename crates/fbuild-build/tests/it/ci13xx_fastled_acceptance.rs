@@ -34,6 +34,7 @@ __attribute__((noinline)) void loop() { ci13xx_spi_scalar_entry(static_cast<unsi
 
 pub(super) fn params(project: &Path) -> BuildParams {
     BuildParams {
+        prebuilt_libs: Default::default(),
         project_dir: project.into(),
         env_name: "ci1306".into(),
         build_dir: project

@@ -26,6 +26,7 @@ async fn pilot_fetches_the_chip_slice_not_the_whole_bundle() {
         version: "3.3.5",
         url: VENDOR,
         variant: Some("ESP32-S3"),
+        prebuilt_libs: fbuild_packages_fetch::PrebuiltLibsPolicy::Slices,
     };
     let path = request.fetch(dir.path()).await.expect("slice fetch");
     let size = std::fs::metadata(&path).unwrap().len();
@@ -59,6 +60,7 @@ async fn pilot_pioarduino_3_3_12_selects_the_chip_slice() {
         version: "core-3.3.12",
         url: VENDOR_3_3_12,
         variant: Some("esp32s3"),
+        prebuilt_libs: fbuild_packages_fetch::PrebuiltLibsPolicy::Slices,
     }
     .fetch(dir.path())
     .await
