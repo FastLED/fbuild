@@ -54,9 +54,7 @@ pub async fn run_build(
 ) -> fbuild_core::Result<()> {
     // FBUILD_PERF_LOG=1 enables coarse CLI-side timing (daemon handshake +
     // round-trip). Zero-overhead when unset.
-    let perf_enabled = std::env::var("FBUILD_PERF_LOG")
-        .map(|v| !v.is_empty() && v != "0")
-        .unwrap_or(false);
+    let perf_enabled = std::env::var("FBUILD_PERF_LOG").is_ok_and(|v| !v.is_empty() && v != "0");
     let cli_start = std::time::Instant::now();
     let handshake_start = std::time::Instant::now();
     daemon_client::ensure_daemon_running().await?;
