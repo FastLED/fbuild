@@ -22,8 +22,8 @@ current Index descriptor.
 | `obtain_tests.rs` | local HTTP + cache layout: reuse without a request, conflict refused untouched, sweep covers the layout |
 | `serve.rs` | `serve`: the serving decision — prebuilt hit, one retry for a transient failure, otherwise `Served::Source` with a printable reason (no error escapes) |
 | `serve_tests.rs` | a failing-then-healthy HTTP server: retried once, dead source falls back after exactly two fetches, permanent refusals cost zero requests |
-| `pack.rs` | `pack`/`bucket_key`/`release`/`catalog`: the publisher's side — one deterministic archive, the decision-2 key, and the entry the client reads (never uploads, §8c) |
-| `pack_tests.rs` | real objects trees: key shape, determinism across mtimes, a full pack → serve → resolve → fetch → extract round trip, refusal cases |
+| `pack.rs` | `pack`/`bucket_key`/`release`/`catalog`: the publisher's side — one deterministic archive carrying the required `objects.json` unit manifest, the decision-2 key, and the entry the client reads (never uploads, §8c) |
+| `pack_tests.rs` | real objects trees: key shape, determinism across mtimes, a full pack → serve → resolve → fetch → extract round trip, the unit manifest (written, missing object, unsafe id, duplicate, occupied), refusal cases |
 | `tests.rs` | local axum fixtures: exact hit, miss, cached/network descriptor checks, operator order |
 
 Rules that decide a hit:
@@ -108,5 +108,16 @@ Anything else is a `Resolution::Miss` and the caller builds from source.
     killed run leaves nothing publishable. Nothing here uploads: decision 8c
     makes every bucket write a maintainer action. The command that drives it is
     hidden (`fbuild __prebuilt-pack`).
+
+11. A packed tree carries `objects.json` (`schema: 1`, `units: {unit-id:
+    object-file}`), because without it nothing is servable: the client hydrates
+    a unit only when that map names one of its units. The map is required and
+    non-empty, every named object must be a regular file the tree holds, a unit
+    id or object name that could address a path outside the tree is refused,
+    and a tree that already holds an `objects.json` is refused rather than
+    shadowed. The publisher never writes object names by hand: each unit line
+    names the source, and the builder derives the file with the same
+    `CompilerBase::object_path` the client hydrates to (the name folds the
+    source's own path in, so it is not portable — only the id is).
 
 A daemon-wide single-flight is not in this module yet.

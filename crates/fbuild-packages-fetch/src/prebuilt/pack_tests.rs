@@ -10,6 +10,18 @@ use tempfile::TempDir;
 
 const FP: &str = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
 
+/// The two compiled units [`objects`] holds, addressed the way the client does.
+const UNITS: [UnitRef<'static>; 2] = [
+    UnitRef {
+        unit: "cores/esp32/main.c",
+        object: "cores/esp32/main.c.o",
+    },
+    UnitRef {
+        unit: "cores/esp32/hal.c",
+        object: "cores/esp32/hal.c.o",
+    },
+];
+
 fn digest(bytes: &[u8]) -> String {
     format!("{:x}", Sha256::digest(bytes))
 }
@@ -40,6 +52,7 @@ fn request<'a>(objects: &'a Path, out: &'a Path, base_url: &'a str) -> PackReque
         chip: "esp32dev",
         framework: "arduino-esp32",
         fingerprint: FP,
+        units: &UNITS,
         arch: "esp32",
         abi: "gcc@14.2.0",
         base_url,
@@ -59,7 +72,8 @@ fn the_key_is_derived_from_product_reference_chip_and_digest() {
     );
     assert_eq!(packed.key, expected);
     assert_eq!(packed.filename(), expected.rsplit('/').next().unwrap());
-    assert_eq!(packed.entries, 6);
+    assert_eq!(packed.entries, 7, "six tree entries plus the unit manifest");
+    assert_eq!(packed.units, 2);
     assert_eq!(
         std::fs::read(packed.archive.as_path()).unwrap().len() as u64,
         packed.size_bytes
@@ -95,6 +109,24 @@ fn packing_is_deterministic_across_mtimes_and_output_directories() {
     assert_eq!(first.sha256, second.sha256);
     assert_eq!(first.size_bytes, second.size_bytes);
     assert_eq!(first.key, second.key);
+}
+
+/// Every entry of a packed tree is byte-identical after a real extract, and the
+/// executable bit survives (the archive carries it as the mode).
+fn assert_extracted_matches(tree: &NormalizedPath, root: &NormalizedPath) {
+    for relative in ["cores/esp32/main.c.o", "cores/esp32/hal.c.o", "README.txt"] {
+        assert_eq!(
+            std::fs::read(tree.join(relative).as_path()).unwrap(),
+            std::fs::read(root.join(relative).as_path()).unwrap(),
+            "{relative} survived the round trip"
+        );
+    }
+    assert!(
+        fbuild_core::platform::fs::is_executable(
+            &std::fs::metadata(tree.join("tool").as_path()).unwrap()
+        ),
+        "the executable bit survives the round trip"
+    );
 }
 
 #[test]
@@ -178,19 +210,9 @@ fn the_archive_round_trips_through_resolve_fetch_and_extract() {
             .await
             .unwrap();
         let tree = obtained.tree.root;
-        for relative in ["cores/esp32/main.c.o", "cores/esp32/hal.c.o", "README.txt"] {
-            assert_eq!(
-                std::fs::read(tree.join(relative).as_path()).unwrap(),
-                std::fs::read(root.join(relative).as_path()).unwrap(),
-                "{relative} survived the round trip"
-            );
-        }
-        assert!(
-            fbuild_core::platform::fs::is_executable(
-                &std::fs::metadata(tree.join("tool").as_path()).unwrap()
-            ),
-            "the executable bit survives the round trip"
-        );
+        // The manifest's own survival through extract + hydrate is asserted end
+        // to end in `fbuild-build-esp`'s `a_packed_tree_hydrates_through_the_real_publisher`.
+        assert_extracted_matches(&tree, &root);
         server.abort();
     });
 }
@@ -280,4 +302,98 @@ fn the_entry_names_the_flavor_and_the_fingerprint_the_client_queries_with() {
     assert_eq!(json["tool"], "prebuilt-arduino-esp32");
     assert_eq!(json["version"], "3.3.12");
     assert_eq!(json["min_client_version"], 1);
+}
+
+/// A packed tree carries the unit manifest, and the digest is stable across two
+/// packs of the same units in two output directories.
+#[test]
+fn the_archive_carries_the_unit_manifest() {
+    let (dir, root) = objects();
+    let out = dir.path().join("out");
+    let packed = pack(&request(&root, &out, "https://bucket.example")).unwrap();
+    let bytes = std::fs::read(packed.archive.as_path()).unwrap();
+    let mut archive = tar::Archive::new(zstd::Decoder::new(&bytes[..]).unwrap());
+    let manifest = archive
+        .entries()
+        .unwrap()
+        .filter_map(Result::ok)
+        .find(|entry| entry.path().unwrap().to_string_lossy() == OBJECTS_MANIFEST)
+        .expect("the manifest is in the archive");
+    let body: serde_json::Value = serde_json::from_reader(manifest).unwrap();
+    assert_eq!(body["schema"], MANIFEST_SCHEMA);
+    assert_eq!(body["units"].as_object().unwrap().len(), 2);
+}
+
+/// A unit that names an object the tree does not hold is refused before a byte
+/// is written: a manifest may never advertise an unservable file.
+#[test]
+fn a_unit_naming_a_missing_object_is_refused() {
+    let (dir, root) = objects();
+    let out = dir.path().join("out");
+    let missing = [UnitRef {
+        unit: "cores/esp32/gone.c",
+        object: "cores/esp32/gone.c.o",
+    }];
+    let mut bad = request(&root, &out, "https://bucket.example");
+    bad.units = &missing;
+    let error = pack(&bad).unwrap_err();
+    assert!(
+        matches!(error, PackError::MissingObject(ref unit, ref object)
+            if unit == "cores/esp32/gone.c" && object == "cores/esp32/gone.c.o"),
+        "{error}"
+    );
+    assert!(!out.exists(), "nothing was written");
+}
+
+/// A tree with no units is unservable, and a unit id that could address a path
+/// outside the tree is refused.
+#[test]
+fn an_unservable_unit_list_is_refused() {
+    let (dir, root) = objects();
+    let out = dir.path().join("out");
+    let mut bad = request(&root, &out, "https://bucket.example");
+    bad.units = &[];
+    assert!(matches!(pack(&bad), Err(PackError::Invalid("units"))));
+
+    for (unit, object) in [
+        ("../escape.c", "cores/esp32/main.c.o"),
+        ("cores/esp32/main.c", "../main.c.o"),
+        ("cores//main.c", "cores/esp32/main.c.o"),
+        ("C:/cores/main.c", "cores/esp32/main.c.o"),
+        ("", "cores/esp32/main.c.o"),
+    ] {
+        let units = [UnitRef { unit, object }];
+        let mut bad = request(&root, &out, "https://bucket.example");
+        bad.units = &units;
+        assert!(
+            matches!(pack(&bad), Err(PackError::Unit(_))),
+            "{unit:?} -> {object:?} must be refused"
+        );
+    }
+    assert!(!out.exists(), "a refused unit list writes nothing");
+}
+
+/// The same unit id twice is ambiguous, and a tree that already holds a
+/// manifest would shadow the one the packer writes.
+#[test]
+fn a_duplicate_unit_or_an_existing_manifest_is_refused() {
+    let (dir, root) = objects();
+    let out = dir.path().join("out");
+    let twice = [
+        UNITS[0],
+        UnitRef {
+            unit: "cores/esp32/main.c",
+            object: "cores/esp32/hal.c.o",
+        },
+    ];
+    let mut bad = request(&root, &out, "https://bucket.example");
+    bad.units = &twice;
+    assert!(matches!(pack(&bad), Err(PackError::Unit(_))));
+
+    std::fs::write(root.join(OBJECTS_MANIFEST).as_path(), b"{}").unwrap();
+    let error = pack(&request(&root, &out, "https://bucket.example")).unwrap_err();
+    assert!(matches!(
+        error,
+        PackError::ManifestOccupied(OBJECTS_MANIFEST)
+    ));
 }

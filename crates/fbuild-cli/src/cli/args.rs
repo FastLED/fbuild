@@ -440,6 +440,12 @@ pub enum Commands {
         /// 64-hex fingerprint from Esp32Framework::prebuilt_core_plan.
         #[arg(long)]
         fingerprint: String,
+        /// Unit manifest: one `<unit-id><TAB><source-path>` line per compiled
+        /// unit. The object file is derived with the same
+        /// CompilerBase::object_path the client hydrates to, and the archive
+        /// then carries the `objects.json` that makes it servable.
+        #[arg(long)]
+        units: String,
         /// Client platform arch, e.g. esp32.
         #[arg(long)]
         arch: String,

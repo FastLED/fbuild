@@ -128,6 +128,84 @@ fn a_served_tree_hydrates_every_unit_it_covers() {
     }
 }
 
+/// The publisher's archive is the client's input, end to end: a tree packed by
+/// `prebuilt::pack` carries the `objects.json` this module reads, so an artifact
+/// the builder can write is one the client can hydrate — proven through the real
+/// extractor, not by a hand-written manifest.
+#[test]
+fn a_packed_tree_hydrates_through_the_real_publisher() {
+    use fbuild_packages_fetch::prebuilt::{
+        Artifact, DEFAULT_PRODUCT, PackRequest, UnitRef, extract, pack,
+    };
+
+    let temp = tempfile::tempdir().unwrap();
+    let units = framework_units(temp.path());
+    let build_dir = temp.path().join("core-build");
+    std::fs::create_dir_all(&build_dir).unwrap();
+
+    // The publisher's build directory holds one object per unit, named the way
+    // its own compiler derives it — the names are not portable, so what the
+    // archive must carry is the unit-id relation.
+    let publisher = temp.path().join("publisher-build");
+    std::fs::create_dir_all(&publisher).unwrap();
+    let mut names = Vec::new();
+    for (_, source) in &units {
+        let object = crate::compiler::CompilerBase::object_path(source.as_path(), &publisher);
+        std::fs::write(&object, b"published object").unwrap();
+        names.push(object.file_name().unwrap().to_string_lossy().into_owned());
+    }
+    std::fs::write(publisher.join("README.txt"), b"payload").unwrap();
+    let refs: Vec<UnitRef<'_>> = units
+        .iter()
+        .zip(&names)
+        .map(|((id, _), name)| UnitRef {
+            unit: id,
+            object: name,
+        })
+        .collect();
+
+    let out = temp.path().join("out");
+    let fingerprint = "0123456789abcdef".repeat(4);
+    let packed = pack(&PackRequest {
+        objects: &publisher,
+        out: &out,
+        vendor: "espressif",
+        product: DEFAULT_PRODUCT,
+        channel: "release",
+        reference: "3.3.12",
+        chip: "esp32c3",
+        framework: "arduino-esp32",
+        fingerprint: &fingerprint,
+        units: &refs,
+        arch: "esp32c3",
+        abi: "gcc@14.2.0",
+        base_url: "https://bucket.example",
+        min_client_version: 1,
+    })
+    .unwrap();
+    assert_eq!(packed.units, 2);
+
+    let artifact = Artifact {
+        path: packed.archive.clone(),
+        size_bytes: packed.size_bytes,
+        sha256: packed.sha256.clone(),
+    };
+    let tree = temp.path().join("served");
+    let extracted = extract(&artifact, &tree).unwrap();
+    assert_eq!(extracted.root.as_path(), tree.as_path());
+
+    let hydrated = hydrate(&tree, &build_dir, &units).unwrap();
+    assert_eq!(hydrated, 2, "both published units hydrated");
+    for (_, source) in &units {
+        let object = crate::compiler::CompilerBase::object_path(source.as_path(), &build_dir);
+        assert_eq!(
+            std::fs::read(&object).unwrap(),
+            b"published object",
+            "the published bytes landed at this host's own object path"
+        );
+    }
+}
+
 /// A tree without the manifest is refused: an archive must never be able to
 /// name an object the compiler did not ask for.
 #[test]

@@ -57,8 +57,8 @@ pub use lru::{
 };
 pub use obtain::{FP_DIR_PREFIX, ObtainError, Obtained, obtain, tree_root};
 pub use pack::{
-    Catalog, DEFAULT_PRODUCT, PackError, PackRequest, Packed, Release, ZSTD_LEVEL, bucket_key,
-    catalog, flavor_for, pack, release, tool_for,
+    Catalog, DEFAULT_PRODUCT, MANIFEST_SCHEMA, OBJECTS_MANIFEST, PackError, PackRequest, Packed,
+    Release, UnitRef, ZSTD_LEVEL, bucket_key, catalog, flavor_for, pack, release, tool_for,
 };
 pub use reader::Reader;
 use serde::{Deserialize, Serialize};
