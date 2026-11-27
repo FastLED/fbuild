@@ -49,6 +49,7 @@ pub async fn run_clean(
         generate_compiledb: false,
         compiledb_only: false,
         shrink: None,
+        prebuilt_libs: None,
         request_id: None,
         caller_pid,
         caller_cwd,

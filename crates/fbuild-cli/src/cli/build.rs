@@ -50,12 +50,11 @@ pub async fn run_build(
     output_dir: Option<String>,
     bloat_analysis: bool,
     shrink: fbuild_build::shrink::ShrinkMode,
+    prebuilt_libs: fbuild_build::prebuilt::PrebuiltPolicy,
 ) -> fbuild_core::Result<()> {
     // FBUILD_PERF_LOG=1 enables coarse CLI-side timing (daemon handshake +
     // round-trip). Zero-overhead when unset.
-    let perf_enabled = std::env::var("FBUILD_PERF_LOG")
-        .map(|v| !v.is_empty() && v != "0")
-        .unwrap_or(false);
+    let perf_enabled = std::env::var("FBUILD_PERF_LOG").is_ok_and(|v| !v.is_empty() && v != "0");
     let cli_start = std::time::Instant::now();
     let handshake_start = std::time::Instant::now();
     daemon_client::ensure_daemon_running().await?;
@@ -122,6 +121,7 @@ pub async fn run_build(
         pio_env: daemon_client::capture_pio_env(),
         bloat_analysis,
         shrink: Some(shrink.as_str().to_string()),
+        prebuilt_libs: Some(prebuilt_libs.as_str().to_string()),
     };
 
     let stream_start = std::time::Instant::now();

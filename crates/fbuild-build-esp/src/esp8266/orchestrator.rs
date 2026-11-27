@@ -807,6 +807,7 @@ mod tests {
         )
         .resolve();
         let params = BuildParams {
+            prebuilt_libs: Default::default(),
             project_dir: project.path().to_path_buf(),
             shrink: Default::default(),
             env_name: "esp8266".into(),

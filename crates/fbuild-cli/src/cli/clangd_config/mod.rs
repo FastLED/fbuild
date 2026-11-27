@@ -184,6 +184,7 @@ pub(crate) async fn ensure_compile_db(
         None,
         false, // bloat_analysis
         fbuild_build::shrink::ShrinkMode::Auto,
+        fbuild_build::prebuilt::PrebuiltPolicy::default(),
     )
     .await?;
     if !db_path.exists() {

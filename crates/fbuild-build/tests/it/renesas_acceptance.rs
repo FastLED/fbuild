@@ -38,6 +38,7 @@ void loop() { result++; }
     )
     .unwrap();
     let params = BuildParams {
+        prebuilt_libs: Default::default(),
         project_dir: project.to_path_buf(),
         shrink: Default::default(),
         env_name: "uno_r4".into(),
@@ -138,6 +139,7 @@ void loop() {}
     )
     .unwrap();
     let params = BuildParams {
+        prebuilt_libs: Default::default(),
         project_dir: project.to_path_buf(),
         shrink: Default::default(),
         env_name: "uno_r4_wifi".into(),
@@ -226,6 +228,7 @@ async fn install_test_compile_backend() {
 /// of `env_name` in `project`, 4 jobs, compile database on.
 fn build_params_for(project: &std::path::Path, env_name: &str) -> BuildParams {
     BuildParams {
+        prebuilt_libs: Default::default(),
         project_dir: project.to_path_buf(),
         shrink: Default::default(),
         env_name: env_name.to_string(),

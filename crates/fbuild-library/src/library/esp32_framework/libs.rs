@@ -4,6 +4,7 @@ use std::path::{Path, PathBuf};
 
 use super::Esp32Framework;
 use super::fs_utils::copy_dir_recursive;
+use fbuild_packages_fetch::PrebuiltLibsPolicy;
 use fbuild_packages_fetch::component_id::{
     ComponentIdentity, content_id, entries_survived, has_stamp, remove_stamp, write_stamp,
 };
@@ -244,17 +245,24 @@ fn install_sdk_from_archive(
 }
 
 /// Fetch one variant's (possibly sliced) libs archive and merge it into `tools/`.
+///
+/// `prebuilt_libs` decides the *shape* of the download: the per-chip slice is
+/// itself the prebuilt artifact, so a build that must compile framework
+/// libraries from source takes the whole published bundle instead
+/// (FastLED/fbuild#2196, decision 1).
 async fn install_sdk_archive(
     libs_url: &str,
     version: &str,
     variant: &str,
     tools_dir: &Path,
+    prebuilt_libs: PrebuiltLibsPolicy,
 ) -> fbuild_core::Result<()> {
     let archive_path = crate::FetchRequest {
         name: "framework-arduinoespressif32-libs",
         version,
         url: libs_url,
         variant: Some(variant),
+        prebuilt_libs,
     }
     .fetch(&tools_dir.join(".libs-archives"))
     .await?;
@@ -461,6 +469,7 @@ impl Esp32Framework {
         libs_url: &str,
         mcu: &str,
         sdk_variant: &str,
+        prebuilt_libs: PrebuiltLibsPolicy,
     ) -> fbuild_core::Result<()> {
         let root = self.resolved_dir();
         let tools_dir = root.join("tools");
@@ -501,7 +510,7 @@ impl Esp32Framework {
             // A whole-bundle archive serves every variant: re-check before
             // fetching the next slice (FastLED/fbuild#1897).
             if installed_variant_dir(&tools_dir, variant).is_none() {
-                install_sdk_archive(libs_url, version, variant, &tools_dir).await?;
+                install_sdk_archive(libs_url, version, variant, &tools_dir, prebuilt_libs).await?;
             }
             if installed_variant_dir(&tools_dir, variant).is_some() {
                 patch_installed_variants(&tools_dir, &[variant.as_str()])?;

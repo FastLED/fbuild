@@ -1,6 +1,7 @@
 //! ESP32 platform, framework, SDK and esptool package selection.
 
 use super::*;
+use fbuild_packages::PrebuiltLibsPolicy;
 
 fn explicit_framework_spec(
     env_config: Option<&HashMap<String, String>>,
@@ -297,9 +298,12 @@ pub(super) async fn ensure_sdk_libs(
     sdk_variant: &str,
     libs_url: Option<&str>,
     skeleton_url: Option<&str>,
+    prebuilt_libs: PrebuiltLibsPolicy,
 ) -> Result<()> {
     if let Some(url) = libs_url {
-        framework.ensure_libs(url, mcu, sdk_variant).await?;
+        framework
+            .ensure_libs(url, mcu, sdk_variant, prebuilt_libs)
+            .await?;
     }
     if let Some(url) = skeleton_url {
         framework.ensure_mcu_libs(url, mcu).await?;

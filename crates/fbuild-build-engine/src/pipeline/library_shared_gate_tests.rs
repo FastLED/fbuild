@@ -95,6 +95,7 @@ mod incremental_archive_policy {
 
         fn params(&self) -> BuildParams {
             BuildParams {
+                prebuilt_libs: Default::default(),
                 project_dir: self.root.clone().into_path_buf(),
                 env_name: "probe".into(),
                 build_dir: self.build.clone().into_path_buf(),

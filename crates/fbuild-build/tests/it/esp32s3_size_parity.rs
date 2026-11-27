@@ -193,6 +193,7 @@ async fn build_with_fbuild(project_dir: &Path) -> NormalizedPath {
         fbuild_paths::BUILD_DIR_NAME
     ));
     let params = BuildParams {
+        prebuilt_libs: Default::default(),
         project_dir: project_dir.to_path_buf(),
         shrink: Default::default(),
         env_name: ENV_NAME.to_string(),
