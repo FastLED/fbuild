@@ -46,6 +46,10 @@ semver = { workspace = true }
 [dev-dependencies]
 # Paused-clock tests for the daemon liveness watchdog.
 tokio = { workspace = true, features = ["test-util"] }
+# Read back the archive `__prebuilt-pack` writes, so the unit manifest it carries
+# is proven by the file on disk rather than by the call that wrote it.
+tar = { workspace = true }
+zstd = { workspace = true }
 
 [lints]
 workspace = true

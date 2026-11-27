@@ -1135,12 +1135,14 @@ dependencies = [
  "serde_json",
  "serialport",
  "sha2",
+ "tar",
  "tempfile",
  "tokio",
  "tokio-tungstenite",
  "tracing",
  "tracing-subscriber",
  "walkdir",
+ "zstd",
 ]
 
 [[package]]

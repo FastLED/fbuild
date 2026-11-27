@@ -36,6 +36,32 @@ pub const MAX_OBJECTS_BYTES: u64 = 2 * 1024 * 1024 * 1024;
 /// The only channel names decision 2 defines.
 const CHANNELS: [&str; 2] = ["release", "nightly"];
 
+/// The manifest a servable tree must carry, naming each compiled unit's object
+/// file. The client reads exactly this name and schema
+/// (`prebuilt_core::OBJECTS_MANIFEST`), so a tree without one is not servable
+/// and the builder refuses to write it.
+pub const OBJECTS_MANIFEST: &str = "objects.json";
+/// Schema of [`OBJECTS_MANIFEST`]; a client that reads another value refuses the
+/// tree rather than guessing at it.
+pub const MANIFEST_SCHEMA: u32 = 1;
+
+/// One compiled unit the packed tree carries.
+///
+/// `unit` is the canonical id the client addresses ("its path relative to the
+/// framework root, `/`-separated") and `object` is the file the tree holds for
+/// it. The relation has to travel: [`CompilerBase::object_path`] folds the
+/// source's own path into the object's name, so the names are never portable
+/// between two hosts, while the unit id is.
+///
+/// [`CompilerBase::object_path`]: fbuild_build_engine::CompilerBase::object_path
+#[derive(Debug, Clone, Copy)]
+pub struct UnitRef<'a> {
+    /// Canonical unit id, e.g. `cores/esp32/main.cpp`.
+    pub unit: &'a str,
+    /// Object file inside the packed tree, e.g. `main_ab.cpp.o`.
+    pub object: &'a str,
+}
+
 #[derive(Debug, thiserror::Error)]
 pub enum PackError {
     #[error("invalid pack request: {0}")]
@@ -58,6 +84,12 @@ pub enum PackError {
         expected: String,
         actual: String,
     },
+    #[error("{0:?} cannot be a servable unit id or object name")]
+    Unit(String),
+    #[error("unit {0:?} names {1:?}, which the objects tree does not carry")]
+    MissingObject(String, String),
+    #[error("the objects tree already holds a {0}, so the packed manifest would be ambiguous")]
+    ManifestOccupied(&'static str),
 }
 
 /// Everything the builder needs to name and describe one archive.
@@ -80,6 +112,10 @@ pub struct PackRequest<'a> {
     pub framework: &'a str,
     /// 64-hex fingerprint of the built core objects (`Esp32Framework::prebuilt_core_plan`).
     pub fingerprint: &'a str,
+    /// The compiled units this tree carries, as the client will address them.
+    /// Required and non-empty: a tree without a unit manifest cannot be
+    /// hydrated, so the builder refuses to publish one.
+    pub units: &'a [UnitRef<'a>],
     /// Client platform arch, e.g. `esp32`.
     pub arch: &'a str,
     /// Client platform ABI, e.g. `gcc@14.2.0`.
@@ -97,6 +133,8 @@ pub struct Packed {
     pub sha256: String,
     pub size_bytes: u64,
     pub entries: u64,
+    /// How many units the packed `objects.json` names.
+    pub units: u64,
     pub key: String,
 }
 
@@ -149,10 +187,11 @@ pub fn bucket_key(request: &PackRequest<'_>, sha256: &str) -> String {
 pub fn pack(request: &PackRequest<'_>) -> Result<Packed, PackError> {
     validate(request)?;
     let entries = collect(request.objects)?;
+    let manifest = unit_manifest(request, &entries)?;
     std::fs::create_dir_all(request.out).map_err(|error| io_error(request.out, &error))?;
     let scratch =
         NormalizedPath::new(request.out).join(format!(".pack-{}.part", &request.fingerprint[..16]));
-    let (sha256, size_bytes) = write_archive(&entries, scratch.as_path())?;
+    let (sha256, size_bytes) = write_archive(&entries, &manifest, scratch.as_path())?;
     let key = bucket_key(request, &sha256);
     let archive = NormalizedPath::new(request.out).join(key.rsplit('/').next().unwrap_or("packed"));
     commit(&scratch, &archive, &sha256)?;
@@ -160,7 +199,10 @@ pub fn pack(request: &PackRequest<'_>) -> Result<Packed, PackError> {
         archive,
         sha256,
         size_bytes,
-        entries: entries.len() as u64,
+        // Every entry the archive carries, the unit manifest included: this is
+        // the count a listing of the archive shows.
+        entries: entries.len() as u64 + 1,
+        units: request.units.len() as u64,
         key,
     })
 }
@@ -345,6 +387,84 @@ fn collect(objects: &Path) -> Result<Vec<Object>, PackError> {
     Ok(found)
 }
 
+/// The `objects.json` bytes the archive carries.
+///
+/// Without it a served tree names nothing: the client hydrates a unit only when
+/// the manifest maps its canonical id to a file inside the tree, so an archive
+/// packed before this manifest existed was unservable. Refusing to name an
+/// object the tree does not hold, and refusing a unit id that could address a
+/// path outside the tree, keeps that promise at the publisher instead of at
+/// every user's first build.
+#[derive(Serialize)]
+struct ObjectsManifest<'a> {
+    schema: u32,
+    units: BTreeMap<&'a str, &'a str>,
+}
+
+fn unit_manifest(request: &PackRequest<'_>, entries: &[Object]) -> Result<Vec<u8>, PackError> {
+    if entries.iter().any(|entry| entry.name == OBJECTS_MANIFEST) {
+        return Err(PackError::ManifestOccupied(OBJECTS_MANIFEST));
+    }
+    if request.units.is_empty() {
+        return Err(PackError::Invalid("units"));
+    }
+    let mut units: BTreeMap<&str, &str> = BTreeMap::new();
+    for unit in request.units {
+        validate_unit(unit)?;
+        if !entries
+            .iter()
+            .any(|entry| entry.kind == Kind::File && entry.name == unit.object)
+        {
+            return Err(PackError::MissingObject(
+                unit.unit.to_string(),
+                unit.object.to_string(),
+            ));
+        }
+        if units.insert(unit.unit, unit.object).is_some() {
+            return Err(PackError::Unit(unit.unit.to_string()));
+        }
+    }
+    serde_json::to_vec(&ObjectsManifest {
+        schema: MANIFEST_SCHEMA,
+        units,
+    })
+    .map_err(|error| PackError::Archive(error.to_string()))
+}
+
+/// A unit id and an object name are both `/`-separated relative paths inside the
+/// tree; anything that could address a file outside it is refused.
+fn validate_unit(unit: &UnitRef<'_>) -> Result<(), PackError> {
+    let unsafe_name = |value: &str| {
+        value.is_empty()
+            || value.starts_with('/')
+            || value.contains(['\\', ':'])
+            || value.contains("..")
+            || value.chars().any(char::is_control)
+            || value.split('/').any(str::is_empty)
+    };
+    if unsafe_name(unit.unit) || unsafe_name(unit.object) {
+        return Err(PackError::Unit(unit.unit.to_string()));
+    }
+    Ok(())
+}
+
+/// Append the unit manifest as the archive's last entry, deterministically.
+fn append_manifest<W: Write>(archive: &mut tar::Builder<W>, bytes: &[u8]) -> Result<(), PackError> {
+    let mut header = tar::Header::new_gnu();
+    header.set_uid(0);
+    header.set_gid(0);
+    header.set_mtime(0);
+    header.set_username("").ok();
+    header.set_groupname("").ok();
+    header.set_entry_type(tar::EntryType::Regular);
+    header.set_mode(0o644);
+    header.set_size(bytes.len() as u64);
+    header.set_cksum();
+    archive
+        .append_data(&mut header, OBJECTS_MANIFEST, bytes)
+        .map_err(|error| PackError::Archive(error.to_string()))
+}
+
 /// Writes through a sha256 tee, so the digest covers exactly the bytes on disk.
 struct HashingWriter<W: Write> {
     inner: W,
@@ -383,7 +503,11 @@ impl<W: Write> Write for HashingWriter<W> {
     }
 }
 
-fn write_archive(entries: &[Object], scratch: &Path) -> Result<(String, u64), PackError> {
+fn write_archive(
+    entries: &[Object],
+    manifest: &[u8],
+    scratch: &Path,
+) -> Result<(String, u64), PackError> {
     let file = std::fs::File::create(scratch).map_err(|error| io_error(scratch, &error))?;
     let hashing = HashingWriter::new(std::io::BufWriter::new(file));
     let encoder = zstd::stream::write::Encoder::new(hashing, ZSTD_LEVEL)
@@ -392,6 +516,7 @@ fn write_archive(entries: &[Object], scratch: &Path) -> Result<(String, u64), Pa
     for object in entries {
         append(&mut archive, object)?;
     }
+    append_manifest(&mut archive, manifest)?;
     let encoder = archive
         .into_inner()
         .map_err(|error| PackError::Archive(error.to_string()))?;
