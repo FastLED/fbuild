@@ -111,16 +111,22 @@ fn packing_is_deterministic_across_mtimes_and_output_directories() {
     assert_eq!(first.key, second.key);
 }
 
-/// A served tree carries the manifest the client hydrates with, mapping each
-/// unit id to the object file the publisher packed for it.
-fn assert_served_manifest(tree: &NormalizedPath, units: &[(&str, &str)]) {
-    let body: serde_json::Value =
-        serde_json::from_slice(&std::fs::read(tree.join(OBJECTS_MANIFEST).as_path()).unwrap())
-            .unwrap();
-    assert_eq!(body["schema"], MANIFEST_SCHEMA);
-    for (unit, object) in units {
-        assert_eq!(body["units"][unit], *object, "{unit} -> {object}");
+/// Every entry of a packed tree is byte-identical after a real extract, and the
+/// executable bit survives (the archive carries it as the mode).
+fn assert_extracted_matches(tree: &NormalizedPath, root: &NormalizedPath) {
+    for relative in ["cores/esp32/main.c.o", "cores/esp32/hal.c.o", "README.txt"] {
+        assert_eq!(
+            std::fs::read(tree.join(relative).as_path()).unwrap(),
+            std::fs::read(root.join(relative).as_path()).unwrap(),
+            "{relative} survived the round trip"
+        );
     }
+    assert!(
+        fbuild_core::platform::fs::is_executable(
+            &std::fs::metadata(tree.join("tool").as_path()).unwrap()
+        ),
+        "the executable bit survives the round trip"
+    );
 }
 
 #[test]
@@ -204,26 +210,9 @@ fn the_archive_round_trips_through_resolve_fetch_and_extract() {
             .await
             .unwrap();
         let tree = obtained.tree.root;
-        for relative in ["cores/esp32/main.c.o", "cores/esp32/hal.c.o", "README.txt"] {
-            assert_eq!(
-                std::fs::read(tree.join(relative).as_path()).unwrap(),
-                std::fs::read(root.join(relative).as_path()).unwrap(),
-                "{relative} survived the round trip"
-            );
-        }
-        assert!(
-            fbuild_core::platform::fs::is_executable(
-                &std::fs::metadata(tree.join("tool").as_path()).unwrap()
-            ),
-            "the executable bit survives the round trip"
-        );
-        assert_served_manifest(
-            &tree,
-            &[
-                ("cores/esp32/main.c", "cores/esp32/main.c.o"),
-                ("cores/esp32/hal.c", "cores/esp32/hal.c.o"),
-            ],
-        );
+        // The manifest's own survival through extract + hydrate is asserted end
+        // to end in `fbuild-build-esp`'s `a_packed_tree_hydrates_through_the_real_publisher`.
+        assert_extracted_matches(&tree, &root);
         server.abort();
     });
 }
