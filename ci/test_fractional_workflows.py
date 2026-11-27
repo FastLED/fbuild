@@ -63,6 +63,9 @@ def called_workflow_failures(workflows):
     return failures
 
 
+WRAPPER = "uv run --no-project python ci/test_cache_status.py -- "
+
+
 class FractionalWorkflowTests(unittest.TestCase):
     def test_windows_checks_real_modern_esptool_source_install(self):
         job = self.load("check-windows.yml")["jobs"]["check"]
@@ -173,6 +176,32 @@ class FractionalWorkflowTests(unittest.TestCase):
             )
         setup = next(step for step in jobs["check"]["steps"] if "zackees/setup-soldr@" in step.get("uses", ""))
         self.assertEqual("check-ubuntu-py312-v1", setup["with"]["cache-key-suffix"])
+
+    def test_every_ubuntu_cargo_test_step_runs_through_the_daemon_retry_wrapper(self):
+        """A targeted `--ignored` step compiles too, so it needs the retry (#2178).
+
+        Both #2197 merge-queue deaths landed in "Test library assembly and
+        archive policies with native GCC", which called `soldr` raw: the
+        job-level FBUILD_CI_DAEMON_DEATH_RETRY=1 was armed and never consumed,
+        because only the "Test" step was wrapped. A raw `soldr cargo test`
+        anywhere in this workflow is that defect regrowing.
+        """
+
+        jobs = self.load("check-ubuntu.yml")["jobs"]
+        raw, wrapped = [], []
+        for job_id, job in jobs.items():
+            for step in job.get("steps", []):
+                for line in step.get("run", "").splitlines():
+                    command = line.strip()
+                    if command.startswith("soldr cargo test"):
+                        raw.append(f"{job_id} / {step.get('name')}: {command}")
+                    elif command.startswith(WRAPPER) and " soldr cargo test " in command:
+                        wrapped.append(command)
+        self.assertEqual([], raw)
+        # Deleting a targeted step must not satisfy the check above.
+        self.assertTrue(any("--include-ignored" in command for command in wrapped), wrapped)
+        self.assertTrue(any("-p fbuild-build --test it" in command for command in wrapped), wrapped)
+        self.assertGreaterEqual(len(wrapped), 10)
 
     def test_local_gate_keeps_required_ubuntu_commands_and_shadow_verification(self):
         minimal = self.load("ci-minimal.yml")["jobs"]

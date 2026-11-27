@@ -333,6 +333,7 @@ class DaemonRetryWiringTests(unittest.TestCase):
         first_lines: list[str],
         second_lines: list[str],
         env_extra: dict[str, str],
+        argv_tail: tuple[str, ...] = (),
     ) -> tuple[int, str, int]:
         def block(lines: list[str]) -> str:
             return "cat <<'LINES'\n" + "\n".join(lines) + "\nLINES\n"
@@ -347,6 +348,7 @@ class DaemonRetryWiringTests(unittest.TestCase):
                 'count=$(cat "$count_file" 2>/dev/null || echo 0)\n'
                 "count=$((count + 1))\n"
                 'echo "$count" > "$count_file"\n'
+                'if [ -n "$SHIM_ARGV" ]; then printf "%s\\n" "$@" > "$SHIM_ARGV"; fi\n'
                 'if [ "$count" -eq 1 ]; then\n' + block(first_lines) + "exit 101\n"
                 "fi\n" + block(second_lines) + "exit 0\n"
             )
@@ -373,6 +375,7 @@ class DaemonRetryWiringTests(unittest.TestCase):
                     "soldr",
                     "cargo",
                     "test",
+                    *argv_tail,
                 ],
                 cwd=repo,
                 env=env,
@@ -413,6 +416,49 @@ class DaemonRetryWiringTests(unittest.TestCase):
         )
         self.assertEqual(101, code)
         self.assertEqual(1, invocations)
+
+    def test_a_targeted_ignored_command_keeps_its_arguments_and_retries(self):
+        """The wrapped steps are `-p crate --lib name -- --include-ignored` (#2178).
+
+        #2197's two merge-queue deaths both came from such a command, so the
+        wrapper must accept that shape -- inserting `--message-format=json`
+        before the `--` boundary and never after the test filter -- and still
+        retry the daemon kill once.
+        """
+
+        tail = (
+            "-p",
+            "fbuild-library",
+            "--lib",
+            "library_assembly",
+            "--",
+            "--include-ignored",
+        )
+        with tempfile.TemporaryDirectory() as raw:
+            recorded = Path(raw) / "argv"
+            code, stdout, invocations = self.run_scripted(
+                [RELAY_RESET_LINE, LOST_LINE],
+                ["test result: ok. 1 passed"],
+                {"FBUILD_CI_DAEMON_DEATH_RETRY": "1", "SHIM_ARGV": str(recorded)},
+                argv_tail=tail,
+            )
+            self.assertEqual(0, code)
+            self.assertEqual(2, invocations)
+            self.assertIn("retrying the command once", stdout)
+            self.assertEqual(
+                [
+                    "cargo",
+                    "test",
+                    "-p",
+                    "fbuild-library",
+                    "--lib",
+                    "library_assembly",
+                    "--message-format=json",
+                    "--",
+                    "--include-ignored",
+                ],
+                recorded.read_text().splitlines(),
+            )
 
     def test_real_test_failure_is_not_retried_even_when_enabled(self):
         code, _stdout, invocations = self.run_scripted(
