@@ -132,7 +132,7 @@ block fails CI with a copy-paste fix.
 
 ### Bumping soldr
 
-Every setup-soldr step uses the floating `zackees/setup-soldr@v0` reference
+Every setup-soldr step uses the floating `zackees/setup-soldr@e6eda4bb48dcef5bbb4425fff3084d8985bbe273` reference
 and does not pin a soldr binary `version:`; the action installs the latest
 release, so there is nothing to bump here. No call site pins an exact
 setup-soldr commit (the last exact-SHA pins moved to `@v0` in #2123).

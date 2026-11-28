@@ -128,7 +128,7 @@ jobs:
           echo "PYTHONHOME=$PYTHONHOME" >> "$GITHUB_ENV"
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@v0
+        uses: zackees/setup-soldr@e6eda4bb48dcef5bbb4425fff3084d8985bbe273
         with:
           s3-bucket: forge-ci-cache
           s3-endpoint: sfo3.digitaloceanspaces.com
@@ -244,7 +244,7 @@ jobs:
         if: runner.os == 'Linux' && runner.environment == 'github-hosted'
         run: uv run --no-project python ci/reclaim_android_ndks.py
       - name: Setup soldr
-        uses: zackees/setup-soldr@v0
+        uses: zackees/setup-soldr@e6eda4bb48dcef5bbb4425fff3084d8985bbe273
         with:
           s3-bucket: forge-ci-cache
           s3-endpoint: sfo3.digitaloceanspaces.com
@@ -310,7 +310,7 @@ jobs:
         with:
           python-version: "3.10"
       - name: Setup soldr
-        uses: zackees/setup-soldr@v0
+        uses: zackees/setup-soldr@e6eda4bb48dcef5bbb4425fff3084d8985bbe273
         with:
           s3-bucket: forge-ci-cache
           s3-endpoint: sfo3.digitaloceanspaces.com
