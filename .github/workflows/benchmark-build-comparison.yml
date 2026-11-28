@@ -141,7 +141,14 @@ jobs:
           sudo -S -p '' iptables -A FORWARD -i veth-h -o "${iface}" -j ACCEPT
           sudo -S -p '' iptables -A FORWARD -i "${iface}" -o veth-h -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
           sudo -S -p '' mkdir -p /etc/netns/bench
-          echo 'nameserver 1.1.1.1' | sudo -S -p '' tee /etc/netns/bench/resolv.conf >/dev/null
+          # Two independent resolvers and a bounded per-server wait: run
+          # 46130090245 lost the entire nightly when 1.1.1.1 stopped answering
+          # UDP after 45 minutes of healthy downloads ("lookup github.com on
+          # 1.1.1.1:53: i/o timeout", three install attempts), and a
+          # single-nameserver resolv.conf gives the retry loop nothing to fail
+          # over to.
+          printf 'nameserver 1.1.1.1\nnameserver 8.8.8.8\noptions timeout:2 attempts:2\n' \
+            | sudo -S -p '' tee /etc/netns/bench/resolv.conf >/dev/null
           # Host->namespace traffic is what downloads traverse; shape it.
           sudo -S -p '' tc qdisc replace dev veth-h root tbf rate 10mbit burst 64kb latency 400ms
           echo "bench netns up; veth-h shaped to 10 Mbit/s (egress into bench)"
