@@ -108,6 +108,20 @@ fail coverage. This policy is tracked in [#1698](https://github.com/FastLED/fbui
   `test_publish_bench_site.py` against real git repositories (bare remote, two publish
   dirs), where the interleaved case is red under the old force push.
 - **`merge_bench_history.py`** -- Unions the published `history.jsonl` with the run's fresh rows inside the benchmark publisher. The nightly can overlap a push run, and each run's history was snapshotted when its measurement *started*, so an older snapshot landing last would revert the newer run's row. Identity is `(ts, sha)`, output stays chronological with the newest line last and trimmed to the same 365-line bound as `write_history`, and an unparseable line is passed through rather than deleted. Tested by `test_merge_bench_history.py`.
+- **`artifact_serving_bench.py`** -- The artifact-serving half of decision 6 in
+  `docs/design/artifact-serving-decisions.md` (the last cell of FastLED/fbuild#1882,
+  unblocked by the #2196 consumer): `--measure` runs the reference cell twice from a
+  cold `FBUILD_CACHE_DIR` per trial -- the served arm with the hidden `--prebuilt-core`
+  opt-in, the control arm with `--no-prebuilt-libs` -- and writes `<YYYY-MM-DD>.json`
+  plus a recency-gated `latest.json`, so `cold_first_compile_wall_s` and its control arm
+  are one document. It reads what the build itself recorded
+  (`prebuilt_libs` in `build_info_<env>.json`, #2196 cell 4) and REFUSES to report a
+  served arm that fell back to source: a ratio from two source builds reads as a 1.00x
+  speedup and measures nothing, which decision 6 makes a hard failure. `--check`
+  applies the 10 % regression gate to the newest run against `latest.json` and exits 3
+  under `--fail`. Tested by `test_artifact_serving_bench.py` against a real `fbuild`
+  shim. The nightly step that invokes it, plus `bytes_downloaded` and
+  `fallback_rung_histogram` (the ladder exposes no rung numbers yet), remain open.
 - **`cancel_superseded.py`** -- The merge-queue janitor: on every `merge_group` run it
   cancels the in-flight queue runs for the same PR that a newer queue run replaced, so
   they stop holding runners when `main` moves. Runs are ordered by `(created_at, id)` --
