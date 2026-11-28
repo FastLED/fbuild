@@ -370,23 +370,42 @@ async fn the_ladder_serves_a_published_tree_and_it_is_hydrated() {
 /// reason, so the `#1882` benchmark can tell its two arms apart from the file.
 #[test]
 fn a_served_consult_records_the_artifact_it_hydrated() {
+    // The key is not free-standing: the ladder derives it from the fingerprint's
+    // sha16 prefix, so the fixture derives it the same way instead of inventing
+    // a value that no consult could produce.
+    let fingerprint = "a".repeat(64);
+    let query = Query {
+        framework: FRAMEWORK.to_string(),
+        arch: "esp32c3".to_string(),
+        abi: "esp32c3".to_string(),
+        version: "3.3.12".to_string(),
+        fp: fingerprint.clone(),
+    };
+    let key = identity_key(&query);
     let outcome = Outcome {
         notice: None,
         hydrated: 2,
-        fingerprint: Some("a".repeat(64)),
+        fingerprint: Some(fingerprint.clone()),
         served_from: Some("https://example.invalid/v1/core.tar.zst".to_string()),
-        key: Some("arduino-esp32/3.3.12/esp32c3/fp-0123456789abcdef".to_string()),
+        key: Some(key.clone()),
         sha256: Some("b".repeat(64)),
     };
     let record = outcome.record();
     assert!(record.used);
     assert_eq!(record.source, "https://example.invalid/v1/core.tar.zst");
-    assert_eq!(
-        record.key.as_deref(),
-        Some("arduino-esp32/3.3.12/esp32c3/fp-0123456789abcdef")
-    );
+    assert_eq!(record.key.as_deref(), Some(key.as_str()));
     assert_eq!(record.sha256.as_deref(), Some("b".repeat(64).as_str()));
     assert_eq!(record.reason, None);
+    let recorded = record.fingerprint.expect("the identity is recorded");
+    assert_eq!(recorded, fingerprint, "the FULL fingerprint, not sha16");
+    assert_eq!(recorded.len(), 64);
+    let key = record.key.expect("a served tree names its key");
+    let suffix = key.rsplit('/').next().unwrap_or_default().to_string();
+    assert_eq!(
+        suffix,
+        format!("fp-{}", &recorded[..16]),
+        "the key stops at fp-<sha16>; a publisher needs the whole value: {key}"
+    );
 }
 
 #[test]
@@ -398,6 +417,9 @@ fn a_source_build_records_used_false_and_why() {
     let record = outcome.record();
     assert!(!record.used);
     assert_eq!(record.source, "source");
+    // A source build that missed the catalog still names what was asked for:
+    // that is the identity a publisher has to upload for the next build.
+    assert_eq!(record.fingerprint.as_deref(), Some("c".repeat(64).as_str()));
     assert_eq!(record.key, None);
     assert_eq!(record.sha256, None);
     assert!(
