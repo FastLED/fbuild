@@ -74,7 +74,9 @@ def resolv_conf_lines(script: str) -> list[str]:
         payloads = [q for q in re.findall(r"'([^']*)'", command) if q]
         if payloads:
             # `printf 'a\nb'` carries literal escapes; `echo 'a'` does not.
-            return "\n".join(payloads).replace("\\n", "\n").splitlines()
+            text: str = "\n".join(payloads).replace("\\n", "\n")
+            # `str()` keeps basedpyright from inferring list[LiteralString].
+            return [str(line) for line in text.splitlines()]
     raise AssertionError(f"no `tee {RESOLV_PATH}` payload in {NETNS_STEP!r}")
 
 
