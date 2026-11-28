@@ -387,6 +387,22 @@ fn a_served_consult_records_the_artifact_it_hydrated() {
     );
     assert_eq!(record.sha256.as_deref(), Some("b".repeat(64).as_str()));
     assert_eq!(record.reason, None);
+    let fingerprint = record.fingerprint.expect("the identity is recorded");
+    assert_eq!(
+        fingerprint,
+        "a".repeat(64),
+        "the FULL fingerprint, not sha16"
+    );
+    assert_eq!(fingerprint.len(), 64);
+    let key = record.key.expect("a served tree names its key");
+    assert!(
+        !key.contains(&fingerprint),
+        "the key stops at fp-<sha16>; a publisher needs the whole value: {key}"
+    );
+    assert_eq!(
+        key.rsplit('/').next(),
+        Some(format!("fp-{}", &fingerprint[..16]).as_str())
+    );
 }
 
 #[test]
@@ -398,6 +414,9 @@ fn a_source_build_records_used_false_and_why() {
     let record = outcome.record();
     assert!(!record.used);
     assert_eq!(record.source, "source");
+    // A source build that missed the catalog still names what was asked for:
+    // that is the identity a publisher has to upload for the next build.
+    assert_eq!(record.fingerprint.as_deref(), Some("c".repeat(64).as_str()));
     assert_eq!(record.key, None);
     assert_eq!(record.sha256, None);
     assert!(

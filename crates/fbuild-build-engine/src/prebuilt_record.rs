@@ -18,6 +18,7 @@
 //!   "source": "https://example.invalid/v1/.../core.tar.zst",
 //!   "key": "arduino-esp32/3.3.12/esp32/fp-0123456789abcdef",
 //!   "sha256": "0123…",
+//!   "fingerprint": "0123…",
 //!   "reason": null
 //! }
 //! ```
@@ -37,6 +38,17 @@ pub struct PrebuiltLibsRecord {
     /// SHA-256 of the served archive, when one was served.
     #[serde(default)]
     pub sha256: Option<String>,
+    /// The exact fingerprint the ladder asked for, when the framework had an
+    /// identity.
+    ///
+    /// [`Self::key`] carries only `fp-<sha16>` — that is the bucket and
+    /// extraction path, not the address a publisher must serve: a catalog
+    /// entry is keyed by the whole value, advertised as
+    /// `fbuild-fp:<fingerprint>`. Recording it here is what lets a build's own
+    /// output name the object a publisher would have to upload, which is the
+    /// first step of publishing a tree this build could then hydrate.
+    #[serde(default)]
+    pub fingerprint: Option<String>,
     /// Why this build compiled from source, when the ladder did not serve it.
     ///
     /// `None` for a served build and for a build that never considered
@@ -57,6 +69,7 @@ impl PrebuiltLibsRecord {
             source: "source".to_string(),
             key: None,
             sha256: None,
+            fingerprint: None,
             reason,
         }
     }
@@ -69,8 +82,21 @@ impl PrebuiltLibsRecord {
             source,
             key,
             sha256,
+            fingerprint: None,
             reason: None,
         }
+    }
+
+    /// Record the exact fingerprint this build asked the ladder for.
+    ///
+    /// Separate from the constructors because it is orthogonal to how the
+    /// consult ended: a source build that missed the catalog needs it just as
+    /// much as a served one, since it names what a publisher would have to
+    /// upload for the next build of the same cell to hit.
+    #[must_use]
+    pub fn with_fingerprint(mut self, fingerprint: Option<String>) -> Self {
+        self.fingerprint = fingerprint;
+        self
     }
 }
 
@@ -93,6 +119,11 @@ mod tests {
         // indistinguishable from metadata written by an older fbuild.
         assert!(value.get("key").is_some_and(serde_json::Value::is_null));
         assert!(value.get("sha256").is_some_and(serde_json::Value::is_null));
+        assert!(
+            value
+                .get("fingerprint")
+                .is_some_and(serde_json::Value::is_null)
+        );
         assert!(value.get("reason").is_some_and(serde_json::Value::is_null));
     }
 
@@ -143,11 +174,14 @@ mod tests {
             "no consult is no key: {parsed}"
         );
 
-        let served = info.with_prebuilt_libs(Some(PrebuiltLibsRecord::served(
-            "https://example.invalid/core.tar.zst".to_string(),
-            Some("arduino-esp32/3.3.12/esp32c3/fp-0123456789abcdef".to_string()),
-            Some("c".repeat(64)),
-        )));
+        let served = info.with_prebuilt_libs(Some(
+            PrebuiltLibsRecord::served(
+                "https://example.invalid/core.tar.zst".to_string(),
+                Some("arduino-esp32/3.3.12/esp32c3/fp-0123456789abcdef".to_string()),
+                Some("c".repeat(64)),
+            )
+            .with_fingerprint(Some("d".repeat(64))),
+        ));
         emit_build_info(tmp.path(), "esp32c3", &served).unwrap();
         let bytes = std::fs::read(tmp.path().join("build_info_esp32c3.json")).unwrap();
         let parsed: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
@@ -162,6 +196,12 @@ mod tests {
         assert_eq!(
             parsed["esp32c3"]["prebuilt_libs"]["sha256"],
             serde_json::json!("c".repeat(64))
+        );
+        // The full fingerprint reaches the file: `key` stops at its sha16
+        // prefix, so this is the only place a publisher can read the address.
+        assert_eq!(
+            parsed["esp32c3"]["prebuilt_libs"]["fingerprint"],
+            serde_json::json!("d".repeat(64))
         );
     }
 

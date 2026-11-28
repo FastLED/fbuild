@@ -146,7 +146,7 @@ impl Outcome {
     /// The `prebuilt_libs` block for `build_info.json` (decision 1, #2196 cell
     /// 4): what this build linked against, and — for a source build — why.
     pub(super) fn record(&self) -> crate::prebuilt_record::PrebuiltLibsRecord {
-        if self.hydrated > 0 {
+        let record = if self.hydrated > 0 {
             crate::prebuilt_record::PrebuiltLibsRecord::served(
                 self.served_from
                     .clone()
@@ -156,7 +156,10 @@ impl Outcome {
             )
         } else {
             crate::prebuilt_record::PrebuiltLibsRecord::source(self.notice.clone())
-        }
+        };
+        // The exact identity, not just the `fp-<sha16>` path in `key`: a
+        // publisher must upload under `fbuild-fp:<fingerprint>` (#1882).
+        record.with_fingerprint(self.fingerprint.clone())
     }
 }
 

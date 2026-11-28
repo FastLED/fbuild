@@ -51,7 +51,7 @@ During research only, a hidden opt-**in** `--prebuilt-libs` (`hide = true`, `con
 | Scope | `global = true` on `Cli`, consumed in `fbuild-packages-fetch` via an explicit `PrebuiltLibsPolicy` field on `FetchRequest` — never read from the environment deep in the fetch path |
 | Research-phase flag | `--prebuilt-libs` (hidden, removed when the default flips) |
 | Nightly escape hatch | `--prebuilt-libs-nearest` (see decision 2); off by default, intended for CI only |
-| `build_info.json` | records `prebuilt_libs: {used: bool, source: "slice"\|"whole"\|"source", key: "<object key>", sha256: "…"}` so any firmware can be traced to the exact archive it was linked against |
+| `build_info.json` | records `prebuilt_libs: {used: bool, source: "slice"\|"whole"\|"source", key: "<object key>", sha256: "…", fingerprint: "<64 hex>"}` so any firmware can be traced to the exact archive it was linked against, and a build that missed the catalog names the `fbuild-fp:<fingerprint>` identity a publisher must upload under (`key` carries only its `fp-<sha16>` path prefix) |
 
 ---
 
