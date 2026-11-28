@@ -433,3 +433,133 @@ fn the_recorded_key_is_the_published_tree_path() {
         format!("arduino-esp32/3.3.12/esp32c3/fp-{}", &fingerprint[..16])
     );
 }
+
+/// Archive one arm's objects exactly the way the library stage does: sorted
+/// member list, the shared `ar` primitive, the 60 s library watchdog (#844).
+async fn archive(ar: &str, objects: &[NormalizedPath], output: &Path) {
+    fbuild_core::archive::create(
+        Path::new(ar),
+        objects,
+        output,
+        "ar",
+        std::time::Duration::from_secs(60),
+    )
+    .await
+    .unwrap();
+}
+
+/// The **framework archive** is what a build links, so the served and the
+/// from-source arm must agree on its bytes — not merely on the entry names
+/// (#2192 rule: assert `reused == fresh`). Hydration copies the publisher's
+/// object verbatim to this host's own object path and both arms hand the
+/// archiver the same member list in the same order, so a deterministic `ar`
+/// must write the same archive from two different build directories.
+#[tokio::test]
+async fn a_served_tree_and_a_source_build_archive_to_identical_bytes() {
+    use fbuild_packages_fetch::prebuilt::{
+        Artifact, DEFAULT_PRODUCT, PackRequest, UnitRef, extract, pack,
+    };
+
+    let temp = tempfile::tempdir().unwrap();
+    let units = framework_units(temp.path());
+    let ar = std::env::var("FBUILD_TEST_AR").unwrap_or_else(|_| "ar".into());
+
+    // The from-source arm: the compiler wrote one object per unit into the
+    // project's core build dir, under the names this host derives.
+    let fresh_dir = temp.path().join("fresh-core-build");
+    std::fs::create_dir_all(&fresh_dir).unwrap();
+    let mut fresh_objects = Vec::new();
+    for (index, (_, source)) in units.iter().enumerate() {
+        let object = crate::compiler::CompilerBase::object_path(source.as_path(), &fresh_dir);
+        std::fs::write(&object, format!("compiled object {index}")).unwrap();
+        fresh_objects.push(NormalizedPath::new(object));
+    }
+    fresh_objects.sort();
+    let fresh_archive = temp.path().join("fresh").join("libcore.a");
+    archive(&ar, &fresh_objects, fresh_archive.as_path()).await;
+    let fresh = std::fs::read(&fresh_archive).unwrap();
+    assert!(!fresh.is_empty(), "the from-source arm produced no archive");
+
+    // The publisher packs exactly those bytes; the client extracts the archive,
+    // hydrates it into a DIFFERENT build dir, and archives what it received.
+    let names: Vec<String> = fresh_objects
+        .iter()
+        .map(|object| {
+            object
+                .as_path()
+                .file_name()
+                .unwrap()
+                .to_string_lossy()
+                .into_owned()
+        })
+        .collect();
+    let refs: Vec<UnitRef<'_>> = units
+        .iter()
+        .zip(&names)
+        .map(|((id, _), name)| UnitRef {
+            unit: id,
+            object: name,
+        })
+        .collect();
+    let fingerprint = "ab".repeat(32);
+    let packed = pack(&PackRequest {
+        objects: fresh_dir.as_path(),
+        out: temp.path().join("out").as_path(),
+        vendor: "espressif",
+        product: DEFAULT_PRODUCT,
+        channel: "release",
+        reference: "3.3.12",
+        chip: "esp32c3",
+        framework: "arduino-esp32",
+        fingerprint: &fingerprint,
+        units: &refs,
+        arch: "esp32c3",
+        abi: "gcc@14.2.0",
+        base_url: "https://bucket.example",
+        min_client_version: 1,
+    })
+    .unwrap();
+
+    let tree = temp.path().join("served-tree");
+    extract(
+        &Artifact {
+            path: packed.archive.clone(),
+            size_bytes: packed.size_bytes,
+            sha256: packed.sha256.clone(),
+        },
+        &tree,
+    )
+    .unwrap();
+    let reused_dir = temp.path().join("reused-core-build");
+    std::fs::create_dir_all(&reused_dir).unwrap();
+    assert_eq!(
+        hydrate(&tree, &reused_dir, &units).unwrap(),
+        units.len(),
+        "the served tree covers every unit of this cell"
+    );
+
+    let mut reused_objects = Vec::new();
+    for (_, source) in &units {
+        let object = crate::compiler::CompilerBase::object_path(source.as_path(), &reused_dir);
+        reused_objects.push(NormalizedPath::new(object));
+    }
+    reused_objects.sort();
+    let reused_archive = temp.path().join("reused").join("libcore.a");
+    archive(&ar, &reused_objects, reused_archive.as_path()).await;
+    let reused = std::fs::read(&reused_archive).unwrap();
+
+    assert_ne!(
+        fresh_dir.as_path(),
+        reused_dir.as_path(),
+        "the two arms must not archive the same directory"
+    );
+    assert_eq!(
+        digest(&fresh),
+        digest(&reused),
+        "a served build and a from-source build of one cell must hash the same archive"
+    );
+    assert_eq!(
+        fresh, reused,
+        "the framework archive must be byte-identical, not just entry-for-entry"
+    );
+}
