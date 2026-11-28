@@ -448,6 +448,81 @@ async fn archive(ar: &str, objects: &[NormalizedPath], output: &Path) {
     .unwrap();
 }
 
+/// One member of a GNU archive, header fields included: two deterministic
+/// archives of the same objects must agree on all of them, not just on the
+/// payload bytes.
+#[derive(Debug, PartialEq, Eq)]
+struct Member {
+    name: String,
+    mode: String,
+    uid: String,
+    gid: String,
+    mtime: String,
+    body: Vec<u8>,
+}
+
+/// Parse a GNU archive's members. The symbol index (`/`) is skipped: it is
+/// derived from the members, so comparing it would only restate them.
+fn members(archive: &[u8]) -> Vec<Member> {
+    let text = |range: std::ops::Range<usize>| {
+        String::from_utf8_lossy(archive.get(range).unwrap_or_default())
+            .trim()
+            .to_string()
+    };
+    let mut members = Vec::new();
+    // Skip the 8-byte `!<arch>\n` global header; members follow it.
+    let mut offset = 8;
+    while offset + 60 <= archive.len() {
+        if archive.get(offset + 58..offset + 60) != Some(b"`\n".as_slice()) {
+            break;
+        }
+        let name = text(offset..offset + 16).trim_end_matches('/').to_string();
+        let size: usize = text(offset + 48..offset + 58).parse().unwrap_or(0);
+        let body = offset + 60;
+        if body + size > archive.len() {
+            break;
+        }
+        if name != "/" && !name.is_empty() {
+            members.push(Member {
+                name,
+                mode: text(offset + 40..offset + 48),
+                uid: text(offset + 28..offset + 34),
+                gid: text(offset + 34..offset + 40),
+                mtime: text(offset + 16..offset + 28),
+                body: archive[body..body + size].to_vec(),
+            });
+        }
+        offset = body + size + (size & 1);
+    }
+    members
+}
+
+/// A digest tells you the two arms disagree; the member table says where.
+/// Compare headers and payloads first, so a served-vs-source regression names
+/// the unit whose object changed, and a header-only difference names the field
+/// the archiver stamped (which is what `ar Drcs` exists to prevent).
+fn assert_same_archive(fresh: &[u8], reused: &[u8]) {
+    assert_eq!(
+        members(fresh),
+        members(reused),
+        "the served tree's members differ from the from-source build's"
+    );
+    assert_eq!(
+        digest(fresh),
+        digest(reused),
+        "every member and header matches, so the bytes differ outside them: {} vs {} bytes; \
+         prefix {:?} vs {:?}",
+        fresh.len(),
+        reused.len(),
+        String::from_utf8_lossy(fresh.get(..72).unwrap_or_default()),
+        String::from_utf8_lossy(reused.get(..72).unwrap_or_default())
+    );
+    assert_eq!(
+        fresh, reused,
+        "the framework archive must be byte-identical"
+    );
+}
+
 /// The **framework archive** is what a build links, so the served and the
 /// from-source arm must agree on its bytes — not merely on the entry names
 /// (#2192 rule: assert `reused == fresh`). Hydration copies the publisher's
@@ -468,13 +543,24 @@ async fn a_served_tree_and_a_source_build_archive_to_identical_bytes() {
     // project's core build dir, under the names this host derives.
     let fresh_dir = temp.path().join("fresh-core-build");
     std::fs::create_dir_all(&fresh_dir).unwrap();
-    let mut fresh_objects = Vec::new();
-    for (index, (_, source)) in units.iter().enumerate() {
-        let object = crate::compiler::CompilerBase::object_path(source.as_path(), &fresh_dir);
-        std::fs::write(&object, format!("compiled object {index}")).unwrap();
-        fresh_objects.push(NormalizedPath::new(object));
-    }
-    fresh_objects.sort();
+    // Pair each unit with the object this host derives for it and sort the
+    // PAIRS. Sorting the paths alone and then zipping them against `units`
+    // maps one unit to another unit's object whenever the hash order differs
+    // from the unit order (#2203: the served arm then archived swapped bytes).
+    let mut fresh_pairs: Vec<(String, NormalizedPath)> = units
+        .iter()
+        .enumerate()
+        .map(|(index, (unit, source))| {
+            let object = crate::compiler::CompilerBase::object_path(source.as_path(), &fresh_dir);
+            std::fs::write(&object, format!("compiled object {index}")).unwrap();
+            (unit.clone(), NormalizedPath::new(object))
+        })
+        .collect();
+    fresh_pairs.sort_by(|left, right| left.1.cmp(&right.1));
+    let fresh_objects: Vec<NormalizedPath> = fresh_pairs
+        .iter()
+        .map(|(_, object)| NormalizedPath::new(object.as_path()))
+        .collect();
     let fresh_archive = temp.path().join("fresh").join("libcore.a");
     archive(&ar, &fresh_objects, fresh_archive.as_path()).await;
     let fresh = std::fs::read(&fresh_archive).unwrap();
@@ -482,9 +568,9 @@ async fn a_served_tree_and_a_source_build_archive_to_identical_bytes() {
 
     // The publisher packs exactly those bytes; the client extracts the archive,
     // hydrates it into a DIFFERENT build dir, and archives what it received.
-    let names: Vec<String> = fresh_objects
+    let names: Vec<String> = fresh_pairs
         .iter()
-        .map(|object| {
+        .map(|(_, object)| {
             object
                 .as_path()
                 .file_name()
@@ -493,12 +579,12 @@ async fn a_served_tree_and_a_source_build_archive_to_identical_bytes() {
                 .into_owned()
         })
         .collect();
-    let refs: Vec<UnitRef<'_>> = units
+    let refs: Vec<UnitRef<'_>> = fresh_pairs
         .iter()
         .zip(&names)
-        .map(|((id, _), name)| UnitRef {
-            unit: id,
-            object: name,
+        .map(|((unit, _), name)| UnitRef {
+            unit: unit.as_str(),
+            object: name.as_str(),
         })
         .collect();
     let fingerprint = "ab".repeat(32);
@@ -553,13 +639,5 @@ async fn a_served_tree_and_a_source_build_archive_to_identical_bytes() {
         reused_dir.as_path(),
         "the two arms must not archive the same directory"
     );
-    assert_eq!(
-        digest(&fresh),
-        digest(&reused),
-        "a served build and a from-source build of one cell must hash the same archive"
-    );
-    assert_eq!(
-        fresh, reused,
-        "the framework archive must be byte-identical, not just entry-for-entry"
-    );
+    assert_same_archive(&fresh, &reused);
 }
