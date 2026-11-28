@@ -19,9 +19,19 @@
 //!   "key": "arduino-esp32/3.3.12/esp32/fp-0123456789abcdef",
 //!   "sha256": "0123…",
 //!   "fingerprint": "0123…",
-//!   "reason": null
+//!   "reason": null,
+//!   "archive_bytes": 4075144,
+//!   "downloaded": true
 //! }
 //! ```
+//!
+//! `archive_bytes` and `downloaded` are the download accounting decision 6 of
+//! `docs/design/artifact-serving-decisions.md` asks the benchmark to report: the
+//! published archive's size, and whether this build actually transferred it
+//! (a tree reused from the local cache downloads nothing, so its
+//! `bytes_downloaded` is zero even though `archive_bytes` is not). Both stay
+//! `null` for a source build — the control arm's bytes come from the framework
+//! bundle, which is not a prebuilt artifact.
 
 use serde::{Deserialize, Serialize};
 
@@ -55,6 +65,21 @@ pub struct PrebuiltLibsRecord {
     /// prebuilt at all (the hidden opt-in was off).
     #[serde(default)]
     pub reason: Option<String>,
+    /// Size in bytes of the published archive behind the served tree.
+    ///
+    /// Decision 6's `bytes_downloaded`: the descriptor pins this number, so a
+    /// served build reports the transfer it would cost without a network
+    /// counter. `None` for a source build, which downloads no prebuilt archive.
+    #[serde(default)]
+    pub archive_bytes: Option<u64>,
+    /// Whether this build transferred the archive, or reused a tree already in
+    /// the local cache. `None` for a source build.
+    ///
+    /// A reuse still serves the build, but its `bytes_downloaded` is zero; the
+    /// benchmark must average the two cases apart or a warm cache reads as a
+    /// smaller artifact.
+    #[serde(default)]
+    pub downloaded: Option<bool>,
 }
 
 impl PrebuiltLibsRecord {
@@ -71,6 +96,8 @@ impl PrebuiltLibsRecord {
             sha256: None,
             fingerprint: None,
             reason,
+            archive_bytes: None,
+            downloaded: None,
         }
     }
 
@@ -84,6 +111,8 @@ impl PrebuiltLibsRecord {
             sha256,
             fingerprint: None,
             reason: None,
+            archive_bytes: None,
+            downloaded: None,
         }
     }
 
@@ -96,6 +125,16 @@ impl PrebuiltLibsRecord {
     #[must_use]
     pub fn with_fingerprint(mut self, fingerprint: Option<String>) -> Self {
         self.fingerprint = fingerprint;
+        self
+    }
+
+    /// Record the download accounting for a served tree: the archive's pinned
+    /// size and whether this build transferred it (decision 6's
+    /// `bytes_downloaded`, per arm).
+    #[must_use]
+    pub fn with_download(mut self, archive_bytes: Option<u64>, downloaded: Option<bool>) -> Self {
+        self.archive_bytes = archive_bytes;
+        self.downloaded = downloaded;
         self
     }
 }
@@ -125,6 +164,18 @@ mod tests {
                 .is_some_and(serde_json::Value::is_null)
         );
         assert!(value.get("reason").is_some_and(serde_json::Value::is_null));
+        // Decision 6's download accounting: absent for a source build, but
+        // PRESENT as null so an older fbuild's metadata is distinguishable.
+        assert!(
+            value
+                .get("archive_bytes")
+                .is_some_and(serde_json::Value::is_null)
+        );
+        assert!(
+            value
+                .get("downloaded")
+                .is_some_and(serde_json::Value::is_null)
+        );
     }
 
     #[test]
@@ -142,6 +193,42 @@ mod tests {
         );
         assert_eq!(value["sha256"], serde_json::json!("a".repeat(64)));
         assert!(value.get("reason").is_some_and(serde_json::Value::is_null));
+    }
+
+    /// Decision 6's `bytes_downloaded` per arm: a served build that had to
+    /// fetch reports the archive's pinned size; a served build that reused a
+    /// local tree reports the same size AND `downloaded: false`, so the bench
+    /// can tell a transfer from a cache hit instead of averaging them.
+    #[test]
+    fn a_served_record_carries_its_download_accounting() {
+        let fetched = PrebuiltLibsRecord::served(
+            "https://example.invalid/v1/core.tar.zst".to_string(),
+            Some("arduino-esp32/3.3.12/esp32/fp-0123456789abcdef".to_string()),
+            Some("a".repeat(64)),
+        )
+        .with_download(Some(4_075_144), Some(true));
+        let value = serde_json::to_value(&fetched).unwrap();
+        assert_eq!(value["archive_bytes"], serde_json::json!(4_075_144_u64));
+        assert_eq!(value["downloaded"], serde_json::json!(true));
+
+        let reused = fetched.clone().with_download(Some(4_075_144), Some(false));
+        let value = serde_json::to_value(&reused).unwrap();
+        assert_eq!(value["archive_bytes"], serde_json::json!(4_075_144_u64));
+        assert_eq!(
+            value["downloaded"],
+            serde_json::json!(false),
+            "a reuse downloads nothing and must say so"
+        );
+    }
+
+    /// A source build downloads no prebuilt archive, so the accounting stays
+    /// null even when the caller asks for it: the control arm's bytes are the
+    /// framework bundle's, not this artifact's.
+    #[test]
+    fn a_source_record_has_no_download_accounting() {
+        let record = PrebuiltLibsRecord::source(Some("no published tree".to_string()));
+        assert_eq!(record.archive_bytes, None);
+        assert_eq!(record.downloaded, None);
     }
 
     /// The block actually lands in `build_info_<env>.json` — through the real

@@ -389,9 +389,13 @@ fn a_served_consult_records_the_artifact_it_hydrated() {
         served_from: Some("https://example.invalid/v1/core.tar.zst".to_string()),
         key: Some(key.clone()),
         sha256: Some("b".repeat(64)),
+        archive_bytes: Some(4_075_144),
+        downloaded: Some(true),
     };
     let record = outcome.record();
     assert!(record.used);
+    assert_eq!(record.archive_bytes, Some(4_075_144));
+    assert_eq!(record.downloaded, Some(true));
     assert_eq!(record.source, "https://example.invalid/v1/core.tar.zst");
     assert_eq!(record.key.as_deref(), Some(key.as_str()));
     assert_eq!(record.sha256.as_deref(), Some("b".repeat(64).as_str()));
@@ -406,6 +410,62 @@ fn a_served_consult_records_the_artifact_it_hydrated() {
         format!("fp-{}", &recorded[..16]),
         "the key stops at fp-<sha16>; a publisher needs the whole value: {key}"
     );
+}
+
+/// Decision 6's `bytes_downloaded`, per arm: a served tree reports the archive
+/// size the descriptor pins, and `downloaded` separates a transfer from a cache
+/// reuse — both serve the build, but only one costs the network, so a benchmark
+/// that averaged them would read a warm cache as a smaller artifact.
+#[test]
+fn served_outcome_reports_a_transfer_and_a_reuse_apart() {
+    let temp = tempfile::tempdir().unwrap();
+    let archive = tar_zst(&[(OBJECTS_MANIFEST, b"{\"schema\":1,\"units\":{}}")]);
+    let archive_path = temp.path().join("core.tar.zst");
+    std::fs::write(&archive_path, &archive).unwrap();
+    let artifact = fbuild_packages_fetch::prebuilt::Artifact {
+        path: NormalizedPath::new(&archive_path),
+        size_bytes: archive.len() as u64,
+        sha256: digest(&archive),
+    };
+    // A real extraction, so the tree this test reports on is one the ladder
+    // could actually serve (never a hand-built ExtractedTree).
+    let tree = fbuild_packages_fetch::prebuilt::extract(&artifact, &temp.path().join("tree"))
+        .expect("the fixture archive extracts");
+    let asset = Asset {
+        filename: "prebuilt-esp32c3.tar.zst".to_string(),
+        size_bytes: artifact.size_bytes,
+        sha256: artifact.sha256.clone(),
+        urls: vec!["https://example.invalid/v1/core.tar.zst".to_string()],
+        provides: Vec::new(),
+        parts: Vec::new(),
+    };
+    let query = Query {
+        framework: FRAMEWORK.to_string(),
+        arch: "esp32c3".to_string(),
+        abi: "esp32c3".to_string(),
+        version: "3.3.12".to_string(),
+        fp: "a".repeat(64),
+    };
+    for downloaded in [true, false] {
+        let obtained = Obtained {
+            tree: tree.clone(),
+            downloaded,
+        };
+        let outcome = served_outcome(&asset, &obtained, 2, Some(query.fp.clone()), &query);
+        let record = outcome.record();
+        assert!(record.used, "a reused tree still serves the build");
+        assert_eq!(
+            record.archive_bytes,
+            Some(artifact.size_bytes),
+            "the pinned archive size, not the extracted tree's bytes"
+        );
+        assert_eq!(record.downloaded, Some(downloaded));
+    }
+    // A source build downloads no prebuilt archive, so its accounting is empty
+    // even though the control arm does transfer the framework bundle.
+    let declined = Outcome::source("prebuilt core: miss".to_string(), None).record();
+    assert_eq!(declined.archive_bytes, None);
+    assert_eq!(declined.downloaded, None);
 }
 
 #[test]
