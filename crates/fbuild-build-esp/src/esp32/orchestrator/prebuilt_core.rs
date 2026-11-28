@@ -58,7 +58,9 @@ use fbuild_packages::library::esp32_framework::Esp32Framework;
 use fbuild_packages::library::esp32_framework::prebuilt_core::{
     CompileUnit, ConfigDigest, CoreBuildInputs, PrebuiltCorePlan,
 };
-use fbuild_packages_fetch::prebuilt::{Asset, Fetcher, Query, Reader, Resolution, Served, serve};
+use fbuild_packages_fetch::prebuilt::{
+    Asset, Fetcher, Obtained, Query, Reader, Resolution, Served, serve,
+};
 use serde::Deserialize;
 
 /// The framework family a prebuilt core object is published under. The packer's
@@ -95,6 +97,12 @@ pub(super) struct Outcome {
     pub key: Option<String>,
     /// SHA-256 of the served archive, when the ladder served a tree.
     pub sha256: Option<String>,
+    /// Size in bytes of the published archive behind a served tree; `None` for
+    /// a source build (decision 6's `bytes_downloaded`, per arm).
+    pub archive_bytes: Option<u64>,
+    /// Whether this build transferred that archive rather than reusing a tree
+    /// already in the local cache; `None` for a source build.
+    pub downloaded: Option<bool>,
 }
 
 impl Outcome {
@@ -120,6 +128,8 @@ impl Outcome {
             served_from: None,
             key: None,
             sha256: None,
+            archive_bytes: None,
+            downloaded: None,
         }
     }
 
@@ -132,6 +142,8 @@ impl Outcome {
             served_from: None,
             key: None,
             sha256: None,
+            archive_bytes: None,
+            downloaded: None,
         }
     }
 
@@ -159,7 +171,12 @@ impl Outcome {
         };
         // The exact identity, not just the `fp-<sha16>` path in `key`: a
         // publisher must upload under `fbuild-fp:<fingerprint>` (#1882).
-        record.with_fingerprint(self.fingerprint.clone())
+        record
+            .with_fingerprint(self.fingerprint.clone())
+            // Decision 6's `bytes_downloaded`, per arm: a served tree either
+            // transferred the archive or reused one, and the two must not
+            // average together in the benchmark.
+            .with_download(self.archive_bytes, self.downloaded)
     }
 }
 
@@ -430,20 +447,9 @@ async fn consult(
         Served::Source(fallback) => Outcome::source(fallback.notice(), fingerprint),
         Served::Prebuilt(obtained) => {
             match hydrate(obtained.tree.root.as_path(), core_build_dir, units) {
-                Ok(hydrated) if hydrated > 0 => Outcome {
-                    notice: None,
-                    hydrated,
-                    fingerprint,
-                    served_from: Some(
-                        asset
-                            .urls
-                            .first()
-                            .cloned()
-                            .unwrap_or_else(|| asset.filename.clone()),
-                    ),
-                    key: Some(identity_key(&query)),
-                    sha256: Some(asset.sha256.clone()),
-                },
+                Ok(hydrated) if hydrated > 0 => {
+                    served_outcome(&asset, &obtained, hydrated, fingerprint, &query)
+                }
                 Ok(_) => Outcome::source(
                     "prebuilt core: the served tree covers none of this build's units".to_string(),
                     fingerprint,
@@ -451,6 +457,37 @@ async fn consult(
                 Err(reason) => Outcome::source(format!("prebuilt core: {reason}"), fingerprint),
             }
         }
+    }
+}
+
+/// The [`Outcome`] for a tree the ladder served and this build hydrated.
+///
+/// A separate function, not an inline struct literal, so a test can exercise
+/// the download accounting through the same code a build runs: the archive's
+/// pinned size and whether this build actually transferred it (decision 6's
+/// `bytes_downloaded`, per arm).
+fn served_outcome(
+    asset: &Asset,
+    obtained: &Obtained,
+    hydrated: usize,
+    fingerprint: Option<String>,
+    query: &Query,
+) -> Outcome {
+    Outcome {
+        notice: None,
+        hydrated,
+        fingerprint,
+        served_from: Some(
+            asset
+                .urls
+                .first()
+                .cloned()
+                .unwrap_or_else(|| asset.filename.clone()),
+        ),
+        key: Some(identity_key(query)),
+        sha256: Some(asset.sha256.clone()),
+        archive_bytes: Some(asset.size_bytes),
+        downloaded: Some(obtained.downloaded),
     }
 }
 
